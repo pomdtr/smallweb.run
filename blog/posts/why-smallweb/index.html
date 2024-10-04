@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Why smallweb? - Smallweb Blog</title>
+
+    <meta name="supported-color-schemes" content="light dark">
+    <meta name="theme-color" content="hsl(220, 20%, 100%)" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="hsl(220, 20%, 10%)" media="(prefers-color-scheme: dark)">
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Smallweb Blog">
+    <link rel="alternate" href="/feed.json" type="application/json" title="Smallweb Blog">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="canonical" href="http://localhost/posts/why-smallweb/">
+    
+  <meta property="og:type" content="website">
+<meta property="og:site_name" content="Smallweb Blog">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="Why smallweb?">
+<meta property="og:description" content="The latest new from Smallweb">
+<meta property="og:url" content="http://localhost/posts/why-smallweb/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@pomdtrr">
+<meta name="description" content="The latest new from Smallweb">
+</head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="navbar-home">
+        
+          <strong>Smallweb Blog</strong>
+        
+      </a>
+
+      <ul class="navbar-links">
+        <li>
+          <a href="/archive/">
+            Archive
+          </a>
+        </li>
+      
+        <li>
+          <a href="/contact/">
+            Contact
+          </a>
+        </li>
+      
+      <li>
+        <script>
+          let theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+          document.documentElement.dataset.theme = theme;
+          function changeTheme() {
+            theme = theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", theme);
+            document.documentElement.dataset.theme = theme;
+          }
+        </script>
+        <button class="button" onclick="changeTheme()">
+          <span class="icon">◐</span>
+        </button>
+      </li>
+      </ul>
+    </nav>
+
+    <main class="body-post">
+      <article class="post" data-pagefind-body="" data-title="Why smallweb?" data-pagefind-index-attrs="data-title">
+  <header class="post-header">
+    <h1 class="post-title">Why smallweb?</h1>
+
+    <div class="post-details">
+  
+    
+    
+      <p>by Achille Lacoin</p>
+    
+  
+
+  <p>
+    <time datetime="2024-07-23 00:00:00">
+      July 23rd, 2024
+    </time>
+  </p>
+
+  <p>3 min read</p>
+
+  <div class="post-tags">
+    
+      
+
+      
+        <a data-pagefind-filter="filter" class="badge" href="/archive/article/">article</a>
+      
+    
+  </div>
+</div>
+
+  </header>
+
+  
+  <nav class="toc">
+    <h2>Table of contents</h2>
+    <ol>
+      
+      <li>
+        <a href="#why-can't-it-be-running-all-the-time%3F">Why can't it be running all the time?</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#taking-inspiration-from-serverless">Taking inspiration from Serverless</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#managing-servers-with-unix-commands">Managing servers with unix commands</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#running-smallweb-on-the-server">Running smallweb on the Server</a>
+
+        
+      </li>
+      
+    </ol>
+  </nav>
+  
+
+  <div class="post-body body">
+    <p>Think about the last time you worked on a local project. You probably had to:</p>
+<ol>
+<li>Open your project in your favorite editor</li>
+<li>Start a development server</li>
+<li>Open your browser and navigate to <code>http://localhost:3000</code> or any other port</li>
+</ol>
+<p>There are a few things that are not great about this workflow:</p>
+<ol>
+<li>You have to go through a few manual steps to start your project. Why can't it be running all the time?</li>
+<li>Multiple projects can't run on the same port. You have to remember which project is running on which port.</li>
+<li>Using <code>http://</code> is very limiting. For example, you can't install a PWA if it's not served over HTTPS.</li>
+</ol>
+<!-- more -->
+<h2 id="why-can't-it-be-running-all-the-time%3F" tabindex="-1"><a href="#why-can't-it-be-running-all-the-time%3F" class="header-anchor">Why can't it be running all the time?</a></h2>
+<p>An elegant way to address some of these issues is to use a reverse proxy like caddy, and self-signed certificates. Your proxy configuration would look something like this:</p>
+<pre class="language-txt" tabindex="0"><code class="language-txt">website.localhost {
+  tls internal {
+    on_demand
+  }
+
+  reverse_proxy localhost:3000
+}
+</code></pre>
+<p>By setting up a reverse proxy, you can access your project using <code>https://website.localhost</code> instead of <code>http://localhost:3000</code>. This is a great improvement, but it's still not perfect: you still have to manually start your project.</p>
+<p>At this point you might be tempted to write a service that starts your project when you boot your computer. But this becomes cumbersome really fast, and it will end up consuming a lot of resources (each project on computer would be running all the time).</p>
+<h2 id="taking-inspiration-from-serverless" tabindex="-1"><a href="#taking-inspiration-from-serverless" class="header-anchor">Taking inspiration from Serverless</a></h2>
+<p>Platforms like <a href="https://vercel.com">Vercel</a>, <a href="https://deno.com/deploy">Deno Deploy</a> or <a href="https://val.town">Val Town</a> allow each user to host a unlimited amount of websites for free. How can they afford to do that? They don't run your code all the time. Instead, they start a new process when a request comes in, and they shut it down when it's done.</p>
+<p>This sounds like a great idea, could we do the same thing, but self-hosted? This is the idea behind smallweb.</p>
+<p>Instead of having all project running at all time, we will only have a single smallweb evaluation server running on port 7777.</p>
+<pre class="language-txt" tabindex="0"><code class="language-txt">*.localhost {
+  tls internal {
+    on_demand
+  }
+
+  reverse_proxy localhost:7777
+}
+</code></pre>
+<p>When a new request comes in, smallweb will map the hostname to a folder in your filesystem:</p>
+<pre class="language-txt" tabindex="0"><code class="language-txt">website.localhost -&gt; ~/localhost/website
+</code></pre>
+<p>Smallweb will then start a new process, and look for a <code>main.ts</code> file in the folder. If it finds one, it will evaluate it and proxy the response back.</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token comment">// ~/localhost/website/main.ts</span>
+
+<span class="token keyword">export</span> <span class="token keyword">default</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">fetch</span><span class="token operator">:</span> <span class="token punctuation">(</span>req<span class="token operator">:</span> Request<span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span><span class="token string">"Hello, World!"</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<pre class="language-console" tabindex="0"><code class="language-console">$ curl https://website.localhost
+Hello, World!
+</code></pre>
+<h2 id="managing-servers-with-unix-commands" tabindex="-1"><a href="#managing-servers-with-unix-commands" class="header-anchor">Managing servers with unix commands</a></h2>
+<p>Since hostnames are mapped to folders in your filesystem, you can use unix commands to manage your servers.</p>
+<p>For example, you can clone a website by copying the folder:</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh">$ <span class="token function">cp</span> <span class="token parameter variable">-r</span> ~/localhost/website ~/localhost/website-clone
+$ <span class="token function">curl</span> https://website-clone.localhost
+Hello, World<span class="token operator">!</span>
+</code></pre>
+<p>If you want to rename it, use the <code>mv</code> command. To delete it, use the <code>rm</code> command.</p>
+<h2 id="running-smallweb-on-the-server" tabindex="-1"><a href="#running-smallweb-on-the-server" class="header-anchor">Running smallweb on the Server</a></h2>
+<p>I've focused on the local dev experience so far, but there is nothing stopping you from running smallweb on a server.</p>
+<p>In fact, this is how I host this blog, and every other <code>smallweb.run</code> websites from a 5$ Hetzner VPS.</p>
+<p>With smallweb running on my server, I can host as many websites as I want, as the amount of resouces consumed depends on the amount of traffic I get, not the amount of websites I have.</p>
+<p>As much my websites don't have any visitors, this is probably the right tradeoff to make 😅.</p>
+
+  </div>
+
+  
+
+<nav class="page-pagination pagination">
+  <ul>
+    <li class="pagination-prev">
+      <a href="/posts/v0.11/" rel="prev">
+        <span>← Older post</span>
+        <strong>Smallweb 0.11 - Global config and new routing</strong>
+      </a>
+    </li>
+    
+    <li class="pagination-next">
+      <a href="/posts/v0.12/" rel="next">
+        <span>Newer post →</span>
+        <strong>Smallweb 0.12 - Publish and install flow for smallweb apps</strong>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+    </article></main>
+
+    <!-- Current page: /posts/why-smallweb/ -->
+  
+
+</body></html>

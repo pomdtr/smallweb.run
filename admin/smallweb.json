@@ -1,0 +1,8 @@
+{
+    "entrypoint": "smallweb:api",
+    "private": true,
+    "publicRoutes": [
+        "/openapi.json",
+        "/schemas/*"
+    ]
+}

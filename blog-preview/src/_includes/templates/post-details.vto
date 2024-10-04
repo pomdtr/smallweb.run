@@ -1,0 +1,28 @@
+<div class="post-details">
+  {{ if author }}
+    {{ set page = search.page(`type=author author="author"`) }}
+    {{ if page }}
+      <p>{{ i18n.post.by}} <a data-pagefind-filter="author" href="{{ page.url }}">{{ author }}</a></p>
+    {{ else }}
+      <p>{{ i18n.post.by}} {{ author }}</p>
+    {{ /if }}
+  {{ /if }}
+
+  <p>
+    <time datetime="{{ date |> date('DATETIME') }}">
+      {{ date |> date('HUMAN_DATE') }}
+    </time>
+  </p>
+
+  <p>{{ it.readingInfo.minutes }} {{ i18n.post.reading_time}}</p>
+
+  <div class="post-tags">
+    {{ for tag of tags }}
+      {{ set page = search.page(`type=tag tag="${tag}"`) }}
+
+      {{ if page }}
+        <a data-pagefind-filter="filter" class="badge" href="{{ page.url }}">{{ tag }}</a>
+      {{ /if }}
+    {{ /for }}
+  </div>
+</div>

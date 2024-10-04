@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smallweb 0.12 - Publish and install flow for smallweb apps - Smallweb Blog</title>
+
+    <meta name="supported-color-schemes" content="light dark">
+    <meta name="theme-color" content="hsl(220, 20%, 100%)" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="hsl(220, 20%, 10%)" media="(prefers-color-scheme: dark)">
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Smallweb Blog">
+    <link rel="alternate" href="/feed.json" type="application/json" title="Smallweb Blog">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="canonical" href="http://localhost/posts/v0.12/">
+    
+  <meta property="og:type" content="website">
+<meta property="og:site_name" content="Smallweb Blog">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="Smallweb 0.12 - Publish and install flow for smallweb apps">
+<meta property="og:description" content="The latest new from Smallweb">
+<meta property="og:url" content="http://localhost/posts/v0.12/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@pomdtrr">
+<meta name="description" content="The latest new from Smallweb">
+</head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="navbar-home">
+        
+          <strong>Smallweb Blog</strong>
+        
+      </a>
+
+      <ul class="navbar-links">
+        <li>
+          <a href="/archive/">
+            Archive
+          </a>
+        </li>
+      
+        <li>
+          <a href="/contact/">
+            Contact
+          </a>
+        </li>
+      
+      <li>
+        <script>
+          let theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+          document.documentElement.dataset.theme = theme;
+          function changeTheme() {
+            theme = theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", theme);
+            document.documentElement.dataset.theme = theme;
+          }
+        </script>
+        <button class="button" onclick="changeTheme()">
+          <span class="icon">◐</span>
+        </button>
+      </li>
+      </ul>
+    </nav>
+
+    <main class="body-post">
+      <article class="post" data-pagefind-body="" data-title="Smallweb 0.12 - Publish and install flow for smallweb apps" data-pagefind-index-attrs="data-title">
+  <header class="post-header">
+    <h1 class="post-title">Smallweb 0.12 - Publish and install flow for smallweb apps</h1>
+
+    <div class="post-details">
+  
+    
+    
+      <p>by Achille Lacoin</p>
+    
+  
+
+  <p>
+    <time datetime="2024-07-23 00:00:00">
+      July 23rd, 2024
+    </time>
+  </p>
+
+  <p>3 min read</p>
+
+  <div class="post-tags">
+    
+      
+
+      
+        <a data-pagefind-filter="filter" class="badge" href="/archive/release/">release</a>
+      
+    
+  </div>
+</div>
+
+  </header>
+
+  
+  <nav class="toc">
+    <h2>Table of contents</h2>
+    <ol>
+      
+      <li>
+        <a href="#smallweb-install%3A-a-new-convention-to-install-and-publish-smallweb-apps">smallweb install: A new convention to install and publish smallweb apps</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#smallweb-init-now-support-custom-templates">smallweb init now support custom templates</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#crons-jobs-are-now-defined-as-http-requests">Crons jobs are now defined as HTTP requests</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#smallweb-open-has-new-flags">smallweb open has new flags</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#deno-kv-is-now-scoped-to-the-hostname">Deno KV is now scoped to the hostname</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#what's-next%3F">What's next?</a>
+
+        
+      </li>
+      
+    </ol>
+  </nav>
+  
+
+  <div class="post-body body">
+    <p>Smallweb 0.12 is out! And it's the first release since 0.8 where I do not feel the need to fondamentally change the routing system 😅.</p>
+<p>But this is still a big release! And it even contains a few breaking changes (don't worry, they are easy to fix).</p>
+<h2 id="smallweb-install%3A-a-new-convention-to-install-and-publish-smallweb-apps" tabindex="-1"><a href="#smallweb-install%3A-a-new-convention-to-install-and-publish-smallweb-apps" class="header-anchor"><code>smallweb install</code>: A new convention to install and publish smallweb apps</a></h2>
+<p>Smallweb now includes a new <code>smallweb install</code> command to install smallweb apps from the web.</p>
+<p>Smallweb apps work on top of github repositories. When you run</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh">smallweb <span class="token function">install</span> pomdtr/example-app ~/localhost/smallweb-app
+</code></pre>
+<p>smallweb will clone the <code>pomdtr/example-app</code> repository in the <code>~/localhost/smallweb-app</code> folder.</p>
+<!-- more -->
+<p>If the repository contains a <code>smallweb</code> branch, smallweb will checkout this branch. Otherwise, it will checkout the <code>main</code> branch.</p>
+<p>This convention is really similar to how github pages work, and you can even repurposes github pages actions to build your smallweb app (see <a href="https://github.com/pomdtr/smallweb-blog/blob/main/.github/workflows/deploy.yml#L24">how this blog is built</a> for an example).</p>
+<p>Once an app is installed, you can use the <code>git</code> cli to manage them. For example, you can run <code>git pull</code> to update the app to the latest version, or <code>git checkout &lt;hash&gt;</code> to rollback to a previous version. Take a look to the <a href="https://github.com/pomdtr/smallweb-puller">pomdtr/smallweb-puller repository</a> for a simple way to trigger an app update from the ouside.</p>
+<p>If you create a smallweb app, make sure to add the <code>smallweb-app</code> topic to your repository.</p>
+<h2 id="smallweb-init-now-support-custom-templates" tabindex="-1"><a href="#smallweb-init-now-support-custom-templates" class="header-anchor"><code>smallweb init</code> now support custom templates</a></h2>
+<p>The <code>smallweb init</code> was reworked to allow users to define custom templates from github. Smallweb templates are just github repositories with a <code>smallweb-template</code> topic.</p>
+<p>The new command usage is:</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts">smallweb init <span class="token punctuation">[</span>dir<span class="token punctuation">]</span> <span class="token punctuation">[</span><span class="token operator">--</span>template <span class="token operator">&lt;</span>repo<span class="token operator">&gt;</span><span class="token punctuation">]</span>
+</code></pre>
+<p>When you run <code>smallweb init example --template pomdtr/smallweb-template-astro</code>, smallweb will download the content of the <code>pomdtr/smallweb-template-astro</code> repository in the <code>example</code> folder (without creating a <code>.git</code> folder).</p>
+<h2 id="crons-jobs-are-now-defined-as-http-requests" tabindex="-1"><a href="#crons-jobs-are-now-defined-as-http-requests" class="header-anchor">Crons jobs are now defined as HTTP requests</a></h2>
+<p>Crons uses to be defined as shell commands:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"crons"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"schedule"</span><span class="token operator">:</span> <span class="token string">"0 0 * * *"</span><span class="token punctuation">,</span>
+            <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"deno"</span><span class="token punctuation">,</span>
+            <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"run"</span><span class="token punctuation">,</span> <span class="token string">"--allow-net"</span><span class="token punctuation">,</span> <span class="token string">"https://example.com/cron.ts"</span><span class="token punctuation">]</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>This had a few limitations:</p>
+<ul>
+<li>crons did not respect the permissions of the app</li>
+<li>getting access to the same Deno KV instance was tricky in some cases</li>
+</ul>
+<p>For these reasons (and in preparation for the upcoming hosted version of smallweb), crons are now defined as HTTP requests:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token comment">// smallweb.json</span>
+<span class="token punctuation">{</span>
+    <span class="token property">"crons"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token punctuation">{</span>
+            <span class="token property">"schedule"</span><span class="token operator">:</span> <span class="token string">"0 0 * * *"</span><span class="token punctuation">,</span>
+            <span class="token property">"path"</span><span class="token operator">:</span> <span class="token string">"/refresh"</span><span class="token punctuation">,</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>This is the exact same API as <a href="https://vercel.com/guides/how-to-setup-cron-jobs-on-vercel">Vercel's cron</a>, so you can refer to their documentation for some examples of how to use it.</p>
+<p>This also remove the need for the <code>smallweb cron trigger</code> command (as you can just go to <code>https://&lt;app&gt;/refresh</code> to trigger the cron).</p>
+<p><code>smallweb cron list</code> was moved to <code>smallweb crons</code>.</p>
+<h2 id="smallweb-open-has-new-flags" tabindex="-1"><a href="#smallweb-open-has-new-flags" class="header-anchor"><code>smallweb open</code> has new flags</a></h2>
+<p>Smallweb open now supports opening both using the app name or dir:</p>
+<pre class="language-sh" tabindex="0"><code class="language-sh"><span class="token comment"># open the react.localhost app</span>
+smallweb <span class="token function">open</span> <span class="token parameter variable">--app</span> react.localhost
+<span class="token comment"># open the located at ~/localhost/react</span>
+smallweb <span class="token function">open</span> <span class="token parameter variable">--dir</span> ~/localhost/react
+<span class="token comment"># open the current directory</span>
+smallweb <span class="token function">open</span>
+</code></pre>
+<h2 id="deno-kv-is-now-scoped-to-the-hostname" tabindex="-1"><a href="#deno-kv-is-now-scoped-to-the-hostname" class="header-anchor">Deno KV is now scoped to the hostname</a></h2>
+<p>If you map multiple domains to the same dir:</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+    <span class="token property">"*-kv.smallweb.run"</span><span class="token operator">:</span> <span class="token string">"~/kv"</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<p>And uses the default KV instance:</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token comment">// ~/kv/main.ts</span>
+
+<span class="token keyword">const</span> kv <span class="token operator">=</span> <span class="token keyword">await</span> Deno<span class="token punctuation">.</span><span class="token function">openKv</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+</code></pre>
+<p><code>example-kv.smallweb.run</code> and <code>another-kv.smallweb.run</code> will not share the same KV instance. This behavior will allow some cool new usecases (ex: preview deployments with distinct KV instances).</p>
+<p>If you want to share a db between multiple hostnames, you can always specify a kv path in your code:</p>
+<pre class="language-ts" tabindex="0"><code class="language-ts"><span class="token keyword">const</span> kv <span class="token operator">=</span> <span class="token keyword">await</span> Deno<span class="token punctuation">.</span><span class="token function">openKv</span><span class="token punctuation">(</span><span class="token punctuation">{</span> path<span class="token operator">:</span> <span class="token string">"./kv.db"</span> <span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<h2 id="what's-next%3F" tabindex="-1"><a href="#what's-next%3F" class="header-anchor">What's next?</a></h2>
+<p>I really feel smallweb is in a good state right now, and I want to grow its community. I just bought a new mic and plan to record some videos to showcase smallweb features on YouTube and Twitter.</p>
+<p>Improved logs are still a priority. I want to move logs to their own file instead of using stderr/stdout, and allow you to filter them by app/time by storing them as JSON lines.</p>
+<p>Now that we have an efficient way to distribute and install apps, I want to port more apps to smallweb. I hope you'll help me with this one!</p>
+<p>And finally, I plan to resume the work on smallweb sister project, smallbrowser.</p>
+
+  </div>
+
+  
+
+<nav class="page-pagination pagination">
+  <ul>
+    <li class="pagination-prev">
+      <a href="/posts/why-smallweb/" rel="prev">
+        <span>← Older post</span>
+        <strong>Why smallweb?</strong>
+      </a>
+    </li>
+    
+    <li class="pagination-next">
+      <a href="/posts/v0.13/" rel="next">
+        <span>Newer post →</span>
+        <strong>Smallweb 0.13 - Private Apps, Terminal, WebDAV, and CLI entrypoints</strong>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+    </article></main>
+
+    <!-- Current page: /posts/v0.12/ -->
+  
+
+</body></html>

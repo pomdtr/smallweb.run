@@ -1,0 +1,70 @@
+<!doctype html>
+
+<html lang="{{ it.lang }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ it.title || metas.title }} - {{ metas.site }}</title>
+
+    <meta name="supported-color-schemes" content="light dark">
+    <meta name="theme-color" content="hsl(220, 20%, 100%)" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="hsl(220, 20%, 10%)" media="(prefers-color-scheme: dark)">
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="alternate" href="/feed.xml" type="application/atom+xml" title="{{ metas.site }}">
+    <link rel="alternate" href="/feed.json" type="application/json" title="{{ metas.site }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="canonical" href="{{ url |> url(true) }}">
+    {{ it.extra_head?.join("\n") }}
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="navbar-home">
+        {{ if it.logo }}
+          {{ it.logo }}
+        {{ else }}
+          <strong>{{ metas.site }}</strong>
+        {{ /if }}
+      </a>
+
+      <ul class="navbar-links">
+      {{- for entry of search.pages("menu.visible=true", "menu.order") }}
+        <li>
+          <a href="{{ entry.url }}"{{ if entry.url == url }} aria-current="page"{{ /if }}>
+            {{ entry.menu.title || entry.title }}
+          </a>
+        </li>
+      {{ /for }}
+      {{- for link of it.menu_links }}
+        <li>
+          <a href="{{ link.href }}">
+            {{ link.text }}
+          </a>
+        </li>
+      {{ /for }}
+      <li>
+        <script>
+          let theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+          document.documentElement.dataset.theme = theme;
+          function changeTheme() {
+            theme = theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", theme);
+            document.documentElement.dataset.theme = theme;
+          }
+        </script>
+        <button class="button" onclick="changeTheme()">
+          <span class="icon">◐</span>
+        </button>
+      </li>
+      </ul>
+    </nav>
+
+    <main class="{{ it.bodyClass }}">
+      {{ content }}
+    </main>
+
+    <!-- Current page: {{ url }} -->
+  </body>
+</html>

@@ -1,0 +1,10 @@
+---
+layout: layouts/base.vto
+bodyClass: body-tag
+---
+<header class="page-header">
+  <p><a href="/archive/">{{ i18n.nav.back }}</a></p>
+  <h1 class="page-title">{{ title }}</h1>
+</header>
+
+{{ include "templates/post-list.vto" { postslist: search.pages(search_query) } }}

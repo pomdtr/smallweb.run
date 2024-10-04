@@ -1,0 +1,80 @@
+{
+    "type": "object",
+    "properties": {
+        "private": {
+            "type": "boolean",
+            "description": "Whether the application is private"
+        },
+        "entrypoint": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/entrypoint"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "fetch": {
+                            "$ref": "#/definitions/entrypoint"
+                        },
+                        "run": {
+                            "$ref": "#/definitions/entrypoint"
+                        }
+                    }
+                }
+            ]
+        },
+        "root": {
+            "description": "Root directory for the application",
+            "type": "string"
+        },
+        "crons": {
+            "type": "array",
+            "description": "Set of cron jobs",
+            "items": {
+                "type": "object",
+                "required": [
+                    "name",
+                    "schedule",
+                    "args"
+                ],
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "description": "Name of the cron job",
+                        "pattern": "^[a-z][a-z0-9_-]+$"
+                    },
+                    "description": {
+                        "type": "string",
+                        "description": "Description of the cron job"
+                    },
+                    "schedule": {
+                        "type": "string",
+                        "description": "Cron schedule"
+                    },
+                    "args": {
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "description": "Command Args"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "entrypoint": {
+            "oneOf": [
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                {
+                    "type": "string"
+                }
+            ]
+        }
+    }
+}

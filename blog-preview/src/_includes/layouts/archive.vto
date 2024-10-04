@@ -1,0 +1,55 @@
+---
+layout: layouts/base.vto
+bodyClass: body-tag
+---
+<header class="page-header">
+  <h1 class="page-title">{{ title }}</h1>
+
+  <p>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="3" cy="13" r="2" fill="currentColor"/><path d="M14 13C14 6.925 9.075 2 3 2M9 13a6 6 0 0 0-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> RSS:
+    <a href="/feed.xml">Atom</a>, <a href="/feed.json">JSON</a>
+  </p>
+
+  {{ if pagination.page === 1 }}
+  <div class="search" id="search"></div>
+  {{ /if }}
+</header>
+
+{{ if pagination.page === 1 }}
+{{ set pageTags = search.pages("type=tag", "tag") }}
+{{ if pageTags.length }}
+<nav class="page-navigation">
+  <h2>{{ i18n.search.tags }}:</h2>
+  
+  <ul class="page-navigation-tags">
+  {{ for page of pageTags }}
+    <li><a href="{{ page.url }}" class="badge">{{ page.tag }}</a></li>
+  {{ /for }}
+  </ul>
+</nav>
+{{ /if }}
+{{ /if }}
+
+{{ include "templates/post-list.vto" { postslist: results } }}
+
+{{ if pagination.totalPages !== 1 }}
+<nav class="page-pagination pagination">
+  <ul>
+    {{- if pagination.previous }}
+    <li class="pagination-prev">
+      <a href="{{ pagination.previous }}" rel="prev">{{ i18n.nav.previous }}</a>
+    </li>
+    {{ /if }}
+
+    <li class="pagination-page">
+      {{ i18n.nav.page }} {{ pagination.page }}
+    </li>
+
+    {{- if pagination.next }}
+    <li class="pagination-next">
+      <a href="{{ pagination.next }}" rel="next">{{ i18n.nav.next }}</a>
+    </li>
+    {{ /if }}
+  </ul>
+</nav>
+{{ /if }}

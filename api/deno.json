@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "@hono/swagger-ui": "npm:@hono/swagger-ui@^0.4.0",
+    "@hono/zod-openapi": "npm:@hono/zod-openapi@^0.15.1",
+    "@std/semver": "jsr:@std/semver@^0.224.3",
+    "hono": "npm:hono@^4.5.1",
+    "zod": "npm:zod@^3.23.8"
+  }
+}

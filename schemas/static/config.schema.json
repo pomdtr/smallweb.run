@@ -1,0 +1,46 @@
+{
+    "type": "object",
+    "properties": {
+        "port": {
+            "description": "Port number to listen on",
+            "type": "integer"
+        },
+        "host": {
+            "description": "Host to listen on",
+            "type": "string"
+        },
+        "email": {
+            "description": "User Email Address",
+            "type": "string"
+        },
+        "editor": {
+            "description": "Default smallweb editor",
+            "type": "string"
+        },
+        "shell": {
+            "description": "Default smallweb shell",
+            "type": "string"
+        },
+        "dir": {
+            "description": "Directory to serve apps from"
+        },
+        "custom-domains": {
+            "type": "object",
+            "description": "Custom domains for applications",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "domain": {
+            "description": "Domain Name",
+            "type": "string"
+        },
+        "env": {
+            "type": "object",
+            "description": "Environment variables set for all applications",
+            "additionalProperties": {
+                "type": "string"
+            }
+        }
+    }
+}

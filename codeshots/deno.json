@@ -1,0 +1,15 @@
+{
+    "name": "@pomdtr/codeshots",
+    "version": "0.0.3",
+    "lock": false,
+    "exports": {
+        ".": "./mod.ts"
+    },
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "mod.ts",
+            "README.md"
+        ]
+    }
+}

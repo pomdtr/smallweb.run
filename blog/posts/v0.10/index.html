@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smallweb 0.10 - Cron jobs are here! - Smallweb Blog</title>
+
+    <meta name="supported-color-schemes" content="light dark">
+    <meta name="theme-color" content="hsl(220, 20%, 100%)" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="hsl(220, 20%, 10%)" media="(prefers-color-scheme: dark)">
+
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="alternate" href="/feed.xml" type="application/atom+xml" title="Smallweb Blog">
+    <link rel="alternate" href="/feed.json" type="application/json" title="Smallweb Blog">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+    <link rel="canonical" href="http://localhost/posts/v0.10/">
+    
+  <meta property="og:type" content="website">
+<meta property="og:site_name" content="Smallweb Blog">
+<meta property="og:locale" content="en">
+<meta property="og:title" content="Smallweb 0.10 - Cron jobs are here!">
+<meta property="og:description" content="The latest new from Smallweb">
+<meta property="og:url" content="http://localhost/posts/v0.10/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@pomdtrr">
+<meta name="description" content="The latest new from Smallweb">
+</head>
+  <body>
+    <nav class="navbar">
+      <a href="/" class="navbar-home">
+        
+          <strong>Smallweb Blog</strong>
+        
+      </a>
+
+      <ul class="navbar-links">
+        <li>
+          <a href="/archive/">
+            Archive
+          </a>
+        </li>
+      
+        <li>
+          <a href="/contact/">
+            Contact
+          </a>
+        </li>
+      
+      <li>
+        <script>
+          let theme = localStorage.getItem("theme") || (window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light");
+          document.documentElement.dataset.theme = theme;
+          function changeTheme() {
+            theme = theme === "dark" ? "light" : "dark";
+            localStorage.setItem("theme", theme);
+            document.documentElement.dataset.theme = theme;
+          }
+        </script>
+        <button class="button" onclick="changeTheme()">
+          <span class="icon">◐</span>
+        </button>
+      </li>
+      </ul>
+    </nav>
+
+    <main class="body-post">
+      <article class="post" data-pagefind-body="" data-title="Smallweb 0.10 - Cron jobs are here!" data-pagefind-index-attrs="data-title">
+  <header class="post-header">
+    <h1 class="post-title">Smallweb 0.10 - Cron jobs are here!</h1>
+
+    <div class="post-details">
+  
+    
+    
+      <p>by Achille Lacoin</p>
+    
+  
+
+  <p>
+    <time datetime="2024-07-13 00:00:00">
+      July 13th, 2024
+    </time>
+  </p>
+
+  <p>1 min read</p>
+
+  <div class="post-tags">
+    
+      
+
+      
+        <a data-pagefind-filter="filter" class="badge" href="/archive/release/">release</a>
+      
+    
+  </div>
+</div>
+
+  </header>
+
+  
+  <nav class="toc">
+    <h2>Table of contents</h2>
+    <ol>
+      
+      <li>
+        <a href="#smallweb-now-supports-cron-jobs">Smallweb now supports cron jobs</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#smallweb-create-is-now-interactive">smallweb create is now interactive</a>
+
+        
+      </li>
+      
+      <li>
+        <a href="#what's-next%3F">What's next?</a>
+
+        
+      </li>
+      
+    </ol>
+  </nav>
+  
+
+  <div class="post-body body">
+    <h2 id="smallweb-now-supports-cron-jobs" tabindex="-1"><a href="#smallweb-now-supports-cron-jobs" class="header-anchor">Smallweb now supports cron jobs</a></h2>
+<p>Cron jobs were one of the key features missing from smallweb.
+You can now defines them from the <code>smallweb.json[c]</code> file.</p>
+<pre class="language-json" tabindex="0"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"crons"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"my-cron-job"</span><span class="token punctuation">,</span>
+      <span class="token property">"schedule"</span><span class="token operator">:</span> <span class="token string">"0 0 * * *"</span><span class="token punctuation">,</span>
+      <span class="token property">"command"</span><span class="token operator">:</span> <span class="token string">"echo"</span><span class="token punctuation">,</span>
+      <span class="token property">"args"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"hello world!"</span><span class="token punctuation">]</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<!-- more -->
+<p>Cron jobs are defined by a name, a schedule, a command, and optional arguments.</p>
+<p>The minimum schedule is <code>* * * * *</code> which means every minute. <a href="https://crontab.guru/">crontab.guru</a> is a great tool to help you define your schedule.</p>
+<p>Additionally, two new commands were added to manage cron jobs:</p>
+<ul>
+<li><code>smallweb cron list</code> to list all cron jobs</li>
+<li><code>smallweb cron trigger</code> to trigger a cron job manually</li>
+</ul>
+<p>Make sure to setup the completions for your shell to get the full experience.</p>
+<p>More information can be found in the <a href="https://docs.smallweb.run/guides/cron.html">documentation</a>.</p>
+<h2 id="smallweb-create-is-now-interactive" tabindex="-1"><a href="#smallweb-create-is-now-interactive" class="header-anchor"><code>smallweb create</code> is now interactive</a></h2>
+<p>You can now just run <code>smallweb create</code> to initialize a new project.</p>
+<p>It will ask you a few questions and generate a new project for you.
+You can skip the questions by passing the <code>--name</code> and <code>--template</code> flags.</p>
+<h2 id="what's-next%3F" tabindex="-1"><a href="#what's-next%3F" class="header-anchor">What's next?</a></h2>
+<p>I want to focus on improving the logs experience in the next release.</p>
+<p>Currently, all logs are grouped together, and there is no way to filter between:</p>
+<ul>
+<li>system logs (ex: http requests)</li>
+<li>application logs (ex: stdout/stderr)</li>
+</ul>
+<p>The user should also be able to filter logs by domain, or application.</p>
+<p>In order to achieve this, I'm thinking of emitting logs as json to stdout, and converting them to human readable format in the cli.</p>
+<p>I also plan to work on:</p>
+<ul>
+<li>a landing page for smallweb</li>
+<li>a demo video showcasing the features</li>
+</ul>
+
+  </div>
+
+  
+
+<nav class="page-pagination pagination">
+  <ul>
+    <li class="pagination-prev">
+      <a href="/posts/v0.9/" rel="prev">
+        <span>← Older post</span>
+        <strong>Smallweb 0.9 - Improved Routing</strong>
+      </a>
+    </li>
+    
+    <li class="pagination-next">
+      <a href="/posts/v0.11/" rel="next">
+        <span>Newer post →</span>
+        <strong>Smallweb 0.11 - Global config and new routing</strong>
+      </a>
+    </li>
+    
+  </ul>
+</nav>
+
+    </article></main>
+
+    <!-- Current page: /posts/v0.10/ -->
+  
+
+</body></html>
