@@ -4,11 +4,12 @@ import type { Update } from "npm:@grammyjs/types";
 import * as path from "jsr:@std/path@1.0.6"
 import { Command } from "jsr:@cliffy/command@1.0.0-rc.7"
 
-export type TelegramParams = {
+export type TelegramOptions = {
     botToken: string;
     secretToken?: string;
     smallwebApiToken: string;
-    chatId: number;
+    handler?: (update: Update) => void | Promise<void>;
+    chatId: string;
     smallwebApiUrl: string;
 }
 
@@ -17,25 +18,42 @@ export type App = {
     run(args: string[]): void | Promise<void>;
 }
 
-export function telegram(params: TelegramParams): App {
-    const telegramApiUrl = `https://api.telegram.org/bot${params.botToken}`;
-    if (!params.botToken) {
+export function telegram(options?: TelegramOptions): App {
+    const defaults: Partial<TelegramOptions> = {
+        botToken: Deno.env.get("TELEGRAM_BOT_TOKEN"),
+        secretToken: Deno.env.get("TELEGRAM_BOT_SECRET"),
+        chatId: Deno.env.get("TELEGRAM_CHAT_ID"),
+        smallwebApiToken: Deno.env.get("SMALLWEB_API_TOKEN"),
+        smallwebApiUrl: Deno.env.get("SMALLWEB_API_URL"),
+    }
+
+    const {
+        botToken,
+        secretToken,
+        chatId,
+        smallwebApiToken,
+        smallwebApiUrl,
+    } = { ...defaults, ...options };
+
+    if (!botToken) {
         throw new Error("telegram bot token is required");
     }
 
-    if (!params.smallwebApiToken) {
+    if (!smallwebApiToken) {
         throw new Error("smallweb api token is required");
     }
 
-    if (!params.smallwebApiUrl) {
+    if (!smallwebApiUrl) {
         throw new Error("smallweb api url is required");
     }
 
-    if (!params.chatId) {
+    if (!chatId) {
         throw new Error("chat id is required");
     }
 
+    const telegramApiUrl = `https://api.telegram.org/bot${botToken}`;
     const fetch = async (req: Request) => {
+
         if (req.method === "GET") {
             const url = new URL(req.url);
             if (url.pathname === "/favicon.ico") {
@@ -51,14 +69,11 @@ export function telegram(params: TelegramParams): App {
         }
 
         const secret = req.headers.get("X-Telegram-Bot-Api-Secret-Token");
-        if (secret !== params.secretToken) {
+        if (secret !== secretToken) {
             return new Response("Unauthorized", { status: 401 });
         }
 
         const update: Update = await req.json();
-        if (update.message?.chat.id !== params.chatId) {
-            return new Response("Unauthorized", { status: 401 });
-        }
 
         const text = update.message?.text;
         if (!text) {
@@ -66,9 +81,14 @@ export function telegram(params: TelegramParams): App {
             return new Response("OK");
         }
 
-        if (!update.message?.chat) {
-            console.error("No chat in message");
+        if (!update.message?.chat.id) {
+            console.error("No chat id in message");
             return new Response("OK");
+        }
+
+
+        if (update.message.chat.id != parseInt(chatId)) {
+            return new Response("Unauthorized", { status: 401 });
         }
 
         const token = Deno.env.get("SMALLWEB_API_TOKEN");
@@ -76,28 +96,30 @@ export function telegram(params: TelegramParams): App {
             throw new Error("SMALLWEB_API_TOKEN is required");
         }
 
-        if (!text.startsWith("/")) {
-            sendMessage({
+        const resp = await runCommand(text, token);
+        if (!resp.ok) {
+            await sendMessage({
                 apiURL: telegramApiUrl,
-                text: "Commands must start with /",
-                chatId: update.message.chat.id,
+                text: "Error running command: " + await resp.text(),
+                chatId: parseInt(chatId)
             });
-            return new Response("ok");
+            return new Response("OK");
         }
 
-        const output = await runCommand(text.slice(1), token);
+        const output = await resp.text();
         if (output.length > 4096) {
             await sendMessage({
                 apiURL: telegramApiUrl,
                 text: "Output is too long, go to your terminal to see the output",
-                chatId: update.message.chat.id,
+                chatId: parseInt(chatId)
             });
-            return new Response();
+            return new Response("OK");
         }
+
         await sendMessage({
             apiURL: telegramApiUrl,
             text: `<pre>${html.escape(output)}</pre>`,
-            chatId: update.message.chat.id,
+            chatId: parseInt(chatId),
             parseMode: "HTML",
         });
         return new Response("OK");
@@ -108,16 +130,24 @@ export function telegram(params: TelegramParams): App {
         const commmand = new Command().name(name).action(() => {
             commmand.showHelp();
         }).command("set-webhook").action(async () => {
-            await setWebhook(telegramApiUrl, params.secretToken);
-        }).command("message").arguments("<text:string>").description("Send a message to the bot").action(
+            await setWebhook(telegramApiUrl, secretToken);
+        }).command("send").arguments("<text:string>").description("Send a message to the bot").action(
             async (_, text) => {
                 await sendMessage({
                     apiURL: telegramApiUrl,
-                    chatId: parseInt(Deno.env.get("TELEGRAM_CHAT_ID")!),
+                    chatId: parseInt(chatId),
                     text,
                 })
             }
-        )
+        ).command("set-my-commands").description("Register commands with the bot").action(async () => {
+            const resp = await registerCommands(telegramApiUrl);
+            if (!resp.ok) {
+                console.error("Error registering commands", await resp.text());
+                Deno.exit(1);
+            }
+
+            console.log("Commands registered!");
+        })
         await commmand.parse(args);
     }
 
@@ -133,7 +163,7 @@ async function sendMessage(params: {
     chatId: number;
     parseMode?: string;
 }) {
-    const resp = await fetch(`${params.apiURL}/sendMessage`, {
+    return await fetch(`${params.apiURL}/sendMessage`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -144,19 +174,12 @@ async function sendMessage(params: {
             text: params.text,
         }),
     });
-
-    if (!resp.ok) {
-        console.error(await resp.text());
-    }
 }
 
 async function runCommand(command: string, token: string) {
     const [name, ...args] = shlex.split(command);
-    if (!name) {
-        return "No command provided";
-    }
-    const resp = await fetch(
-        `${Deno.env.get("SMALLWEB_API_URL")}/run/${name}`,
+    return await fetch(
+        `${Deno.env.get("SMALLWEB_API_URL")}/v0/run/${name}`,
         {
             method: "POST",
             headers: {
@@ -166,12 +189,6 @@ async function runCommand(command: string, token: string) {
             body: JSON.stringify({ args }),
         },
     );
-
-    if (!resp.ok) {
-        return `Error: ${resp.status} ${await resp.text()}`;
-    }
-
-    return resp.text();
 }
 
 async function setWebhook(apiURL: string, secretToken?: string) {
@@ -183,6 +200,22 @@ async function setWebhook(apiURL: string, secretToken?: string) {
         body: JSON.stringify({
             url: globalThis.location.href,
             secretToken,
+        }),
+    });
+}
+
+async function registerCommands(apiURL: string) {
+    return await fetch(`${apiURL}/setMyCommands`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            commands: [
+                { command: "help", description: "Get help" },
+                { command: "run", description: "Run a command" },
+                { command: "list", description: "List apps" },
+            ],
         }),
     });
 }

@@ -2,21 +2,32 @@
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-## `smallweb up --tunnel` flag
+## Integrated tunneling service
 
 I want to allow users to try out the full smallweb experience without having to buy a domain, and setup dns records.
 
-A new user would just run:
+There will be a new `tunnel` field in the config:
 
-- `smallweb up --tunnel` to get a random tunnel name
-- `smallweb up --tunnel=<tunnel>` to choose a tunnel name
+```json
+{
+  "domain": "nico.smallweb.live",
+  "tunnel": true
+}
+```
 
-Then, his apps would be instantly available at `https://<app>-<tunnel>.smallweb.live`.
+If the `tunnel` field is set to true, smallweb will consider that the domain is the address of a reverse proxy, and will try to establish a tunnel with it using:
 
-I found multiple projects that would allow me to setup something like this:
+```
+CONNECT nico.smallweb.live
+```
 
-- https://github.com/openziti/zrok?tab=readme-ov-file#the-zrok-sdk
-- https://github.com/koding/tunnel
+From now on, the reverse proxy will forward every requests from `*.nico.smallweb.live` and `nico.smallweb.live` to the tunnel.
+
+You'll be able to host your own proxy using the `smallweb proxy` command.
+
+The [piko project](https://github.com/andydunstall/piko) has a similar architecture that I might be able to copy (except do not want to map a single endpoint, but also wildcards).
+
+![architecture diagram](https://github.com/andydunstall/piko/raw/main/assets/images/overview.png)
 
 ## `@smallweb/storage` package
 
@@ -33,11 +44,13 @@ In order to achieve this, the management command from the cli should always inte
 
 The only exception will be the `smallweb run`, that should probably use ssh.
 
-## Telegram Bot
+## Integrations
 
-## Raycast Extension
+### Telegram Bot
 
-## VS Code Extension
+### Raycast Extension
+
+### VS Code Extension
 
 ## Analytics
 
