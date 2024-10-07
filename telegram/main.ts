@@ -1,3 +1,3 @@
-import { telegram } from "jsr:@smallweb/telegram"
+import { telegram } from "./mod.ts"
 
 export default telegram()

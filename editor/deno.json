@@ -5,6 +5,7 @@
   "exports": {
     ".": "./mod.ts"
   },
+  "lock": false,
   "publish": {
     "include": [
       "mod.ts",

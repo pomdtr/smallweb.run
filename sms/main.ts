@@ -33,5 +33,18 @@ export default {
         const res = await client.send.text(payload)
 
         return Response.json(res)
+    },
+
+    run: async (args: string[]) => {
+        if (!args) {
+            throw new Error("text is required")
+        }
+
+        const res = await client.send.text({
+            to: phone,
+            message: args.join(" ")
+        })
+
+        console.log(res)
     }
 }

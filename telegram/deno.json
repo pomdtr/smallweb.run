@@ -1,7 +1,14 @@
 {
     "name": "@smallweb/telegram",
     "version": "0.0.1",
+    "lock": false,
     "exports": {
         ".": "./mod.ts"
+    },
+    "publish": {
+        "include": [
+            "mod.ts",
+            "README.md"
+        ]
     }
 }

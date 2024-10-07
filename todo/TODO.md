@@ -15,11 +15,13 @@ There will be a new `tunnel` field in the config:
 }
 ```
 
-If the `tunnel` field is set to true, smallweb will consider that the domain is the address of a reverse proxy, and will try to establish a tunnel with it using:
+If the `tunnel` field is set to true, smallweb will consider that the domain is the address of a reverse proxy, and will try to establish a tunnel with it using ssh:
 
 ```
-CONNECT nico.smallweb.live
+ssh pomdtr@smallweb.live -p 2222
 ```
+
+From now on, the public key of the user will be associated with the ssh namespace.
 
 From now on, the reverse proxy will forward every requests from `*.nico.smallweb.live` and `nico.smallweb.live` to the tunnel.
 
