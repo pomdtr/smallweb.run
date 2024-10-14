@@ -1,6 +1,7 @@
 {
     "private": true,
     "publicRoutes": [
-        "/todo/TODO.md"
+        "/todo/TODO.md",
+        "/readme/README.md"
     ]
 }

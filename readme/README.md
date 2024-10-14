@@ -1,11 +1,26 @@
-# Smallweb Codejar
+# Smallweb Readme
+
+Publish the readme from any smallweb app.
 
 ```ts
-// ~/smallweb/editor/main.ts
-import { codejar } from "./mod.ts";
+// ~/smallweb/readme/main.ts
 
-export default codejar({
+export default readme({
     apiUrl: Deno.env.get("SMALLWEB_API_URL"),
     apiToken: Deno.env.get("SMALLWEB_API_TOKEN"),
 });
 ```
+
+Use the publicRoutes parameter to whitelist files you want to be accessible.
+
+```json
+{
+    "private": true,
+    "publicRoutes": [
+        "/todo/TODO.md",
+        "/readme/README.md"
+    ]
+}
+```
+
+You can preview this file from <https://readme.smallweb.run/readme/README.md>.
