@@ -1,6 +1,6 @@
 # Smallweb Readme
 
-Publish the readme from any smallweb app.
+Publish the README from any smallweb app.
 
 ```ts
 // ~/smallweb/readme/main.ts
