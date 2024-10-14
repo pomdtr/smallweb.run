@@ -6,30 +6,25 @@ This website list what's next for [smallweb](https://smallweb.run).
 
 I want to allow users to try out the full smallweb experience without having to buy a domain, and setup dns records.
 
-There will be a new `tunnel` field in the config:
+There will be a new `proxy` field in the config:
 
 ```json
 {
-  "domain": "nico.smallweb.live",
-  "tunnel": true
+  "domain": "nico.com",
+  "proxy": "smallweb.live"
 }
 ```
 
-If the `tunnel` field is set to true, smallweb will consider that the domain is the address of a reverse proxy, and will try to establish a tunnel with it using ssh:
+As soon as the user run `smallweb up`, a connexion will be established between your local smallweb instance and the proxy.
 
+The first time the command run, smallweb will generate an ssh key, which will be associated to your domain.
+
+```sh
+# forward request originating from nico.com and *.nico.com to localhost:777
+ssh -R nico.com:443:localhost:7777 smallweb.live
 ```
-ssh pomdtr@smallweb.live -p 2222
-```
 
-From now on, the public key of the user will be associated with the ssh namespace.
-
-From now on, the reverse proxy will forward every requests from `*.nico.smallweb.live` and `nico.smallweb.live` to the tunnel.
-
-You'll be able to host your own proxy using the `smallweb proxy` command.
-
-The [piko project](https://github.com/andydunstall/piko) has a similar architecture that I might be able to copy (except do not want to map a single endpoint, but also wildcards).
-
-![architecture diagram](https://github.com/andydunstall/piko/raw/main/assets/images/overview.png)
+From now on, the reverse proxy will forward every requests from `*.nico.smallweb.live` and `nico.smallweb.live` to your local instance of smallweb.
 
 ## `@smallweb/storage` package
 
@@ -50,13 +45,13 @@ The only exception will be the `smallweb run`, that should probably use ssh.
 
 ### Telegram Bot
 
+- Distributed as a smallweb app
+
 ### Raycast Extension
 
+https://github.com/pomdtr/smallweb-raycast
+
 ### VS Code Extension
-
-## Analytics
-
-ex: store no of views per day/week/month/year/all time
 
 ## Website Redesign
 
