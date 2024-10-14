@@ -125,7 +125,7 @@ It allows me to run `smallweb.run ls` from my terminal, as if the cli was instal
 
 Some of my apps are versionned using git, but these github repository are only present on my laptop, and are not synced to my VPS (see the --ignore_vcs flag in the mutagen command).
 
-On the vps side, I have a single `.git` folder at the root of my smallweb folder. I then use a hourly cron job to backup this folder to a private github repository (`https://github.com/pomdtr/smallweb.run`).
+On the vps side, I have a single `.git` folder at the root of my smallweb folder. I then use a hourly cron job to backup this folder to a private github repository (available at <https://github.com/pomdtr/smallweb.run>).
 
 ![smallweb.run backup](/img/smallweb-run-backup.png)
 

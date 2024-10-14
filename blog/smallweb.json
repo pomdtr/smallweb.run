@@ -1,5 +1,4 @@
 {
     "entrypoint": "smallweb:static",
-    "root": "_site",
-    "private": true
+    "root": "_site"
 }
