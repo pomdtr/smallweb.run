@@ -132,6 +132,7 @@ const homepage = /* html */ `<html lang="en">
       'css': 'css',
       'md': 'markdown',
       'json': 'json',
+      'jsonl': 'json',
       'jsx': 'jsx',
       'tsx': 'tsx',
       // Add more mappings as needed
