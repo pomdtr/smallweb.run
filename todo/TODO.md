@@ -2,29 +2,42 @@
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-## Integrated tunneling service
+## `smallweb tunnel` command
 
-I want to allow users to try out the full smallweb experience without having to buy a domain, and setup dns records.
+```console
+$ smallweb tunnel <app>
+Your app is now accessible at https://<app>-<tunnel-id>.smallweb.live
+```
 
-There will be a new `proxy` field in the config:
+Behind the scenes, it creates a ssh tunnel using:
+
+```sh
+ssh -R 80:localhost:<freeport> -p 2222 smallweb.live
+```
+
+You'll have the ability to use your own proxy server with the `smallweb proxy` command.
+
+You can set a custom one using:
 
 ```json
 {
-  "domain": "nico.com",
-  "proxy": "smallweb.live"
+    "proxy": "<proxy-address>"
 }
 ```
 
-As soon as the user run `smallweb up`, a connexion will be established between your local smallweb instance and the proxy.
+## `file-browser` package
 
-The first time the command run, smallweb will generate an ssh key, which will be associated to your domain.
+A new file browser app, with the ability to define custom handlers for each file type.
 
-```sh
-# forward request originating from nico.com and *.nico.com to localhost:777
-ssh -R nico.com:443:localhost:7777 smallweb.live
+```ts
+import { fileBrowser } from 'jsr:@smallweb/file-browser'
+
+export default fileBrowser({
+  handlers: [
+    { "url": "https://readme.smallweb.run", "extensions": [".md"] }
+  ]
+})
 ```
-
-From now on, the reverse proxy will forward every requests from `*.nico.smallweb.live` and `nico.smallweb.live` to your local instance of smallweb.
 
 ## `@smallweb/storage` package
 
