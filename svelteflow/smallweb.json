@@ -1,4 +1,0 @@
-{
-    "entrypoint": "smallweb:static",
-    "root": "dist"
-}
