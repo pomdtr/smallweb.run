@@ -1,6 +1,6 @@
 {
     "name": "@pomdtr/codeshots",
-    "version": "0.0.3",
+    "version": "0.1.2",
     "lock": false,
     "exports": {
         ".": "./mod.ts"
@@ -8,6 +8,7 @@
     "license": "MIT",
     "publish": {
         "include": [
+            "assets",
             "mod.ts",
             "README.md"
         ]

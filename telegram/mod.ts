@@ -1,41 +1,37 @@
-import shlex from "npm:shlex@2.1.2";
-import * as path from "jsr:@std/path@1.0.6"
-import { webhookCallback, Bot } from "npm:grammy"
 import { Command } from "jsr:@cliffy/command@1.0.0-rc.7"
+import { webhookCallback, Bot } from "npm:grammy"
 import * as html from "jsr:@std/html@1.0.0";
+import * as path from "jsr:@std/path@1.0.6"
+import shlex from "npm:shlex@2.1.2";
+import { decodeBase64 } from "jsr:@std/encoding@1.0.5"
+import type { App } from "jsr:@smallweb/types@0.1.0"
 
-export type TelegramParams = {
-    botToken: string;
-    secretToken: string;
-    smallwebApiToken: string;
-    chatId: string;
-    smallwebApiUrl: string;
+
+export type TelegramOptions = {
+    botToken?: string;
+    secretToken?: string;
+    smallwebApiToken?: string;
+    smallwebApiUrl?: string;
 }
 
-export type App = {
-    fetch(req: Request): Response | Promise<Response>;
-    run(args: string[]): void | Promise<void>;
-}
-
-export function telegram(options?: Partial<TelegramParams>): App {
-    const defaults: Partial<TelegramParams> = {
-        botToken: Deno.env.get("TELEGRAM_BOT_TOKEN"),
-        secretToken: Deno.env.get("TELEGRAM_BOT_SECRET"),
-        chatId: Deno.env.get("TELEGRAM_CHAT_ID"),
-        smallwebApiToken: Deno.env.get("SMALLWEB_API_TOKEN"),
-        smallwebApiUrl: Deno.env.get("SMALLWEB_API_URL"),
-    }
-
-    const { botToken, secretToken, chatId, smallwebApiToken, smallwebApiUrl } = { ...defaults, ...options }
+export function telegram(chatID: number, options?: TelegramOptions): App {
+    const botToken = options?.botToken || Deno.env.get("TELEGRAM_BOT_TOKEN")
     if (!botToken) {
         throw new Error("botToken is required")
     }
 
-    if (!chatId) {
-        throw new Error("chatId is required")
+    const secretToken = options?.secretToken || Deno.env.get("TELEGRAM_BOT_SECRET")
+    if (!secretToken) {
+        throw new Error("secretToken is required")
     }
 
-    if (!smallwebApiToken) {
+    const apiUrl = options?.smallwebApiUrl || Deno.env.get("SMALLWEB_API_URL")
+    if (!apiUrl) {
+        throw new Error("smallwebApiUrl is required")
+    }
+
+    const apiToken = options?.smallwebApiToken || Deno.env.get("SMALLWEB_API_TOKEN")
+    if (!apiToken) {
         throw new Error("smallwebApiToken is required")
     }
 
@@ -50,19 +46,19 @@ export function telegram(options?: Partial<TelegramParams>): App {
     })
 
     bot.command("run", async (ctx) => {
-        if (!ctx.message?.chat.id || ctx.message?.chat.id.toString() !== chatId) {
+        if (!ctx.message?.chat.id || ctx.message?.chat.id !== chatID) {
             await ctx.reply("You are not authorized to run commands")
             return
         }
 
         const [name, ...args] = shlex.split(ctx.match);
         const resp = await fetch(
-            `${smallwebApiUrl}/v0/run/${name}`,
+            `${apiUrl}/v0/run/${name}`,
             {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    authorization: `Bearer ${smallwebApiToken}`,
+                    authorization: `Bearer ${apiToken}`,
                 },
                 body: JSON.stringify({ args }),
             },
@@ -73,13 +69,15 @@ export function telegram(options?: Partial<TelegramParams>): App {
             return
         }
 
-        const output = await resp.text();
-        if (output.length > 4096) {
+        const { stdout, stderr, success } = await resp.json();
+        const text = new TextDecoder().decode(decodeBase64(success ? stdout : stderr));
+
+        if (text.length > 4096) {
             ctx.reply("Output is too long, go to your terminal to see the output");
             return
         }
 
-        await ctx.reply(`<pre>${html.escape(output)}</pre>`, {
+        await ctx.reply(`<pre>${html.escape(text)}</pre>`, {
             parse_mode: "HTML",
         });
     })
@@ -102,10 +100,12 @@ export function telegram(options?: Partial<TelegramParams>): App {
             const commmand = new Command().name(name).action(() => {
                 commmand.showHelp();
             }).command("set-webhook").action(async () => {
-                await bot.api.setWebhook(globalThis.location.href);
+                await bot.api.setWebhook(globalThis.location.href, {
+                    secret_token: secretToken,
+                });
             }).command("send").arguments("<text:string>").description("Send a message to the bot").action(
                 async (_, text) => {
-                    await bot.api.sendMessage(chatId, text);
+                    await bot.api.sendMessage(chatID, text);
                 }
             ).command("set-my-commands").description("Register commands with the bot").action(async () => {
                 await bot.api.setMyCommands([

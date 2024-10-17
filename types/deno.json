@@ -1,0 +1,13 @@
+{
+    "name": "@smallweb/types",
+    "version": "0.1.0",
+    "exports": {
+        ".": "./mod.ts"
+    },
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "mod.ts"
+        ]
+    }
+}

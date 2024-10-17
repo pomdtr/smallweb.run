@@ -1,22 +1,31 @@
-# Serve Snippets
+# Codeshots
 
-Usage: Store your snippets in a directory (ex: `shots`), then serve them using:
+Generate a screenshot of any file in your smallweb directory.
+
+## Installation
 
 ```ts
-import { codeshots } from "jsr:@pomdtr/codeshots@{version}";
+// main.ts
+import { codeshots } from "jsr:@pomdtr/codeshots"
 
-export default {
-    fetch: codeshots("./src")
+export default codeshots();
+```
+
+Rename `.env.sample` to `.env` and set the env vars.
+
+Then make sure that the app is private:
+
+```json
+// smallweb.json
+{
+    "private": true
 }
 ```
 
-## Example Structure
+## Example
 
-```txt
-.
-├── main.ts
-└── src
-    └── example.json
-```
+![Example](./assets/main_ts.png)
 
-Go to `http://localhost:8000/example.json` to get a screenshot of the the `src/example.json` file.
+## Usage
+
+- Go to `https://<codeshots-domain>/<app>/<filepath>` to generate a codeshot of any file in your smallweb directory.

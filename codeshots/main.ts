@@ -1,5 +1,3 @@
-import { codeshots } from "./mod.ts";
+import { codeshots } from "jsr:@pomdtr/codeshots"
 
-export default {
-    fetch: codeshots("./src")
-}
+export default codeshots();
