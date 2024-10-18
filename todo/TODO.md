@@ -12,7 +12,7 @@ Your app is now accessible at https://<app>-<tunnel-id>.smallweb.live
 Behind the scenes, it creates a ssh tunnel using:
 
 ```sh
-ssh -R 80:localhost:<freeport> -p 2222 smallweb.live
+ssh -R 80:localhost:<freeport> -p 2222 localhost.run
 ```
 
 You'll have the ability to use your own proxy server with the `smallweb proxy` command.
