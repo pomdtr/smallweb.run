@@ -1,0 +1,22 @@
+{
+    "name": "@smallweb/openapi",
+    "version": "0.14.10",
+    "exports": {
+        ".": "./mod.ts",
+        "./openapi.json": "./openapi.json"
+    },
+    "license": "MIT",
+    "fmt": {
+        "indentWidth": 2
+    },
+    "tasks": {
+        "build": "deno run -A ./build.ts"
+    },
+    "publish": {
+        "include": [
+            "README.md",
+            "mod.ts",
+            "openapi.json"
+        ]
+    }
+}

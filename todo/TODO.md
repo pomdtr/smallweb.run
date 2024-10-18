@@ -2,50 +2,9 @@
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-## `smallweb tunnel` command
+## Manipulate a remote smallweb instance from the cli
 
-```console
-$ smallweb tunnel <app>
-Your app is now accessible at https://<app>-<tunnel-id>.smallweb.live
-```
-
-Behind the scenes, it creates a ssh tunnel using:
-
-```sh
-ssh -R 80:localhost:<freeport> -p 2222 localhost.run
-```
-
-You'll have the ability to use your own proxy server with the `smallweb proxy` command.
-
-You can set a custom one using:
-
-```json
-{
-    "proxy": "<proxy-address>"
-}
-```
-
-## `file-browser` package
-
-A new file browser app, with the ability to define custom handlers for each file type.
-
-```ts
-import { fileBrowser } from 'jsr:@smallweb/file-browser'
-
-export default fileBrowser({
-  handlers: [
-    { "url": "https://readme.smallweb.run", "extensions": [".md"] }
-  ]
-})
-```
-
-## `@smallweb/storage` package
-
-Build a generic storage package inspired by [unstorage](https://unstorage.unjs.io/).
-
-## Allow the cli to manipulate a remote smallweb instance
-
-You should be able to interact with a remote smallweb instance as if it was a local one (with completions, ability to open an url in browser, ...)
+You should be able to interact with a remote smallweb instance as if it was a local one (with completions, unable to open an url in browser, ...)
 
 In order to achieve this, the management command from the cli should always interact with the REST API, either:
 
@@ -74,6 +33,8 @@ The website was built in a rush. I'm planning to use [starlight](https://starlig
 
 I need to show the world the capabilities of smallweb, and the way I'm using it. I'll start a youtube channel to do so.
 
+## SMTP Server
+
 ## Smallweb Cloud
 
 Smallweb cloud will allow you to register your own namespace on the `smallweb.run` domain.
@@ -96,6 +57,29 @@ You'll then be able to sync your smallweb folder with a local folder using [muta
 
 ```sh
 mutagen sync create --name smallweb <user>@smallweb.run:/home/<user>/smallweb ~/smallweb
+```
+
+## `smallweb tunnel` command (done)
+
+```console
+$ smallweb tunnel <app>
+Your app is now accessible at https://<app>-<tunnel-id>.smallweb.live
+```
+
+Behind the scenes, it creates a ssh tunnel using:
+
+```sh
+ssh -R 80:localhost:<freeport> -p 2222 localhost.run
+```
+
+You'll have the ability to use your own proxy server with the `smallweb proxy` command.
+
+You can set a custom one using:
+
+```json
+{
+    "proxy": "<proxy-address>"
+}
 ```
 
 ## Token Scope (done)
