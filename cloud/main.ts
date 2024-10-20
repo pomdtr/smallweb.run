@@ -38,7 +38,7 @@ const waitlist = /* html */ `
 </head>
 <body class="flex items-center justify-center min-h-screen bg-gray-900 text-gray-300 font-mono">
     <div class="container p-8 rounded shadow-md w-full max-w-md bg-gray-800 border border-gray-700">
-        <h1 class="text-2xl font-bold mb-4">Smallweb Cloud is coming</h1>
+        <h1 class="text-2xl font-bold mb-4"><a class="text-pink-300 hover:underline" href="https://readme.smallweb.run/todo/TODO.md#smallweb-cloud">Smallweb Cloud</a> is coming</h1>
         <p class="mb-4">Be among the first to try it out!</p>
         <form id="waitlist-form" class="space-y-5">
             <div>
