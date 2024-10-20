@@ -188,24 +188,22 @@
     "dir": "~/smallweb"
 }
 </code></pre>
-<p>Here, <code>api.example.com</code> will be mapped to <code>~/smallweb/api</code>, <code>blog.example.com</code> will be mapped to <code>~/smallweb/blog</code>, and so on.</p>
-<p>The apex domain (example.com) will be mapped to <code>~/smallweb/@</code>.</p>
-<p>If <code>~/smallweb/@</code> does not exist and <code>~/smallweb/www</code> does, every request to the apex domain (<code>example.com</code>) will be redirected to <code>www.example.com</code>. Inversely, if <code>~/smallweb/www</code> does not exist and <code>~/smallweb/@</code> does, every request to <code>www.example.com</code> will be redirected to the <code>example.com</code>.</p>
-<p>If you want to opt-out of this behavior, you can create a <code>~/smallweb/@</code> directory, which will be mapped to the root domain.</p>
-<h2 id="custom-domains"><a class="header" href="#custom-domains">Custom domains</a></h2>
-<p>In addition to your base domain, you can also map custom domains to apps from your global config.</p>
-<pre><code class="language-json">{
-    "domain": "example.com",
-    "dir": "~/smallweb",
-    "customDomains": {
-        "pomdtr.me": "my-app"
-    }
-}
-</code></pre>
-<p>In this example, <code>pomdtr.me</code> will be mapped to <code>~/smallweb/my-app</code>, meaning that the <code>my-app</code> app will be accessible both at:</p>
+<p>The routing system maps domains to directories as follows:</p>
 <ul>
-<li><code>https://my-app.example.com</code></li>
-<li><code>https://pomdtr.me</code></li>
+<li>
+<p>Direct subdomain mapping:</p>
+<ul>
+<li><code>api.example.com</code> → <code>~/smallweb/api</code></li>
+<li><code>blog.example.com</code> → <code>~/smallweb/blog</code></li>
+</ul>
+</li>
+<li>
+<p>Root domain behavior:</p>
+<ul>
+<li>Requests to <code>example.com</code> automatically redirect to <code>www.example.com</code> if the <code>www</code> directory exists</li>
+<li>If the <code>www</code> directory does not exist, a 404 error is returned</li>
+</ul>
+</li>
 </ul>
 
                     </main>
