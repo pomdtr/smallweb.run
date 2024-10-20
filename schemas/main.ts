@@ -11,7 +11,7 @@ app.get("/:schema", (c) => {
 app.get("/:version/:schema", async (c) => {
     const { version, schema } = c.req.param()
 
-    const req = new Request(version === "latest" ? `https://raw.githubusercontent.com/pomdtr/smallweb/refs/heads/main/api/schemas/${schema}` : `https://raw.githubusercontent.com/pomdtr/smallweb/refs/tags/v${version}/api/schemas/${schema}`)
+    const req = new Request(version === "latest" ? `https://raw.githubusercontent.com/pomdtr/smallweb/refs/heads/main/api/schemas/${schema}.schema.json` : `https://raw.githubusercontent.com/pomdtr/smallweb/refs/tags/v${version}/api/schemas/${schema}.schema.json`)
     const cached = await cache.match(req)
     if (cached) {
         return new Response(cached.body, {

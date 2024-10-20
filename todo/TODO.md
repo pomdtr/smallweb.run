@@ -1,6 +1,46 @@
 # Smallweb TODO
 
-This website list what's next for [smallweb](https://smallweb.run).
+This website list what's next for [smallweb](https://smallweb.run). 
+
+You can view the source at <https://github.smallweb.run/todo/main.ts>.
+
+## Smallweb Cloud
+
+Smallweb cloud will allow you to register your own namespace on the `smallweb.live` domain. It'll will use github for oauth and usernames.
+
+Your apps will be accessible at:
+
+- `https://<app>.<username>.smallweb.live` for the `fetch` handler
+- `ssh <user>@smallweb.live <app>` for the `run` handler (authenticated using the `https://github.com/<username>.keys` endpoint)
+
+Of course, you'll be able to register your own domain instead, changing the endpoint to:
+
+- `https://<app>.<domain>` for the `fetch` handler
+- the run endpoint will stay the same (or optionally `<user>@<domain>`)
+
+When you'll go to the apex domain (`https://smallweb.live`), you'll be greated by a VS Code instance, allowing you to edit your websites.
+
+## Ideas
+
+- ability to inject scripts in every app (ex: dot shortcut)
+- add cache dir for lazy builds
+
+## Additional file servers
+
+- [S3 Server](https://github.com/johannesboyne/gofakes3)
+- [SFTP Server](https://github.com/pkg/sftp)
+
+## Adaptor for [blot.im](https://blot.im) websites
+
+## Built-in lastlogin
+
+Maybe only supporting github at first ?
+
+## Built-in localhost.run
+
+## Add a cache dir for lazy builds
+
+## Automatic backups to github / git repository
 
 ## Manipulate a remote smallweb instance from the cli
 
@@ -23,6 +63,7 @@ The only exception will be the `smallweb run`, that should probably use ssh.
 
 https://github.com/pomdtr/smallweb-raycast
 
+
 ### VS Code Extension
 
 ## Website Redesign
@@ -31,33 +72,7 @@ The website was built in a rush. I'm planning to use [starlight](https://starlig
 
 ## Record youtube videos for smallweb
 
-I need to show the world the capabilities of smallweb, and the way I'm using it. I'll start a youtube channel to do so.
-
-## SMTP Server
-
-## Smallweb Cloud
-
-Smallweb cloud will allow you to register your own namespace on the `smallweb.run` domain.
-
-First, you'll need to go to `signup.smallweb.run`, and input your email address.
-
-You'll then be able to edit your smallweb config from the browser, and associate your public key with your account.
-
-Your apps will be accessible at:
-
-- `https://<app>.<user>.smallweb.run` for the `fetch` handler
-- `ssh <app>.<user>@smallweb.run [args]` for the `run` handler
-
-Of course, you'll be able to register your own domain instead, changing the endpoint to:
-
-- `https://<app>.<domain>` for the `fetch` handler
-- `ssh <app>@<domain> [args]` for the `run` handler
-
-You'll then be able to sync your smallweb folder with a local folder using [mutagen](https://mutagen.io/):
-
-```sh
-mutagen sync create --name smallweb <user>@smallweb.run:/home/<user>/smallweb ~/smallweb
-```
+I need to show the world the capabilities of smallweb, and the way I'm using it. I'll start a youtube channel to do so. 
 
 ## `smallweb tunnel` command (done)
 
@@ -113,7 +128,7 @@ The api should also be available to the smallweb CLI using a unix socket.
 
 ## Improved logs (done)
 
-Currently, logs are awful. In the future, they will be accessible as a stream at https://<api-domain>/v0/logs (allowing you to access them from any client).
+Currently, logs are awful. In the future, they will be accessible as a stream at` https://<api-domain>/v0/logs` (allowing you to access them from any client).
 
 You'll also be able to access them using the CLI:
 
