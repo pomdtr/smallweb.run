@@ -127,7 +127,7 @@ function App() {
                         Smallweb is open-source and GPL licensed.
                     </p>
                     <p>
-                        <a href="https://github.smallweb.run/www">View Source</a>
+                        <a href="https://github.smallweb.run">View Source</a>
                     </p>
                 </footer>
             </div>

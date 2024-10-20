@@ -6,11 +6,15 @@ export default {
         if (req.method === "POST") {
             const { email } = await req.json()
             const db = await JSONFilePreset("db.json", { emails: [] } as { emails: string[] })
+            if (db.data.emails.includes(email)) {
+                return new Response("You are already on the waitlist!")
+            }
+
             await db.update((data) => {
                 data.emails.push(email)
             })
 
-            return new Response("OK")
+            return new Response("You have been added to the waitlist!")
         }
 
         return new Response(waitlist, {
@@ -58,11 +62,8 @@ const waitlist = /* html */ `
                 },
                 body: JSON.stringify({ email })
             });
-            if (response.ok) {
-                alert('You have been added to the waitlist!');
-            } else {
-                alert('There was an error. Please try again.');
-            }
+            const message = await response.text();
+            alert(message);
         });
     </script>
 </body>
