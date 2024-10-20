@@ -10,15 +10,29 @@ Smallweb cloud will allow you to register your own namespace on the `smallweb.li
 
 Your apps will be accessible at:
 
-- `https://<app>.<username>.smallweb.live` for the `fetch` handler
+- `https://<app>.<username>.smallweb.live` for the `fetch` handler (or `https://<app>.<your-domain>`).
 - `ssh <user>@smallweb.live <app>` for the `run` handler (authenticated using the `https://github.com/<username>.keys` endpoint)
 
-Of course, you'll be able to register your own domain instead, changing the endpoint to:
-
-- `https://<app>.<domain>` for the `fetch` handler
-- the run endpoint will stay the same (or optionally `<user>@<domain>`)
-
 When you'll go to the apex domain (`https://smallweb.live`), you'll be greated by a VS Code instance, allowing you to edit your websites.
+
+Of course, you'll be able to sync your folder locally using [mutagen](https://mutagen.io) (or webdav, sshfs...)
+
+```sh
+mutagen sync create <user>@smallweb.live /home/<user>/smallweb ~/smallweb --ignore_vcs --ignore=node_modules
+```
+
+## Manipulate a remote smallweb instance from the cli
+
+Requirement for [Smallweb Cloud](#smallweb-cloud).
+
+You should be able to interact with a remote smallweb instance as if it was a local one (with completions, unable to open an url in browser, ...)
+
+In order to achieve this, the management command from the cli should always interact with the REST API, either:
+
+- through an unix socket if the cli and the evaluation server are on the same machine
+- using http request if the cli and evaluation servers are on different machines
+
+The only exception will be the `smallweb run`, that should probably use ssh.
 
 ## Ideas
 
@@ -41,17 +55,6 @@ Maybe only supporting github at first ?
 ## Add a cache dir for lazy builds
 
 ## Automatic backups to github / git repository
-
-## Manipulate a remote smallweb instance from the cli
-
-You should be able to interact with a remote smallweb instance as if it was a local one (with completions, unable to open an url in browser, ...)
-
-In order to achieve this, the management command from the cli should always interact with the REST API, either:
-
-- through an unix socket if the cli and the evaluation server are on the same machine
-- using http request if the cli and evaluation servers are on different machines
-
-The only exception will be the `smallweb run`, that should probably use ssh.
 
 ## Integrations
 
@@ -114,8 +117,8 @@ Each smallweb instance should come with a REST API, that you can serve on any do
 
 ```json
 {
-    "private": true,
     "entrypoint": "smallweb:api",
+    "private": true,
     "publicRoutes": [
         "/openapi.json"
     ]

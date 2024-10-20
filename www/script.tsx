@@ -34,7 +34,7 @@ function App() {
                         <a href="https://docs.smallweb.run" target="_blank">Docs</a>
                         <a href="https://blog.smallweb.run" target="_blank">Blog</a>
                         <a href="https://discord.smallweb.run" target="_blank">Discord</a>
-                        <a href="https://github.com/pomdtr/smallweb" target="_blank">GitHub</a>
+                        <a href="https://github.com/pomdtr/smallweb.run" target="_blank">View Source</a>
                     </div>
                 </nav>
                 <div className="hero">

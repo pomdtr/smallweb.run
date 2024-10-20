@@ -8,19 +8,20 @@ import "npm:prismjs@1.29.0/components/prism-json.js";
 type ReadmeOptions = {
   apiUrl?: string;
   apiToken?: string;
+  editorUrl?: string;
 }
 
 type App = {
   fetch: (req: Request) => Promise<Response>
 }
 
-export function readme(options?: ReadmeOptions): App {
-  const apiUrl = options?.apiUrl || Deno.env.get("SMALLWEB_API_URL")
+export function readme(opts?: ReadmeOptions): App {
+  const apiUrl = opts?.apiUrl || Deno.env.get("SMALLWEB_API_URL")
   if (!apiUrl) {
     throw new Error("No API URL provided")
   }
 
-  const apiToken = options?.apiToken || Deno.env.get("SMALLWEB_API_TOKEN")
+  const apiToken = opts?.apiToken || Deno.env.get("SMALLWEB_API_TOKEN")
 
   const fetchApi = (path: string, options: RequestInit) => {
     const headers = new Headers(options.headers);
@@ -55,7 +56,10 @@ export function readme(options?: ReadmeOptions): App {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smallweb TODO</title>
-    <link rel="icon" href="https://icons.smallweb.run/smallweb.svg" type="image/svg+xml" />
+    ${opts?.editorUrl ?
+      /* html */ `<script type="module" src="https://esm.smallweb.run/dot-shortcut.ts?url=${new URL(url.pathname, opts.editorUrl)}"></script>`
+          : ""
+        }
     <style>
       main {
         max-width: 800px;

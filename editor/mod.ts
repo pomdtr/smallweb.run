@@ -29,6 +29,11 @@ export function codejar(options?: CodejarOptions): App {
   return {
     async fetch(req) {
       const url = new URL(req.url);
+      if (url.pathname == "/") {
+        const usage = `Usage: ${url.origin}/<app>/<file>`;
+        return new Response(usage, { status: 400 });
+      }
+
       if (req.method == "POST") {
         const resp = await fetchApi(path.join("/webdav", url.pathname), {
           method: "PUT",
