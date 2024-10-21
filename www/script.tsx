@@ -48,7 +48,6 @@ function App() {
 
                 <main>
                     <section className="architecture-schema animate-on-scroll">
-                        <h2>How It Works</h2>
                         <p>
                             Smallweb maps domains to folders in your filesystem. For example, with the <code>smallweb.run</code> domain:
                         </p>
@@ -95,7 +94,7 @@ function App() {
                             <line x1="310" y1="260" x2="490" y2="260" stroke="#5E6AD2" strokeWidth="2" markerEnd="url(#arrowhead)" />
                         </svg>
                         <p>
-                            Creating a new website is as simple as creating a folder and opening the corresponding URL in your browser.
+                            Creating a new website becomes as simple as creating a folder and opening the corresponding URL in your browser.
                         </p>
                     </section>
 
@@ -124,10 +123,7 @@ function App() {
 
                 <footer>
                     <p>
-                        Smallweb is open-source and GPL licensed.
-                    </p>
-                    <p>
-                        <a href="https://github.smallweb.run">View Source</a>
+                        <a href="https://github.smallweb.run/www">View Source</a>
                     </p>
                 </footer>
             </div>
@@ -168,7 +164,7 @@ body {
 }
 
 header {
-    margin-bottom: 120px;
+    margin-bottom: 150px;
 }
 
 nav {

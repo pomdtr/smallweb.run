@@ -1,24 +1,67 @@
 # Smallweb TODO
 
-This website list what's next for [smallweb](https://smallweb.run). 
+This website list what's next for [smallweb](https://smallweb.run).
 
 You can view the source at <https://github.smallweb.run/todo/main.ts>.
 
+## before 0.15.0
+
+
+- [ ] fix websocket
+- [x] ~~fix `smallweb config` dir value not expanding tildes~~
+- [x] ~~remove docs embedding~~
+
 ## Smallweb Cloud
 
-Smallweb cloud will allow you to register your own namespace on the `smallweb.live` domain. It'll will use github for oauth and usernames.
+Smallweb cloud will allow you to register and run your apps under `smallweb.live` domain.
 
-Your apps will be accessible at:
+To get started, you'll first need to signup:
 
-- `https://<app>.<username>.smallweb.live` for the `fetch` handler (or `https://<app>.<your-domain>`).
-- `ssh <user>@smallweb.live <app>` for the `run` handler (authenticated using the `https://github.com/<username>.keys` endpoint)
+```ssh
+ssh signup@smallweb.live
+```
 
-When you'll go to the apex domain (`https://smallweb.live`), you'll be greated by a VS Code instance, allowing you to edit your websites.
+You'll need to pride a valid email address. Your public key will then be associated with your account.
 
-Of course, you'll be able to sync your folder locally using [mutagen](https://mutagen.io) (or webdav, sshfs...)
+You will then be able to use mutagen to sync your smallweb dir:
+
+```ssh
+mutagen sync create --name=smallweb <user>@smallweb.live:/home/<user>/smallweb ~/smallweb --ignore_vcs --ignore=node_modules
+```
+
+Behind the scenes:
+
+- A user will be created on the smallweb.live VPS with the following config
+
+  ```json
+  {
+    "addr": "unix//home/<user>/smallweb.sock",
+    "domain": "<user>.smallweb.live",
+    "email": "<email>",
+    "dir": "/home/<user>/smallweb"
+  }
+  ```
+
+- The smallweb dir will be initialized with some apps
+- The smallweb process will be started
+
+From now on apps will be accessible at:
+
+- `https://<app>.<user>.smallweb.live` for the `fetch` handler (or `https://<app>.<your-domain>` if you setup a custom one).
+- `ssh <user>@smallweb.live run <app>` for the `run` handler
+
+Private apps will be protected behind github oauth.
+
+You'll also be able to use some commands from the cli using:
 
 ```sh
-mutagen sync create <user>@smallweb.live /home/<user>/smallweb ~/smallweb --ignore_vcs --ignore=node_modules
+ssh <user>@smallweb.live [command]
+```
+
+Ex:
+
+```sh
+ssh <user>@smallweb.live log http --host example.<user>.smallweb.live
 ```
 
 ## Manipulate a remote smallweb instance from the cli
@@ -75,7 +118,7 @@ The website was built in a rush. I'm planning to use [starlight](https://starlig
 
 ## Record youtube videos for smallweb
 
-I need to show the world the capabilities of smallweb, and the way I'm using it. I'll start a youtube channel to do so. 
+I need to show the world the capabilities of smallweb, and the way I'm using it. I'll start a youtube channel to do so.
 
 ## `smallweb tunnel` command (done)
 

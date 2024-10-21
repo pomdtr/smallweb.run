@@ -2,6 +2,7 @@
     "private": true,
     "publicRoutes": [
         "/todo/TODO.md",
-        "/readme/README.md"
+        "/readme/README.md",
+        "/cloud/doc.md"
     ]
 }

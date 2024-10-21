@@ -38,6 +38,11 @@ export function readme(opts?: ReadmeOptions): App {
       if (req.method != "GET") {
         return new Response("Method not allowed", { status: 405 });
       }
+      
+      if (opts.editorUrl && url.searchParams.has("edit")) {
+        const target = new URL(url.pathname, opts.editorUrl)
+        return Response.redirect(target)
+      }
 
       const resp = await fetchApi(path.join("/webdav", url.pathname), {
         method: "GET",

@@ -1,0 +1,5 @@
+{
+    "privateRoutes": [
+        "/db.json"
+    ]
+}
