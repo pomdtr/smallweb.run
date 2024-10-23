@@ -3,6 +3,6 @@
     "publicRoutes": [
         "/todo/TODO.md",
         "/readme/README.md",
-        "/cloud/doc.md"
+        "/*/README.md"
     ]
 }

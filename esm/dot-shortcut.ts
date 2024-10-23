@@ -7,7 +7,7 @@ document.addEventListener("keydown", (event) => {
         return;
     }
 
-    const url = new URL(import.meta.url).searchParams.get("url");
+    const url: string | null = new URL(import.meta.url).searchParams.get("url");
     if (!url) {
         console.error("No URL found in query string");
         return;
