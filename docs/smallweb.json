@@ -1,0 +1,4 @@
+{
+    "entrypoint": "smallweb:static",
+    "root": "book"
+}

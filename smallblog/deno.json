@@ -1,6 +1,0 @@
-{
-    "compilerOptions": {
-        "jsx": "precompile",
-        "jsxImportSource": "npm:hono/jsx"
-    }
-}

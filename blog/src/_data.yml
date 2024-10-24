@@ -8,8 +8,8 @@ extra_head: []
 
 # Metas plugin https://lume.land/plugins/metas/#description
 metas:
-  site: Smallweb Blog
-  description: The latest new from Smallweb
+  site: Smallweb
+  description: The latest from Smallweb
   title: "=title"
   image: "=image"
   twitter: "@pomdtrr"

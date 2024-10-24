@@ -1,4 +1,20 @@
 {
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "smallweb.json",
+                "smallweb.jsonc"
+            ],
+            "url": "https://schemas.smallweb.run/manifest"
+        },
+        {
+            "fileMatch": [
+                ".smallweb/config.json",
+                ".smallweb/config.jsonc"
+            ],
+            "url": "https://schemas.smallweb.run/config"
+        }
+    ],
     "deno.disablePaths": [
         "astro"
     ],

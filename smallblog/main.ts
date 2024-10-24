@@ -1,4 +1,4 @@
-import { createBlogApp } from "jsr:@tayzendev/smallblog@0.4.2";
+import { createBlogApp } from "jsr:@tayzendev/smallblog@0.5.0";
 
 export default createBlogApp({
     siteTitle: "Smallblog demo",

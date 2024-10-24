@@ -1,8 +1,8 @@
 /// <reference lib="dom" />
 
-/** @jsxImportSource https://esm.sh/react */
-import { useState, useEffect } from "https://esm.sh/react";
-import { createRoot } from "https://esm.sh/react-dom/client";
+/** @jsxImportSource https://esm.sh/react@18.3.1 */
+import { useState, useEffect } from "https://esm.sh/react@18.3.1";
+import { createRoot } from "https://esm.sh/react-dom@18.3.1/client";
 
 function App() {
     const [isVisible, setIsVisible] = useState(false);

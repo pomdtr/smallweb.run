@@ -1,37 +1,45 @@
 # Smallweb Cloud
 
+> Interested in smallweb cloud? Join the [waitlist](https://cloud.smallweb.run).
+
 Smallweb cloud will allow you to register and run your apps under `smallweb.live` domain.
 
-To get started, you'll first need to signup:
+First, you'll need to create an account, either on https://signup.smallweb.live or using `ssh signup@smallweb.live`.
+
+You'll then get a command allowing to sync your smallweb dir locally using [mutagen](https://mutagen.io):
 
 ```sh
-ssh signup@ssh.smallweb.live
+# start mutagen at login
+mutagen daemon register
+# sync smallweb dir
+mutagen sync create \
+  --name=smallweb \
+  --ignore-vcs \
+  --ignore=node_modules \
+  --mode=two-way-resolved \
+  <token>@ssh.smallweb.run:/home/<user>/smallweb ~/smallweb
 ```
 
-You'll them be prompted for an email address, and will go through a validation prompt. Your ssh public key will then be associated with your account.
+The syncing process will keep running in the background, and will keep your local files in sync with the cloud.
 
-Behind the scenes, a smallweb instance will be created with the following config:
+You'll then be able to create a new runner for your apps, meaning that they will be available at `https://<app>.<user>.smallweb.live` (or `https://<app>.<your-domain>` if you setup a custom domain).
 
-  ```json
-  {
-    "domain": "<user>.smallweb.live",
-    "email": "<email>",
-    "dir": "/home/<user>/smallweb",
-    "addr": "unix//home/<user>/.cache/smallweb.sock"
-  }
-  ```
-  
-You will then be able to use mutagen to sync your smallweb dir (a mutagen agent will be installed on container)
+And you'll be able to control your apps using the regular smallweb commands:
 
-```sh
-# install mutagen
-brew install mutagen-io/mutagen/mutagen
-
-# connect to a mutagen daemon, running from a container on the smallweb.live VPS
-mutagen sync create --name=smallweb --ignore_vcs --ignore=node_modules,DS_Store --mode=two-way-resolved <user>@ssh.smallweb.live:/smallweb ~/smallweb
+```console
+$ smallweb ls
+Name        Dir                    Url
+api         ~/smallweb/api         https://api.<user>.smallweb.live/
+assets      ~/smallweb/assets      https://assets.<user>.smallweb.live/
+astro       ~/smallweb/astro       https://astro.<user>.smallweb.live/
 ```
 
-From now on apps will be accessible at:
+And run your cli entrypoints using `smallweb run` (if you have a deno installed):
 
-- `https://<app>.<user>.smallweb.live` for the `fetch` handler (or `https://<app>.<your-domain>` if you setup a custom one).
-- `ssh <user>@ssh.smallweb.live [args] ...` for the cli (ex: `ssh <user>@ssh.smallweb.live run <app> [args] ...`)
+```
+$ smallweb run vt --help
+```
+
+## Architecture
+
+![architecture diagram](https://assets.smallweb.run/architecture.excalidraw.png)

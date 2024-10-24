@@ -127,7 +127,7 @@ Some of my apps are versionned using git, but these github repository are only p
 
 On the vps side, I have a single `.git` folder at the root of my smallweb folder. I then use a hourly cron job to backup this folder to a private github repository (`https://github.com/pomdtr/smallweb.run`).
 
-![smallweb.run backup](/img/smallweb-run-backup.png)
+![smallweb.run backup](./img/smallweb-run-backup.png)
 
 One of the cool thing about this setup is that I can then reference files from a specific backup using the commit hash, and then import from a smallweb app using deno!
 

@@ -9,6 +9,6 @@ const site = lume({
 });
 
 site.use(plugins());
-site.copy("img");
+site.copy("posts/img");
 
 export default site;
