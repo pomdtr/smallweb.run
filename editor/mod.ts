@@ -1,31 +1,11 @@
-import * as path from "@std/path"
+import { fetchApi } from "jsr:@smallweb/api@0.1.1"
 
-type CodejarOptions = {
-  apiUrl?: string;
-  apiToken?: string;
-}
 
 type App = {
   fetch: (req: Request) => Promise<Response>
 }
 
-export function codejar(options?: CodejarOptions): App {
-  const apiUrl = options?.apiUrl || Deno.env.get("SMALLWEB_API_URL")
-  if (!apiUrl) {
-    throw new Error("No API URL provided")
-  }
-
-  const apiToken = options?.apiToken || Deno.env.get("SMALLWEB_API_TOKEN")
-
-  const fetchApi = (path: string, options: RequestInit) => {
-    const headers = new Headers(options.headers);
-    if (apiToken) {
-      headers.set("Authorization", `Bearer ${apiToken}`);
-    }
-
-    return fetch(new URL(path, apiUrl), { ...options, headers });
-  }
-
+export function codejar(): App {
   return {
     async fetch(req) {
       const url = new URL(req.url);
@@ -35,7 +15,7 @@ export function codejar(options?: CodejarOptions): App {
       }
 
       if (req.method == "POST") {
-        const resp = await fetchApi(path.join("/webdav", url.pathname), {
+        const resp = await fetchApi(`/webdav${url.pathname}`, {
           method: "PUT",
           body: req.body
         });
@@ -52,7 +32,7 @@ export function codejar(options?: CodejarOptions): App {
       }
 
       if (req.headers.get("accept") == "text/plain") {
-        const resp = await fetchApi(path.join("/webdav", url.pathname), {
+        const resp = await fetchApi(`/webdav${url.pathname}`, {
           method: "GET",
         });
 

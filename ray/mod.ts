@@ -1,15 +1,7 @@
 import * as path from "jsr:@std/path@1.0.6"
 import type { App as SmallwebApp } from "jsr:@smallweb/types@0.1.0"
+import { fetchApi } from "jsr:@smallweb/api@0.1.1"
 import { encodeBase64Url } from "jsr:@std/encoding@1.0.5/base64url"
-
-export type CodeShotOptions = {
-    apiUrl?: string;
-    apiToken?: string;
-    theme?: string;
-    padding?: number;
-    darkMode?: boolean;
-    background?: boolean;
-}
 
 const ext2lang: Record<string, string> = {
     ".js": "javascript",
@@ -34,29 +26,14 @@ function getRayUrl(pathname: string, code: string): string {
     return `https://ray.so${hash}`;
 }
 
-export function ray(options: CodeShotOptions = {}): SmallwebApp {
-    const apiURL = options.apiUrl || Deno.env.get("SMALLWEB_API_URL");
-    if (!apiURL) {
-        throw new Error("No API URL provided");
-    }
-
-    const apiToken = options.apiToken || Deno.env.get("SMALLWEB_API_TOKEN");
-    if (!apiToken) {
-        throw new Error("No API Token provided");
-    }
-
+export function ray(): SmallwebApp {
     return {
         fetch: async (req) => {
             const url = new URL(req.url);
             if (url.pathname == "/favicon.ico") {
                 return new Response("Not found", { status: 404 });
             }
-            const targetURL = new URL("/webdav" + url.pathname, apiURL);
-            const resp = await fetch(targetURL, {
-                headers: {
-                    "Authorization": `Bearer ${apiToken}`,
-                }
-            })
+            const resp = await fetchApi("/webdav" + url.pathname)
 
             if (!resp.ok) {
                 return new Response("File not found", { status: 404 });
@@ -71,13 +48,7 @@ export function ray(options: CodeShotOptions = {}): SmallwebApp {
                 Deno.exit(1);
             }
 
-            const targetURL = new URL(path.join("webdav", args[0]), apiURL);
-            const resp = await fetch(targetURL, {
-                headers: {
-                    "Authorization": `Bearer ${apiToken}`,
-                }
-            })
-
+            const resp = await fetch(path.join("/webdav", args[0]))
             if (!resp.ok) {
                 console.error("Error fetching file", await resp.text());
                 Deno.exit(1);

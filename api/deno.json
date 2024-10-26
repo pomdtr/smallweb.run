@@ -1,0 +1,9 @@
+{
+    "name": "@smallweb/api",
+    "version": "0.1.1",
+    "license": "MIT",
+    "exports": "./mod.ts",
+    "imports": {
+        "@smallweb/types": "jsr:@smallweb/types@^0.1.0"
+    }
+}

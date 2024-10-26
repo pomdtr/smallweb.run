@@ -1,13 +1,12 @@
 import { CSS, render } from "jsr:@deno/gfm";
 import * as path from "jsr:@std/path"
+import { fetchApi } from "jsr:@smallweb/api@0.1.1"
 
-import "npm:prismjs@1.29.0/components/prism-bash.js";
-import "npm:prismjs@1.29.0/components/prism-typescript.js";
-import "npm:prismjs@1.29.0/components/prism-json.js";
+import "prismjs/components/prism-bash.js";
+import "prismjs/components/prism-typescript.js";
+import "prismjs/components/prism-json.js";
 
 type ReadmeOptions = {
-  apiUrl?: string;
-  apiToken?: string;
   editorUrl?: string;
 }
 
@@ -15,22 +14,8 @@ type App = {
   fetch: (req: Request) => Promise<Response>
 }
 
-export function readme(opts?: ReadmeOptions): App {
-  const apiUrl = opts?.apiUrl || Deno.env.get("SMALLWEB_API_URL")
-  if (!apiUrl) {
-    throw new Error("No API URL provided")
-  }
-
-  const apiToken = opts?.apiToken || Deno.env.get("SMALLWEB_API_TOKEN")
-
-  const fetchApi = (path: string, options: RequestInit) => {
-    const headers = new Headers(options.headers);
-    if (apiToken) {
-      headers.set("Authorization", `Bearer ${apiToken}`);
-    }
-
-    return fetch(new URL(path, apiUrl), { ...options, headers });
-  }
+export function readme(opts: ReadmeOptions = {}): App {
+  const { editorUrl } = opts
 
   return {
     async fetch(req) {
@@ -38,9 +23,9 @@ export function readme(opts?: ReadmeOptions): App {
       if (req.method != "GET") {
         return new Response("Method not allowed", { status: 405 });
       }
-      
-      if (opts.editorUrl && url.searchParams.has("edit")) {
-        const target = new URL(url.pathname, opts.editorUrl)
+
+      if (editorUrl && url.searchParams.has("edit")) {
+        const target = new URL(url.pathname, editorUrl)
         return Response.redirect(target)
       }
 

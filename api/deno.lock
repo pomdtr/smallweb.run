@@ -1,0 +1,16 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@smallweb/types@0.1": "0.1.0"
+  },
+  "jsr": {
+    "@smallweb/types@0.1.0": {
+      "integrity": "eae1f09cc954c18129dea767a2165e70ae1cf50f8f52bb4112ed81299eb6eb9d"
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@smallweb/types@0.1"
+    ]
+  }
+}
