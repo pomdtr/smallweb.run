@@ -1,3 +1,3 @@
-import { api } from "./mod.ts"
+import { api } from "jsr:@smallweb/api"
 
 export default api()
