@@ -56,6 +56,16 @@ I'm thinking of using [Secp256k1](https://en.bitcoin.it/wiki/Secp256k1).
 
 ## `smallweb sync` (wrapper over mutagen)
 
+```sh
+mutagen sync create \
+  --name=smallweb \
+  --ignore-vcs \
+  --ignore=node_modules \
+  --mode=two-way-resolved \
+  --stage-mode-alpha=internal \
+  <token>@ssh.smallweb.run:/var/www/<user> ~/smallweb
+```
+
 ## before 0.15.0
 
 - [ ] fix websocket

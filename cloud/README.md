@@ -9,16 +9,10 @@ First, you'll need to create an account, either on https://signup.smallweb.live 
 You'll then get a command allowing to sync your smallweb dir locally using [mutagen](https://mutagen.io):
 
 ```sh
-# start mutagen
-mutagen daemon start
-# sync smallweb dir
-mutagen sync create \
-  --name=smallweb \
-  --ignore-vcs \
-  --ignore=node_modules \
-  --mode=two-way-resolved \
-  --stage-mode-alpha=internal \
-  <token>@ssh.smallweb.run:/home/<user>/smallweb ~/smallweb
+# signup to smallweb cloud
+smallweb signup
+# start the sync process (using mutagen)
+smallweb sync
 ```
 
 The syncing process will keep running in the background, and will keep your local files in sync with the cloud.
