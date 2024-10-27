@@ -1,8 +1,13 @@
 {
     "name": "@smallweb/api",
-    "version": "0.3.0",
+    "version": "0.3.2",
     "license": "MIT",
     "exports": "./mod.ts",
+    "publish": {
+        "include": [
+            "mod.ts"
+        ]
+    },
     "imports": {
         "@cliffy/command": "jsr:@cliffy/command@1.0.0-rc.7",
         "@smallweb/types": "jsr:@smallweb/types@^0.1.0",

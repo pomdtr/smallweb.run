@@ -29,7 +29,7 @@ export function readme(opts: ReadmeOptions = {}): App {
         return Response.redirect(target)
       }
 
-      const resp = await fetchApi(path.join("/webdav", url.pathname), {
+      const resp = await fetchApi(path.join("/webdav", url.pathname, "README.md"), {
         method: "GET",
       });
 
@@ -47,7 +47,7 @@ export function readme(opts: ReadmeOptions = {}): App {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smallweb TODO</title>
     ${opts?.editorUrl ?
-      /* html */ `<script type="module" src="https://esm.smallweb.run/dot-shortcut.ts?url=${new URL(url.pathname, opts.editorUrl)}"></script>`
+      /* html */ `<script type="module" src="https://esm.smallweb.run/dot-shortcut.ts?url=${new URL(path.join(url.pathname, "README.md"), opts.editorUrl)}"></script>`
           : ""
         }
     <style>

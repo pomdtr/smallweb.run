@@ -20,7 +20,7 @@ export default {
         }
 
         if (url.pathname === "/readme") {
-            return Response.redirect("https://readme.smallweb.run/cloud/README.md")
+            return Response.redirect("https://readme.smallweb.run/cloud")
         }
 
         if (url.pathname === "/db.json") {

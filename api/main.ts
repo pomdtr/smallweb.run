@@ -1,3 +1,3 @@
-import { createAPI } from "./mod.ts"
+import { createApi } from "./mod.ts"
 
-export default createAPI()
+export default createApi()
