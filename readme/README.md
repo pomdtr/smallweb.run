@@ -17,10 +17,10 @@ Use the publicRoutes parameter to whitelist files you want to be accessible.
 {
     "private": true,
     "publicRoutes": [
-        "/todo/TODO.md",
-        "/readme/README.md"
+        "/todo",
+        "/readme"
     ]
 }
 ```
 
-You can preview this file from <https://readme.smallweb.run/readme/README.md>.
+You can preview this file from <https://readme.smallweb.run/readme>.

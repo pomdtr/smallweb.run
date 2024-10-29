@@ -44,46 +44,41 @@ smallweb service install
 
 Caddy’s configuration path depends on whether you're using an Intel-based Mac or an Apple Silicon (M1/M2) Mac.
 
-- **For Apple Silicon (M1/M2) Macs**:
-  The default installation path is `/opt/homebrew/etc/Caddyfile`.
+- **For Apple Silicon Macs**:
+
+  ```sh
+  brew install caddy
+
+  # Write caddy configuration
+  cat <<EOF > /opt/homebrew/etc/Caddyfile
+  *.localhost {
+    tls internal {
+      on_demand
+    }
+
+    reverse_proxy localhost:7777
+  }
+  EOF
+  ```
+
 - **For Intel-based Macs**:
-  The default installation path is `/usr/local/etc/Caddyfile`.
 
-#### Apple Silicon (M1/M2):
+  ```sh
+  brew install caddy
 
-```sh
-brew install caddy
+  # Write caddy configuration
+  cat <<EOF > /usr/local/etc/Caddyfile
+  *.localhost {
+    tls internal {
+      on_demand
+    }
 
-# Write caddy configuration
-cat <<EOF > /opt/homebrew/etc/Caddyfile
-localhost, *.localhost, *.*.localhost {
-  tls internal {
-    on_demand
+    reverse_proxy localhost:7777
   }
+  EOF
+  ```
 
-  reverse_proxy localhost:7777
-}
-EOF
-```
-
-#### Intel-based:
-
-```sh
-brew install caddy
-
-# Write caddy configuration
-cat <<EOF > /usr/local/etc/Caddyfile
-localhost, *.localhost, *.*.localhost {
-  tls internal {
-    on_demand
-  }
-
-  reverse_proxy localhost:7777
-}
-EOF
-```
-
-#### Run Caddy:
+#### Run Caddy
 
 ```sh
 # Run caddy in the background
@@ -97,25 +92,25 @@ caddy trust
 
 The configuration path for dnsmasq also depends on your Mac's architecture.
 
-#### Apple Silicon (M1/M2):
+- **For Apple Silicon Macs**:
 
-```sh
-brew install dnsmasq
+  ```sh
+  brew install dnsmasq
 
-# Write dnsmasq configuration
-echo "address=/.localhost/127.0.0.1" >> /opt/homebrew/etc/dnsmasq.conf
-```
+  # Write dnsmasq configuration
+  echo "address=/.localhost/127.0.0.1" >> /opt/homebrew/etc/dnsmasq.conf
+  ```
 
-#### Intel-based:
+- **For Intel-based Macs**:
 
-```sh
-brew install dnsmasq
+  ```sh
+  brew install dnsmasq
 
-# Write dnsmasq configuration
-echo "address=/.localhost/127.0.0.1" >> /usr/local/etc/dnsmasq.conf
-```
+  # Write dnsmasq configuration
+  echo "address=/.localhost/127.0.0.1" >> /usr/local/etc/dnsmasq.conf
+  ```
 
-#### Run dnsmasq:
+#### Run dnsmasq
 
 ```sh
 # Run dnsmasq in the background

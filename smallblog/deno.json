@@ -1,0 +1,35 @@
+{
+  "name": "@tayzendev/smallblog",
+  "version": "0.7.2",
+  "exports": "./mod.tsx",
+  "imports": {
+    "@deno/gfm": "jsr:@deno/gfm@^0.9.0",
+    "@libs/xml": "jsr:@libs/xml@^6.0.0",
+    "@smallweb/types": "jsr:@smallweb/types@^0.1.0",
+    "@std/front-matter": "jsr:@std/front-matter@^1.0.5",
+    "@std/fs": "jsr:@std/fs@^1.0.5",
+    "@std/media-types": "jsr:@std/media-types@^1.0.3",
+    "@std/path": "jsr:@std/path@^1.0.6",
+    "@std/yaml": "jsr:@std/yaml@^1.0.5",
+    "commander": "npm:commander@^12.1.0",
+    "hono": "npm:hono@^4.6.3",
+    "minisearch": "npm:minisearch@^7.1.0",
+    "rss": "npm:rss@^1.2.2"
+  },
+  "publish": {
+    "include": [
+      "LICENSE",
+      "README.md",
+      "mod.tsx",
+      "pages/",
+      "blog.ts",
+      "sitemap.ts",
+      "utils.ts",
+      "img/article.png",
+      "img/front_page.png",
+      "article_generator.ts",
+      "cli.ts"
+    ],
+    "exclude": ["favicon.ico", "posts/", "drafts/"]
+  }
+}

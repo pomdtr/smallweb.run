@@ -1,4 +1,5 @@
 {
+    "admin": true,
     "private": true,
     "publicRoutes": [
         "/openapi.json"

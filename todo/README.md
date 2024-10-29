@@ -4,6 +4,10 @@ This website list what's next for [smallweb](https://smallweb.run).
 
 You can view the source at <https://github.smallweb.run/todo/main.ts>.
 
+## consider CNAME
+
+## add back @ record
+
 ## `smallweb env`
 
 I want to provide a sync solution for smallweb, but I don't want to be responsible for secrets.

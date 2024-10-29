@@ -25,7 +25,7 @@ export function readme(opts: ReadmeOptions = {}): App {
       }
 
       if (editorUrl && url.searchParams.has("edit")) {
-        const target = new URL(url.pathname, editorUrl)
+        const target = new URL(path.join(url.pathname, "README.md"), editorUrl)
         return Response.redirect(target)
       }
 
