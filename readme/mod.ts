@@ -24,6 +24,16 @@ export function readme(opts: ReadmeOptions = {}): App {
         return new Response("Method not allowed", { status: 405 });
       }
 
+      if (url.pathname === "/") {
+        const resp = await fetchApi("/v0/apps")
+        if (!resp.ok) {
+          return new Response("Failed to fetch apps", { status: 500 })
+        }
+
+        const apps = await resp.json() as { name: string }[]
+        return Response.json(apps.map(app => new URL(app.name, url.origin).href))
+      }
+
       if (editorUrl && url.searchParams.has("edit")) {
         const target = new URL(path.join(url.pathname, "README.md"), editorUrl)
         return Response.redirect(target)
@@ -38,7 +48,6 @@ export function readme(opts: ReadmeOptions = {}): App {
       }
 
       const body = render(await resp.text());
-
       const html = /* html */ `
     <!DOCTYPE html>
     <html lang="en">

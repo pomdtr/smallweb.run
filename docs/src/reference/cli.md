@@ -12,7 +12,7 @@ Host websites from your internet folder
 
 ## smallweb api
 
-Interact with the smallweb API
+Extension api
 
 ```
 smallweb api [flags]
@@ -21,10 +21,7 @@ smallweb api [flags]
 ### Options
 
 ```
-  -d, --data string          Data to send in the request body
-  -H, --header stringArray   HTTP headers to use
-  -h, --help                 help for api
-  -X, --method string        HTTP method to use (default "GET")
+  -h, --help   help for api
 ```
 
 ## smallweb capture
@@ -250,46 +247,6 @@ smallweb create <app> [flags]
   -h, --help   help for create
 ```
 
-## smallweb cron
-
-Manage cron jobs
-
-### Options
-
-```
-  -h, --help   help for cron
-```
-
-## smallweb cron list
-
-List cron jobs
-
-```
-smallweb cron list [flags]
-```
-
-### Options
-
-```
-      --app string   filter by app
-  -h, --help         help for list
-      --json         output as json
-```
-
-## smallweb cron trigger
-
-Trigger a cron job
-
-```
-smallweb cron trigger <id> [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for trigger
-```
-
 ## smallweb delete
 
 Delete an app
@@ -373,64 +330,6 @@ smallweb list [flags]
 ```
   -h, --help   help for list
       --json   output as json
-```
-
-## smallweb log
-
-Show logs
-
-### Options
-
-```
-  -h, --help   help for log
-```
-
-## smallweb log console
-
-Show console logs
-
-```
-smallweb log console [flags]
-```
-
-### Options
-
-```
-      --app string   filter logs by app
-  -h, --help         help for console
-      --json         output logs in JSON format
-```
-
-## smallweb log cron
-
-Show cron logs
-
-```
-smallweb log cron [flags]
-```
-
-### Options
-
-```
-  -h, --help          help for cron
-      --host string   filter logs by host
-      --json          output logs in JSON format
-```
-
-## smallweb log http
-
-Show HTTP logs
-
-```
-smallweb log http [flags]
-```
-
-### Options
-
-```
-  -h, --help          help for http
-      --host string   filter logs by host
-      --json          output logs in JSON format
 ```
 
 ## smallweb open
@@ -605,8 +504,7 @@ smallweb token create [flags]
 ### Options
 
 ```
-      --admin                admin token
-  -a, --app strings          app token
+  -a, --app string           app token
   -d, --description string   description of the token
   -h, --help                 help for create
 ```
@@ -638,20 +536,6 @@ smallweb token list [flags]
 ```
   -h, --help   help for list
   -j, --json   output as JSON
-```
-
-## smallweb tunnel
-
-Start a tunnel to a remote server (powered by localhost.run)
-
-```
-smallweb tunnel [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for tunnel
 ```
 
 ## smallweb up

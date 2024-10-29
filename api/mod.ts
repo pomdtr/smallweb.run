@@ -1,4 +1,5 @@
 import { Command } from "@cliffy/command"
+import * as path from "@std/path"
 import manifest from "./deno.json" with { type: "json" }
 
 
@@ -22,7 +23,7 @@ export function createApi(): App {
         },
         run: async (args) => {
             const command = new Command()
-                .name(Deno.env.get("SMALLWEB_APP_NAME") || "api")
+                .name(path.basename(Deno.cwd()))
                 .version(manifest.version)
                 .description("Smallweb Api Client")
                 .arguments("<pathname:string>")

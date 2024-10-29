@@ -5,8 +5,8 @@
   "elements": [
     {
       "type": "text",
-      "version": 865,
-      "versionNonce": 791196080,
+      "version": 866,
+      "versionNonce": 679471884,
       "isDeleted": false,
       "id": "kFzthsJJzd0qNHTfyOsc4",
       "fillStyle": "solid",
@@ -26,7 +26,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1730154698855,
+      "updated": 1730184527137,
       "link": null,
       "locked": false,
       "fontSize": 21.04748674967048,
@@ -41,8 +41,8 @@
     },
     {
       "type": "text",
-      "version": 721,
-      "versionNonce": 976781648,
+      "version": 722,
+      "versionNonce": 269556660,
       "isDeleted": false,
       "id": "qPFr1DOuqkGt4wXRDSrW3",
       "fillStyle": "solid",
@@ -62,7 +62,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1730154698855,
+      "updated": 1730184527139,
       "link": "https://github.smallweb.run/excalidraw",
       "locked": false,
       "fontSize": 20,
@@ -110,8 +110,8 @@
     },
     {
       "type": "text",
-      "version": 547,
-      "versionNonce": 75955120,
+      "version": 548,
+      "versionNonce": 166111628,
       "isDeleted": false,
       "id": "uzvb8lkEsQfssllUp-xu8",
       "fillStyle": "solid",
@@ -131,7 +131,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1730154698857,
+      "updated": 1730184527144,
       "link": null,
       "locked": false,
       "fontSize": 56.06142735849283,
@@ -212,7 +212,7 @@
       "containerId": "sRh7AjwUylzhbwwN3CYfx",
       "originalText": "WOW!",
       "lineHeight": 1.25,
-      "baseline": 21
+      "baseline": 20
     },
     {
       "type": "freedraw",
@@ -18128,8 +18128,8 @@
     },
     {
       "type": "text",
-      "version": 187,
-      "versionNonce": 675010384,
+      "version": 188,
+      "versionNonce": 1817937204,
       "isDeleted": false,
       "id": "BihXLAAVv4sip66Ronn72",
       "fillStyle": "solid",
@@ -18149,7 +18149,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1730154698859,
+      "updated": 1730184527146,
       "link": null,
       "locked": false,
       "fontSize": 181.28505787808206,
@@ -18165,7 +18165,7 @@
   ],
   "appState": {
     "gridSize": null,
-    "viewBackgroundColor": "#ffffff"
+    "viewBackgroundColor": "#fdf8f6"
   },
   "files": {
     "a1613a2e00d0c4882ee586620c0798e512c39a36": {
