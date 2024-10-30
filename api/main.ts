@@ -1,3 +1,12 @@
-import { createApi } from "./mod.ts"
+import { Smallweb } from "./mod.ts"
 
-export default createApi()
+const execPath = "/Users/pomdtr/go/bin/smallweb"
+
+const smallweb = new Smallweb(execPath)
+
+const resp = await smallweb.api("/openapi.json")
+if (!resp.ok) {
+    throw new Error(`Failed to fetch API: ${resp.statusText}`)
+}
+console.log(await resp.text())
+

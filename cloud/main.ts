@@ -32,9 +32,6 @@ export default {
         }
 
         return serveFile(req, "index.html")
-    },
-    run: () => {
-        console.log(JSON.stringify(db.data, null, 2))
     }
 }
 
