@@ -1,0 +1,16 @@
+{
+    "name": "@smallweb/sdk",
+    "version": "0.1.0",
+    "exports": "./mod.ts",
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "README.md",
+            "mod.ts"
+        ]
+    },
+    "imports": {
+        "@david/which": "jsr:@david/which@^0.4.1",
+        "@std/encoding": "jsr:@std/encoding@^1.0.5"
+    }
+}

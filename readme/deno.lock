@@ -6,6 +6,8 @@
     "jsr:@denosaurs/emoji@0.3": "0.3.1",
     "jsr:@smallweb/api@*": "0.1.0",
     "jsr:@smallweb/api@0.1.1": "0.1.1",
+    "jsr:@smallweb/sdk@0.1.0": "0.1.0",
+    "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/path@*": "1.0.7",
     "jsr:@std/path@1.0.7": "1.0.7",
     "jsr:@std/path@^1.0.7": "1.0.7",
@@ -46,6 +48,15 @@
     },
     "@smallweb/api@0.1.1": {
       "integrity": "1a5be38507e560d33fd5609715e9500e8235d52adb75961377efd851f3d207fc"
+    },
+    "@smallweb/sdk@0.1.0": {
+      "integrity": "0d21d1d3615bd755b50b42e8c93fcd1153c3330949ffdb48c2d7d4b26d5d4f03",
+      "dependencies": [
+        "jsr:@std/encoding"
+      ]
+    },
+    "@std/encoding@1.0.5": {
+      "integrity": "ecf363d4fc25bd85bd915ff6733a7e79b67e0e7806334af15f4645c569fefc04"
     },
     "@std/path@1.0.7": {
       "integrity": "76a689e07f0e15dcc6002ec39d0866797e7156629212b28f27179b8a5c3b33a1"

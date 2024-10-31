@@ -1,6 +1,7 @@
 import { CSS, render } from "jsr:@deno/gfm";
 import * as path from "jsr:@std/path"
-import { fetchApi } from "jsr:@smallweb/api@0.1.1"
+import { fetchWebdav, fetchApi } from "jsr:@smallweb/sdk@0.1.0"
+
 
 import "prismjs/components/prism-bash.js";
 import "prismjs/components/prism-typescript.js";
@@ -39,7 +40,7 @@ export function readme(opts: ReadmeOptions = {}): App {
         return Response.redirect(target)
       }
 
-      const resp = await fetchApi(path.join("/webdav", url.pathname, "README.md"), {
+      const resp = await fetchWebdav(path.join(url.pathname, "README.md"), {
         method: "GET",
       });
 

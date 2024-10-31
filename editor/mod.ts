@@ -1,4 +1,4 @@
-import { fetchApi } from "jsr:@smallweb/api@0.1.1"
+import { fetchWebdav } from "jsr:@smallweb/sdk@0.1.0"
 
 
 type App = {
@@ -15,7 +15,7 @@ export function codejar(): App {
       }
 
       if (req.method == "POST") {
-        const resp = await fetchApi(`/webdav${url.pathname}`, {
+        const resp = await fetchWebdav(url.pathname, {
           method: "PUT",
           body: req.body
         });
@@ -32,7 +32,7 @@ export function codejar(): App {
       }
 
       if (req.headers.get("accept") == "text/plain") {
-        const resp = await fetchApi(`/webdav${url.pathname}`, {
+        const resp = await fetchWebdav(url.pathname, {
           method: "GET",
         });
 

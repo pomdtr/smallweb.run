@@ -1,5 +1,6 @@
 {
     "private": true,
+    "admin": true,
     "publicRoutes": [
         "/todo",
         "/cloud"

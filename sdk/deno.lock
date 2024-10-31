@@ -1,0 +1,21 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@david/which@~0.4.1": "0.4.1",
+    "jsr:@std/encoding@^1.0.5": "1.0.5"
+  },
+  "jsr": {
+    "@david/which@0.4.1": {
+      "integrity": "896a682b111f92ab866cc70c5b4afab2f5899d2f9bde31ed00203b9c250f225e"
+    },
+    "@std/encoding@1.0.5": {
+      "integrity": "ecf363d4fc25bd85bd915ff6733a7e79b67e0e7806334af15f4645c569fefc04"
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@david/which@~0.4.1",
+      "jsr:@std/encoding@^1.0.5"
+    ]
+  }
+}
