@@ -80,7 +80,6 @@ type App = {
 }
 
 const swaggerHomepage = /* html */ `<!DOCTYPE html>
-<!-- HTML for static distribution bundle build -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
