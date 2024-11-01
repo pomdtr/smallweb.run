@@ -1,3 +1,6 @@
-import { createSmallblog } from "jsr:@tayzendev/smallblog@0.8.1"
+import { createSmallblog } from "jsr:@tayzendev/smallblog@0.9.0"
 
-export default createSmallblog({})
+export default createSmallblog({
+    siteTitle: "My Smallblog",
+
+})
