@@ -97,6 +97,22 @@ const swaggerHomepage = /* html */ `<!DOCTYPE html>
     <script src="https://raw.esm.sh/swagger-ui-dist@5.17.14/swagger-ui-bundle.js" charset="UTF-8"> </script>
     <script src="https://raw.esm.sh/swagger-ui-dist@5.17.14/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
     <script src="https://raw.esm.sh/swagger-ui-dist@5.17.14/swagger-initializer.js" charset="UTF-8"> </script>
+    <script>
+    window.onload = () => {
+      const ui = SwaggerUIBundle({
+        url: "/openapi.json",
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIStandalonePreset
+        ],
+        layout: "StandaloneLayout"
+      });
+
+      window.ui = ui;
+    };
+  </script>
   </body>
 </html>
 `
