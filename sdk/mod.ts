@@ -79,9 +79,23 @@ type App = {
     fetch: (req: Request) => Response | Promise<Response>
 }
 
+const swaggerHomepage = /* html */ `<!DOCTYPE html>
+`
+
 export function api(): App {
     return {
-        fetch: (req: Request) => fetchApi(req),
+        fetch: (req: Request) => {
+            const url = new URL(req.url)
+            if (url.pathname == "/") {
+                return new Response(swaggerHomepage, {
+                    headers: {
+                        "content-type": "text/html; charset=utf-8",
+                    },
+                })
+            }
+
+            return fetchApi(req)
+        }
     }
 }
 
