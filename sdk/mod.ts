@@ -135,7 +135,7 @@ export function api(opts: ApiOptions = {}): App {
         fetch: (req: Request) => {
             const url = new URL(req.url)
             if (url.pathname == "/") {
-                return new Response(swaggerHomepage(assetsRoot), {
+                return new Response(swaggerHomepage(assetsRoot.endsWith("/") ? assetsRoot.slice(0, -1) : assetsRoot), {
                     headers: {
                         "content-type": "text/html; charset=utf-8",
                     },
