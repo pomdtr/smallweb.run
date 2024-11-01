@@ -1,7 +1,9 @@
-import { parseArgs } from "jsr:@std/cli"
-import * as path from "jsr:@std/path"
+import { parseArgs } from "@std/cli"
+import * as path from "@std/path"
 
-export function createCli(handler: (req: Request) => Response | Promise<Response>) {
+export type Cli = (args?: string[]) => Promise<void>
+
+export function createCli(handler: (req: Request) => Response | Promise<Response>): Cli {
     return async (args?: string[]) => {
         if (!args) {
             args = Deno.args

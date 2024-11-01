@@ -1,0 +1,16 @@
+{
+    "name": "@pomdtr/http-cli",
+    "version": "0.1.0",
+    "exports": "./mod.ts",
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "README.md",
+            "mod.ts"
+        ]
+    },
+    "imports": {
+        "@std/cli": "jsr:@std/cli@^1.0.6",
+        "@std/path": "jsr:@std/path@^1.0.8"
+    }
+}
