@@ -1,3 +1,3 @@
-import { api } from "./mod.ts"
+import { webdav } from "./mod.ts"
 
-export default api()
+export default webdav()
