@@ -17,7 +17,7 @@ export class HttpCli {
         const { _, ...flags } = parseArgs(args)
 
         const pathname = path.join("/", ..._.map(encodeURIComponent))
-        const url = new URL(pathname, globalThis.location.href)
+        const url = new URL(pathname, "http://localhost")
         for (const [key, value] of Object.entries(flags)) {
             switch (typeof value) {
                 case "boolean":
