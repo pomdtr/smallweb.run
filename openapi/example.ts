@@ -1,5 +1,5 @@
 import { createClient, type NormalizeOAS } from 'npm:fets'
-import type openapi from 'jsr:@smallweb/openapi'
+import type openapi from './mod.ts'
 
 const client = createClient<NormalizeOAS<typeof openapi>>({
     endpoint: 'https://<your-domain>',
@@ -10,7 +10,7 @@ const client = createClient<NormalizeOAS<typeof openapi>>({
     }
 })
 
-const response = await client['/v0/apps/{app}'].get({
+const response = await client['/v0/apps/{app}'].put({
     params: {
         app: "demo" // params are automatically typed
     }
@@ -18,6 +18,7 @@ const response = await client['/v0/apps/{app}'].get({
 if (!response.ok) {
     throw new Error("Failed to fetch app")
 }
+
 
 const app = await response.json() // typed as App
 console.log(app)

@@ -26,6 +26,41 @@
             }
           }
         }
+      },
+      "post": {
+        "operationId": "createApp",
+        "tags": [
+          "apps"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create app",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/App"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/v0/apps/{app}": {
@@ -54,16 +89,17 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "App not found"
           }
         }
-      }
-    },
-    "/v0/run/{app}": {
-      "post": {
-        "operationId": "runApp",
+      },
+      "put": {
         "tags": [
           "apps"
         ],
+        "operationId": "updateApp",
         "parameters": [
           {
             "name": "app",
@@ -80,14 +116,11 @@
               "schema": {
                 "type": "object",
                 "required": [
-                  "args"
+                  "name"
                 ],
                 "properties": {
-                  "args": {
-                    "type": "array",
-                    "items": {
-                      "type": "string"
-                    }
+                  "name": {
+                    "type": "string"
                   }
                 }
               }
@@ -96,112 +129,38 @@
         },
         "responses": {
           "200": {
-            "description": "Run app cli",
+            "description": "Updated app",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommandOutput"
-                }
-              },
-              "text/plain": {
-                "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/App"
                 }
               }
             }
           }
         }
-      }
-    },
-    "/v0/logs/cron": {
-      "get": {
+      },
+      "delete": {
         "tags": [
-          "logs"
+          "apps"
         ],
-        "operationId": "getCronLogs",
+        "operationId": "deleteApp",
         "parameters": [
           {
             "name": "app",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string"
-            },
-            "description": "Filter logs by app"
+            }
           }
         ],
         "responses": {
-          "200": {
-            "description": "Stream of cron logs",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v0/logs/http": {
-      "get": {
-        "operationId": "getHttpLogs",
-        "tags": [
-          "logs"
-        ],
-        "parameters": [
-          {
-            "name": "host",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter logs by host"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Stream logs",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v0/logs/console": {
-      "get": {
-        "operationId": "getConsoleLogs",
-        "tags": [
-          "logs"
-        ],
-        "parameters": [
-          {
-            "name": "app",
-            "in": "query",
-            "schema": {
-              "type": "string"
-            },
-            "description": "Filter logs by app"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Stream logs",
-            "content": {
-              "application/octet-stream": {
-                "schema": {
-                  "type": "string",
-                  "format": "binary"
-                }
-              }
-            }
+          "204": {
+            "description": "Delete app"
+          },
+          "404": {
+            "description": "App not found"
           }
         }
       }
@@ -224,29 +183,6 @@
           },
           "manifest": {
             "type": "object"
-          }
-        }
-      },
-      "CommandOutput": {
-        "type": "object",
-        "required": [
-          "success",
-          "code",
-          "stdout",
-          "stderr"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "code": {
-            "type": "integer"
-          },
-          "stdout": {
-            "type": "string"
-          },
-          "stderr": {
-            "type": "string"
           }
         }
       }
