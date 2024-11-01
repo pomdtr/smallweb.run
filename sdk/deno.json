@@ -6,7 +6,8 @@
     "publish": {
         "include": [
             "README.md",
-            "mod.ts"
+            "mod.ts",
+            "swagger.ts"
         ]
     },
     "imports": {
