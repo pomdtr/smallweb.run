@@ -1,7 +1,3 @@
-import { open } from "./mod.ts"
+import { api } from "./mod.ts"
 
-export default {
-    async run() {
-        await open("https://smallweb.run")
-    }
-}
+export default api()
