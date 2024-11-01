@@ -4,7 +4,7 @@
 
 ```ts
 import { Hono } from "npm:hono@4.6.8"
-import { createCli } from "./mod.ts"
+import { createCli } from "jsr:@pomdtr/http-cli"
 import { zValidator } from 'npm:@hono/zod-validator'
 import { z } from 'npm:zod'
 
