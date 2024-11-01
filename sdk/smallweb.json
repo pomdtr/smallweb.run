@@ -1,3 +1,4 @@
 {
-    "admin": true
+    "admin": true,
+    "private": true
 }
