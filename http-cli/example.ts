@@ -17,5 +17,8 @@ app.on("RUN", "/hello/:name?", zValidator("query", z.object({
     return c.text(`Hello, ${name}!`)
 })
 
+// create a cli instance
 const cli = new HttpCli(app.fetch)
+
+// run the cli (args are optional, defaults to Deno.args)
 await cli.run()
