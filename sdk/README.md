@@ -13,21 +13,24 @@ export default api()
 // ~/smallweb/api/smallweb.json
 {
     "admin": true,
-    "private": true
+    "private": true,
+    "publicRoutes": [
+        "/openapi.json"
+    ]
 }
 ```
 
 ## Publishing webdav server
 
 ```ts
-// ~/smallweb/api/main.ts
+// ~/smallweb/webdav/main.ts
 import { webdav } from "jsr:@smallweb/sdk"
 
 export default webdav()
 ```
 
 ```json
-// ~/smallweb/api/smallweb.json
+// ~/smallweb/webdav/smallweb.json
 {
     "admin": true,
     "private": true
