@@ -1,10 +1,16 @@
 import { parseArgs } from "@std/cli"
 import * as path from "@std/path"
 
-export type CLI = (args?: string[]) => Promise<void>
+type RequestHandler = (request: Request) => Response | Promise<Response>
 
-export function createCli(handler: (req: Request) => Response | Promise<Response>): CLI {
-    return async (args?: string[]) => {
+export class HttpCli {
+    handler: RequestHandler
+
+    constructor(handler: RequestHandler) {
+        this.handler = handler
+    }
+
+    run = async (args?: string[]) => {
         if (!args) {
             args = Deno.args
         }
@@ -34,7 +40,7 @@ export function createCli(handler: (req: Request) => Response | Promise<Response
             body: Deno.stdin.readable
         })
 
-        const response = await handler(request)
+        const response = await this.handler(request)
         if (!response.ok) {
             Deno.exitCode = 1
             await response.body?.pipeTo(Deno.stderr.writable)
@@ -43,4 +49,5 @@ export function createCli(handler: (req: Request) => Response | Promise<Response
 
         await response.body?.pipeTo(Deno.stdout.writable)
     }
+
 }
