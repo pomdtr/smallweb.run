@@ -79,16 +79,16 @@ type App = {
     fetch: (req: Request) => Response | Promise<Response>
 }
 
-const swaggerHomepage = /* html */ `<!DOCTYPE html>
+const swaggerHomepage = (assetsRoot: string) => /* html */ `<!DOCTYPE html>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <title>Swagger UI</title>
-    <link rel="stylesheet" type="text/css" href="https://raw.esm.sh/swagger-ui-dist@5.17.14/swagger-ui.css" />
-    <link rel="stylesheet" type="text/css" href="https://raw.esm.sh/swagger-ui-dist@5.17.14/index.css" />
-    <link rel="icon" type="image/png" href="https://raw.esm.sh/swagger-ui-dist@5.17.14/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="https://raw.esm.sh/swagger-ui-dist@5.17.14/favicon-16x16.png" sizes="16x16" />
+    <link rel="stylesheet" type="text/css" href="${assetsRoot}/swagger-ui.css" />
+    <link rel="stylesheet" type="text/css" href="${assetsRoot}/index.css" />
+    <link rel="icon" type="image/png" href="${assetsRoot}/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="${assetsRoot}/favicon-16x16.png" sizes="16x16" />
     <style>
       /* Hide the top black bar */
       .swagger-ui .topbar {
@@ -99,9 +99,9 @@ const swaggerHomepage = /* html */ `<!DOCTYPE html>
 
   <body>
     <div id="swagger-ui"></div>
-    <script src="https://raw.esm.sh/swagger-ui-dist@5.17.14/swagger-ui-bundle.js" charset="UTF-8"> </script>
-    <script src="https://raw.esm.sh/swagger-ui-dist@5.17.14/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
-    <script src="https://raw.esm.sh/swagger-ui-dist@5.17.14/swagger-initializer.js" charset="UTF-8"> </script>
+    <script src="${assetsRoot}/swagger-ui-bundle.js" charset="UTF-8"> </script>
+    <script src="${assetsRoot}/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
+    <script src="${assetsRoot}/swagger-initializer.js" charset="UTF-8"> </script>
     <script>
     window.onload = () => {
       const ui = SwaggerUIBundle({
@@ -122,12 +122,20 @@ const swaggerHomepage = /* html */ `<!DOCTYPE html>
 </html>
 `
 
-export function api(): App {
+export type ApiOptions = {
+    assetsRoot?: string
+}
+
+export function api(opts: ApiOptions = {}): App {
+    const {
+        assetsRoot = "https://raw.esm.sh/swagger-ui-dist@5.17.14",
+    } = opts
+
     return {
         fetch: (req: Request) => {
             const url = new URL(req.url)
             if (url.pathname == "/") {
-                return new Response(swaggerHomepage, {
+                return new Response(swaggerHomepage(assetsRoot), {
                     headers: {
                         "content-type": "text/html; charset=utf-8",
                     },
