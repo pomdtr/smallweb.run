@@ -20,15 +20,47 @@ function fetchApi(req: Request, options: ApiOptions = {}): Response | Promise<Re
     }
 
     const app = new Hono();
-    app.get("/v0/apps")
-    app.get("/v0/apps/{app}")
-
-    createOpenApiDocument(app, {
-        info: {
-            title: "Smallweb API",
-            version: "0"
+    app.get("/v0/apps", openApi({
+        tags: ["apps"],
+        responses: {
+            200: z.array(z.object({
+                name: z.string(),
+                url: z.string(),
+            }))
         }
+    }), async (c) => {
+        const entries = await Array.fromAsync(Deno.readDir(rootDir));
+        return c.json(entries.filter(entry => entry.isDirectory || entry.name.startsWith(".")).map((entry) => ({
+            name: entry.name,
+            url: new URL(`https://${entry.name}.${Deno.env.get("SMALLWEB_DOMAIN")}/`).href,
+        })))
     })
+
+    app.post("/v0/apps")
+
+    app.get("/v0/apps/{app}", openApi({
+        tags: ["apps"],
+        request: {
+            param: z.object({
+                app: z.string()
+            })
+        },
+        responses: {
+            200: z.object({
+                name: z.string(),
+                url: z.string(),
+            })
+        }
+    }))
+
+    app.put("/v0/apps/{app}")
+    app.delete("/v0/apps/{app}")
+
+    createOpenApiDocument(
+        app,
+        { info: { title: "Smallweb API", version: "0" }, },
+        { routeName: "/openapi.json" }
+    )
     return app.fetch(req);
 }
 
