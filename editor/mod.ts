@@ -1,59 +1,54 @@
-import { fetchWebdav } from "jsr:@smallweb/sdk@0.1.0"
+import * as path from "@std/path"
 
-
-type App = {
-  fetch: (req: Request) => Promise<Response>
+interface App {
+  fetch: (req: Request) => Response | Promise<Response>
 }
 
-export function codejar(): App {
-  return {
-    async fetch(req) {
-      const url = new URL(req.url);
-      if (url.pathname == "/") {
-        const usage = `Usage: ${url.origin}/<app>/<file>`;
-        return new Response(usage, { status: 400 });
-      }
+type CodeJarOptions = {
+  rootDir?: string
+}
 
-      if (req.method == "POST") {
-        const resp = await fetchWebdav(url.pathname, {
-          method: "PUT",
-          body: req.body
-        });
+export class CodeJar implements App {
+  constructor(public options: CodeJarOptions = {}) { }
 
-        if (!resp.ok) {
-          return new Response("Failed to create file", { status: 500 });
-        }
+  run = async (args?: string[]) => { }
 
-        return new Response("File created", { status: 200 });
-      }
+  fetch = async (req: Request) => {
+    const rootDir = this.options.rootDir || Deno.env.get("SMALLWEB_DIR");
+    if (!rootDir) {
+      throw new Error("SMALLWEB_DIR is not set; are you sure you're app has admin permissions?")
+    }
 
-      if (req.method != "GET") {
-        return new Response("Method not allowed", { status: 405 });
-      }
+    const url = new URL(req.url);
+    if (url.pathname == "/") {
+      const usage = `Usage: ${url.origin}/<app>/<file>`;
+      return new Response(usage, { status: 400 });
+    }
 
-      if (req.headers.get("accept") == "text/plain") {
-        const resp = await fetchWebdav(url.pathname, {
-          method: "GET",
-        });
+    if (req.method == "POST") {
+      await Deno.writeTextFile(path.join(rootDir, url.pathname), await req.text());
+      return new Response("File created", { status: 200 });
+    }
 
-        if (!resp.ok) {
-          return new Response("File not found", { status: 404 });
-        }
+    if (req.method != "GET") {
+      return new Response("Method not allowed", { status: 405 });
+    }
 
-        return new Response(resp.body, {
-          headers: {
-            "Content-Type": "text/plain",
-          },
-        });
-
-      }
-
-      return new Response(homepage, {
+    if (req.headers.get("accept") == "text/plain") {
+      const content = await Deno.readTextFile(path.join(rootDir, url.pathname));
+      return new Response(content, {
         headers: {
-          "Content-Type": "text/html",
+          "Content-Type": "text/plain",
         },
       });
+
     }
+
+    return new Response(homepage, {
+      headers: {
+        "Content-Type": "text/html",
+      },
+    });
   }
 }
 

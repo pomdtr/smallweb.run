@@ -1,5 +1,5 @@
-import { readme } from "./mod.ts";
+import { createReadme } from "./mod.ts";
 
-export default readme({
+export default createReadme({
     editorUrl: "https://editor.smallweb.run",
 })

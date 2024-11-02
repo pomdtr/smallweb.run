@@ -1,8 +1,5 @@
 import { CSS, render } from "jsr:@deno/gfm";
 import * as path from "jsr:@std/path"
-import { fetchWebdav, fetchApi } from "jsr:@smallweb/sdk@0.1.0"
-
-
 import "prismjs/components/prism-bash.js";
 import "prismjs/components/prism-typescript.js";
 import "prismjs/components/prism-json.js";
@@ -11,55 +8,40 @@ type ReadmeOptions = {
   editorUrl?: string;
 }
 
-type App = {
-  fetch: (req: Request) => Promise<Response>
-}
+export class Readme {
+  constructor(public options: ReadmeOptions = {}) { }
 
-export function readme(opts: ReadmeOptions = {}): App {
-  const { editorUrl } = opts
+  fetch = async (req: Request) => {
+    const { editorUrl } = this.options
+    const rootDir = Deno.env.get("SMALLWEB_DIR")
+    if (!rootDir) {
+      throw new Error("SMALLWEB_DIR is not set; are you sure you're app has admin permissions?")
+    }
 
-  return {
-    async fetch(req) {
-      const url = new URL(req.url);
-      if (req.method != "GET") {
-        return new Response("Method not allowed", { status: 405 });
-      }
+    const url = new URL(req.url);
+    if (req.method != "GET") {
+      return new Response("Method not allowed", { status: 405 });
+    }
 
-      if (url.pathname === "/") {
-        const resp = await fetchApi("/v0/apps")
-        if (!resp.ok) {
-          return new Response("Failed to fetch apps", { status: 500 })
-        }
 
-        const apps = await resp.json() as { name: string }[]
-        return Response.json(apps.map(app => new URL(app.name, url.origin).href))
-      }
+    if (editorUrl && url.searchParams.has("edit")) {
+      const target = new URL(path.join(url.pathname, "README.md"), editorUrl)
+      return Response.redirect(target)
+    }
 
-      if (editorUrl && url.searchParams.has("edit")) {
-        const target = new URL(path.join(url.pathname, "README.md"), editorUrl)
-        return Response.redirect(target)
-      }
-
-      const resp = await fetchWebdav(path.join(url.pathname, "README.md"), {
-        method: "GET",
-      });
-
-      if (!resp.ok) {
-        return new Response("File not found", { status: 404 });
-      }
-
-      const body = render(await resp.text());
-      const html = /* html */ `
+    const markdown = await Deno.readTextFile(path.join(rootDir, url.pathname, "README.md"));
+    const body = render(await markdown);
+    const html = /* html */ `
     <!DOCTYPE html>
     <html lang="en">
     <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smallweb TODO</title>
-    ${opts?.editorUrl ?
-      /* html */ `<script type="module" src="https://esm.smallweb.run/dot-shortcut.ts?url=${new URL(path.join(url.pathname, "README.md"), opts.editorUrl)}"></script>`
-          : ""
-        }
+    ${this.options.editorUrl ?
+      /* html */ `<script type="module" src="https://esm.smallweb.run/dot-shortcut.ts?url=${new URL(path.join(url.pathname, "README.md"), this.options.editorUrl)}"></script>`
+        : ""
+      }
     <style>
       main {
         max-width: 800px;
@@ -76,11 +58,15 @@ export function readme(opts: ReadmeOptions = {}): App {
     </body>
     </html>
     `;
-      return new Response(html, {
-        headers: {
-          "content-type": "text/html; charset=utf-8",
-        },
-      });
-    }
+    return new Response(html, {
+      headers: {
+        "content-type": "text/html; charset=utf-8",
+      },
+    });
   }
 }
+
+export function createReadme(options: ReadmeOptions = {}): Readme {
+  return new Readme(options)
+}
+

@@ -1,7 +1,19 @@
 {
+  "name": "@smallweb/api",
+  "version": "0.4.0",
+  "exports": "./mod.ts",
+  "license": "MIT",
   "imports": {
+    "@std/path": "jsr:@std/path@^1.0.8",
     "hono": "npm:hono@^4.6.8",
     "hono-zod-openapi": "npm:hono-zod-openapi@^0.4.1",
     "zod": "npm:zod@^3.23.8"
+  },
+  "publish": {
+    "include": [
+      "mod.ts",
+      "swagger.ts",
+      "README.md"
+    ]
   }
 }

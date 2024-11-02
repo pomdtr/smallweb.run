@@ -1,3 +1,3 @@
-import { codejar } from "./mod.ts";
+import { CodeJar } from "./mod.ts";
 
-export default codejar();
+export default new CodeJar()

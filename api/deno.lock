@@ -1,9 +1,15 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@std/path@^1.0.8": "1.0.8",
     "npm:hono-zod-openapi@~0.4.1": "0.4.1_hono@4.6.8_zod@3.23.8",
     "npm:hono@^4.6.8": "4.6.8",
     "npm:zod@^3.23.8": "3.23.8"
+  },
+  "jsr": {
+    "@std/path@1.0.8": {
+      "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
+    }
   },
   "npm": {
     "@hono/zod-validator@0.4.1_hono@4.6.8_zod@3.23.8": {
@@ -37,6 +43,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@std/path@^1.0.8",
       "npm:hono-zod-openapi@~0.4.1",
       "npm:hono@^4.6.8",
       "npm:zod@^3.23.8"
