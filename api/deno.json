@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "hono": "npm:hono@^4.6.8",
+    "hono-zod-openapi": "npm:hono-zod-openapi@^0.4.1",
+    "zod": "npm:zod@^3.23.8"
+  }
+}
