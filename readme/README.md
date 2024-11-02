@@ -4,11 +4,9 @@ Publish the README from any smallweb app.
 
 ```ts
 // ~/smallweb/readme/main.ts
+import { createReadme } from "jsr:@pomdtr/readme";
 
-export default readme({
-    apiUrl: Deno.env.get("SMALLWEB_API_URL"),
-    apiToken: Deno.env.get("SMALLWEB_API_TOKEN"),
-});
+export default createReadme();
 ```
 
 Use the publicRoutes parameter to whitelist files you want to be accessible.
