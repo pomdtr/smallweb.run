@@ -8,13 +8,25 @@ export type ApiOptions = {
     rootDir?: string;
 }
 
-export function api(options: ApiOptions = {}) {
+function fetchApi(input: URL | Request | string, init?: RequestInit & ApiOptions): Response | Promise<Response> {
     const app = new Hono();
     app.get("/v0/apps")
     app.get("/v0/apps/{app}")
 
+    const req = new Request(input, init);
+    return app.fetch(req);
+}
+
+type App = {
+    fetch: (req: Request) => Response | Promise<Response>
+}
+
+export function api(options: ApiOptions = {}): App {
     return {
-        fetch: app.fetch
+        fetch: (req: Request) => fetchApi(req.url, {
+            ...req,
+            ...options
+        })
     }
 }
 
