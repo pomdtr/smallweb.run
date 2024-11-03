@@ -8,101 +8,87 @@ import homepage from "./swagger.ts"
 extendZodWithOpenApi(z);
 
 export type ApiOptions = {
-    dir?: string;
-    domain?: string;
+    dir: string;
+    domain: string;
 }
 
-export class Api {
-    hono: Hono;
+type App = {
+    fetch: (req: Request) => Response | Promise<Response>
+}
 
-    constructor(public options: ApiOptions = {}) {
-        this.hono = new Hono();
+export function createApi(options: Partial<ApiOptions> = {}): App {
+    const {
+        dir = Deno.env.get("SMALLWEB_DIR"),
+        domain = Deno.env.get("SMALLWEB_DOMAIN")
+    } = options
 
-        this.hono.get("/v0/apps", openApi({
-            tags: ["apps"],
-            responses: {
-                200: z.array(z.object({
-                    name: z.string(),
-                    url: z.string(),
-                }))
-            }
-        }), async (c) => {
-            const entries = await Array.fromAsync(Deno.readDir(this.#dir));
+    if (!dir) {
+        throw new Error("no dir provided")
+    }
 
-            return c.json(entries.filter(entry => entry.isDirectory || entry.name.startsWith(".")).map((entry) => ({
-                name: entry.name,
-                url: `https://${entry.name}.${this.#domain}/`
-            })))
-        })
+    if (!domain) {
+        throw new Error("no domain provided")
+    }
 
-        this.hono.get("/v0/apps/{app}", openApi({
-            tags: ["apps"],
-            request: {
-                param: z.object({
-                    app: z.string()
-                })
-            },
-            responses: {
-                200: z.object({
-                    name: z.string(),
-                    url: z.string(),
-                }),
-                404: z.object({
-                    error: z.string()
-                })
-            }
-        }), async (c) => {
-            const params = c.req.valid("param")
-            const appDir = path.join(this.#dir, params.app);
+    const app = new Hono().get("/v0/apps", openApi({
+        tags: ["apps"],
+        responses: {
+            200: z.array(z.object({
+                name: z.string(),
+                url: z.string(),
+            }))
+        }
+    }), async (c) => {
+        const entries = await Array.fromAsync(Deno.readDir(dir));
 
-            try {
-                const stat = await Deno.stat(appDir);
-                if (!stat.isDirectory) {
-                    return c.json({ error: "App not found" }, 404);
-                }
+        return c.json(entries.filter(entry => entry.isDirectory || entry.name.startsWith(".")).map((entry) => ({
+            name: entry.name,
+            url: `https://${entry.name}.${domain}/`
+        })))
+    }).get("/v0/apps/{app}", openApi({
+        tags: ["apps"],
+        request: {
+            param: z.object({
+                app: z.string()
+            })
+        },
+        responses: {
+            200: z.object({
+                name: z.string(),
+                url: z.string(),
+            }),
+            404: z.object({
+                error: z.string()
+            })
+        }
+    }), async (c) => {
+        const params = c.req.valid("param")
+        const appDir = path.join(dir, params.app);
 
-                return c.json({
-                    name: params.app,
-                    url: `https://${params.app}.${this.#domain}/`
-                })
-            } catch (_) {
+        try {
+            const stat = await Deno.stat(appDir);
+            if (!stat.isDirectory) {
                 return c.json({ error: "App not found" }, 404);
             }
-        })
 
-        this.hono.get("/", (c) => {
-            return c.html(homepage)
-        })
-
-
-        createOpenApiDocument(
-            this.hono,
-            { info: { title: "Smallweb API", version: "0" }, },
-            { routeName: "/openapi.json" }
-        )
-    }
-
-    fetch = (req: Request): Response | Promise<Response> => {
-        return this.hono.fetch(req);
-    }
-
-    get #dir() {
-        const dir = this.options.dir || Deno.env.get("SMALLWEB_DIR");
-        if (!dir) {
-            throw new Error("SMALLWEB_DIR is not set");
+            return c.json({
+                name: params.app,
+                url: `https://${params.app}.${domain}/`
+            })
+        } catch (_) {
+            return c.json({ error: "App not found" }, 404);
         }
-        return dir;
-    }
+    }).get("/", (c) => {
+        return c.html(homepage)
+    })
 
-    get #domain() {
-        const domain = this.options.domain || Deno.env.get("SMALLWEB_DOMAIN");
-        if (!domain) {
-            throw new Error("SMALLWEB_DOMAIN is not set");
-        }
-        return domain;
-    }
-}
+    createOpenApiDocument(
+        app,
+        { info: { title: "Smallweb API", version: "0" }, },
+        { routeName: "/openapi.json" }
+    )
 
-export function createApi(options: ApiOptions = {}): Api {
-    return new Api(options);
+    return {
+        fetch: app.fetch
+    }
 }
