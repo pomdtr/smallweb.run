@@ -1,3 +1,8 @@
-import { webdav } from "jsr:@smallweb/sdk@0.1.0"
+import { webdav } from "./mod.ts"
 
-export default webdav()
+export default webdav({
+    rootDir: Deno.env.get("SMALLWEB_DIR"),
+    verifyToken: (token: string) => {
+        return Deno.env.get("WEBDAV_TOKEN") === token
+    }
+})

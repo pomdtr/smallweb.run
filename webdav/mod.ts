@@ -1,16 +1,25 @@
 import { Hono } from "hono"
+import { bearerAuth } from "hono/bearer-auth"
 import * as path from "jsr:@std/path"
 import * as http from "jsr:@std/http"
 import * as xml from "jsr:@libs/xml"
 
 export type WebdavParams = {
-    rootDir: string
+    rootDir?: string,
+    verifyToken: (token: string) => boolean | Promise<boolean>
 }
 
 export function webdav(params: WebdavParams) {
-    const { rootDir } = params
+    const {
+        rootDir = Deno.cwd()
+    } = params
 
-    const app = new Hono().get("*", async (c) => {
+    const app = new Hono().use(
+        "*",
+        bearerAuth({
+            verifyToken: params.verifyToken
+        })
+    ).get("*", async (c) => {
         const filepath = path.join(rootDir, c.req.path)
         const stat = await Deno.stat(filepath)
         if (stat.isDirectory) {
