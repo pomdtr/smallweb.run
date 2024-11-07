@@ -5,5 +5,9 @@ const handleRequest = () => {
 }
 
 export default {
-    fetch: lastlogin(handleRequest)
+    fetch: lastlogin(handleRequest, {
+        verifyEmail: (email) => {
+            return email === Deno.env.get("EMAIL")
+        }
+    })
 }
