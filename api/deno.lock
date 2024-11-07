@@ -1,12 +1,25 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@pomdtr/lastlogin@0.2.0": "0.2.0",
+    "jsr:@std/http@^1.0.9": "1.0.9",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "npm:hono-zod-openapi@~0.4.1": "0.4.1_hono@4.6.8_zod@3.23.8",
     "npm:hono@^4.6.8": "4.6.8",
+    "npm:lowdb@^7.0.1": "7.0.1",
     "npm:zod@^3.23.8": "3.23.8"
   },
   "jsr": {
+    "@pomdtr/lastlogin@0.2.0": {
+      "integrity": "fdb6e7bd78213cd3bdf4d2c6da2a30f3942aa43e5b1dcf8159790a518e60b54d",
+      "dependencies": [
+        "jsr:@std/http",
+        "npm:lowdb"
+      ]
+    },
+    "@std/http@1.0.9": {
+      "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c"
+    },
     "@std/path@1.0.8": {
       "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
     }
@@ -30,6 +43,15 @@
     },
     "hono@4.6.8": {
       "integrity": "sha512-f+2Ec9JAzabT61pglDiLJcF/DjiSefZkjCn9bzm1cYLGkD5ExJ3Jnv93ax9h0bn7UPLHF81KktoyjdQfWI2n1Q=="
+    },
+    "lowdb@7.0.1": {
+      "integrity": "sha512-neJAj8GwF0e8EpycYIDFqEPcx9Qz4GUho20jWFR7YiFeXzF1YMLdxB36PypcTSPMA+4+LvgyMacYhlr18Zlymw==",
+      "dependencies": [
+        "steno"
+      ]
+    },
+    "steno@4.0.2": {
+      "integrity": "sha512-yhPIQXjrlt1xv7dyPQg2P17URmXbuM5pdGkpiMB3RenprfiBlvK415Lctfe0eshk90oA7/tNq7WEiMK8RSP39A=="
     },
     "zod-openapi@3.3.0_zod@3.23.8": {
       "integrity": "sha512-9CouRzPrmKU4Rggb8dPgVrNq6SZTUjdMO+6TvpE2ylkDYlap/Agjce2LZwG4ZwEVEVyZ1s5KnkiL4hn//G3gIA==",

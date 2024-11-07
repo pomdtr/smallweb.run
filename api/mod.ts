@@ -1,26 +1,31 @@
 import { createOpenApiDocument, openApi } from 'hono-zod-openapi';
 import { extendZodWithOpenApi } from 'hono-zod-openapi';
 import { Hono } from "hono";
+import { bearerAuth } from "hono/bearer-auth"
 import { z } from 'zod';
 import * as path from "@std/path"
 import homepage from "./swagger.ts"
 
 extendZodWithOpenApi(z);
 
-export type ApiOptions = {
-    dir: string;
-    domain: string;
-}
-
 type App = {
-    fetch: (req: Request) => Response | Promise<Response>
+    fetch: (req: Request) => Response | Promise<Response>,
 }
 
-export function createApi(options: Partial<ApiOptions> = {}): App {
+
+export type ApiParams = {
+    dir?: string;
+    domain?: string;
+    verifyToken: (token: string) => boolean | Promise<boolean>;
+}
+
+
+export function api(params: ApiParams): App {
     const {
         dir = Deno.env.get("SMALLWEB_DIR"),
-        domain = Deno.env.get("SMALLWEB_DOMAIN")
-    } = options
+        domain = Deno.env.get("SMALLWEB_DOMAIN"),
+        verifyToken
+    } = params
 
     if (!dir) {
         throw new Error("no dir provided")
@@ -30,8 +35,11 @@ export function createApi(options: Partial<ApiOptions> = {}): App {
         throw new Error("no domain provided")
     }
 
-    const app = new Hono().get("/v0/apps", openApi({
+    const server = new Hono().use("/v0/*", bearerAuth({
+        verifyToken
+    })).get("/v0/apps", openApi({
         tags: ["apps"],
+        security: [{ bearerAuth: [] }],
         responses: {
             200: z.array(z.object({
                 name: z.string(),
@@ -47,6 +55,7 @@ export function createApi(options: Partial<ApiOptions> = {}): App {
         })))
     }).get("/v0/apps/{app}", openApi({
         tags: ["apps"],
+        security: [{ bearerAuth: [] }],
         request: {
             param: z.object({
                 app: z.string()
@@ -83,12 +92,21 @@ export function createApi(options: Partial<ApiOptions> = {}): App {
     })
 
     createOpenApiDocument(
-        app,
-        { info: { title: "Smallweb API", version: "0" }, },
+        server,
+        {
+            info: { title: "Smallweb API", version: "0" }, components: {
+                securitySchemes: {
+                    bearerAuth: {
+                        type: "http",
+                        scheme: "bearer"
+                    }
+                }
+            }
+        },
         { routeName: "/openapi.json" }
     )
 
     return {
-        fetch: app.fetch
+        fetch: server.fetch,
     }
 }

@@ -1,3 +1,7 @@
-import { createApi } from "./mod.ts"
+import { api } from "./mod.ts"
 
-export default createApi()
+export default api({
+    verifyToken: (token: string) => {
+        return Deno.env.get("API_TOKEN") === token
+    }
+})
