@@ -23,14 +23,6 @@ export default {
             return Response.redirect("https://readme.smallweb.run/cloud")
         }
 
-        if (url.pathname === "/db.json") {
-            return new Response(JSON.stringify(db.data, null, 2), {
-                headers: {
-                    "Content-Type": "application/json"
-                }
-            })
-        }
-
         return serveFile(req, "index.html")
     },
     run() {
