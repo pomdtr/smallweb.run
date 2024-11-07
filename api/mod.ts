@@ -1,5 +1,4 @@
-import { createOpenApiDocument, openApi } from 'hono-zod-openapi';
-import { extendZodWithOpenApi } from 'hono-zod-openapi';
+import { createOpenApiDocument, openApi, extendZodWithOpenApi } from 'hono-zod-openapi';
 import { Hono } from "hono";
 import { bearerAuth } from "hono/bearer-auth"
 import { z } from 'zod';
@@ -35,7 +34,7 @@ export function api(params: ApiParams): App {
         throw new Error("no domain provided")
     }
 
-    const server = new Hono().use("/v0/*", bearerAuth({
+    const app = new Hono().use("/v0/*", bearerAuth({
         verifyToken
     })).get("/v0/apps", openApi({
         tags: ["apps"],
@@ -49,10 +48,38 @@ export function api(params: ApiParams): App {
     }), async (c) => {
         const entries = await Array.fromAsync(Deno.readDir(dir));
 
-        return c.json(entries.filter(entry => entry.isDirectory || entry.name.startsWith(".")).map((entry) => ({
+        return c.json(entries.filter(entry => entry.isDirectory && !entry.name.startsWith(".")).map((entry) => ({
             name: entry.name,
             url: `https://${entry.name}.${domain}/`
         })))
+    }).post("/v0/apps", openApi({
+        tags: ["apps"],
+        security: [{ bearerAuth: [] }],
+        request: {
+            json: z.object({
+                name: z.string()
+            })
+        },
+        responses: {
+            201: z.object({
+                name: z.string(),
+                url: z.string(),
+            })
+        }
+    }), async (c) => {
+        const body = await c.req.valid("json")
+        const appDir = path.join(dir, body.name);
+
+        try {
+            await Deno.mkdir(appDir);
+            await Deno.writeTextFile(path.join(appDir, "main.ts"), template);
+            return c.json({
+                name: body.name,
+                url: `https://${body.name}.${domain}/`
+            }, 201);
+        } catch (_) {
+            return c.json({ error: "App already exists" }, 400);
+        }
     }).get("/v0/apps/{app}", openApi({
         tags: ["apps"],
         security: [{ bearerAuth: [] }],
@@ -87,12 +114,63 @@ export function api(params: ApiParams): App {
         } catch (_) {
             return c.json({ error: "App not found" }, 404);
         }
+    }).put("/v0/apps/{app}", openApi({
+        tags: ["apps"],
+        security: [{ bearerAuth: [] }],
+        request: {
+            param: z.object({
+                app: z.string()
+            }),
+            json: z.object({
+                name: z.string()
+            })
+        },
+        description: "Rename app",
+        responses: {
+            200: z.object({
+                name: z.string(),
+                url: z.string(),
+            }),
+            404: z.object({
+                error: z.string()
+            })
+        }
+    }), async (c) => {
+        const { app } = c.req.valid("param")
+        const body = c.req.valid("json")
+        await Deno.rename(path.join(dir, app), path.join(dir, body.name))
+        return c.json({
+            name: body.name,
+            url: `https://${body.name}.${domain}/`
+        })
+    }).delete("/v0/apps/{app}", openApi({
+        tags: ["apps"],
+        security: [{ bearerAuth: [] }],
+        request: {
+            param: z.object({
+                app: z.string()
+            }),
+        },
+        responses: {
+            204: z.null(),
+            404: z.object({
+                error: z.string()
+            })
+        }
+    }), async (c) => {
+        const { app } = c.req.valid("param")
+        try {
+            await Deno.remove(path.join(dir, app), { recursive: true })
+            return c.json({ message: "App deleted" }, 204)
+        } catch (_) {
+            return c.json({ error: "App not found" }, 404)
+        }
     }).get("/", (c) => {
         return c.html(homepage)
     })
 
     createOpenApiDocument(
-        server,
+        app,
         {
             info: { title: "Smallweb API", version: "0" }, components: {
                 securitySchemes: {
@@ -106,7 +184,15 @@ export function api(params: ApiParams): App {
         { routeName: "/openapi.json" }
     )
 
-    return {
-        fetch: server.fetch,
-    }
+    return app
 }
+
+const template = /* ts */ `export default {
+    fetch: () => {
+        return new Response("Hello from smallweb!");
+    },
+    run: () => {
+        console.log("Hello from smallweb!");
+    },
+};
+`;
