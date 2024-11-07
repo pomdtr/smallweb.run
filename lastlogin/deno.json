@@ -1,0 +1,15 @@
+{
+    "name": "@pomdtr/lastlogin",
+    "version": "0.2.0",
+    "exports": "./mod.ts",
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "mod.ts"
+        ]
+    },
+    "imports": {
+        "@std/http": "jsr:@std/http@^1.0.9",
+        "lowdb": "npm:lowdb@^7.0.1"
+    }
+}
