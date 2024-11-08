@@ -1,6 +1,7 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@pomdtr/bearer-auth@0.1.0": "0.1.0",
     "jsr:@pomdtr/lastlogin@0.2.0": "0.2.0",
     "jsr:@std/http@^1.0.9": "1.0.9",
     "jsr:@std/path@^1.0.8": "1.0.8",
@@ -10,6 +11,9 @@
     "npm:zod@^3.23.8": "3.23.8"
   },
   "jsr": {
+    "@pomdtr/bearer-auth@0.1.0": {
+      "integrity": "eacd5b9f7b653689d1382de7ee6bbdc569439a1b6950e38d2432e6cebe37756d"
+    },
     "@pomdtr/lastlogin@0.2.0": {
       "integrity": "fdb6e7bd78213cd3bdf4d2c6da2a30f3942aa43e5b1dcf8159790a518e60b54d",
       "dependencies": [

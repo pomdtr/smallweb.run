@@ -1,3 +1,3 @@
 # Contact
 
-- mail: <achille.lacoin@gmail.com>
+- github: <https://github.com/pomdtr>

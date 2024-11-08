@@ -1,6 +1,5 @@
 import { createOpenApiDocument, openApi, extendZodWithOpenApi } from 'hono-zod-openapi';
 import { Hono } from "hono";
-import { bearerAuth } from "hono/bearer-auth"
 import { z } from 'zod';
 import * as path from "@std/path"
 import homepage from "./swagger.ts"
@@ -12,19 +11,17 @@ type App = {
 }
 
 
-export type ApiParams = {
+export type ApiOptions = {
     dir?: string;
     domain?: string;
-    verifyToken: (token: string) => boolean | Promise<boolean>;
 }
 
 
-export function api(params: ApiParams): App {
+export function createApi(options: ApiOptions = {}): App {
     const {
         dir = Deno.env.get("SMALLWEB_DIR"),
         domain = Deno.env.get("SMALLWEB_DOMAIN"),
-        verifyToken
-    } = params
+    } = options
 
     if (!dir) {
         throw new Error("no dir provided")
@@ -34,9 +31,9 @@ export function api(params: ApiParams): App {
         throw new Error("no domain provided")
     }
 
-    const app = new Hono().use("/v0/*", bearerAuth({
-        verifyToken
-    })).get("/v0/apps", openApi({
+    const app = new Hono()
+
+    app.get("/v0/apps", openApi({
         tags: ["apps"],
         security: [{ bearerAuth: [] }],
         responses: {
@@ -47,12 +44,13 @@ export function api(params: ApiParams): App {
         }
     }), async (c) => {
         const entries = await Array.fromAsync(Deno.readDir(dir));
-
         return c.json(entries.filter(entry => entry.isDirectory && !entry.name.startsWith(".")).map((entry) => ({
             name: entry.name,
             url: `https://${entry.name}.${domain}/`
         })))
-    }).post("/v0/apps", openApi({
+    })
+
+    app.post("/v0/apps", openApi({
         tags: ["apps"],
         security: [{ bearerAuth: [] }],
         request: {
@@ -80,7 +78,9 @@ export function api(params: ApiParams): App {
         } catch (_) {
             return c.json({ error: "App already exists" }, 400);
         }
-    }).get("/v0/apps/{app}", openApi({
+    })
+
+    app.get("/v0/apps/{app}", openApi({
         tags: ["apps"],
         security: [{ bearerAuth: [] }],
         request: {
@@ -114,7 +114,9 @@ export function api(params: ApiParams): App {
         } catch (_) {
             return c.json({ error: "App not found" }, 404);
         }
-    }).put("/v0/apps/{app}", openApi({
+    })
+
+    app.put("/v0/apps/{app}", openApi({
         tags: ["apps"],
         security: [{ bearerAuth: [] }],
         request: {
@@ -138,12 +140,18 @@ export function api(params: ApiParams): App {
     }), async (c) => {
         const { app } = c.req.valid("param")
         const body = c.req.valid("json")
-        await Deno.rename(path.join(dir, app), path.join(dir, body.name))
-        return c.json({
-            name: body.name,
-            url: `https://${body.name}.${domain}/`
-        })
-    }).delete("/v0/apps/{app}", openApi({
+        try {
+            await Deno.rename(path.join(dir, app), path.join(dir, body.name))
+            return c.json({
+                name: body.name,
+                url: `https://${body.name}.${domain}/`
+            })
+        } catch (_) {
+            return c.json({ error: "App not found" }, 404)
+        }
+    })
+
+    app.delete("/v0/apps/{app}", openApi({
         tags: ["apps"],
         security: [{ bearerAuth: [] }],
         request: {
@@ -165,7 +173,9 @@ export function api(params: ApiParams): App {
         } catch (_) {
             return c.json({ error: "App not found" }, 404)
         }
-    }).get("/", (c) => {
+    })
+
+    app.get("/", (c) => {
         return c.html(homepage)
     })
 

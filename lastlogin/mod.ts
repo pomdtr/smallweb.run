@@ -55,7 +55,9 @@ const OAUTH_COOKIE = "oauth_store";
 export type LastLoginOptions = {
     kvPath?: string;
     verifyEmail?: (email: string) => Promise<boolean> | boolean;
+    private?: boolean;
     public_routes?: string[];
+    private_routes?: string[];
 };
 
 type FetchFn = (req: Request) => Response | Promise<Response>;
@@ -68,13 +70,30 @@ export function lastlogin(
     return async (req: Request) => {
         req.headers.delete("X-LastLogin-Email");
         const isPublicRoute = () => {
+            let isPrivate = !!options.private
+            for (const pathname of options.private_routes ?? []) {
+                const pattern = new URLPattern({ pathname });
+                if (pattern.test(req.url)) {
+                    isPrivate = true;
+                    break;
+                }
+            }
+
+            for (const pathname of options.private_routes ?? []) {
+                const pattern = new URLPattern({ pathname });
+                if (pattern.test(req.url)) {
+                    isPrivate = true;
+                }
+            }
+
             for (const pathname of options.public_routes ?? []) {
                 const pattern = new URLPattern({ pathname });
                 if (pattern.test(req.url)) {
-                    return true;
+                    isPrivate = false;
                 }
             }
-            return false;
+
+            return isPrivate;
         };
         const url = new URL(req.url);
         const clientID = `${url.protocol}//${url.host}/`;
