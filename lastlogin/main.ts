@@ -1,15 +1,15 @@
 import { lastlogin } from "./mod.ts";
 
 const handleRequest = () => {
-    return new Response("Hello, world!");
-}
+  return new Response("Hello, world!");
+};
 
 export default {
-    fetch: lastlogin(handleRequest, {
-        verifyEmail: (email) => {
-            return email === Deno.env.get("EMAIL")
-        },
-        provider: "google",
-        public_routes: ["/public"],
-    })
-}
+  fetch: lastlogin(handleRequest, {
+    provider: "google",
+    private: true,
+    verifyEmail: (email: string) => {
+      return email == Deno.env.get("EMAIL");
+    },
+  }),
+};
