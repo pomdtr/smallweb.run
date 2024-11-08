@@ -75,8 +75,10 @@ function App() {
                             </a>
                             <rect x="450" y="50" width="300" height="300" rx="10" ry="10" fill="#1E2028" stroke="#5E6AD2" strokeWidth="2" />
                             <text x="600" y="30" textAnchor="middle" fill="#E2E8F0" fontSize="20">Domains</text>
-                            <rect x="470" y="70" width="260" height="50" rx="5" ry="5" fill="#2C3E50" stroke="#5E6AD2" strokeWidth="2" />
-                            <text x="600" y="100" textAnchor="middle" fill="#E2E8F0" fontSize="16">smallweb.run</text>
+                            <a href="https://github.smallweb.run" target="_blank">
+                                <rect x="470" y="70" width="260" height="50" rx="5" ry="5" fill="#2C3E50" stroke="#5E6AD2" strokeWidth="2" />
+                                <text x="600" y="100" textAnchor="middle" fill="#E2E8F0" fontSize="16">smallweb.run</text>
+                            </a>
                             <a href="https://www.smallweb.run" target="_blank">
                                 <rect x="490" y="140" width="220" height="40" rx="5" ry="5" fill="#34495E" stroke="#5E6AD2" strokeWidth="2" />
                                 <text x="600" y="165" textAnchor="middle" fill="#E2E8F0" fontSize="14">www.smallweb.run</text>
