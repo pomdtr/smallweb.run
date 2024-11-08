@@ -3,9 +3,29 @@
 ```ts
 // ~/smallweb/editor/main.ts
 import { codejar } from "./mod.ts";
+import { lastlogin } from "@pomdtr/lastlogin";
 
-export default codejar({
-    apiUrl: Deno.env.get("SMALLWEB_API_URL"),
-    apiToken: Deno.env.get("SMALLWEB_API_TOKEN"),
-});
+const app = codejar();
+
+export default {
+    // gate editor behind lastlogin auth
+    fetch: lastlogin(app.fetch, {
+        private: true,
+        verifyEmail: (email) => {
+            return email === Deno.env.get("EMAIL");
+        },
+    }),
+};
+```
+
+```json
+// ~/smallweb/editor/smallweb.json
+{
+    "admin": true
+}
+```
+
+```sh
+# ~/smallweb/editor/.env
+EMAIL=user@example.com
 ```

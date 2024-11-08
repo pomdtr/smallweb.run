@@ -1,55 +1,51 @@
-import * as path from "@std/path"
+import * as path from "@std/path";
+import { getContext } from "@smallweb/ctx";
 
-interface App {
-  fetch: (req: Request) => Response | Promise<Response>
-}
+type App = {
+  fetch: (req: Request) => Response | Promise<Response>;
+};
 
-type CodeJarOptions = {
-  rootDir?: string
-}
+export function codejar(): App {
+  const ctx = getContext();
 
-export class CodeJar implements App {
-  constructor(public options: CodeJarOptions = {}) { }
+  return {
+    fetch: async (req: Request) => {
+      const url = new URL(req.url);
+      if (url.pathname == "/") {
+        const usage = `Usage: ${url.origin}/<app>/<file>`;
+        return new Response(usage, { status: 400 });
+      }
 
-  run = async (args?: string[]) => { }
+      if (req.method == "POST") {
+        await Deno.writeTextFile(
+          path.join(ctx.dir, url.pathname),
+          await req.text(),
+        );
+        return new Response("File created", { status: 200 });
+      }
 
-  fetch = async (req: Request) => {
-    const rootDir = this.options.rootDir || Deno.env.get("SMALLWEB_DIR");
-    if (!rootDir) {
-      throw new Error("SMALLWEB_DIR is not set; are you sure you're app has admin permissions?")
-    }
+      if (req.method != "GET") {
+        return new Response("Method not allowed", { status: 405 });
+      }
 
-    const url = new URL(req.url);
-    if (url.pathname == "/") {
-      const usage = `Usage: ${url.origin}/<app>/<file>`;
-      return new Response(usage, { status: 400 });
-    }
+      if (req.headers.get("accept") == "text/plain") {
+        const content = await Deno.readTextFile(
+          path.join(ctx.dir, url.pathname),
+        );
+        return new Response(content, {
+          headers: {
+            "Content-Type": "text/plain",
+          },
+        });
+      }
 
-    if (req.method == "POST") {
-      await Deno.writeTextFile(path.join(rootDir, url.pathname), await req.text());
-      return new Response("File created", { status: 200 });
-    }
-
-    if (req.method != "GET") {
-      return new Response("Method not allowed", { status: 405 });
-    }
-
-    if (req.headers.get("accept") == "text/plain") {
-      const content = await Deno.readTextFile(path.join(rootDir, url.pathname));
-      return new Response(content, {
+      return new Response(homepage, {
         headers: {
-          "Content-Type": "text/plain",
+          "Content-Type": "text/html",
         },
       });
-
-    }
-
-    return new Response(homepage, {
-      headers: {
-        "Content-Type": "text/html",
-      },
-    });
-  }
+    },
+  };
 }
 
 const homepage = /* html */ `<html lang="en">
@@ -177,4 +173,4 @@ const homepage = /* html */ `<html lang="en">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-tsx.min.js"></script>
 </body>
-</html>`
+</html>`;

@@ -29,13 +29,13 @@ export type LastLoginOptions = {
      * An array of route paths that do not require authentication.
      * @default undefined
      */
-    public_routes?: string[];
+    publicRoutes?: string[];
 
     /**
      * An array of route paths that require authentication.
      * @default undefined
      */
-    private_routes?: string[];
+    privateRoutes?: string[];
 };
 
 type FetchFn = (req: Request) => Response | Promise<Response>;
@@ -73,7 +73,7 @@ export function lastlogin(
 ): FetchFn {
     const isPublicRoute = (url: string) => {
         let isPublic = !options.private;
-        for (const pathname of options.private_routes ?? []) {
+        for (const pathname of options.privateRoutes ?? []) {
             const pattern = new URLPattern({ pathname });
             if (pattern.test(url)) {
                 isPublic = false;
@@ -81,7 +81,7 @@ export function lastlogin(
             }
         }
 
-        for (const pathname of options.public_routes ?? []) {
+        for (const pathname of options.publicRoutes ?? []) {
             const pattern = new URLPattern({ pathname });
             if (pattern.test(url)) {
                 isPublic = true;

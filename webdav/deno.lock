@@ -1,18 +1,28 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@libs/xml@*": "6.0.0",
+    "jsr:@pomdtr/bearer-auth@0.1.0": "0.1.0",
     "jsr:@std/cli@^1.0.6": "1.0.6",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@^1.0.3": "1.0.3",
+    "jsr:@std/http@*": "1.0.9",
     "jsr:@std/http@^1.0.9": "1.0.9",
     "jsr:@std/media-types@^1.0.3": "1.0.3",
     "jsr:@std/net@^1.0.4": "1.0.4",
+    "jsr:@std/path@*": "1.0.8",
     "jsr:@std/path@^1.0.7": "1.0.8",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/streams@^1.0.7": "1.0.7",
     "npm:hono@^4.6.8": "4.6.8"
   },
   "jsr": {
+    "@libs/xml@6.0.0": {
+      "integrity": "d629f461bc10598de9ad55470f3b7c9bf1707cc2b90be9603a129259b8e5d0a5"
+    },
+    "@pomdtr/bearer-auth@0.1.0": {
+      "integrity": "eacd5b9f7b653689d1382de7ee6bbdc569439a1b6950e38d2432e6cebe37756d"
+    },
     "@std/cli@1.0.6": {
       "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
     },

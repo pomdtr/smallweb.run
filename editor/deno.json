@@ -1,6 +1,6 @@
 {
   "name": "@pomdtr/smallweb-codejar",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "license": "MIT",
   "exports": {
     ".": "./mod.ts"
@@ -13,6 +13,8 @@
     ]
   },
   "imports": {
+    "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.3.0",
+    "@smallweb/ctx": "jsr:@smallweb/ctx@^0.1.1",
     "@std/path": "jsr:@std/path@^1.0.6"
   }
 }

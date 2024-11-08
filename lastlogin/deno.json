@@ -1,11 +1,12 @@
 {
     "name": "@pomdtr/lastlogin",
-    "version": "0.2.6",
+    "version": "0.3.0",
     "exports": "./mod.ts",
     "license": "MIT",
     "publish": {
         "include": [
-            "mod.ts"
+            "mod.ts",
+            "README.md"
         ]
     },
     "imports": {

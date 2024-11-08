@@ -1,3 +1,8 @@
+# Smallweb API
+
+## Usage
+
+```ts
 import { bearerAuth } from "jsr:@pomdtr/bearer-auth@0.1.0";
 import { api } from "./mod.ts";
 
@@ -11,3 +16,4 @@ export default {
         publicRoutes: ["/", "/openapi.json"],
     }),
 };
+```

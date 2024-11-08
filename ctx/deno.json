@@ -1,0 +1,11 @@
+{
+    "name": "@smallweb/ctx",
+    "version": "0.1.1",
+    "exports": "./mod.ts",
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "mod.ts"
+        ]
+    }
+}

@@ -1,3 +1,13 @@
-import { CodeJar } from "./mod.ts";
+import { codejar } from "./mod.ts";
+import { lastlogin } from "@pomdtr/lastlogin";
 
-export default new CodeJar()
+const app = codejar();
+
+export default {
+    fetch: lastlogin(app.fetch, {
+        private: true,
+        verifyEmail: (email) => {
+            return email === Deno.env.get("EMAIL");
+        },
+    }),
+};

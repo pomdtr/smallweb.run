@@ -1,8 +1,14 @@
-import { webdav } from "./mod.ts"
+import { webdav } from "./mod.ts";
+import { bearerAuth } from "jsr:@pomdtr/bearer-auth@0.1.0";
 
-export default webdav({
+const app = webdav({
     rootDir: Deno.env.get("SMALLWEB_DIR"),
-    verifyToken: (token: string) => {
-        return Deno.env.get("WEBDAV_TOKEN") === token
-    }
-})
+});
+
+export default {
+    fetch: bearerAuth(app.fetch, {
+        verifyToken: (token: string) => {
+            return token === Deno.env.get("WEBDAV_TOKEN");
+        },
+    }),
+};
