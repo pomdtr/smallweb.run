@@ -4,32 +4,35 @@ import * as path from "@std/path"
 
 type Session = {
     email: string;
-    domain: string;
     expiresAt: number;
 }
 
-async function createSession(email: string, domain: string) {
-    await fs.ensureDir(path.join(".lastlogin", "sessions"));
+function getSessionPath(sessionID: string) {
+    return path.join(".lastlogin", "sessions", `${sessionID}.json`);
+}
+
+async function createSession(email: string) {
     const sessionID = crypto.randomUUID();
-    const sessionPath = path.join(".lastlogin", "sessions", `${sessionID}.json`);
+    const sessionPath = getSessionPath(sessionID);
+    await fs.ensureDir(path.dirname(sessionPath));
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 14);
-
-    await Deno.writeTextFile(sessionPath, JSON.stringify({
+    const session: Session = {
         email,
-        domain,
         expiresAt: expiresAt.getTime(),
-    }));
+    };
+
+    await Deno.writeTextFile(sessionPath, JSON.stringify(session));
 
     return sessionID;
 }
 
-async function getSession(sessionID: string, domain: string): Promise<Session | null> {
+async function getSession(sessionID: string): Promise<Session | null> {
     if (!sessionID) {
         return null;
     }
 
-    const sessionPath = path.join(".lastlogin", "sessions", `${sessionID}.json`);
+    const sessionPath = getSessionPath(sessionID);
     if (!await fs.exists(sessionPath)) {
         return null;
     }
@@ -41,15 +44,11 @@ async function getSession(sessionID: string, domain: string): Promise<Session | 
         return null;
     }
 
-    if (session.domain != domain) {
-        return null;
-    }
-
     return session;
 }
 
 async function deleteSession(sessionID: string) {
-    const sessionPath = path.join(".lastlogin", "sessions", `${sessionID}.json`);
+    const sessionPath = getSessionPath(sessionID);
     if (await fs.exists(sessionPath)) {
         await Deno.remove(sessionPath);
     }
@@ -144,7 +143,7 @@ export function lastlogin(
                     Location: store.redirect,
                 },
             });
-            const sessionID = await createSession(email, url.hostname);
+            const sessionID = await createSession(email);
             deleteCookie(res.headers, OAUTH_COOKIE);
             setCookie(res.headers, {
                 httpOnly: true,
@@ -178,7 +177,7 @@ export function lastlogin(
         }
 
         const cookies = getCookies(req.headers);
-        const session = await getSession(cookies[SESSION_COOKIE], url.hostname);
+        const session = await getSession(cookies[SESSION_COOKIE]);
         if (!session) {
             if (isPublicRoute(req.url)) {
                 return next(req);
