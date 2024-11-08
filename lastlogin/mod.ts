@@ -1,5 +1,6 @@
 import { deleteCookie, getCookies, setCookie } from "@std/http/cookie";
-import { JSONFilePreset } from "lowdb/node"
+import * as fs from "@std/fs"
+import * as path from "@std/path"
 
 type Session = {
     email: string;
@@ -7,16 +8,18 @@ type Session = {
     expiresAt: number;
 }
 
-const db = await JSONFilePreset<Record<string, Session>>("sessions.json", {});
-
-
 async function createSession(email: string, domain: string) {
+    await fs.ensureDir(path.join(".lastlogin", "sessions"));
     const sessionID = crypto.randomUUID();
+    const sessionPath = path.join(".lastlogin", "sessions", `${sessionID}.json`);
     const expiresAt = new Date();
     expiresAt.setDate(expiresAt.getDate() + 14);
-    await db.update((data) => {
-        data[sessionID] = { email, domain, expiresAt: expiresAt.getTime() };
-    })
+
+    await Deno.writeTextFile(sessionPath, JSON.stringify({
+        email,
+        domain,
+        expiresAt: expiresAt.getTime(),
+    }));
 
     return sessionID;
 }
@@ -26,10 +29,12 @@ async function getSession(sessionID: string, domain: string): Promise<Session | 
         return null;
     }
 
-    const session = await db.data[sessionID];
-    if (!session) {
+    const sessionPath = path.join(".lastlogin", "sessions", `${sessionID}.json`);
+    if (!await fs.exists(sessionPath)) {
         return null;
     }
+
+    const session: Session = JSON.parse(await Deno.readTextFile(sessionPath));
 
     if (session.expiresAt < new Date().getTime()) {
         await deleteSession(sessionID);
@@ -44,18 +49,20 @@ async function getSession(sessionID: string, domain: string): Promise<Session | 
 }
 
 async function deleteSession(sessionID: string) {
-    await db.update((data) => {
-        delete data[sessionID];
-    })
+    const sessionPath = path.join(".lastlogin", "sessions", `${sessionID}.json`);
+    if (await fs.exists(sessionPath)) {
+        await Deno.remove(sessionPath);
+    }
 }
 
 const SESSION_COOKIE = "lastlogin_session";
 const OAUTH_COOKIE = "oauth_store";
 
 export type LastLoginOptions = {
-    kvPath?: string;
+    dbPath?: string;
     verifyEmail?: (email: string) => Promise<boolean> | boolean;
-    private?: boolean;
+    public?: boolean;
+    provider?: string;
     public_routes?: string[];
     private_routes?: string[];
 };
@@ -67,34 +74,31 @@ export function lastlogin(
     next: FetchFn,
     options: LastLoginOptions = {},
 ): FetchFn {
+    const isPublicRoute = (url: string) => {
+        let isPublic = !!options.public
+        for (const pathname of options.private_routes ?? []) {
+            const pattern = new URLPattern({ pathname });
+            if (pattern.test(url)) {
+                isPublic = false;
+                break;
+            }
+        }
+
+        for (const pathname of options.public_routes ?? []) {
+            const pattern = new URLPattern({ pathname });
+            if (pattern.test(url)) {
+                isPublic = true;
+            }
+        }
+
+        return isPublic;
+    };
+
     return async (req: Request) => {
+        // clone the request to modify it
+        req = new Request(req);
         req.headers.delete("X-LastLogin-Email");
-        const isPublicRoute = () => {
-            let isPrivate = !!options.private
-            for (const pathname of options.private_routes ?? []) {
-                const pattern = new URLPattern({ pathname });
-                if (pattern.test(req.url)) {
-                    isPrivate = true;
-                    break;
-                }
-            }
 
-            for (const pathname of options.private_routes ?? []) {
-                const pattern = new URLPattern({ pathname });
-                if (pattern.test(req.url)) {
-                    isPrivate = true;
-                }
-            }
-
-            for (const pathname of options.public_routes ?? []) {
-                const pattern = new URLPattern({ pathname });
-                if (pattern.test(req.url)) {
-                    isPrivate = false;
-                }
-            }
-
-            return isPrivate;
-        };
         const url = new URL(req.url);
         const clientID = `${url.protocol}//${url.host}/`;
         const redirectUri = `${url.protocol}//${url.host}/auth/callback`;
@@ -176,12 +180,15 @@ export function lastlogin(
         const cookies = getCookies(req.headers);
         const session = await getSession(cookies[SESSION_COOKIE], url.hostname);
         if (!session) {
-            if (isPublicRoute()) {
+            if (isPublicRoute(req.url)) {
                 return next(req);
             }
 
             const state = crypto.randomUUID();
             const authUrl = new URL("https://lastlogin.net/auth");
+            if (options.provider) {
+                authUrl.searchParams.set("provider", options.provider);
+            }
             authUrl.searchParams.set("client_id", clientID);
             authUrl.searchParams.set("redirect_uri", redirectUri);
             authUrl.searchParams.set("scope", "email");
@@ -212,8 +219,8 @@ export function lastlogin(
             return res;
         }
 
-        if (isPublicRoute()) {
-            req.headers.set("X-LastLogin-Email", session.email);
+
+        if (isPublicRoute(req.url)) {
             return next(req);
         }
 
