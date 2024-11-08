@@ -1,17 +1,18 @@
 import { JSONFilePreset } from "npm:lowdb@7.0.1/node";
 import { serveFile } from "jsr:@std/http";
 import { lastlogin } from "jsr:@pomdtr/lastlogin@0.2.6";
+import * as cli from "jsr:@std/cli";
 
 type Data = {
     emails: string[];
 };
 
+const db = await JSONFilePreset<Data>("db.json", { emails: [] });
+
 const handleRequest = async (req: Request) => {
     const url = new URL(req.url);
     if (req.method === "POST") {
         const { email } = await req.json();
-
-        const db = await JSONFilePreset<Data>("db.json", { emails: [] });
         if (db.data.emails.includes(email)) {
             return new Response("You are already on the waitlist!");
         }
@@ -40,8 +41,18 @@ export default {
         },
         private_routes: ["/db.json"],
     }),
-    async run() {
-        const db = await JSONFilePreset<Data>("db.json", { emails: [] });
-        console.log(JSON.stringify(db.data, null, 2));
+    run(args: string[]) {
+        const flags = cli.parseArgs(args, {
+            boolean: ["json"],
+        });
+
+        if (flags.json) {
+            console.log(JSON.stringify(db.data, null, 2));
+            return;
+        }
+
+        for (const email of db.data.emails) {
+            console.log(email);
+        }
     },
 };
