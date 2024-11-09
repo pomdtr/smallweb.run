@@ -1,6 +1,6 @@
 {
     "name": "@pomdtr/lastlogin",
-    "version": "0.3.0",
+    "version": "0.4.0",
     "exports": "./mod.ts",
     "license": "MIT",
     "publish": {
@@ -10,8 +10,7 @@
         ]
     },
     "imports": {
-        "@std/fs": "jsr:@std/fs@^1.0.5",
         "@std/http": "jsr:@std/http@^1.0.9",
-        "@std/path": "jsr:@std/path@^1.0.8"
+        "hono": "npm:hono@^4.6.9"
     }
 }

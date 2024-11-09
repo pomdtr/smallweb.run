@@ -8,21 +8,10 @@ export type Config = {
     customDomains?: string[];
 };
 
-export type AppConfig = {
-    root: string;
-    entrypoint: string;
-    admin: boolean;
-    crons: string[];
-};
-
 export type App = {
     name: string;
     url: string;
     dir: string;
-};
-
-export type FullApp = App & {
-    config: AppConfig;
 };
 
 export class Smallweb {
@@ -53,18 +42,10 @@ export class Smallweb {
                     return null;
                 }
 
-                const config: AppConfig = {
-                    root: appDir,
-                    entrypoint: "main.ts",
-                    admin: false,
-                    crons: [],
-                };
-
                 return {
                     name,
                     url: `https://${name}.${this.config.domain}/`,
                     dir: appDir,
-                    config,
                 };
             },
         };

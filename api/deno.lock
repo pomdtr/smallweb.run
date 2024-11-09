@@ -3,6 +3,7 @@
   "specifiers": {
     "jsr:@pomdtr/bearer-auth@0.1.0": "0.1.0",
     "jsr:@pomdtr/lastlogin@0.2.0": "0.2.0",
+    "jsr:@std/cli@^1.0.6": "1.0.6",
     "jsr:@std/http@^1.0.9": "1.0.9",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "npm:hono-zod-openapi@~0.4.1": "0.4.1_hono@4.6.8_zod@3.23.8",
@@ -20,6 +21,9 @@
         "jsr:@std/http",
         "npm:lowdb"
       ]
+    },
+    "@std/cli@1.0.6": {
+      "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
     },
     "@std/http@1.0.9": {
       "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c"
@@ -69,6 +73,7 @@
   },
   "workspace": {
     "dependencies": [
+      "jsr:@std/cli@^1.0.6",
       "jsr:@std/path@^1.0.8",
       "npm:hono-zod-openapi@~0.4.1",
       "npm:hono@^4.6.8",

@@ -1,8 +1,7 @@
 import { deleteCookie, getCookies, setCookie } from "@std/http/cookie";
-import * as fs from "@std/fs";
-import * as path from "@std/path";
+import { sign, verify } from "hono/jwt";
 
-const SESSION_COOKIE = "lastlogin_session";
+const JWT_COOKIE = "lastlogin_jwt";
 const OAUTH_COOKIE = "oauth_store";
 
 /**
@@ -36,6 +35,12 @@ export type LastLoginOptions = {
      * @default undefined
      */
     privateRoutes?: string[];
+
+    /**
+     * The secret key used to sign the JWT token.
+     * It can also be passed using the LASTLOGIN_SECRET_KEY environment variable.
+     */
+    secretKey?: string;
 };
 
 type FetchFn = (req: Request) => Response | Promise<Response>;
@@ -51,7 +56,7 @@ type FetchFn = (req: Request) => Response | Promise<Response>;
  * import { lastlogin } from './mod.ts';
  *
  * const options = {
- *   private_routes: ['/dashboard', '/settings'],
+ *   privateRoutes: ['/dashboard', '/settings'],
  *   provider: 'google',
  *   verifyEmail: async (email) => {
  *     // Custom email verification logic
@@ -90,6 +95,11 @@ export function lastlogin(
 
         return isPublic;
     };
+
+    const secretKey = options.secretKey || Deno.env.get("LASTLOGIN_SECRET_KEY");
+    if (!secretKey) {
+        throw new Error("Secret key is required");
+    }
 
     return async (req: Request) => {
         // clone the request to modify it
@@ -141,15 +151,21 @@ export function lastlogin(
                     Location: store.redirect,
                 },
             });
-            const sessionID = await createSession(email);
+            const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
+            const jwt = await sign({
+                email,
+                exp,
+            }, secretKey);
+
             deleteCookie(res.headers, OAUTH_COOKIE);
             setCookie(res.headers, {
                 httpOnly: true,
                 secure: true,
                 sameSite: "Lax",
                 path: "/",
-                name: SESSION_COOKIE,
-                value: sessionID,
+                expires: new Date(exp * 1000),
+                name: JWT_COOKIE,
+                value: jwt,
             });
 
             return res;
@@ -157,13 +173,11 @@ export function lastlogin(
 
         if (url.pathname == "/auth/logout") {
             const cookies = getCookies(req.headers);
-            if (!(SESSION_COOKIE in cookies)) {
+            if (!(JWT_COOKIE in cookies)) {
                 return new Response("session cookie not found", {
                     status: 401,
                 });
             }
-            const sessionID = cookies[SESSION_COOKIE];
-            await deleteSession(sessionID);
 
             const res = new Response(null, {
                 status: 302,
@@ -172,13 +186,15 @@ export function lastlogin(
                 },
             });
 
-            deleteCookie(res.headers, SESSION_COOKIE);
+            deleteCookie(res.headers, JWT_COOKIE);
             return res;
         }
 
         const cookies = getCookies(req.headers);
-        const session = await getSession(cookies[SESSION_COOKIE]);
-        if (!session) {
+        const jwt = await verify(cookies[JWT_COOKIE], secretKey).catch(() =>
+            null
+        );
+        if (!jwt || !jwt.email || typeof jwt.email != "string") {
             if (isPublicRoute(req.url)) {
                 return next(req);
             }
@@ -200,7 +216,7 @@ export function lastlogin(
                     Location: authUrl.toString(),
                 },
             });
-            deleteCookie(res.headers, SESSION_COOKIE);
+            deleteCookie(res.headers, JWT_COOKIE);
             setCookie(res.headers, {
                 httpOnly: true,
                 secure: true,
@@ -220,12 +236,13 @@ export function lastlogin(
             return res;
         }
 
+        req.headers.set("X-LastLogin-Email", jwt.email);
         if (isPublicRoute(req.url)) {
             return next(req);
         }
 
         if (
-            options.verifyEmail && !(await options.verifyEmail(session.email))
+            options.verifyEmail && !(await options.verifyEmail(jwt.email))
         ) {
             return new Response(
                 "You do not have permission to access this page",
@@ -235,59 +252,6 @@ export function lastlogin(
             );
         }
 
-        req.headers.set("X-LastLogin-Email", session.email);
         return next(req);
     };
-}
-
-type Session = {
-    email: string;
-    expiresAt: number;
-};
-
-function getSessionPath(sessionID: string) {
-    return path.join(".lastlogin", "sessions", `${sessionID}.json`);
-}
-
-async function createSession(email: string) {
-    const sessionID = crypto.randomUUID();
-    const sessionPath = getSessionPath(sessionID);
-    await fs.ensureDir(path.dirname(sessionPath));
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 14);
-    const session: Session = {
-        email,
-        expiresAt: expiresAt.getTime(),
-    };
-
-    await Deno.writeTextFile(sessionPath, JSON.stringify(session));
-
-    return sessionID;
-}
-
-async function getSession(sessionID: string): Promise<Session | null> {
-    if (!sessionID) {
-        return null;
-    }
-
-    const sessionPath = getSessionPath(sessionID);
-    if (!await fs.exists(sessionPath)) {
-        return null;
-    }
-
-    const session: Session = JSON.parse(await Deno.readTextFile(sessionPath));
-
-    if (session.expiresAt < new Date().getTime()) {
-        await deleteSession(sessionID);
-        return null;
-    }
-
-    return session;
-}
-
-async function deleteSession(sessionID: string) {
-    const sessionPath = getSessionPath(sessionID);
-    if (await fs.exists(sessionPath)) {
-        await Deno.remove(sessionPath);
-    }
 }

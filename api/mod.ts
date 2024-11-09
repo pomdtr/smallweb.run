@@ -7,11 +7,13 @@ import { Hono } from "hono";
 import { z } from "zod";
 import * as path from "@std/path";
 import homepage from "./swagger.ts";
+import * as cli from "@std/cli";
 
 extendZodWithOpenApi(z);
 
 type App = {
     fetch: (req: Request) => Response | Promise<Response>;
+    run: (args: string[]) => Promise<void>;
 };
 
 export type ApiOptions = {
@@ -19,7 +21,7 @@ export type ApiOptions = {
     domain?: string;
 };
 
-export function api(options: ApiOptions = {}): App {
+export function createApi(options: ApiOptions = {}): App {
     const {
         dir = Deno.env.get("SMALLWEB_DIR"),
         domain = Deno.env.get("SMALLWEB_DOMAIN"),
@@ -190,7 +192,6 @@ export function api(options: ApiOptions = {}): App {
                 }),
             },
             responses: {
-                204: z.null(),
                 404: z.object({
                     error: z.string(),
                 }),
@@ -227,7 +228,60 @@ export function api(options: ApiOptions = {}): App {
         { routeName: "/openapi.json" },
     );
 
-    return app;
+    return {
+        fetch: app.fetch,
+        async run(args: string[]) {
+            const { _, ...flags } = await cli.parseArgs(args, {
+                string: ["_", "headers", "method", "data"],
+                boolean: ["help"],
+                alias: {
+                    help: "h",
+                    data: "d",
+                    headers: "H",
+                    method: "X",
+                },
+                collect: ["headers"],
+            });
+
+            if (flags.help) {
+                console.log(`Usage: cli [options] <url>
+
+Options:
+  -X, --method <method>       Specify the HTTP method to use (GET, POST, etc.)
+  -d, --data <data>           Send specified data in the request body
+  -H, --headers <header>      Add a header to the request (can be used multiple times)
+  -h, --help                  Display this help message
+
+Arguments:
+  <url>                       The URL to send the request to
+
+Examples:
+  cli -X POST -d "name=value" -H "Content-Type: application/json" https://example.com
+  cli -X GET -H "Accept: application/json" https://example.com
+`);
+                return;
+            }
+
+            if (_.length === 0) {
+                console.error("No path provided");
+                Deno.exit(1);
+            }
+
+            const path = _[0];
+            const headers = new Headers();
+            for (const header of flags.headers || []) {
+                const [name, value] = header.split(":");
+                headers.set(name, value);
+            }
+
+            const resp = await app.request(path, {
+                method: flags.method,
+                body: flags.data,
+                headers,
+            });
+            console.log(await resp.text());
+        },
+    };
 }
 
 const template = /* ts */ `export default {

@@ -81,7 +81,3 @@ export class Readme {
     });
   };
 }
-
-export function createReadme(options: ReadmeOptions = {}): Readme {
-  return new Readme(options);
-}

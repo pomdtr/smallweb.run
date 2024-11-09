@@ -1,16 +1,18 @@
 # Lastlogin Authentication
 
-## Usage
+## Usage in smallweb
 
 ```ts
-import { lastlogin } from "./mod.ts";
+// ~/smallweb/lastlogin-example/main.ts
+import { lastlogin } from "jsr:@pomdtr/lastlogin";
 
-const handleRequest = () => {
-  return new Response("Hello, world!");
+const handler = (req: Request) => {
+  const email = req.headers.get("X-Lastlogin-Email");
+  return new Response(`Hello, ${email}!`);
 };
 
 export default {
-  fetch: lastlogin(handleRequest, {
+  fetch: lastlogin(handler, {
     provider: "google",
     private: true,
     verifyEmail: (email: string) => {
@@ -18,4 +20,9 @@ export default {
     },
   }),
 };
+```
+
+```sh
+# ~/smallweb/lastlogin-example/.env
+LASTLOGIN_SECRET_KEY=my-secret-key
 ```

@@ -17,3 +17,7 @@ export default {
     }),
 };
 ```
+
+```sh
+LASTLOGIN_SECRET_KEY=my-secret-key
+```
