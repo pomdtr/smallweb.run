@@ -1,6 +1,6 @@
 # Global Config
 
-The smallweb config is located at `~/.config/smallweb/config.json[c]`. It is a json file that defines global settings for smallweb.
+The smallweb config is located at `$SMALLWEB_DIR/.smallweb/config.json`. It is a json file that defines global settings for smallweb.
 
 You can also specify a custom config file by setting the `SMALLWEB_CONFIG` environment variable.
 

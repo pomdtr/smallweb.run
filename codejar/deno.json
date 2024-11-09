@@ -1,0 +1,21 @@
+{
+  "name": "@pomdtr/smallweb-codejar",
+  "version": "0.3.5",
+  "license": "MIT",
+  "exports": {
+    ".": "./mod.ts"
+  },
+  "lock": false,
+  "publish": {
+    "include": [
+      "mod.ts",
+      "README.md"
+    ]
+  },
+  "imports": {
+    "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.3.0",
+    "@smallweb/ctx": "jsr:@smallweb/ctx@^0.1.1",
+    "@std/http": "jsr:@std/http@^1.0.9",
+    "@std/path": "jsr:@std/path@^1.0.6"
+  }
+}

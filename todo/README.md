@@ -4,9 +4,9 @@ This website list what's next for [smallweb](https://smallweb.run).
 
 You can view the source at <https://github.smallweb.run/todo/main.ts>.
 
-## store app data in app folder ?
+## Smallweb SDK
 
-## consider CNAME
+Instead of a rest api, smallweb should include a sdk, that interact directly with the filesystem.
 
 ## add back @ record
 
@@ -92,10 +92,6 @@ mutagen sync create \
 ## Automatic backups to github / git repository
 
 ## Integrations
-
-### Telegram Bot
-
-- Distributed as a smallweb app
 
 ### Raycast Extension
 

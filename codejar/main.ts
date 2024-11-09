@@ -1,10 +1,10 @@
-import { codejar } from "@pomdtr/smallweb-codejar";
+import { codejar } from "./mod.ts";
 import { lastlogin } from "@pomdtr/lastlogin";
 import { getContext } from "@smallweb/ctx";
 
-const { dir } = getContext();
+const { app } = getContext();
 
-const handler = codejar(dir);
+const handler = codejar(app.dir);
 
 export default {
     fetch: lastlogin(handler.fetch, {

@@ -1,24 +1,37 @@
 import * as path from "@std/path";
-import { getContext } from "@smallweb/ctx";
+import * as http from "@std/http";
 
 type App = {
   fetch: (req: Request) => Response | Promise<Response>;
 };
 
-export function codejar(): App {
-  const ctx = getContext();
+export type CodejarOptions = {
+  urlRoot?: string;
+};
 
+export function codejar(rootDir: string, options: CodejarOptions = {}): App {
   return {
     fetch: async (req: Request) => {
       const url = new URL(req.url);
-      if (url.pathname == "/") {
-        const usage = `Usage: ${url.origin}/<app>/<file>`;
-        return new Response(usage, { status: 400 });
+      const filepath = path.join(rootDir, url.pathname);
+      const stat = await Deno.stat(filepath).catch(() => null);
+      if (!stat) {
+        return new Response("File not found", { status: 404 });
+      }
+
+      if (stat.isDirectory) {
+        return http.serveDir(req, {
+          fsRoot: rootDir,
+          showDirListing: true,
+          showIndex: false,
+          showDotfiles: true,
+          urlRoot: options.urlRoot,
+        });
       }
 
       if (req.method == "POST") {
         await Deno.writeTextFile(
-          path.join(ctx.dir, url.pathname),
+          path.join(rootDir, url.pathname),
           await req.text(),
         );
         return new Response("File created", { status: 200 });
@@ -30,7 +43,7 @@ export function codejar(): App {
 
       if (req.headers.get("accept") == "text/plain") {
         const content = await Deno.readTextFile(
-          path.join(ctx.dir, url.pathname),
+          path.join(rootDir, url.pathname),
         );
         return new Response(content, {
           headers: {
@@ -108,6 +121,7 @@ const homepage = /* html */ `<html lang="en">
       'css': 'css',
       'md': 'markdown',
       'json': 'json',
+      'env': 'bash',
       'jsonl': 'json',
       'jsx': 'jsx',
       'tsx': 'tsx',
@@ -118,6 +132,7 @@ const homepage = /* html */ `<html lang="en">
 
   const jar = CodeJar(editor, highlight, {
     tab: '  ',
+    addClosing: false
   })
 
   const resp = await fetch(window.location.href, {
@@ -165,6 +180,7 @@ const homepage = /* html */ `<html lang="en">
   });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-markdown.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-typescript.min.js"></script>

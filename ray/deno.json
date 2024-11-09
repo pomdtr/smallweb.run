@@ -12,5 +12,8 @@
             "mod.ts",
             "README.md"
         ]
+    },
+    "imports": {
+        "@std/http": "jsr:@std/http@^1.0.9"
     }
 }
