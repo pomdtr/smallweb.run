@@ -1,4 +1,9 @@
-import { deleteCookie, getCookies, setCookie } from "@std/http/cookie";
+import {
+    type Cookie,
+    deleteCookie,
+    getCookies,
+    setCookie,
+} from "@std/http/cookie";
 import { sign, verify } from "hono/jwt";
 
 const JWT_COOKIE = "lastlogin_jwt";
@@ -26,13 +31,13 @@ export type LastLoginOptions = {
 
     /**
      * An array of route paths that do not require authentication.
-     * @default undefined
+     * @default []
      */
     publicRoutes?: string[];
 
     /**
      * An array of route paths that require authentication.
-     * @default undefined
+     * @default []
      */
     privateRoutes?: string[];
 
@@ -96,6 +101,13 @@ export function lastlogin(
         return isPublic;
     };
 
+    const cookieAttrs: Partial<Cookie> = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "Lax",
+        path: "/",
+    };
+
     const secretKey = options.secretKey || Deno.env.get("LASTLOGIN_SECRET_KEY");
     if (!secretKey) {
         throw new Error("Secret key is required");
@@ -157,12 +169,9 @@ export function lastlogin(
                 exp,
             }, secretKey);
 
-            deleteCookie(res.headers, OAUTH_COOKIE);
+            deleteCookie(res.headers, OAUTH_COOKIE, cookieAttrs);
             setCookie(res.headers, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "Lax",
-                path: "/",
+                ...cookieAttrs,
                 expires: new Date(exp * 1000),
                 name: JWT_COOKIE,
                 value: jwt,
@@ -186,7 +195,7 @@ export function lastlogin(
                 },
             });
 
-            deleteCookie(res.headers, JWT_COOKIE);
+            deleteCookie(res.headers, JWT_COOKIE, cookieAttrs);
             return res;
         }
 
@@ -216,12 +225,9 @@ export function lastlogin(
                     Location: authUrl.toString(),
                 },
             });
-            deleteCookie(res.headers, JWT_COOKIE);
+            deleteCookie(res.headers, JWT_COOKIE, cookieAttrs);
             setCookie(res.headers, {
-                httpOnly: true,
-                secure: true,
-                sameSite: "Lax",
-                path: "/",
+                ...cookieAttrs,
                 name: OAUTH_COOKIE,
                 value: encodeURIComponent(
                     JSON.stringify(
