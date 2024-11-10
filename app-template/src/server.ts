@@ -6,6 +6,6 @@ export type ServerParams = {
 
 export function createServer(params: ServerParams) {
     return new Hono().get("/", (c) => {
-        return c.text(`Hello ${params.name}`);
+        return c.text(`Hello ${params.name}!`);
     });
 }
