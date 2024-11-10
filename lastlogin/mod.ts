@@ -4,7 +4,7 @@ import {
     getCookies,
     setCookie,
 } from "@std/http/cookie";
-import { sign, verify } from "hono/jwt";
+import * as jwt from "@hono/hono/jwt";
 
 const JWT_COOKIE = "lastlogin_jwt";
 const OAUTH_COOKIE = "oauth_store";
@@ -182,7 +182,7 @@ export function lastlogin(
                 },
             });
             const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
-            const jwt = await sign({
+            const token = await jwt.sign({
                 email,
                 exp,
             }, secretKey);
@@ -192,7 +192,7 @@ export function lastlogin(
                 ...cookieAttrs,
                 expires: new Date(exp * 1000),
                 name: JWT_COOKIE,
-                value: jwt,
+                value: token,
             });
 
             return res;
@@ -218,10 +218,10 @@ export function lastlogin(
         }
 
         const cookies = getCookies(req.headers);
-        const jwt = await verify(cookies[JWT_COOKIE], secretKey).catch(() =>
-            null
+        const payload = await jwt.verify(cookies[JWT_COOKIE], secretKey).catch(
+            () => null,
         );
-        if (!jwt || !jwt.email || typeof jwt.email != "string") {
+        if (!payload || typeof payload.email != "string") {
             if (isPublicRoute(req.url)) {
                 return next(req);
             }
@@ -260,13 +260,13 @@ export function lastlogin(
             return res;
         }
 
-        req.headers.set("X-LastLogin-Email", jwt.email);
+        req.headers.set("X-LastLogin-Email", payload.email);
         if (isPublicRoute(req.url)) {
             return next(req);
         }
 
         if (
-            options.verifyEmail && !(await options.verifyEmail(jwt.email))
+            options.verifyEmail && !(await options.verifyEmail(payload.email))
         ) {
             return new Response(
                 "You do not have permission to access this page",
