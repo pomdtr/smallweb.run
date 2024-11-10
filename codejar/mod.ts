@@ -1,63 +1,59 @@
 import * as path from "@std/path";
 import * as http from "@std/http";
 
-type App = {
-  fetch: (req: Request) => Response | Promise<Response>;
-};
-
 export type CodejarOptions = {
   urlRoot?: string;
 };
 
-export function codejar(rootDir: string, options: CodejarOptions = {}): App {
-  return {
-    fetch: async (req: Request) => {
-      const url = new URL(req.url);
-      const filepath = path.join(rootDir, url.pathname);
-      const stat = await Deno.stat(filepath).catch(() => null);
-      if (!stat) {
-        return new Response("File not found", { status: 404 });
-      }
+export class Codejar {
+  constructor(public rootDir: string, public options: CodejarOptions = {}) {}
 
-      if (stat.isDirectory) {
-        return http.serveDir(req, {
-          fsRoot: rootDir,
-          showDirListing: true,
-          showIndex: false,
-          showDotfiles: true,
-          urlRoot: options.urlRoot,
-        });
-      }
+  fetch = async (req: Request): Promise<Response> => {
+    const url = new URL(req.url);
+    const filepath = path.join(this.rootDir, url.pathname);
+    const stat = await Deno.stat(filepath).catch(() => null);
+    if (!stat) {
+      return new Response("File not found", { status: 404 });
+    }
 
-      if (req.method == "POST") {
-        await Deno.writeTextFile(
-          path.join(rootDir, url.pathname),
-          await req.text(),
-        );
-        return new Response("File created", { status: 200 });
-      }
+    if (stat.isDirectory) {
+      return http.serveDir(req, {
+        fsRoot: this.rootDir,
+        showDirListing: true,
+        showIndex: false,
+        showDotfiles: true,
+        urlRoot: this.options.urlRoot,
+      });
+    }
 
-      if (req.method != "GET") {
-        return new Response("Method not allowed", { status: 405 });
-      }
+    if (req.method == "POST") {
+      await Deno.writeTextFile(
+        path.join(this.rootDir, url.pathname),
+        await req.text(),
+      );
+      return new Response("File created", { status: 200 });
+    }
 
-      if (req.headers.get("accept") == "text/plain") {
-        const content = await Deno.readTextFile(
-          path.join(rootDir, url.pathname),
-        );
-        return new Response(content, {
-          headers: {
-            "Content-Type": "text/plain",
-          },
-        });
-      }
+    if (req.method != "GET") {
+      return new Response("Method not allowed", { status: 405 });
+    }
 
-      return new Response(homepage, {
+    if (req.headers.get("accept") == "text/plain") {
+      const content = await Deno.readTextFile(
+        path.join(this.rootDir, url.pathname),
+      );
+      return new Response(content, {
         headers: {
-          "Content-Type": "text/html",
+          "Content-Type": "text/plain",
         },
       });
-    },
+    }
+
+    return new Response(homepage, {
+      headers: {
+        "Content-Type": "text/html",
+      },
+    });
   };
 }
 

@@ -37,7 +37,7 @@
       "containerId": null,
       "originalText": "Find the source of this website at:",
       "lineHeight": 1.25,
-      "baseline": 18
+      "baseline": 20.0593584370881
     },
     {
       "type": "text",
@@ -73,7 +73,7 @@
       "containerId": null,
       "originalText": "https://github.smallweb.run/excalidraw",
       "lineHeight": 1.25,
-      "baseline": 18
+      "baseline": 19
     },
     {
       "type": "image",
@@ -142,7 +142,7 @@
       "containerId": null,
       "originalText": "Omg, does it work?\n",
       "lineHeight": 1.25,
-      "baseline": 119
+      "baseline": 123.15356839623206
     },
     {
       "type": "rectangle",
@@ -8920,8 +8920,8 @@
     },
     {
       "type": "freedraw",
-      "version": 200,
-      "versionNonce": 1349108040,
+      "version": 229,
+      "versionNonce": 669878572,
       "isDeleted": false,
       "id": "na-ATLFyl3N6JEcD8GXwS",
       "fillStyle": "solid",
@@ -8930,8 +8930,8 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": 387.7877886379547,
-      "y": 42.80097823041615,
+      "x": 397.7877886379547,
+      "y": 111.80097823041615,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
       "width": 142,
@@ -8941,7 +8941,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1731108547363,
+      "updated": 1731238016019,
       "link": null,
       "locked": false,
       "points": [
@@ -18160,7 +18160,7 @@
       "containerId": null,
       "originalText": "Coucou HIL ! ",
       "lineHeight": 1.25,
-      "baseline": 160
+      "baseline": 174.35632234760257
     }
   ],
   "appState": {

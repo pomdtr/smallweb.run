@@ -12,6 +12,9 @@ const OAUTH_COOKIE = "oauth_store";
 /**
  * Options for configuring the LastLogin module.
  */
+/**
+ * Options for configuring the LastLogin service.
+ */
 export type LastLoginOptions = {
     /**
      * A function to verify the email address.
@@ -20,9 +23,20 @@ export type LastLoginOptions = {
     verifyEmail?: (email: string) => Promise<boolean> | boolean;
 
     /**
+     * The domain of the login service.
+     * @default "lastlogin.io"
+     */
+    domain?: string;
+
+    /**
      * The provider name for the login service.
      */
-    provider?: string;
+    provider?:
+        | "google"
+        | "github"
+        | "facebook"
+        | "gitlab"
+        | "hello";
 
     /**
      * Indicates that all routes require authentication.
@@ -101,6 +115,10 @@ export function lastlogin(
         return isPublic;
     };
 
+    const {
+        domain = "lastlogin.io",
+    } = options;
+
     const cookieAttrs: Partial<Cookie> = {
         httpOnly: true,
         secure: true,
@@ -134,7 +152,7 @@ export function lastlogin(
                 return new Response("code not found", { status: 400 });
             }
 
-            const tokenUrl = new URL("https://lastlogin.net/token");
+            const tokenUrl = new URL(`https://${domain}/token`);
             tokenUrl.searchParams.set("client_id", clientID);
             tokenUrl.searchParams.set("code", code);
             tokenUrl.searchParams.set("redirect_uri", redirectUri);
@@ -150,7 +168,7 @@ export function lastlogin(
                 access_token: string;
             };
 
-            const resp = await fetch("https://lastlogin.net/userinfo", {
+            const resp = await fetch(`https://${domain}/userinfo`, {
                 headers: {
                     Authorization: `Bearer ${access_token}`,
                 },
@@ -209,7 +227,7 @@ export function lastlogin(
             }
 
             const state = crypto.randomUUID();
-            const authUrl = new URL("https://lastlogin.net/auth");
+            const authUrl = new URL(`https://${domain}/auth`);
             if (options.provider) {
                 authUrl.searchParams.set("provider", options.provider);
             }

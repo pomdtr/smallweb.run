@@ -1,32 +1,31 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@pomdtr/lastlogin@0.3": "0.3.0",
-    "jsr:@pomdtr/smallweb-codejar@~0.3.5": "0.3.5",
+    "jsr:@pomdtr/lastlogin@0.4": "0.4.1",
+    "jsr:@pomdtr/smallweb-codejar@0.4": "0.4.0",
     "jsr:@smallweb/ctx@~0.1.1": "0.1.1",
     "jsr:@std/cli@^1.0.6": "1.0.6",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@^1.0.3": "1.0.3",
-    "jsr:@std/fs@^1.0.5": "1.0.5",
     "jsr:@std/http@^1.0.9": "1.0.9",
     "jsr:@std/media-types@^1.0.3": "1.0.3",
     "jsr:@std/net@^1.0.4": "1.0.4",
     "jsr:@std/path@^1.0.6": "1.0.8",
     "jsr:@std/path@^1.0.7": "1.0.8",
     "jsr:@std/path@^1.0.8": "1.0.8",
-    "jsr:@std/streams@^1.0.7": "1.0.8"
+    "jsr:@std/streams@^1.0.7": "1.0.8",
+    "npm:hono@^4.6.9": "4.6.9"
   },
   "jsr": {
-    "@pomdtr/lastlogin@0.3.0": {
-      "integrity": "0a2c634e990c627bb53a2f66132ee2a847a90a8a190f01c96f9d71d237a6ec53",
+    "@pomdtr/lastlogin@0.4.1": {
+      "integrity": "60d67dcb87399ed014847281582ad1f91fa15829c29428a8f0d135c1dee042ec",
       "dependencies": [
-        "jsr:@std/fs",
         "jsr:@std/http",
-        "jsr:@std/path@^1.0.8"
+        "npm:hono"
       ]
     },
-    "@pomdtr/smallweb-codejar@0.3.5": {
-      "integrity": "8c1334302d67215341ea5316eaf0c029035d107441830779a4e02a9dcc0f83a4",
+    "@pomdtr/smallweb-codejar@0.4.0": {
+      "integrity": "b0a627e75df0d75e6fbeb33b78c151c8156150dba03ebbe455e8ca59922f27ca",
       "dependencies": [
         "jsr:@std/http",
         "jsr:@std/path@^1.0.6"
@@ -43,12 +42,6 @@
     },
     "@std/fmt@1.0.3": {
       "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
-    },
-    "@std/fs@1.0.5": {
-      "integrity": "41806ad6823d0b5f275f9849a2640d87e4ef67c51ee1b8fb02426f55e02fd44e",
-      "dependencies": [
-        "jsr:@std/path@^1.0.7"
-      ]
     },
     "@std/http@1.0.9": {
       "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c",
@@ -75,10 +68,15 @@
       "integrity": "b41332d93d2cf6a82fe4ac2153b930adf1a859392931e2a19d9fabfb6f154fb3"
     }
   },
+  "npm": {
+    "hono@4.6.9": {
+      "integrity": "sha512-p/pN5yZLuZaHzyAOT2nw2/Ud6HhJHYmDNGH6Ck1OWBhPMVeM1r74jbCRwNi0gyFRjjbsGgoHbOyj7mT1PDNbTw=="
+    }
+  },
   "workspace": {
     "dependencies": [
-      "jsr:@pomdtr/lastlogin@0.3",
-      "jsr:@pomdtr/smallweb-codejar@~0.3.5",
+      "jsr:@pomdtr/lastlogin@0.4",
+      "jsr:@pomdtr/smallweb-codejar@0.4",
       "jsr:@smallweb/ctx@~0.1.1"
     ]
   }

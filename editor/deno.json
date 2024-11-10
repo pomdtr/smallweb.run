@@ -1,7 +1,7 @@
 {
   "imports": {
-    "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.3.0",
-    "@pomdtr/smallweb-codejar": "jsr:@pomdtr/smallweb-codejar@^0.3.5",
+    "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.4.0",
+    "@pomdtr/smallweb-codejar": "jsr:@pomdtr/smallweb-codejar@^0.4.0",
     "@smallweb/ctx": "jsr:@smallweb/ctx@^0.1.1"
   }
 }

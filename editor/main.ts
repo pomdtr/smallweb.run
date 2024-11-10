@@ -1,13 +1,9 @@
-import { codejar } from "@pomdtr/smallweb-codejar";
+import { Codejar } from "@pomdtr/smallweb-codejar";
 import { lastlogin } from "@pomdtr/lastlogin";
-import { getContext } from "@smallweb/ctx";
 
-const { dir } = getContext();
-
-const handler = codejar(dir);
-
+const codejar = new Codejar("..");
 export default {
-    fetch: lastlogin(handler.fetch, {
+    fetch: lastlogin(codejar.fetch, {
         private: true,
         verifyEmail: (email) => {
             return email === Deno.env.get("EMAIL");
