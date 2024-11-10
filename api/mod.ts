@@ -11,30 +11,88 @@ import * as cli from "@std/cli";
 
 extendZodWithOpenApi(z);
 
-type App = {
-    fetch: (req: Request) => Response | Promise<Response>;
-    run: (args: string[]) => Promise<void>;
-};
-
 export type ApiOptions = {
     dir?: string;
     domain?: string;
 };
 
-export function createApi(options: ApiOptions = {}): App {
-    const {
-        dir = Deno.env.get("SMALLWEB_DIR"),
-        domain = Deno.env.get("SMALLWEB_DOMAIN"),
-    } = options;
+export class Api {
+    private requestHandler;
+    constructor(opts: ApiOptions = {}) {
+        const {
+            dir = Deno.env.get("SMALLWEB_DIR"),
+            domain = Deno.env.get("SMALLWEB_DOMAIN"),
+        } = opts;
 
-    if (!dir) {
-        throw new Error("no dir provided");
+        if (!dir) {
+            throw new Error("dir is required");
+        }
+
+        if (!domain) {
+            throw new Error("domain is required");
+        }
+
+        this.requestHandler = createRequestHandler(dir, domain);
     }
 
-    if (!domain) {
-        throw new Error("no domain provided");
-    }
+    fetch = (req: Request): Response | Promise<Response> => {
+        return this.requestHandler.fetch(req);
+    };
 
+    run = async (args: string[]): Promise<void> => {
+        const { _, ...flags } = await cli.parseArgs(args, {
+            string: ["_", "headers", "method", "data"],
+            boolean: ["help"],
+            alias: {
+                help: "h",
+                data: "d",
+                headers: "H",
+                method: "X",
+            },
+            collect: ["headers"],
+        });
+
+        if (flags.help) {
+            console.log(`Usage: cli [options] <url>
+
+Options:
+  -X, --method <method>       Specify the HTTP method to use (GET, POST, etc.)
+  -d, --data <data>           Send specified data in the request body
+  -H, --headers <header>      Add a header to the request (can be used multiple times)
+  -h, --help                  Display this help message
+
+Arguments:
+  <url>                       The URL to send the request to
+
+Examples:
+  cli -X POST -d "name=value" -H "Content-Type: application/json" https://example.com
+  cli -X GET -H "Accept: application/json" https://example.com
+`);
+            return;
+        }
+
+        if (_.length === 0) {
+            console.error("No path provided");
+            Deno.exit(1);
+        }
+
+        const path = _[0];
+        const headers = new Headers();
+        for (const header of flags.headers || []) {
+            const [name, value] = header.split(":");
+            headers.set(name, value);
+        }
+
+        const resp = await this.requestHandler.request(path, {
+            method: flags.method,
+            body: flags.data,
+            headers,
+        });
+        console.log(await resp.text());
+    };
+}
+
+function createRequestHandler(dir: string, domain: string) {
     const app = new Hono();
 
     app.get(
@@ -228,60 +286,7 @@ export function createApi(options: ApiOptions = {}): App {
         { routeName: "/openapi.json" },
     );
 
-    return {
-        fetch: app.fetch,
-        async run(args: string[]) {
-            const { _, ...flags } = await cli.parseArgs(args, {
-                string: ["_", "headers", "method", "data"],
-                boolean: ["help"],
-                alias: {
-                    help: "h",
-                    data: "d",
-                    headers: "H",
-                    method: "X",
-                },
-                collect: ["headers"],
-            });
-
-            if (flags.help) {
-                console.log(`Usage: cli [options] <url>
-
-Options:
-  -X, --method <method>       Specify the HTTP method to use (GET, POST, etc.)
-  -d, --data <data>           Send specified data in the request body
-  -H, --headers <header>      Add a header to the request (can be used multiple times)
-  -h, --help                  Display this help message
-
-Arguments:
-  <url>                       The URL to send the request to
-
-Examples:
-  cli -X POST -d "name=value" -H "Content-Type: application/json" https://example.com
-  cli -X GET -H "Accept: application/json" https://example.com
-`);
-                return;
-            }
-
-            if (_.length === 0) {
-                console.error("No path provided");
-                Deno.exit(1);
-            }
-
-            const path = _[0];
-            const headers = new Headers();
-            for (const header of flags.headers || []) {
-                const [name, value] = header.split(":");
-                headers.set(name, value);
-            }
-
-            const resp = await app.request(path, {
-                method: flags.method,
-                body: flags.data,
-                headers,
-            });
-            console.log(await resp.text());
-        },
-    };
+    return app;
 }
 
 const template = /* ts */ `export default {

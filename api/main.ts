@@ -1,7 +1,7 @@
 import { bearerAuth } from "jsr:@pomdtr/bearer-auth@0.1.0";
-import { createApi } from "./mod.ts";
+import { Api } from "./mod.ts";
 
-const api = createApi();
+const api = new Api();
 
 export default {
     fetch: bearerAuth(api.fetch, {

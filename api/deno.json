@@ -1,6 +1,6 @@
 {
   "name": "@smallweb/api",
-  "version": "0.5.0",
+  "version": "0.6.1",
   "exports": "./mod.ts",
   "license": "MIT",
   "imports": {
@@ -13,6 +13,7 @@
   "publish": {
     "include": [
       "mod.ts",
+      "img/*",
       "swagger.ts",
       "README.md"
     ]

@@ -2,12 +2,4 @@
 
 set -e
 
-# check if jq is installed
-if ! command -v jq &> /dev/null; then
-  echo "jq is required to run this command"
-  exit 1
-fi
-
-SMALLWEB_DIR="$(smallweb config --json | jq -r .dir)"
-
-code "${SMALLWEB_DIR/#\~/$HOME}/$1"
+code "${SMALLWEB_DIR}/$1"
