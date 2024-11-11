@@ -90,6 +90,7 @@ export class FileServer {
 const fileServer: FileServer = new FileServer({
     transform: true,
     showDirListing: true,
+    enableCors: true,
 });
 
 export default fileServer;

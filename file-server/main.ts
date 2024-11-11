@@ -1,6 +1,9 @@
 import { FileServer } from "./mod.ts";
 
-export default new FileServer({
+const fileServer = new FileServer({
     fsRoot: "./static",
     transform: true,
+    enableCors: true,
 });
+
+export default fileServer;
