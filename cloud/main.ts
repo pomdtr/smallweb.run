@@ -1,6 +1,6 @@
 import { JSONFilePreset } from "npm:lowdb@7.0.1/node";
 import { serveFile } from "jsr:@std/http";
-import { lastlogin } from "jsr:@pomdtr/lastlogin@0.2.6";
+import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.2";
 import * as cli from "jsr:@std/cli";
 
 type Data = {
@@ -36,10 +36,8 @@ const handleRequest = async (req: Request) => {
 
 export default {
     fetch: lastlogin(handleRequest, {
-        verifyEmail: (email) => {
-            return email === Deno.env.get("EMAIL");
-        },
-        private_routes: ["/db.json"],
+        public: true,
+        privateRoutes: ["/db.json"],
     }),
     run(args: string[]) {
         const flags = cli.parseArgs(args, {

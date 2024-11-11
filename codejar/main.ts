@@ -1,16 +1,8 @@
 import { Codejar } from "./mod.ts";
-import { lastlogin } from "@pomdtr/lastlogin";
-import { getContext } from "@smallweb/ctx";
+import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.2";
 
-const { app } = getContext();
-
-const codejar = new Codejar(app.dir);
+const codejar = new Codejar(".");
 
 export default {
-    fetch: lastlogin(codejar.fetch, {
-        private: true,
-        verifyEmail: (email) => {
-            return email === Deno.env.get("EMAIL");
-        },
-    }),
+    fetch: lastlogin(codejar.fetch),
 };
