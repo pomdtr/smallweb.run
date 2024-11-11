@@ -7,10 +7,6 @@ const readme = new Readme({
 
 export default {
     fetch: lastlogin(readme.fetch, {
-        verifyEmail: (email) => {
-            return email === Deno.env.get("EMAIL");
-        },
-        provider: "google",
-        public_routes: ["/cloud"],
+        public_routes: ["/cloud", "/todo"],
     }),
 };

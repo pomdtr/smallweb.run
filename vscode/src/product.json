@@ -1,0 +1,20 @@
+{
+    "productConfiguration": {
+        "nameShort": "VSCode Web Sample",
+        "nameLong": "VSCode Web without FileSystemProvider",
+        "applicationName": "code-web-sample",
+        "dataFolderName": ".vscode-web-sample",
+        "version": "1.75.0",
+        "extensionsGallery": {
+            "serviceUrl": "https://open-vsx.org/vscode/gallery",
+            "itemUrl": "https://open-vsx.org/vscode/item",
+            "resourceUrlTemplate": "https://openvsxorg.blob.core.windows.net/resources/{publisher}/{name}/{version}/{path}"
+        },
+        "extensionEnabledApiProposals": {
+            "vscode.vscode-web-playground": [
+                "fileSearchProvider",
+                "textSearchProvider"
+            ]
+        }
+    }
+}

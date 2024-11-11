@@ -1,3 +1,5 @@
-import { telegram } from "./mod.ts"
+import { Telegram } from "./mod.ts";
 
-export default telegram(1751933281)
+export default new Telegram({
+    chatID: "1751933281",
+});

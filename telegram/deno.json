@@ -1,6 +1,7 @@
 {
-    "name": "@smallweb/telegram",
+    "name": "@pomdtr/telegram",
     "version": "0.0.1",
+    "license": "MIT",
     "lock": false,
     "exports": {
         ".": "./mod.ts"

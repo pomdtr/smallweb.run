@@ -12,20 +12,15 @@ export class HelloWorld {
     constructor(config: HelloWorldConfig = {}) {
         const { name = "smallweb" } = config;
 
-        this.server = createServer({
-            name,
-        });
-
-        this.cli = createCli({
-            name,
-        });
+        this.server = createServer({ name });
+        this.cli = createCli({ name });
     }
 
-    fetch = (req: Request): Response | Promise<Response> => {
+    fetch: (req: Request) => Response | Promise<Response> = (req) => {
         return this.server.fetch(req);
     };
 
-    run = async (args: string[]): Promise<void> => {
+    run: (args: string[]) => void | Promise<void> = async (args) => {
         await this.cli.parse(args);
     };
 }

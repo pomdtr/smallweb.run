@@ -1,0 +1,17 @@
+{
+    "name": "@smallweb/file-server",
+    "version": "0.3.0",
+    "exports": "./mod.ts",
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "mod.ts",
+            "README.md"
+        ]
+    },
+    "imports": {
+        "@deno/emit": "jsr:@deno/emit@^0.45.0",
+        "@std/http": "jsr:@std/http@^1.0.0",
+        "@std/path": "jsr:@std/path@^1.0.6"
+    }
+}

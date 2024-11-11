@@ -5,7 +5,10 @@
     "jsr:@cliffy/flags@1.0.0-rc.7": "1.0.0-rc.7",
     "jsr:@cliffy/internal@1.0.0-rc.7": "1.0.0-rc.7",
     "jsr:@cliffy/table@1.0.0-rc.7": "1.0.0-rc.7",
+    "jsr:@hono/hono@^4.6.9": "4.6.9",
+    "jsr:@pomdtr/lastlogin@0.5.2": "0.5.2",
     "jsr:@std/fmt@~1.0.2": "1.0.3",
+    "jsr:@std/http@^1.0.9": "1.0.9",
     "jsr:@std/text@~1.0.7": "1.0.8",
     "npm:hono@^4.6.9": "4.6.9"
   },
@@ -35,8 +38,21 @@
         "jsr:@std/fmt"
       ]
     },
+    "@hono/hono@4.6.9": {
+      "integrity": "4d4975f5c023d4416d26e6dd4a498c56e59958561733f56f55a9be57f023603b"
+    },
+    "@pomdtr/lastlogin@0.5.2": {
+      "integrity": "9c9a8b16ceea21149b010ae2f088e6097a8b512dcebc4554dbc1ddc84cd5e15c",
+      "dependencies": [
+        "jsr:@hono/hono",
+        "jsr:@std/http"
+      ]
+    },
     "@std/fmt@1.0.3": {
       "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
+    },
+    "@std/http@1.0.9": {
+      "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c"
     },
     "@std/text@1.0.8": {
       "integrity": "40ba34caa095f393e78796e5eda37b8b4e2cc6cfd6f51f34658ad7487b1451e4"

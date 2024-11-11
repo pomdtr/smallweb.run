@@ -9,7 +9,11 @@ type ReadmeOptions = {
   editorUrl?: string;
 };
 
-export class Readme {
+export interface App {
+  fetch(req: Request): Response | Promise<Response>;
+}
+
+export class Readme implements App {
   constructor(public options: ReadmeOptions = {}) {}
 
   fetch = async (req: Request) => {
