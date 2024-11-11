@@ -5,6 +5,8 @@ const readme = new Readme({
     editorUrl: "https://editor.smallweb.run",
 });
 
-readme.fetch = lastlogin(readme.fetch);
+readme.fetch = lastlogin(readme.fetch, {
+    publicRoutes: ["/todo", "/cloud"],
+});
 
 export default readme;

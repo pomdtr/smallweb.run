@@ -4,7 +4,13 @@ import { transpile } from "@deno/emit";
 
 const cache = await caches.open("file-server");
 
-type FileServerConfig = { transform?: boolean } & http.ServeDirOptions;
+type FileServerConfig = {
+    /**
+     * Whether to transpile files with .ts, .jsx or .tsx extensions to javascript.
+     * @default false
+     */
+    transpile?: boolean;
+} & http.ServeDirOptions;
 
 export class FileServer {
     constructor(private config: FileServerConfig = {}) {}
@@ -18,7 +24,7 @@ export class FileServer {
 
         const extension = path.extname(url.pathname);
         if (
-            this.config.transform && [".ts", ".tsx", ".jsx"].includes(extension)
+            this.config.transpile && [".ts", ".tsx", ".jsx"].includes(extension)
         ) {
             console.error("Transforming", url.href);
             const cached = await cache.match(req);
@@ -92,7 +98,7 @@ export class FileServer {
 }
 
 const fileServer: FileServer = new FileServer({
-    transform: true,
+    transpile: true,
     showDirListing: true,
     enableCors: true,
 });
