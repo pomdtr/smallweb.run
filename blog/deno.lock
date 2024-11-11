@@ -7,6 +7,7 @@
     "jsr:@hono/hono@4.4.6": "4.4.6",
     "jsr:@smallweb/file-server@*": "0.0.1",
     "jsr:@smallweb/file-server@0.3.0": "0.3.0",
+    "jsr:@smallweb/file-server@0.3.2": "0.3.2",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@0.224": "0.224.0",
     "jsr:@std/assert@0.226": "0.226.0",
@@ -138,6 +139,14 @@
     },
     "@smallweb/file-server@0.3.0": {
       "integrity": "815a6f23b8b3dce801fac956bfffd465b0be1080c5b2b89500b92f5f890f7c7f",
+      "dependencies": [
+        "jsr:@deno/emit",
+        "jsr:@std/http@1",
+        "jsr:@std/path@^1.0.6"
+      ]
+    },
+    "@smallweb/file-server@0.3.2": {
+      "integrity": "0a7a9703d9007297f5127c42a8d1d8436d8a6b48f90043b8dcdaba3a1a103774",
       "dependencies": [
         "jsr:@deno/emit",
         "jsr:@std/http@1",

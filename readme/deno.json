@@ -1,6 +1,6 @@
 {
-  "name": "@pomdtr/smallweb-codejar",
-  "version": "0.1.4",
+  "name": "@pomdtr/smallweb-readme",
+  "version": "0.1.5",
   "license": "MIT",
   "imports": {
     "@deno/gfm": "jsr:@deno/gfm@^0.10.0",

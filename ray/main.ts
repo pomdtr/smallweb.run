@@ -1,16 +1,9 @@
-import { ray } from "./mod.ts";
-import { lastlogin } from "jsr:@pomdtr/lastlogin@0.2.6";
+import { Ray } from "./mod.ts";
+import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.2";
 
-const rootDir = Deno.env.get("SMALLWEB_DIR")!;
+const { SMALLWEB_DIR } = Deno.env.toObject();
 
-const app = ray(rootDir);
+const ray = new Ray(SMALLWEB_DIR);
+ray.fetch = lastlogin(ray.fetch);
 
-export default {
-    fetch: lastlogin(app.fetch, {
-        private: true,
-        verifyEmail: (email) => {
-            return email === Deno.env.get("EMAIL");
-        },
-        provider: "google",
-    }),
-};
+export default ray;

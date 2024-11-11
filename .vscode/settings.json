@@ -15,6 +15,7 @@
             "url": "https://schemas.smallweb.run/config"
         }
     ],
+    "deno.enable": true,
     "deno.disablePaths": [
         "astro"
     ],
@@ -26,6 +27,5 @@
         "**/bower_components": true,
         "**/*.code-search": true,
         "docs": true,
-    },
-    "gitdoc.enabled": true
+    }
 }

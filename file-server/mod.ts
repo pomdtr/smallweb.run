@@ -70,6 +70,10 @@ export class FileServer {
                     status: resp.status,
                 });
 
+                if (this.config.enableCors) {
+                    res.headers.set("Access-Control-Allow-Origin", "*");
+                }
+
                 await cache.put(req, res.clone());
                 return res;
             } catch (e) {

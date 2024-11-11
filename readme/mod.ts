@@ -1,23 +1,19 @@
-import { CSS, render } from "jsr:@deno/gfm";
-import * as path from "jsr:@std/path";
-import * as http from "jsr:@std/http";
+import { CSS, render } from "@deno/gfm";
+import * as path from "@std/path";
+import * as http from "@std/http";
 import "prismjs/components/prism-bash.js";
 import "prismjs/components/prism-typescript.js";
 import "prismjs/components/prism-json.js";
 
-type ReadmeOptions = {
+type ReadmeConfig = {
   editorUrl?: string;
 };
 
-export interface App {
-  fetch(req: Request): Response | Promise<Response>;
-}
+export class Readme {
+  constructor(public config: ReadmeConfig = {}) {}
 
-export class Readme implements App {
-  constructor(public options: ReadmeOptions = {}) {}
-
-  fetch = async (req: Request) => {
-    const { editorUrl } = this.options;
+  fetch: (req: Request) => Response | Promise<Response> = async (req) => {
+    const { editorUrl } = this.config;
     const rootDir = Deno.env.get("SMALLWEB_DIR");
     if (!rootDir) {
       throw new Error(
@@ -55,10 +51,10 @@ export class Readme implements App {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smallweb TODO</title>
     ${
-      this.options.editorUrl
+      this.config.editorUrl
         ? /* html */ `<script type="module" src="https://esm.smallweb.run/dot-shortcut.ts?url=${new URL(
           path.join(url.pathname, "README.md"),
-          this.options.editorUrl,
+          this.config.editorUrl,
         )}"></script>`
         : ""
     }

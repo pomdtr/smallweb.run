@@ -4,8 +4,10 @@
     "jsr:@deno/gfm@*": "0.10.0",
     "jsr:@deno/gfm@0.10": "0.10.0",
     "jsr:@denosaurs/emoji@0.3": "0.3.1",
+    "jsr:@hono/hono@^4.6.9": "4.6.9",
     "jsr:@pomdtr/lastlogin@0.2.1": "0.2.1",
     "jsr:@pomdtr/lastlogin@0.2.2": "0.2.2",
+    "jsr:@pomdtr/lastlogin@0.5.2": "0.5.2",
     "jsr:@smallweb/api@*": "0.1.0",
     "jsr:@smallweb/api@0.1.1": "0.1.1",
     "jsr:@smallweb/sdk@0.1.0": "0.1.0",
@@ -53,6 +55,9 @@
     "@denosaurs/emoji@0.3.1": {
       "integrity": "b0aed5f55dec99e83da7c9637fe0a36d1d6252b7c99deaaa3fc5dea3fcf3da8b"
     },
+    "@hono/hono@4.6.9": {
+      "integrity": "4d4975f5c023d4416d26e6dd4a498c56e59958561733f56f55a9be57f023603b"
+    },
     "@pomdtr/lastlogin@0.2.1": {
       "integrity": "f6ed47d4de4d28d23f166e51aac414e9a5b89f2a2814099e0d5871a5069cbc31",
       "dependencies": [
@@ -66,6 +71,13 @@
         "jsr:@std/fs",
         "jsr:@std/http@^1.0.9",
         "jsr:@std/path@^1.0.8"
+      ]
+    },
+    "@pomdtr/lastlogin@0.5.2": {
+      "integrity": "9c9a8b16ceea21149b010ae2f088e6097a8b512dcebc4554dbc1ddc84cd5e15c",
+      "dependencies": [
+        "jsr:@hono/hono",
+        "jsr:@std/http@^1.0.9"
       ]
     },
     "@smallweb/api@0.1.0": {
