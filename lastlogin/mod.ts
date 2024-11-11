@@ -17,6 +17,12 @@ const OAUTH_COOKIE = "oauth_store";
  */
 export type LastLoginOptions = {
     /**
+     * The email address or addresses of the user.
+     * It can also be passed using the LASTLOGIN_EMAIL environment variable.
+     */
+    email?: string | string[];
+
+    /**
      * A function to verify the email address.
      * It can return a boolean or a Promise that resolves to a boolean.
      */
@@ -39,9 +45,9 @@ export type LastLoginOptions = {
         | "hello";
 
     /**
-     * Indicates that all routes require authentication.
+     * Indicates that authentication is optional.
      */
-    private?: boolean;
+    public?: boolean;
 
     /**
      * An array of route paths that do not require authentication.
@@ -62,7 +68,7 @@ export type LastLoginOptions = {
     secretKey?: string;
 };
 
-type FetchFn = (req: Request) => Response | Promise<Response>;
+type Handler = (req: Request) => Response | Promise<Response>;
 
 /**
  * Middleware function to handle user authentication and session management.
@@ -92,11 +98,39 @@ type FetchFn = (req: Request) => Response | Promise<Response>;
  * };
  */
 export function lastlogin(
-    next: FetchFn,
+    handler: Handler,
     options: LastLoginOptions = {},
-): FetchFn {
+): Handler {
+    const {
+        domain = "lastlogin.io",
+        provider = Deno.env.get("LASTLOGIN_PROVIDER"),
+    } = options;
+
+    const verifyEmail = (email: string) => {
+        if (typeof options.email == "string") {
+            return email == options.email;
+        }
+
+        if (Array.isArray(options.email)) {
+            return options.email.includes(email);
+        }
+
+        if (options.verifyEmail) {
+            return options.verifyEmail(email);
+        }
+
+        const env = Deno.env.get("LASTLOGIN_EMAIL");
+
+        if (!env) {
+            return false;
+        }
+
+        const emails = env.trim().split(",");
+        return emails.includes(email);
+    };
+
     const isPublicRoute = (url: string) => {
-        let isPublic = !options.private;
+        let isPublic = !!options.public;
         for (const pathname of options.privateRoutes ?? []) {
             const pattern = new URLPattern({ pathname });
             if (pattern.test(url)) {
@@ -114,10 +148,6 @@ export function lastlogin(
 
         return isPublic;
     };
-
-    const {
-        domain = "lastlogin.io",
-    } = options;
 
     const cookieAttrs: Partial<Cookie> = {
         httpOnly: true,
@@ -185,6 +215,7 @@ export function lastlogin(
             const token = await jwt.sign({
                 email,
                 exp,
+                domain: url.hostname,
             }, secretKey);
 
             deleteCookie(res.headers, OAUTH_COOKIE, cookieAttrs);
@@ -221,15 +252,18 @@ export function lastlogin(
         const payload = await jwt.verify(cookies[JWT_COOKIE], secretKey).catch(
             () => null,
         );
-        if (!payload || typeof payload.email != "string") {
+        if (
+            !payload || typeof payload.email != "string" ||
+            payload.domain != url.hostname
+        ) {
             if (isPublicRoute(req.url)) {
-                return next(req);
+                return handler(req);
             }
 
             const state = crypto.randomUUID();
             const authUrl = new URL(`https://${domain}/auth`);
-            if (options.provider) {
-                authUrl.searchParams.set("provider", options.provider);
+            if (provider) {
+                authUrl.searchParams.set("provider", provider);
             }
             authUrl.searchParams.set("client_id", clientID);
             authUrl.searchParams.set("redirect_uri", redirectUri);
@@ -262,11 +296,11 @@ export function lastlogin(
 
         req.headers.set("X-LastLogin-Email", payload.email);
         if (isPublicRoute(req.url)) {
-            return next(req);
+            return handler(req);
         }
 
         if (
-            options.verifyEmail && !(await options.verifyEmail(payload.email))
+            !verifyEmail(payload.email)
         ) {
             return new Response(
                 "You do not have permission to access this page",
@@ -276,6 +310,6 @@ export function lastlogin(
             );
         }
 
-        return next(req);
+        return handler(req);
     };
 }
