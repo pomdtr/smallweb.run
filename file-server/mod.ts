@@ -87,7 +87,7 @@ export class FileServer {
     };
 }
 
-export const fileServer: FileServer = new FileServer({
+const fileServer: FileServer = new FileServer({
     transform: true,
     showDirListing: true,
 });

@@ -10,7 +10,6 @@
 - [Environment Variables](./guides/env.md)
 - [Plugins](./guides/plugins.md)
 - [Authentication](./guides/auth.md)
-- [REST Api](./guides/rest.md)
 - [App Sandbox](./guides/sandbox.md)
 
 # Hosting
