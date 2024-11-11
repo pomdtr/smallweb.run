@@ -1,0 +1,34 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@hono/hono@^4.6.9": "4.6.9",
+    "jsr:@pomdtr/lastlogin@0.5.2": "0.5.2",
+    "jsr:@std/http@^1.0.9": "1.0.9",
+    "npm:hono@^4.6.9": "4.6.9"
+  },
+  "jsr": {
+    "@hono/hono@4.6.9": {
+      "integrity": "4d4975f5c023d4416d26e6dd4a498c56e59958561733f56f55a9be57f023603b"
+    },
+    "@pomdtr/lastlogin@0.5.2": {
+      "integrity": "9c9a8b16ceea21149b010ae2f088e6097a8b512dcebc4554dbc1ddc84cd5e15c",
+      "dependencies": [
+        "jsr:@hono/hono",
+        "jsr:@std/http"
+      ]
+    },
+    "@std/http@1.0.9": {
+      "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c"
+    }
+  },
+  "npm": {
+    "hono@4.6.9": {
+      "integrity": "sha512-p/pN5yZLuZaHzyAOT2nw2/Ud6HhJHYmDNGH6Ck1OWBhPMVeM1r74jbCRwNi0gyFRjjbsGgoHbOyj7mT1PDNbTw=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:hono@^4.6.9"
+    ]
+  }
+}
