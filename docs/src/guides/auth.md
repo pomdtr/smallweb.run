@@ -2,12 +2,22 @@
 
 To protect your apps behind authentication, you can make use of a variety of authentication middlewares.
 
-## Basic Authentication
+## Email / Github / Google / Facebook auth using lastlogin.net
 
-The `basicAuth` middleware is useful for protecting non-interactive endpoints. It is a simple middleware that checks for the presence of the `Authorization` header and validates the credentials.
+```sh
+# ~/smallweb/.env
 
-```ts
-
+LASTLOGIN_SECRET_KEY=your-secret-key
+LASTLOGIN_EMAIL=pomdtr@smallweb.run
 ```
 
-## Email / Github / Google / Facebook auth using lastlogin.net
+```ts
+import { lastlogin } from "jsr:@pomdtr/lastlogin";
+
+export default {
+  fetch: lastlogin((req: Request) => {
+    const email = req.headers.get("X-Lastlogin-Email"); // pomdtr@smallweb.run
+    return new Response(`Hello, ${email}!`);
+  }),
+};
+```

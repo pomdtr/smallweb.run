@@ -33,7 +33,7 @@ export function createServer(params: {
             return c.json(
                 entries.filter((entry) =>
                     entry.isDirectory && !entry.name.startsWith(".")
-                ).map((entry) => ({
+                ).sort((a, b) => a.name.localeCompare(b.name)).map((entry) => ({
                     name: entry.name,
                     url: `https://${entry.name}.${params.domain}/`,
                 })),
