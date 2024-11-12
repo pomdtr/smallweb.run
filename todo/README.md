@@ -49,7 +49,7 @@ $ smallweb env set GITHUB_TOKEN "ghp_1234567890"
 
 And it will add the following value to your `.env`:
 
-```txt
+```sh
 GITHUB_TOKEN="encrypted:BNca6YgAAhbdZOm6pifoX0MOfpTdquHe8sMpQZN+VHp9DLo2LpmhRoc1emp99BDta8xU/J9Y8zO5iko/+HrLKxxfXXfAv1nRvVV0ZuhLk+4mcbHl7eqpbFhn5ZBpHzi2e+eSh2nn"
 ```
 
