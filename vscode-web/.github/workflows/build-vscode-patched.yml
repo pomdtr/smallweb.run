@@ -1,0 +1,24 @@
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    name: Build patched VSCode Web artifact
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Build VSCode Web patched
+        run: make vscode-web-patched-artifact
+
+      - name: Upload Release Artifact
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.action_ref }}
+          allowUpdates: true
+          artifacts: "vscode-web*.zip"

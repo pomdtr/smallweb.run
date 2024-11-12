@@ -1,0 +1,8 @@
+{
+    "name": "vscode-dist",
+    "version": "0.95.2",
+    "license": "MIT",
+    "files": [
+        "dist"
+    ]
+}
