@@ -12,9 +12,8 @@
   },
   "publish": {
     "include": [
-      "mod.ts",
-      "img/*",
-      "swagger.ts",
+      "src",
+      "img",
       "README.md"
     ]
   }

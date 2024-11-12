@@ -7,92 +7,13 @@ import { Hono } from "hono";
 import { z } from "zod";
 import * as path from "@std/path";
 import homepage from "./swagger.ts";
-import * as cli from "@std/cli";
 
 extendZodWithOpenApi(z);
 
-export type ApiOptions = {
-    dir?: string;
-    domain?: string;
-};
-
-export class Api {
-    private requestHandler;
-    constructor(opts: ApiOptions = {}) {
-        const {
-            dir = Deno.env.get("SMALLWEB_DIR"),
-            domain = Deno.env.get("SMALLWEB_DOMAIN"),
-        } = opts;
-
-        if (!dir) {
-            throw new Error("dir is required");
-        }
-
-        if (!domain) {
-            throw new Error("domain is required");
-        }
-
-        this.requestHandler = createRequestHandler(dir, domain);
-    }
-
-    fetch = (req: Request): Response | Promise<Response> => {
-        return this.requestHandler.fetch(req);
-    };
-
-    run = async (args: string[]): Promise<void> => {
-        const { _, ...flags } = await cli.parseArgs(args, {
-            string: ["_", "headers", "method", "data"],
-            boolean: ["help"],
-            alias: {
-                help: "h",
-                data: "d",
-                headers: "H",
-                method: "X",
-            },
-            collect: ["headers"],
-        });
-
-        if (flags.help) {
-            console.log(`Usage: cli [options] <url>
-
-Options:
-  -X, --method <method>       Specify the HTTP method to use (GET, POST, etc.)
-  -d, --data <data>           Send specified data in the request body
-  -H, --headers <header>      Add a header to the request (can be used multiple times)
-  -h, --help                  Display this help message
-
-Arguments:
-  <url>                       The URL to send the request to
-
-Examples:
-  cli -X POST -d "name=value" -H "Content-Type: application/json" https://example.com
-  cli -X GET -H "Accept: application/json" https://example.com
-`);
-            return;
-        }
-
-        if (_.length === 0) {
-            console.error("No path provided");
-            Deno.exit(1);
-        }
-
-        const path = _[0];
-        const headers = new Headers();
-        for (const header of flags.headers || []) {
-            const [name, value] = header.split(":");
-            headers.set(name, value);
-        }
-
-        const resp = await this.requestHandler.request(path, {
-            method: flags.method,
-            body: flags.data,
-            headers,
-        });
-        console.log(await resp.text());
-    };
-}
-
-function createRequestHandler(dir: string, domain: string) {
+export function createServer(params: {
+    dir: string;
+    domain: string;
+}) {
     const app = new Hono();
 
     app.get(
@@ -108,13 +29,13 @@ function createRequestHandler(dir: string, domain: string) {
             },
         }),
         async (c) => {
-            const entries = await Array.fromAsync(Deno.readDir(dir));
+            const entries = await Array.fromAsync(Deno.readDir(params.dir));
             return c.json(
                 entries.filter((entry) =>
                     entry.isDirectory && !entry.name.startsWith(".")
                 ).map((entry) => ({
                     name: entry.name,
-                    url: `https://${entry.name}.${domain}/`,
+                    url: `https://${entry.name}.${params.domain}/`,
                 })),
             );
         },
@@ -139,7 +60,7 @@ function createRequestHandler(dir: string, domain: string) {
         }),
         async (c) => {
             const body = await c.req.valid("json");
-            const appDir = path.join(dir, body.name);
+            const appDir = path.join(params.dir, body.name);
 
             try {
                 await Deno.mkdir(appDir);
@@ -149,7 +70,7 @@ function createRequestHandler(dir: string, domain: string) {
                 );
                 return c.json({
                     name: body.name,
-                    url: `https://${body.name}.${domain}/`,
+                    url: `https://${body.name}.${params.domain}/`,
                 }, 201);
             } catch (_) {
                 return c.json({ error: "App already exists" }, 400);
@@ -178,8 +99,8 @@ function createRequestHandler(dir: string, domain: string) {
             },
         }),
         async (c) => {
-            const params = c.req.valid("param");
-            const appDir = path.join(dir, params.app);
+            const { app } = c.req.valid("param");
+            const appDir = path.join(params.dir, app);
 
             try {
                 const stat = await Deno.stat(appDir);
@@ -188,8 +109,8 @@ function createRequestHandler(dir: string, domain: string) {
                 }
 
                 return c.json({
-                    name: params.app,
-                    url: `https://${params.app}.${domain}/`,
+                    name: app,
+                    url: `https://${app}.${params.domain}/`,
                 });
             } catch (_) {
                 return c.json({ error: "App not found" }, 404);
@@ -226,12 +147,12 @@ function createRequestHandler(dir: string, domain: string) {
             const body = c.req.valid("json");
             try {
                 await Deno.rename(
-                    path.join(dir, app),
-                    path.join(dir, body.name),
+                    path.join(params.dir, app),
+                    path.join(params.dir, body.name),
                 );
                 return c.json({
                     name: body.name,
-                    url: `https://${body.name}.${domain}/`,
+                    url: `https://${body.name}.${params.domain}/`,
                 });
             } catch (_) {
                 return c.json({ error: "App not found" }, 404);
@@ -258,7 +179,9 @@ function createRequestHandler(dir: string, domain: string) {
         async (c) => {
             const { app } = c.req.valid("param");
             try {
-                await Deno.remove(path.join(dir, app), { recursive: true });
+                await Deno.remove(path.join(params.dir, app), {
+                    recursive: true,
+                });
                 return c.json({ message: "App deleted" }, 204);
             } catch (_) {
                 return c.json({ error: "App not found" }, 404);
