@@ -3,15 +3,24 @@ import * as path from "jsr:@std/path";
 import * as http from "jsr:@std/http";
 import * as xml from "jsr:@libs/xml";
 
-export type WebdavParams = {
+export type WebdavConfig = {
     rootDir?: string;
 };
 
-export function webdav(params: WebdavParams) {
-    const {
-        rootDir = Deno.cwd(),
-    } = params;
+export class Webdav {
+    private server;
 
+    constructor(config: WebdavConfig = {}) {
+        const dir = config.rootDir || Deno.cwd();
+        this.server = createServer(dir);
+    }
+
+    fetch: (req: Request) => Response | Promise<Response> = (req) => {
+        return this.server.fetch(req);
+    };
+}
+
+function createServer(rootDir: string) {
     const app = new Hono({});
 
     app.get("*", async (c) => {
@@ -120,7 +129,5 @@ export function webdav(params: WebdavParams) {
         return new Response(null, { status: 204 });
     });
 
-    return {
-        fetch: app.fetch,
-    };
+    return app;
 }

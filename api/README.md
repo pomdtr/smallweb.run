@@ -8,20 +8,11 @@ A rest API for your internet folder.
 
 ```ts
 // ~/smallweb/api/main.ts
-import { bearerAuth } from "jsr:@pomdtr/bearer-auth"
-import { Api } from "jsr:@smalweb/api";
+import { SmallwebApi } from "./src/mod.ts";
 
-const api = new Api();
+const api = new SmallwebApi();
 
-export default {
-    fetch: bearerAuth(api.fetch, {
-        verifyToken: (token: string) => {
-            return token === Deno.env.get("API_TOKEN");
-        },
-        publicRoutes: ["/", "/openapi.json"],
-    }),
-    run: api.run
-};
+export default api;
 ```
 
 ```json
@@ -33,5 +24,5 @@ export default {
 
 ```sh
 # ~/smallweb/api/.env
-API_TOKEN=my-secret-token
+SMALLWEB_API_TOKEN=my-secret-token
 ```

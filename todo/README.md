@@ -78,10 +78,6 @@ mutagen sync create \
 
 ## Adaptor for [blot.im](https://blot.im) websites
 
-## Built-in localhost.run (smallweb proxy ?)
-
-## Add a cache dir for lazy builds
-
 ## Automatic backups to github / git repository
 
 ## Integrations

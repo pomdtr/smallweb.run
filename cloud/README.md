@@ -6,14 +6,11 @@ Smallweb cloud will allow you to register and run your apps under `smallweb.live
 
 First, you'll need to create an account, either on `https://signup.smallweb.live` or using `ssh signup@smallweb.live`.
 
-You'll then get a command allowing to sync your smallweb dir locally using [mutagen](https://mutagen.io):
+You'll then get a command allowing to sync your smallweb dir locally using [mutagen](https://mutagen.io).
 
-```sh
-```
+The syncing process will keep running in the background, so any changes to your local files will be instantly mirrored to your server (and vice-versa).
 
-The syncing process will keep running in the background, and will keep your local files in sync with the cloud.
-
-You'll then be able to create a new runner for your apps, meaning that they will be available at `https://<app>.<user>.smallweb.live` (or `https://<app>.<your-domain>` if you setup a custom domain).
+You'll then be able to access your apps at `https://<app>.<user>.smallweb.live` (or `https://<app>.<your-domain>` if you setup a custom domain).
 
 And you'll be able to control your apps using the regular smallweb commands:
 

@@ -9,5 +9,5 @@ title = "Smallweb"
 create-missing = false
 
 [output.html]
-edit-url-template = "https://github.com/pomdtr/smallweb/edit/main/docs/{path}"
+edit-url-template = "https://github.com/pomdtr/smallweb.run/edit/main/docs/{path}"
 git-repository-url = "https://github.com/pomdtr/smallweb"

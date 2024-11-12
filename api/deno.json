@@ -1,7 +1,7 @@
 {
   "name": "@smallweb/api",
-  "version": "0.6.1",
-  "exports": "./mod.ts",
+  "version": "0.7.0",
+  "exports": "./src/mod.ts",
   "license": "MIT",
   "imports": {
     "@std/cli": "jsr:@std/cli@^1.0.6",
