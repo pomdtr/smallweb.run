@@ -1,12 +1,13 @@
-import { escape } from "jsr:@std/html";
+import { escape } from "@std/html";
+import workbenchConfig from "./workbench.json" with { type: "json" };
 import embeds from "./dist/mod.ts";
 
 export type VSCodeConfig = {
-    workbench?: Record<string, unknown>;
+    rootDir?: string;
 };
 
 export class VSCode {
-    constructor(private config: VSCodeConfig = {}) {}
+    constructor(public config: VSCodeConfig = {}) {}
 
     fetch: (req: Request) => Response | Promise<Response> = async (
         req: Request,
@@ -23,7 +24,7 @@ export class VSCode {
             content.replace(
                 "{{VSCODE_WORKBENCH_WEB_CONFIGURATION}}",
                 escape(
-                    JSON.stringify(this.config.workbench || workbenchConfig),
+                    JSON.stringify(workbenchConfig),
                 ),
             ),
             {
@@ -34,27 +35,3 @@ export class VSCode {
         );
     };
 }
-
-export const workbenchConfig = {
-    productConfiguration: {
-        nameShort: "Smallweb Editor",
-        nameLong: "Smallweb Editor",
-        applicationName: "code-web-sample",
-        dataFolderName: ".vscode-web-sample",
-        version: "1.95.2",
-        extensionsGallery: {
-            serviceUrl: "https://open-vsx.org/vscode/gallery",
-            itemUrl: "https://open-vsx.org/vscode/item",
-            resourceUrlTemplate:
-                "https://openvsxorg.blob.core.windows.net/resources/{publisher}/{name}/{version}/{path}",
-        },
-        // extensionEnabledApiProposals: {
-        //     "pomdtr.smallweb": ["fileSearchProvider", "textSearchProvider", "ipc"]
-        // }
-    },
-    // folderUri: { scheme: "smallweb", path: "/" },
-    // additionalBuiltinExtensions: [{
-    //     scheme: window.location.protocol === "http:" ? "http" : "https",
-    //     authority: window.location.host,
-    // }]
-};

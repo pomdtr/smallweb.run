@@ -22,6 +22,7 @@
     "jsr:@std/fmt@~0.218.2": "0.218.2",
     "jsr:@std/fs@~0.218.2": "0.218.2",
     "jsr:@std/html@*": "1.0.3",
+    "jsr:@std/html@^1.0.3": "1.0.3",
     "jsr:@std/http@1": "1.0.9",
     "jsr:@std/http@1.0.0-rc.4": "1.0.0-rc.4",
     "jsr:@std/http@^1.0.9": "1.0.9",
@@ -41,16 +42,13 @@
     "jsr:@std/streams@^1.0.7": "1.0.7",
     "npm:github-slugger@2": "2.0.0",
     "npm:he@^1.2.0": "1.2.0",
-    "npm:hono-zod-openapi@~0.4.2": "0.4.2_hono@4.6.9_zod@3.23.8",
-    "npm:hono@^4.6.9": "4.6.9",
     "npm:katex@0.16": "0.16.11",
     "npm:marked-alert@2": "2.1.2_marked@12.0.2",
     "npm:marked-footnote@^1.2.0": "1.2.4_marked@12.0.2",
     "npm:marked-gfm-heading-id@^3.1.0": "3.2.0_marked@12.0.2",
     "npm:marked@12": "12.0.2",
     "npm:prismjs@^1.29.0": "1.29.0",
-    "npm:sanitize-html@^2.13.0": "2.13.1",
-    "npm:zod@^3.23.8": "3.23.8"
+    "npm:sanitize-html@^2.13.0": "2.13.1"
   },
   "jsr": {
     "@deno/cache-dir@0.8.0": {
@@ -206,13 +204,6 @@
     }
   },
   "npm": {
-    "@hono/zod-validator@0.4.1_hono@4.6.9_zod@3.23.8": {
-      "integrity": "sha512-I8LyfeJfvVmC5hPjZ2Iij7RjexlgSBT7QJudZ4JvNPLxn0JQ3sqclz2zydlwISAnw21D2n4LQ0nfZdoiv9fQQA==",
-      "dependencies": [
-        "hono",
-        "zod"
-      ]
-    },
     "commander@8.3.0": {
       "integrity": "sha512-OkTL9umf+He2DZkUq8f8J9of7yL6RJKI24dVITBmNfZBmri9zYZQrKkuXiKhyfPSu8tUhnVBB1iKXevvnlR4Ww=="
     },
@@ -255,18 +246,6 @@
     },
     "he@1.2.0": {
       "integrity": "sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw=="
-    },
-    "hono-zod-openapi@0.4.2_hono@4.6.9_zod@3.23.8": {
-      "integrity": "sha512-32MRNnm+asXL+YsJbeWTL/SEIdAurIOu3qJDtOhZWj0WqeuhozolFXyuYAXIMmsTup45cv24h3MP5rm6HuqJkQ==",
-      "dependencies": [
-        "@hono/zod-validator",
-        "hono",
-        "zod",
-        "zod-openapi"
-      ]
-    },
-    "hono@4.6.9": {
-      "integrity": "sha512-p/pN5yZLuZaHzyAOT2nw2/Ud6HhJHYmDNGH6Ck1OWBhPMVeM1r74jbCRwNi0gyFRjjbsGgoHbOyj7mT1PDNbTw=="
     },
     "htmlparser2@8.0.2": {
       "integrity": "sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==",
@@ -341,22 +320,11 @@
     },
     "source-map-js@1.2.1": {
       "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
-    },
-    "zod-openapi@3.3.0_zod@3.23.8": {
-      "integrity": "sha512-9CouRzPrmKU4Rggb8dPgVrNq6SZTUjdMO+6TvpE2ylkDYlap/Agjce2LZwG4ZwEVEVyZ1s5KnkiL4hn//G3gIA==",
-      "dependencies": [
-        "zod"
-      ]
-    },
-    "zod@3.23.8": {
-      "integrity": "sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g=="
     }
   },
   "workspace": {
     "dependencies": [
-      "npm:hono-zod-openapi@~0.4.2",
-      "npm:hono@^4.6.9",
-      "npm:zod@^3.23.8"
+      "jsr:@std/html@^1.0.3"
     ]
   }
 }
