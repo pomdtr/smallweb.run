@@ -99,8 +99,8 @@ function workbenchConfig(host: string, options: {
             },
             "extensionEnabledApiProposals": {
                 "pomdtr.smallweb": [
-                    "fileSearchProvider",
-                    "textSearchProvider",
+                    "fileSearchProviderNew",
+                    "textSearchProviderNew",
                 ],
             },
         },

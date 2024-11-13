@@ -304,18 +304,26 @@ export default {
                                     "b64": {
                                         "type": "string"
                                     },
-                                    "create": {
-                                        "type": "boolean"
-                                    },
-                                    "overwrite": {
-                                        "type": "boolean"
+                                    "options": {
+                                        "type": "object",
+                                        "properties": {
+                                            "create": {
+                                                "type": "boolean"
+                                            },
+                                            "overwrite": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "create",
+                                            "overwrite"
+                                        ]
                                     }
                                 },
                                 "required": [
                                     "path",
                                     "b64",
-                                    "create",
-                                    "overwrite"
+                                    "options"
                                 ]
                             }
                         }
@@ -357,14 +365,22 @@ export default {
                                     "destination": {
                                         "type": "string"
                                     },
-                                    "overwrite": {
-                                        "type": "boolean"
+                                    "options": {
+                                        "type": "object",
+                                        "properties": {
+                                            "overwrite": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "overwrite"
+                                        ]
                                     }
                                 },
                                 "required": [
                                     "source",
                                     "destination",
-                                    "overwrite"
+                                    "options"
                                 ]
                             }
                         }
@@ -452,13 +468,21 @@ export default {
                                     "path": {
                                         "type": "string"
                                     },
-                                    "recursive": {
-                                        "type": "boolean"
+                                    "options": {
+                                        "type": "object",
+                                        "properties": {
+                                            "recursive": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "recursive"
+                                        ]
                                     }
                                 },
                                 "required": [
                                     "path",
-                                    "recursive"
+                                    "options"
                                 ]
                             }
                         }
@@ -484,6 +508,64 @@ export default {
                         }
                     }
                 }
+            }
+        },
+        "/search/provideFileSearchResults": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "pattern",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        },
+        "/search/provideTextSearchResults": {
+            "post": {
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "query",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    },
+                    {
+                        "in": "query",
+                        "name": "isMutliLine",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "isRegex",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "isCaseSensitive",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    },
+                    {
+                        "in": "query",
+                        "name": "isWordMatch",
+                        "schema": {
+                            "type": "boolean"
+                        }
+                    }
+                ],
+                "responses": {}
             }
         }
     }

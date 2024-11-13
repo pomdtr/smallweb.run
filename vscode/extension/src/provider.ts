@@ -6,10 +6,10 @@
 
 import * as vscode from 'vscode';
 import { createClient, type NormalizeOAS } from 'fets';
-import { Base64 } from  'js-base64';
+import { Base64 } from 'js-base64';
 import openapi from './openapi';
 
-export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileSearchProvider, vscode.TextSearchProvider {
+export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileSearchProviderNew, vscode.TextSearchProviderNew {
 
 	private clients: Record<string, ReturnType<typeof this.createClient>> = {};
 
@@ -108,7 +108,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 
 		const b64 = Base64.fromUint8Array(content)
 		const res = await client['/fs/writeFile'].post({
-			json: { path: uri.path, b64, create: options.create, overwrite: options.overwrite }
+			json: { path: uri.path, b64, options: { create: options.create, overwrite: options.overwrite } }
 		})
 
 		if (!res.ok) {
@@ -144,7 +144,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 		}
 
 		const resp = await client['/fs/delete'].post({
-			json: { path: uri.path, recursive: options.recursive }
+			json: { path: uri.path, options: { recursive: options.recursive } }
 		})
 
 		if (!resp.ok) {
@@ -178,7 +178,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 		}
 
 		const resp = await client['/fs/copy'].post({
-			json: { source: source.path, destination: destination.path, overwrite: options.overwrite }
+			json: { source: source.path, destination: destination.path, options: { overwrite: options.overwrite } }
 		})
 
 		if (!resp.ok) {
@@ -187,13 +187,17 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 
 	}
 
-	provideFileSearchResults(query: vscode.FileSearchQuery, options: vscode.FileSearchOptions, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Uri[]> {
-		return [];
+	provideFileSearchResults(pattern: string, options: vscode.FileSearchProviderOptions, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Uri[]> {
+
+		return []
 	}
 
-	provideTextSearchResults(query: vscode.TextSearchQuery, options: vscode.TextSearchOptions, progress: vscode.Progress<vscode.TextSearchResult>, token: vscode.CancellationToken): vscode.ProviderResult<vscode.TextSearchComplete> {
-		return {}
+	provideTextSearchResults(query: vscode.TextSearchQueryNew, options: vscode.TextSearchProviderOptions, progress: vscode.Progress<vscode.TextSearchResultNew>, token: vscode.CancellationToken): vscode.ProviderResult<vscode.TextSearchCompleteNew> {
+		return {
+			limitHit: false
+		}
 	}
+
 
 
 	private _emitter = new vscode.EventEmitter<vscode.FileChangeEvent[]>();

@@ -53,8 +53,8 @@
 		}
 	},
 	"enabledApiProposals": [
-		"fileSearchProvider",
-		"textSearchProvider"
+		"fileSearchProviderNew",
+		"textSearchProviderNew"
 	],
 	"scripts": {
 		"vscode:prepublish": "npm run build",

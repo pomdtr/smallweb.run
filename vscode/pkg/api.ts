@@ -34,7 +34,7 @@ export function createApi(params: {
     token: string | string[];
 }) {
     const rootDir = path.resolve(params.rootDir);
-    const api = new Hono()
+    return new Hono()
         .use("*", cors())
         .use("/fs/*", bearerAuth({ token: params.token }))
         .post(
@@ -183,8 +183,10 @@ export function createApi(params: {
                     json: z.object({
                         path: z.string(),
                         b64: z.string(),
-                        create: z.boolean(),
-                        overwrite: z.boolean(),
+                        options: z.object({
+                            create: z.boolean(),
+                            overwrite: z.boolean(),
+                        }),
                     }),
                 },
                 responses: {
@@ -200,11 +202,11 @@ export function createApi(params: {
                     return c.json({ error: "Bad Request" }, 404);
                 }
 
-                if (!body.create && !await fs.exists(fullPath)) {
+                if (!body.options.create && !await fs.exists(fullPath)) {
                     return c.json({ error: "File not found" }, 404);
                 }
 
-                if (!body.overwrite && await fs.exists(fullPath)) {
+                if (!body.options.overwrite && await fs.exists(fullPath)) {
                     return c.json({ error: "File already exists" }, 400);
                 }
 
@@ -224,7 +226,9 @@ export function createApi(params: {
                     json: z.object({
                         source: z.string(),
                         destination: z.string(),
-                        overwrite: z.boolean(),
+                        options: z.object({
+                            overwrite: z.boolean(),
+                        }),
                     }),
                 },
                 responses: {
@@ -249,7 +253,9 @@ export function createApi(params: {
                     return c.json({ error: "Bad Request" }, 404);
                 }
 
-                if (!body.overwrite && await fs.exists(destinationPath)) {
+                if (
+                    !body.options.overwrite && await fs.exists(destinationPath)
+                ) {
                     return c.json({ error: "File already exists" }, 400);
                 }
 
@@ -309,7 +315,9 @@ export function createApi(params: {
                 request: {
                     json: z.object({
                         path: z.string(),
-                        recursive: z.boolean(),
+                        options: z.object({
+                            recursive: z.boolean(),
+                        }),
                     }),
                 },
                 responses: {
@@ -329,7 +337,9 @@ export function createApi(params: {
                     return c.json({ error: "File not found" }, 404);
                 }
 
-                await Deno.remove(fullPath, { recursive: body.recursive });
+                await Deno.remove(fullPath, {
+                    recursive: body.options.recursive,
+                });
                 return c.json({ success: true });
             },
         )
@@ -359,7 +369,42 @@ export function createApi(params: {
                 });
                 return c.json({ success: true });
             },
+        ).post(
+            "/search/provideFileSearchResults",
+            openApi({
+                request: {
+                    query: z.string(),
+                    options: z.object({
+                        maxResults: z.number(),
+                    }),
+                },
+                responses: {},
+            }),
+            (c) => {
+                return c.json({});
+            },
+        )
+        .post(
+            "/search/provideTextSearchResults",
+            openApi({
+                request: {
+                    query: z.object({
+                        query: z.string(),
+                        isMutliLine: z.boolean().optional(),
+                        isRegex: z.boolean().optional(),
+                        isCaseSensitive: z.boolean().optional(),
+                        isWordMatch: z.boolean().optional(),
+                    }),
+                    options: z.object({
+                        folder: z.string(),
+                        includes: z.array(z.string()),
+                        excludes: z.array(z.string()),
+                    }),
+                },
+                responses: {},
+            }),
+            (c) => {
+                return c.json({});
+            },
         );
-
-    return api;
 }
