@@ -5,8 +5,8 @@
   "elements": [
     {
       "type": "text",
-      "version": 902,
-      "versionNonce": 1767067918,
+      "version": 903,
+      "versionNonce": 2039838780,
       "isDeleted": false,
       "id": "kFzthsJJzd0qNHTfyOsc4",
       "fillStyle": "solid",
@@ -26,7 +26,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1731367648424,
+      "updated": 1731453783090,
       "link": null,
       "locked": false,
       "fontSize": 21.04748674967048,
@@ -41,8 +41,8 @@
     },
     {
       "type": "text",
-      "version": 757,
-      "versionNonce": 84971218,
+      "version": 758,
+      "versionNonce": 785004932,
       "isDeleted": false,
       "id": "qPFr1DOuqkGt4wXRDSrW3",
       "fillStyle": "solid",
@@ -62,7 +62,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1731367648424,
+      "updated": 1731453783090,
       "link": "https://github.smallweb.run/excalidraw",
       "locked": false,
       "fontSize": 20,
@@ -110,8 +110,8 @@
     },
     {
       "type": "text",
-      "version": 615,
-      "versionNonce": 2099380046,
+      "version": 616,
+      "versionNonce": 624103612,
       "isDeleted": false,
       "id": "uzvb8lkEsQfssllUp-xu8",
       "fillStyle": "solid",
@@ -131,7 +131,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1731367648424,
+      "updated": 1731453783090,
       "link": null,
       "locked": false,
       "fontSize": 56.06142735849283,
@@ -18128,8 +18128,8 @@
     },
     {
       "type": "text",
-      "version": 224,
-      "versionNonce": 1568334994,
+      "version": 225,
+      "versionNonce": 1204840708,
       "isDeleted": false,
       "id": "BihXLAAVv4sip66Ronn72",
       "fillStyle": "solid",
@@ -18149,7 +18149,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1731367648425,
+      "updated": 1731453783090,
       "link": null,
       "locked": false,
       "fontSize": 181.28505787808206,
@@ -18160,7 +18160,7 @@
       "containerId": null,
       "originalText": "Coucou HIL ! ",
       "lineHeight": 1.25,
-      "baseline": 160
+      "baseline": 159
     }
   ],
   "appState": {

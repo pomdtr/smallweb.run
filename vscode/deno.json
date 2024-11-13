@@ -1,5 +1,15 @@
 {
-  "imports": {
-    "hono": "npm:hono@^4.6.9"
+  "name": "@smallweb/vscode",
+  "version": "0.0.4",
+  "exports": "./mod.ts",
+  "license": "MIT",
+  "publish": {
+    "include": [
+      "README.md",
+      "mod.ts"
+    ]
+  },
+  "tasks": {
+    "embed": "deno run -A jsr:@smallweb/embed@0.0.15 static dist"
   }
 }
