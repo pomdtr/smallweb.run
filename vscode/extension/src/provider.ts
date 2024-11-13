@@ -11,34 +11,29 @@ import openapi from './openapi';
 
 export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileSearchProviderNew, vscode.TextSearchProviderNew {
 
-	private clients: Record<string, ReturnType<typeof this.createClient>> = {};
+	private clients: Record<string, ReturnType<typeof SmallwebProvider.createClient>> = {};
+	private defaultClient: ReturnType<typeof SmallwebProvider.createClient> | undefined = SmallwebProvider.createClient({});
 
 	constructor(tokens: Record<string, string>) {
 		for (const [host, token] of Object.entries(tokens)) {
-			this.clients[host] = this.createClient({ host, token });
+			this.clients[host] = SmallwebProvider.createClient({ host, token });
 		}
 	}
 
-	private createClient(options: {
-		host: string,
+	private static createClient(options: {
+		host?: string,
 		token?: string
 	}) {
 		return createClient<NormalizeOAS<typeof openapi>>({
-			endpoint: `https://${options.host}/api`,
+			endpoint: options.host ? `https://${options.host}/api` : undefined,
 			globalParams: options.token ? { headers: { Authorization: `Bearer ${options.token}` } } : {}
 		})
 	}
 
 
-
 	// --- manage file metadata
-
 	async stat(uri: vscode.Uri) {
-		const client = this.clients[uri.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[uri.authority] || this.defaultClient;
 		const resp = await client['/fs/stat'].post({
 			json: { path: uri.path }
 		})
@@ -55,11 +50,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 	}
 
 	async readDirectory(uri: vscode.Uri) {
-		const client = this.clients[uri.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[uri.authority] || this.defaultClient;
 		const resp = await client['/fs/readDirectory'].post({
 			json: { path: uri.path }
 		})
@@ -79,11 +70,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 	// --- manage file contents
 
 	async readFile(uri: vscode.Uri) {
-		const client = this.clients[uri.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[uri.authority] || this.defaultClient;
 		const resp = await client['/fs/readFile'].post({
 			json: { path: uri.path }
 		})
@@ -101,11 +88,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 	}
 
 	async writeFile(uri: vscode.Uri, content: Uint8Array, options: { create: boolean, overwrite: boolean }) {
-		const client = this.clients[uri.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[uri.authority] || this.defaultClient;
 		const b64 = Base64.fromUint8Array(content)
 		const res = await client['/fs/writeFile'].post({
 			json: { path: uri.path, b64, options: { create: options.create, overwrite: options.overwrite } }
@@ -123,11 +106,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 			throw new Error('Cross-host renaming is not supported');
 		}
 
-		const client = this.clients[oldUri.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[oldUri.authority] || this.defaultClient;
 		const resp = await client['/fs/rename'].post({
 			json: { oldPath: oldUri.path, newPath: newUri.path, overwrite: options.overwrite }
 		})
@@ -138,11 +117,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 	}
 
 	async delete(uri: vscode.Uri, options: { recursive: boolean }) {
-		const client = this.clients[uri.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[uri.authority] || this.defaultClient;
 		const resp = await client['/fs/delete'].post({
 			json: { path: uri.path, options: { recursive: options.recursive } }
 		})
@@ -153,11 +128,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 	}
 
 	async createDirectory(uri: vscode.Uri) {
-		const client = this.clients[uri.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[uri.authority] || this.defaultClient;
 		const resp = await client['/fs/createDirectory'].post({
 			json: { path: uri.path }
 		})
@@ -172,11 +143,7 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 			throw new Error('Cross-host copying is not supported');
 		}
 
-		const client = this.clients[source.authority];
-		if (!client) {
-			throw vscode.FileSystemError.FileNotFound();
-		}
-
+		const client = this.clients[source.authority] || this.defaultClient;
 		const resp = await client['/fs/copy'].post({
 			json: { source: source.path, destination: destination.path, options: { overwrite: options.overwrite } }
 		})
@@ -188,7 +155,6 @@ export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileS
 	}
 
 	provideFileSearchResults(pattern: string, options: vscode.FileSearchProviderOptions, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Uri[]> {
-
 		return []
 	}
 
