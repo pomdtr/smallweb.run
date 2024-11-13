@@ -162,6 +162,12 @@ export function lastlogin(
     }
 
     return async (req: Request) => {
+        if (req.method == "OPTIONS") {
+            return new Response(null, {
+                status: 204,
+            });
+        }
+
         // clone the request to modify it
         req = new Request(req);
         req.headers.delete("X-LastLogin-Email");

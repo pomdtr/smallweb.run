@@ -17,7 +17,8 @@
     ],
     "deno.enable": true,
     "deno.disablePaths": [
-        "astro"
+        "astro",
+        "vscode/extension"
     ],
     "search.useIgnoreFiles": false,
     "search.exclude": {

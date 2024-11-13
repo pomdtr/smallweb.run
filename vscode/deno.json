@@ -1,6 +1,6 @@
 {
   "name": "@smallweb/vscode",
-  "version": "0.0.5",
+  "version": "0.0.8",
   "exports": "./pkg/mod.ts",
   "license": "MIT",
   "publish": {
@@ -10,9 +10,15 @@
     ]
   },
   "tasks": {
-    "embed": "deno run -A jsr:@smallweb/embed@0.0.15 static dist"
+    "embed": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/dist"
   },
   "imports": {
-    "@std/html": "jsr:@std/html@^1.0.3"
+    "@std/encoding": "jsr:@std/encoding@^1.0.5",
+    "@std/fs": "jsr:@std/fs@^1.0.5",
+    "@std/html": "jsr:@std/html@^1.0.3",
+    "@std/path": "jsr:@std/path@^1.0.8",
+    "hono": "npm:hono@^4.6.10",
+    "zod": "npm:zod@^3.23.8",
+    "hono-zod-openapi": "npm:hono-zod-openapi@^0.5.0"
   }
 }

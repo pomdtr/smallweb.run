@@ -1,0 +1,19 @@
+{
+	"compilerOptions": {
+		"strictNullChecks": true,
+		"module": "commonjs",
+		"target": "es2020",
+		"lib": [
+			"es2020"
+		],
+		"outDir": "out",
+		"sourceMap": true,
+		"strict": true,
+		"skipLibCheck": true,
+		"rootDir": "."
+	},
+	"exclude": [
+		"node_modules",
+		".vscode-test"
+	]
+}

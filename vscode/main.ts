@@ -1,12 +1,11 @@
 import { VSCode } from "./pkg/mod.ts";
-import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.2";
 
 const vscode = new VSCode({
-    rootDir: ".",
+    rootDir: "..",
 });
 
-vscode.fetch = lastlogin(vscode.fetch, {
-    publicRoutes: ["/manifest.json"],
-});
+// vscode.fetch = lastlogin(vscode.fetch, {
+//     publicRoutes: ["/api/*", "/manifest.json", "/openapi.json", "/openapi.ts"],
+// });
 
 export default vscode;
