@@ -15,13 +15,6 @@ const api = new SmallwebApi();
 export default api;
 ```
 
-```json
-// ~/smallweb/api/smallweb.json
-{
-    "admin": true
-}
-```
-
 ```sh
 # ~/smallweb/api/.env
 SMALLWEB_API_TOKEN=my-secret-token

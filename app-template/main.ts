@@ -1,4 +1,4 @@
-import { HelloWorld } from "./src/mod.ts";
+import { HelloWorld } from "./pkg/mod.ts";
 
 const helloWorld = new HelloWorld();
 

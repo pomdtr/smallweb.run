@@ -1,14 +1,10 @@
-import {
-    createOpenApiDocument,
-    extendZodWithOpenApi,
-    openApi,
-} from "hono-zod-openapi";
+import { createOpenApiDocument, openApi } from "hono-zod-openapi";
+import "zod-openapi/extend";
+
 import { Hono } from "hono";
 import { z } from "zod";
 import * as path from "@std/path";
 import homepage from "./swagger.ts";
-
-extendZodWithOpenApi(z);
 
 export function createServer(params: {
     dir: string;

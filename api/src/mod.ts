@@ -37,9 +37,12 @@ export class SmallwebApi {
         }
 
         this.publicRoutes = publicRoutes;
-        this.server = createServer({ dir, domain });
-        this.command = createCommand(this.server.request);
         this.verifyToken = verifyToken;
+        this.server = createServer({ dir, domain });
+        this.command = createCommand({
+            name: Deno.env.get("SMALLWEB_APP_NAME") || "smallweb",
+            fetchApi: this.server.request,
+        });
     }
 
     private verifyRequest(req: Request) {
@@ -70,6 +73,6 @@ export class SmallwebApi {
     };
 
     run: (args: string[]) => void | Promise<void> = async (args) => {
-        await this.command(args);
+        await this.command.parse(args);
     };
 }

@@ -2,30 +2,11 @@
 
 ```ts
 // ~/smallweb/editor/main.ts
-import { codejar } from "./mod.ts";
-import { lastlogin } from "@pomdtr/lastlogin";
+import { Codejar } from "jsr:@pomdtr/codejar";
+import { lastlogin } from "jsr:@pomdtr/lastlogin";
 
-const app = codejar();
+const codejar = new Codejar();
+codejar.fetch = lastlogin(codejar.fetch);
 
-export default {
-    // gate editor behind lastlogin auth
-    fetch: lastlogin(app.fetch, {
-        private: true,
-        verifyEmail: (email) => {
-            return email === Deno.env.get("EMAIL");
-        },
-    }),
-};
-```
-
-```json
-// ~/smallweb/editor/smallweb.json
-{
-    "admin": true
-}
-```
-
-```sh
-# ~/smallweb/editor/.env
-EMAIL=user@example.com
+export default codejar
 ```

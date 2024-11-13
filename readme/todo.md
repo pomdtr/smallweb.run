@@ -2,8 +2,6 @@
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-You can view the source at <https://github.smallweb.run/todo/main.ts>.
-
 ## Add a TMP dir
 
 ## Smallweb SDK

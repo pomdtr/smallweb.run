@@ -14,14 +14,15 @@ export class VSCode {
     ) => {
         const url = new URL(req.url);
         if (url.pathname !== "/") {
-            return new Response("Not found", { status: 404 });
+            return embeds.serve(req);
         }
 
-        const embed = await embeds.load("index.html");
-        const content = await embed.text();
+        const homepage = await embeds.load("index.html").then((embed) =>
+            embed.text()
+        );
 
         return new Response(
-            content.replace(
+            homepage.replace(
                 "{{VSCODE_WORKBENCH_WEB_CONFIGURATION}}",
                 escape(
                     JSON.stringify(workbenchConfig),

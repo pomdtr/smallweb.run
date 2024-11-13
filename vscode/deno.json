@@ -1,13 +1,12 @@
 {
   "name": "@smallweb/vscode",
   "version": "0.0.5",
-  "exports": "./mod.ts",
+  "exports": "./pkg/mod.ts",
   "license": "MIT",
   "publish": {
     "include": [
       "README.md",
-      "mod.ts",
-      "dist/**/*.ts"
+      "pkg"
     ]
   },
   "tasks": {

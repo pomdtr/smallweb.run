@@ -1,0 +1,22 @@
+{
+    "name": "Smallweb Editor",
+    "short_name": "Smallweb Editor",
+    "start_url": "/",
+    "lang": "en-US",
+    "display": "standalone",
+    "display_override": [
+        "window-controls-overlay"
+    ],
+    "icons": [
+        {
+            "src": "https://raw.esm.sh/vscode-web-dist@1.95.2/dist/code-192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        },
+        {
+            "src": "https://raw.esm.sh/vscode-web-dist@1.95.2/dist/code-512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ]
+}

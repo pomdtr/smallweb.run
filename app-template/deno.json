@@ -1,12 +1,12 @@
 {
     "name": "@smallweb/app-template",
-    "version": "0.1.1",
-    "exports": "./src/mod.ts",
+    "version": "0.1.2",
+    "exports": "./pkg/mod.ts",
     "license": "MIT",
     "publish": {
         "include": [
             "README.md",
-            "src"
+            "pkg"
         ]
     },
     "imports": {
