@@ -5,7 +5,7 @@ Smallweb maps every subdomains of your root domain to a directory in your root d
 For example with, the following configuration:
 
 ```json
-// ~/.config/smallweb/config.json
+// ~/smallweb/.smallweb/config.json
 {
     "domain": "example.com"
 }
