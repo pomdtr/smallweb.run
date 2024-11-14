@@ -56,11 +56,7 @@ mkdir -p ~/smallweb/example
 CAT <<EOF > ~/smallweb/example/main.ts
 export default {
   fetch() {
-    return new Response("Smallweb is running", {
-      headers: {
-        "Content-Type": "text/plain",
-      },
-    });
+    return new Response("Smallweb is running");
   }
 }
 EOF

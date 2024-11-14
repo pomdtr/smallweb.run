@@ -1,10 +1,17 @@
 # Global Config
 
-The smallweb config is located at `$SMALLWEB_DIR/.smallweb/config.json`. It is a json file that defines global settings for smallweb.
+The smallweb config is located at `$SMALLWEB_DIR/.smallweb/config.json`.
 
-You can also specify a custom config file by setting the `SMALLWEB_CONFIG` environment variable.
+If `SMALLWEB_DIR` is not set, it defaults to `~/smallweb`.
 
-Smallweb also respects the `XDG_CONFIG_HOME` environment variable.
+It is a json file that defines global settings for smallweb.
+
+If you sync the smallweb dir between multiple servers, but want to set different config value depending on the server, you can use env variables to set config value.
+
+```sh
+# run smallweb with a different domain that the one set in the config
+SMALlWEB_DOMAIN=localhost smallweb up
+```
 
 ## Available Fields
 
@@ -39,7 +46,7 @@ The `cert` and `key` fields define the path to the SSL certificate and key.
 
 ### `domain`
 
-The `domain` field defines the apex domain used for routing.
+The `domain` field defines the apex domain used for routing. By default, it is `localhost`.
 
 ```json
 {
@@ -48,28 +55,6 @@ The `domain` field defines the apex domain used for routing.
 ```
 
 See the [Routing](../guides/routing.md) guide for more information.
-
-### `dir`
-
-The `dir` field defines the root directory for all apps.
-
-```json
-{
-  "dir": "~/smallweb"
-}
-```
-
-### `email`
-
-The `email` field is required to enable lastlogin authentication for private apps.
-
-If it is not set, private will show a basic auth prompt instead.
-
-```json
-{
-  "email": "pomdtr@example.com"
-}
-```
 
 ### `customDomains`
 
@@ -85,29 +70,11 @@ The `customDomains` field is an object that maps custom domains to apps.
 
 ## Default Config
 
-By default the config file looks like this:
+By default, the config is as follows:
 
 ```json
 {
   "addr": ":7777",
-  "dir": "~/smallweb",
-}
-```
-
-Since smallweb requires a domain to be set, the minimal config is:
-
-```json
-{
-  "domain": "example.com"
-}
-```
-
-which is equivalent to:
-
-```json
-{
-  "domain": "example.com",
-  "addr": ":7777",
-  "dir": "~/smallweb",
+  "domain": "localhost"
 }
 ```

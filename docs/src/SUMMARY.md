@@ -7,10 +7,12 @@
 - [Routing](./guides/routing.md)
 - [HTTP Servers](./guides/server.md)
 - [Cli Commands](./guides/commands.md)
+- [Cron Jobs](./guides/cron.md)
 - [Environment Variables](./guides/env.md)
 - [Plugins](./guides/plugins.md)
 - [Authentication](./guides/auth.md)
 - [App Sandbox](./guides/sandbox.md)
+- [File Sync](./guides/file-sync.md)
 
 # Hosting
 

@@ -12,32 +12,10 @@ The `entrypoint` field defines the file to serve. If this field is not provided,
 
 The `root` field defines the root directory of the app. If this field is not provided, the app will use the app directory as the root directory.
 
-### `private`
+### `admin`
 
-If the `private` field is set to `true`, the app will ask for your admin username and password before serving the app using basic auth.
+The `admin` field defines wether the app is an admin app. Admin apps have read/write access the whole smallweb directory.
 
-### `privateRoutes`
+### `crons`
 
-If you only want to protect a subset of routes, you can use the `privateRoutes` field. This field is an array of routes that require authentication.
-
-```json
-{
-  "privateRoutes": [
-    "/private",
-    "/admin/*"
-  ]
-}
-```
-
-### `publicRoutes`
-
-If you want to make a subset of routes public, you can use the `publicRoutes` field. This field is an array of routes that do not require authentication.
-
-```json
-{
-  "private": true,
-  "publicRoutes": [
-    "/public/*",
-  ]
-}
-```
+The `crons` field defines the cron jobs for the app. See [Cron Jobs](../guides/cron.md) for more information.

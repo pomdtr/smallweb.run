@@ -4,38 +4,14 @@
 
 Host websites from your internet folder
 
+```
+smallweb [flags]
+```
+
 ### Options
 
 ```
   -h, --help   help for smallweb
-```
-
-## smallweb api
-
-Extension api
-
-```
-smallweb api [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for api
-```
-
-## smallweb capture
-
-Extension capture
-
-```
-smallweb capture [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for capture
 ```
 
 ## smallweb changelog
@@ -50,20 +26,6 @@ smallweb changelog [flags]
 
 ```
   -h, --help   help for changelog
-```
-
-## smallweb clone
-
-Clone an app
-
-```
-smallweb clone [app] [new-name] [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for clone
 ```
 
 ## smallweb completion
@@ -247,6 +209,60 @@ smallweb create <app> [flags]
   -h, --help   help for create
 ```
 
+## smallweb cron
+
+Manage cron jobs
+
+### Options
+
+```
+  -h, --help   help for cron
+```
+
+## smallweb cron list
+
+List cron jobs
+
+```
+smallweb cron list [flags]
+```
+
+### Options
+
+```
+      --app string   filter by app
+  -h, --help         help for list
+      --json         output as json
+```
+
+## smallweb cron trigger
+
+Trigger a cron job
+
+```
+smallweb cron trigger <id> [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for trigger
+```
+
+## smallweb cron up
+
+Start the cron daemon
+
+```
+smallweb cron up [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for up
+```
+
 ## smallweb delete
 
 Delete an app
@@ -275,46 +291,21 @@ smallweb docs [flags]
   -h, --help   help for docs
 ```
 
-## smallweb edit
+## smallweb fetch
 
-Extension edit
-
-```
-smallweb edit [flags]
-```
-
-### Options
+Fetch a path from an app
 
 ```
-  -h, --help   help for edit
-```
-
-## smallweb gallery
-
-Extension gallery
-
-```
-smallweb gallery [flags]
+smallweb fetch [app] <path> [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for gallery
-```
-
-## smallweb hello
-
-Extension hello
-
-```
-smallweb hello [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for hello
+  -d, --data string          Data to send in the request body. Use @- to read from stdin
+  -H, --header stringArray   HTTP headers to use
+  -h, --help                 help for fetch
+  -X, --method string        HTTP method to use (default "GET")
 ```
 
 ## smallweb list
@@ -330,6 +321,22 @@ smallweb list [flags]
 ```
   -h, --help   help for list
       --json   output as json
+```
+
+## smallweb logs
+
+View app logs
+
+```
+smallweb logs [flags]
+```
+
+### Options
+
+```
+      --app string   app to view logs for
+  -h, --help         help for logs
+      --json         output logs in JSON format
 ```
 
 ## smallweb open
@@ -483,61 +490,6 @@ smallweb service uninstall [flags]
   -h, --help   help for uninstall
 ```
 
-## smallweb token
-
-Manage api tokens
-
-### Options
-
-```
-  -h, --help   help for token
-```
-
-## smallweb token create
-
-Create a new token
-
-```
-smallweb token create [flags]
-```
-
-### Options
-
-```
-  -a, --app string           app token
-  -d, --description string   description of the token
-  -h, --help                 help for create
-```
-
-## smallweb token delete
-
-Remove a token
-
-```
-smallweb token delete <id> [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for delete
-```
-
-## smallweb token list
-
-List all tokens
-
-```
-smallweb token list [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for list
-  -j, --json   output as JSON
-```
-
 ## smallweb up
 
 Start the smallweb evaluation server
@@ -549,6 +501,7 @@ smallweb up [flags]
 ### Options
 
 ```
+      --cron   run cron jobs
   -h, --help   help for up
 ```
 
@@ -564,20 +517,6 @@ smallweb upgrade [version] [flags]
 
 ```
   -h, --help   help for upgrade
-```
-
-## smallweb view
-
-Extension view
-
-```
-smallweb view [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for view
 ```
 
 

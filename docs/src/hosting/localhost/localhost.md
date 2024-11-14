@@ -128,22 +128,11 @@ EOF
 First, let's create a dummy smallweb website:
 
 ```sh
-mkdir -p ~/smallweb/.smallweb
-cat <<EOF > ~/smallweb/.smallweb/config.json
-{
-  "domain": "localhost"
-}
-EOF
-
 mkdir -p ~/smallweb/example
 cat <<EOF > ~/smallweb/example/main.ts
 export default {
   fetch() {
-    return new Response("Smallweb is running", {
-      headers: {
-        "Content-Type": "text/plain",
-      },
-    });
+    return new Response("Smallweb is running");
   }
 }
 EOF
@@ -198,22 +187,11 @@ There is no need to setup dnsmasq on Ubuntu, as it seems to be already configure
 First, let's create a dummy smallweb website:
 
 ```sh
-mkdir -p ~/smallweb/.smallweb
-cat <<EOF > ~/smallweb/.smallweb/config.json
-{
-  "domain": "localhost"
-}
-EOF
-
 mkdir -p ~/smallweb/example
 CAT <<EOF > ~/smallweb/example/main.ts
 export default {
   fetch() {
-    return new Response("Smallweb is running", {
-      headers: {
-        "Content-Type": "text/plain",
-      },
-    });
+    return new Response("Smallweb is running");
   }
 }
 EOF
