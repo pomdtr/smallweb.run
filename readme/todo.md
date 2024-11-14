@@ -2,15 +2,13 @@
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-## Add a TMP dir
+## Move away from cgi-bin architecture
+
+Currently each request is sandboxed in it's own deno process.
 
 ## Smallweb SDK
 
-Instead of a rest api, smallweb should include a sdk, that interact directly with the filesystem.
-
-## `edit` command
-
-Add a way to edit a file from the cli using the system editor.
+An sdk for admin apps, that interact directly with the filesystem.
 
 ## `smallweb env`
 

@@ -1,3 +1,7 @@
-import { excalidraw } from "jsr:@smallweb/excalidraw@0.7.9"
+import { Excalidraw } from "jsr:@smallweb/excalidraw@0.8.1";
 
-export default excalidraw(".")
+const excalidraw = new Excalidraw({
+    rootDir: "./data"
+});
+
+export default excalidraw;

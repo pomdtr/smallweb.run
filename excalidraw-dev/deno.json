@@ -1,0 +1,25 @@
+{
+  "name": "@smallweb/excalidraw",
+  "version": "0.8.1",
+  "lock": false,
+  "exports": "./pkg/mod.ts",
+  "license": "MIT",
+  "tasks": {
+    "install": "cd frontend && npm install",
+    "build-frontend": "cd frontend && npm run build",
+    "embed-frontend": "deno run -A jsr:@smallweb/embed@0.0.15 frontend/dist pkg/static",
+    "build": "deno task build-frontend && deno task embed-frontend"
+  },
+  "publish": {
+    "include": [
+      "README.md",
+      "pkg"
+    ]
+  },
+  "imports": {
+    "@std/fs": "jsr:@std/fs@^1.0.4",
+    "@std/http": "jsr:@std/http@^1.0.7",
+    "@std/path": "jsr:@std/path@^1.0.6",
+    "hono": "npm:hono@^4.6.3"
+  }
+}

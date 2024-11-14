@@ -41,7 +41,7 @@ function App() {
                     </nav>
                     <div className="hero">
                         <h1>Your Internet Folder</h1>
-                        <p className="tagline">A lightweight, self-hosted serverless platform based on Deno</p>
+                        <p className="tagline">A self-hosted serverless platform based on Deno</p>
                         <a href="https://docs.smallweb.run" className="cta-button">Get Started</a>
                     </div>
                 </header>

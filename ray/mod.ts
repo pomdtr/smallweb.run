@@ -20,16 +20,14 @@ const ext2lang: Record<string, string> = {
 };
 
 function getRayUrl(pathname: string, code: string): string {
-    const title = path.basename(pathname);
     const language = ext2lang[path.extname(pathname)] || "";
-    const hash = `#title=${title}&code=${
-        encodeBase64Url(code)
-    }&language=${language}`;
+    const hash = `#title=${pathname.slice(1)}&code=${encodeBase64Url(code)
+        }&language=${language}&padding=32`
     return `https://ray.so${hash}`;
 }
 
 export class Ray {
-    constructor(private rootDir: string) {}
+    constructor(private rootDir: string) { }
 
     fetch: (req: Request) => Response | Promise<Response> = async (req) => {
         const url = new URL(req.url);
