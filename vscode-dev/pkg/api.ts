@@ -126,6 +126,12 @@ export function createApi(params: {
                     200: z.object({
                         success: z.boolean(),
                     }),
+                    400: z.object({
+                        error: z.string(),
+                    }),
+                    404: z.object({
+                        error: z.string(),
+                    }),
                 },
             }),
             async (c) => {
@@ -154,6 +160,12 @@ export function createApi(params: {
                         200: z.object({
                             success: z.boolean(),
                             b64: z.string(),
+                        }),
+                        400: z.object({
+                            error: z.string(),
+                        }),
+                        404: z.object({
+                            error: z.string(),
                         }),
                     },
                 },
@@ -192,6 +204,12 @@ export function createApi(params: {
                 responses: {
                     200: z.object({
                         success: z.boolean(),
+                    }),
+                    400: z.object({
+                        error: z.string(),
+                    }),
+                    404: z.object({
+                        error: z.string(),
                     }),
                 },
             }),
@@ -234,6 +252,12 @@ export function createApi(params: {
                 responses: {
                     200: z.object({
                         success: z.boolean(),
+                    }),
+                    400: z.object({
+                        error: z.string(),
+                    }),
+                    404: z.object({
+                        error: z.string(),
                     }),
                 },
             }),
@@ -280,6 +304,12 @@ export function createApi(params: {
                     200: z.object({
                         success: z.boolean(),
                     }),
+                    400: z.object({
+                        error: z.string(),
+                    }),
+                    404: z.object({
+                        error: z.string(),
+                    }),
                 },
             }),
             async (c) => {
@@ -324,6 +354,12 @@ export function createApi(params: {
                     200: z.object({
                         success: z.boolean(),
                     }),
+                    400: z.object({
+                        error: z.string(),
+                    }),
+                    404: z.object({
+                        error: z.string(),
+                    }),
                 },
             }),
             async (c) => {
@@ -355,6 +391,9 @@ export function createApi(params: {
                     200: z.object({
                         success: z.boolean(),
                     }),
+                    400: z.object({
+                        error: z.string(),
+                    })
                 },
             }),
             async (c) => {
@@ -369,42 +408,43 @@ export function createApi(params: {
                 });
                 return c.json({ success: true });
             },
-        ).post(
-            "/search/provideFileSearchResults",
-            openApi({
-                request: {
-                    query: z.string(),
-                    options: z.object({
-                        maxResults: z.number(),
-                    }),
-                },
-                responses: {},
-            }),
-            (c) => {
-                return c.json({});
-            },
         )
-        .post(
-            "/search/provideTextSearchResults",
-            openApi({
-                request: {
-                    query: z.object({
-                        query: z.string(),
-                        isMutliLine: z.boolean().optional(),
-                        isRegex: z.boolean().optional(),
-                        isCaseSensitive: z.boolean().optional(),
-                        isWordMatch: z.boolean().optional(),
-                    }),
-                    options: z.object({
-                        folder: z.string(),
-                        includes: z.array(z.string()),
-                        excludes: z.array(z.string()),
-                    }),
-                },
-                responses: {},
-            }),
-            (c) => {
-                return c.json({});
-            },
-        );
+    // .post(
+    //     "/search/provideFileSearchResults",
+    //     openApi({
+    //         request: {
+    //             query: z.string(),
+    //             options: z.object({
+    //                 maxResults: z.number(),
+    //             }),
+    //         },
+    //         responses: {},
+    //     }),
+    //     (c) => {
+    //         return c.json({});
+    //     },
+    // )
+    // .post(
+    //     "/search/provideTextSearchResults",
+    //     openApi({
+    //         request: {
+    //             query: z.object({
+    //                 query: z.string(),
+    //                 isMutliLine: z.boolean().optional(),
+    //                 isRegex: z.boolean().optional(),
+    //                 isCaseSensitive: z.boolean().optional(),
+    //                 isWordMatch: z.boolean().optional(),
+    //             }),
+    //             options: z.object({
+    //                 folder: z.string(),
+    //                 includes: z.array(z.string()),
+    //                 excludes: z.array(z.string()),
+    //             }),
+    //         },
+    //         responses: {},
+    //     }),
+    //     (c) => {
+    //         return c.json({});
+    //     },
+    // );
 }

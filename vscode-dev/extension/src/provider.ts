@@ -15,26 +15,6 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 
 	constructor(private tokens: Record<string, string>) { }
 
-	private createClient(uri: vscode.Uri) {
-		const searchParams = new URLSearchParams(uri.query)
-		const token = searchParams.get('token') || this.tokens[uri.authority]
-		return createClient<NormalizeOAS<typeof openapi>>({
-			endpoint: `https://${uri.authority}/api`,
-			globalParams: token ? { headers: { Authorization: `Bearer ${token}` } } : {}
-		})
-	}
-
-	private getClient(uri: vscode.Uri) {
-		const client = this.clients[uri.authority]
-		if (client) {
-			return client
-		}
-
-		this.clients[uri.authority] = this.createClient(uri)
-		return this.clients[uri.authority]
-	}
-
-
 	// --- manage file metadata
 	async stat(uri: vscode.Uri) {
 		const client = this.getClient(uri);
@@ -79,9 +59,9 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 			json: { path: uri.path }
 		})
 
-		// if (resp.status === 404) {
-		// 	throw vscode.FileSystemError.FileNotFound(uri);
-		// }
+		if (resp.status === 404) {
+			throw vscode.FileSystemError.FileNotFound(uri);
+		}
 
 		if (!resp.ok) {
 			throw new Error(resp.statusText);
@@ -115,9 +95,14 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 			json: { oldPath: oldUri.path, newPath: newUri.path, overwrite: options.overwrite }
 		})
 
+		if (resp.status === 404) {
+			throw vscode.FileSystemError.FileNotFound(oldUri);
+		}
+
 		if (!resp.ok) {
 			throw new Error(resp.statusText);
 		}
+
 	}
 
 	async delete(uri: vscode.Uri, options: { recursive: boolean }) {
@@ -125,6 +110,10 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 		const resp = await client['/fs/delete'].post({
 			json: { path: uri.path, options: { recursive: options.recursive } }
 		})
+
+		if (resp.status === 404) {
+			throw vscode.FileSystemError.FileNotFound(uri);
+		}
 
 		if (!resp.ok) {
 			throw new Error(resp.statusText);
@@ -177,5 +166,24 @@ export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.Fi
 	watch(_resource: vscode.Uri): vscode.Disposable {
 		// ignore, fires for all changes...
 		return new vscode.Disposable(() => { });
+	}
+
+	private createClient(uri: vscode.Uri) {
+		const searchParams = new URLSearchParams(uri.query)
+		const token = searchParams.get('token') || this.tokens[uri.authority]
+		return createClient<NormalizeOAS<typeof openapi>>({
+			endpoint: `https://${uri.authority}/api`,
+			globalParams: token ? { headers: { Authorization: `Bearer ${token}` } } : {}
+		})
+	}
+
+	private getClient(uri: vscode.Uri) {
+		const client = this.clients[uri.authority]
+		if (client) {
+			return client
+		}
+
+		this.clients[uri.authority] = this.createClient(uri)
+		return this.clients[uri.authority]
 	}
 }
