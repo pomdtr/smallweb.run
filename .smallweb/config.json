@@ -1,3 +1,10 @@
 {
-    "domain": "smallweb.run"
+    "domain": "smallweb.run",
+    "adminApps": [
+        "vscode",
+        "editor",
+        "readme",
+        "api"
+    ],
+    "customDomains": {}
 }

@@ -8,8 +8,8 @@ const App = () => {
         confetti({
             particleCount: 5,
             origin: {
-                x: e.pageX / window.innerWidth,
-                y: (e.pageY + 20) / window.innerHeight,
+                x: e.pageX / globalThis.innerWidth,
+                y: (e.pageY + 20) / globalThis.innerHeight,
             }
         })
     }

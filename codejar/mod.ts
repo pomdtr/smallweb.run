@@ -1,14 +1,18 @@
 import * as path from "@std/path";
 import * as http from "@std/http";
+import type { FetchFn } from "@smallweb/types"
 
 export type CodejarOptions = {
-  urlRoot?: string;
+  rootDir?: string;
 };
 
 export class Codejar {
-  constructor(public rootDir: string, public options: CodejarOptions = {}) {}
+  private rootDir
+  constructor(options: CodejarOptions = {}) {
+    this.rootDir = path.resolve(options.rootDir || ".");
+  }
 
-  fetch = async (req: Request): Promise<Response> => {
+  fetch: FetchFn = async (req) => {
     const url = new URL(req.url);
     const filepath = path.join(this.rootDir, url.pathname);
     const stat = await Deno.stat(filepath).catch(() => null);
@@ -22,7 +26,6 @@ export class Codejar {
         showDirListing: true,
         showIndex: false,
         showDotfiles: true,
-        urlRoot: this.options.urlRoot,
       });
     }
 

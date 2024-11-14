@@ -38,11 +38,11 @@ export type LastLoginOptions = {
      * The provider name for the login service.
      */
     provider?:
-        | "google"
-        | "github"
-        | "facebook"
-        | "gitlab"
-        | "hello";
+    | "google"
+    | "github"
+    | "facebook"
+    | "gitlab"
+    | "hello";
 
     /**
      * Indicates that authentication is optional.
@@ -174,8 +174,8 @@ export function lastlogin(
 
         const url = new URL(req.url);
         const clientID = `${url.protocol}//${url.host}/`;
-        const redirectUri = `${url.protocol}//${url.host}/auth/callback`;
-        if (url.pathname == "/auth/callback") {
+        const redirectUri = `${url.protocol}//${url.host}/_auth/callback`;
+        if (url.pathname == "/_auth/callback") {
             const cookies = await getCookies(req.headers);
             const store = JSON.parse(decodeURIComponent(cookies[OAUTH_COOKIE]));
             const state = url.searchParams.get("state");
@@ -235,7 +235,7 @@ export function lastlogin(
             return res;
         }
 
-        if (url.pathname == "/auth/logout") {
+        if (url.pathname == "/_auth/logout") {
             const cookies = getCookies(req.headers);
             if (!(JWT_COOKIE in cookies)) {
                 return new Response("session cookie not found", {
