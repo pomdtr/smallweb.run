@@ -9,7 +9,7 @@ import { createClient, type NormalizeOAS } from 'fets';
 import { Base64 } from 'js-base64';
 import openapi from './openapi';
 
-export class SmallwebProvider implements vscode.FileSystemProvider, vscode.FileSearchProviderNew, vscode.TextSearchProviderNew {
+export class SmallwebProvider implements vscode.FileSystemProvider /*, vscode.FileSearchProviderNew, vscode.TextSearchProviderNew */ {
 
 	private clients: Record<string, ReturnType<typeof this.createClient>> = {};
 

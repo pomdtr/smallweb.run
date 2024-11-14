@@ -1,1 +1,1 @@
-- add markdown support
+- add support for index.md files

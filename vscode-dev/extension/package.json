@@ -52,10 +52,6 @@
 			}
 		}
 	},
-	"enabledApiProposals": [
-		"fileSearchProviderNew",
-		"textSearchProviderNew"
-	],
 	"scripts": {
 		"vscode:prepublish": "npm run build",
 		"prepublishOnly": "npm run build",

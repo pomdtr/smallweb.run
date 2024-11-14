@@ -172,6 +172,24 @@ export function lastlogin(
         req = new Request(req);
         req.headers.delete("X-LastLogin-Email");
 
+        const authorization = req.headers.get("Authorization");
+        if (authorization) {
+            if (!authorization.startsWith("Bearer ")) {
+                return new Response("Invalid Authorization header", {
+                    status: 400,
+                });
+            }
+
+            const token = authorization.slice(7);
+            const payload = await jwt.verify(token, secretKey).catch(() => null);
+            if (!payload || typeof payload.email != "string") {
+                return new Response("Invalid token", { status: 401 });
+            }
+
+            req.headers.set("X-LastLogin-Email", payload.email);
+            return handler(req);
+        }
+
         const url = new URL(req.url);
         const clientID = `${url.protocol}//${url.host}/`;
         const redirectUri = `${url.protocol}//${url.host}/_auth/callback`;
@@ -217,12 +235,9 @@ export function lastlogin(
                     Location: store.redirect,
                 },
             });
+
             const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
-            const token = await jwt.sign({
-                email,
-                exp,
-                domain: url.hostname,
-            }, secretKey);
+            const token = await createJwtToken({ email, domain: url.hostname, secretKey, exp });
 
             deleteCookie(res.headers, OAUTH_COOKIE, cookieAttrs);
             setCookie(res.headers, {
@@ -318,4 +333,19 @@ export function lastlogin(
 
         return handler(req);
     };
+}
+
+export function createJwtToken(options: { email: string; domain: string; secretKey?: string, exp?: number }): Promise<string> {
+    const {
+        email,
+        domain,
+        secretKey = Deno.env.get("LASTLOGIN_SECRET_KEY"),
+        exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
+    } = options;
+
+    if (!secretKey) {
+        throw new Error("Secret key is required");
+    }
+
+    return jwt.sign({ email, exp, domain }, secretKey);
 }
