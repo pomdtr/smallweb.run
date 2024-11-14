@@ -12,6 +12,5 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.push(vscode.commands.registerCommand('smallweb.workspaceInit', _ => {
 		vscode.workspace.updateWorkspaceFolders(0, 0, { uri: vscode.Uri.parse('smallweb:/'), name: "Smallweb" });
 	}));
-
 }
 

@@ -1,7 +1,7 @@
-import { VSCode } from "./pkg/mod.ts";
+import { VSCode } from "jsr:@smallweb/vscode@0.0.8";
 
 const vscode = new VSCode({
-    rootDir: Deno.env.get("SMALLWEB_DIR"),
+    rootDir: "."
 });
 
 export default vscode;

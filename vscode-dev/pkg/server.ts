@@ -82,6 +82,7 @@ export function createServer(params: {
 }
 
 function workbenchConfig(host: string, options: {
+    token?: string;
     path?: string;
 } = {}) {
     return {
