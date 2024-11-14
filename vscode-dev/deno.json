@@ -10,7 +10,7 @@
     ]
   },
   "tasks": {
-    "embed": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/dist"
+    "embed": "deno run -A jsr:@smallweb/embed@0.0.15 static pkg/static"
   },
   "imports": {
     "@std/encoding": "jsr:@std/encoding@^1.0.5",

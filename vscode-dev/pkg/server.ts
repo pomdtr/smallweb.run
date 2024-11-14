@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 import { createApi } from "./api.ts";
-import embeds from "./dist/mod.ts";
+import embeds from "./static/mod.ts";
 import { escape } from "@std/html";
 import { createOpenApiDocument } from "hono-zod-openapi";
 import * as path from "@std/path";
