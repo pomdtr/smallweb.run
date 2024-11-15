@@ -6,7 +6,7 @@ const vscode = new VSCode({
 });
 
 vscode.fetch = lastlogin(vscode.fetch, {
-    publicRoutes: ["/api/*", "/openapi.json", "manifest.json"],
+    publicRoutes: ["/api/*", "/openapi.json", "/manifest.json"],
 })
 
 export default vscode;
