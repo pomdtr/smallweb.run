@@ -16,7 +16,9 @@
 
 # Hosting
 
-- [Localhost](./hosting/localhost/localhost.md)
+- [Local Setup](./hosting/local/index.md)
+  - [MacOS](./hosting/local/macos.md)
+  - [Linux](./hosting/local/linux.md)
 - [Cloudflare Tunnel](./hosting/cloudflare/cloudflare.md)
 - [VPS / Home Server](./hosting/vps.md)
 - [Deno Deploy](./hosting/deno-deploy.md)

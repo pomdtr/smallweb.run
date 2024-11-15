@@ -1,5 +1,5 @@
 export default {
     fetch: () => {
-        return new Response("Hello, from vscode!")
+        return new Response("I love this!")
     }
 }
