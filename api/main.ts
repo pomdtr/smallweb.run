@@ -1,4 +1,4 @@
-import { SmallwebApi } from "./src/mod.ts";
+import { SmallwebApi } from "./pkg/mod.ts";
 
 const api = new SmallwebApi(
     {
