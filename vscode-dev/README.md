@@ -13,12 +13,3 @@ export default vscode;
 # ~/smallweb/vscode/.env
 VSCODE_TOKEN=my-secret-token
 ```
-
-```json
-// settings.json
-{
-    "smallweb.tokens": {
-        "vscode.<your-domain>": "my-secret-token"
-    }
-}
-```

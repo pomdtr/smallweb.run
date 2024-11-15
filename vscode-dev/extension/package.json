@@ -2,7 +2,7 @@
 	"name": "smallweb-vscode",
 	"displayName": "Smallweb",
 	"description": "Smallweb VS Code Integration",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"publisher": "pomdtr",
 	"license": "MIT",
 	"repository": {

@@ -7,7 +7,7 @@ import * as path from "@std/path";
 
 export function createServer(params: {
     rootDir: string;
-    token: string | string[];
+    token: string;
 }) {
     const api = createApi({
         rootDir: params.rootDir,
@@ -69,6 +69,7 @@ export function createServer(params: {
                     escape(
                         JSON.stringify(workbenchConfig(url.host, {
                             path: c.req.path,
+                            token: params.token,
                         })),
                     ),
                 ),
@@ -108,13 +109,14 @@ function workbenchConfig(host: string, options: {
         "folderUri": {
             "scheme": "smallweb",
             "authority": host,
+            "query": options.token ? `?token=${options.token}` : "",
             "path": options.path ?? "/",
         },
         "additionalBuiltinExtensions": [
             {
                 "scheme": "https",
-                "authority": "raw.esm.sh",
-                "path": "smallweb-vscode@0.0.4",
+                "authority": "cdn.jsdelivr.net",
+                "path": "npm/smallweb-vscode@0.0.5",
             },
         ],
     };

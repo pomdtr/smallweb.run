@@ -409,42 +409,4 @@ export function createApi(params: {
                 return c.json({ success: true });
             },
         )
-    // .post(
-    //     "/search/provideFileSearchResults",
-    //     openApi({
-    //         request: {
-    //             query: z.string(),
-    //             options: z.object({
-    //                 maxResults: z.number(),
-    //             }),
-    //         },
-    //         responses: {},
-    //     }),
-    //     (c) => {
-    //         return c.json({});
-    //     },
-    // )
-    // .post(
-    //     "/search/provideTextSearchResults",
-    //     openApi({
-    //         request: {
-    //             query: z.object({
-    //                 query: z.string(),
-    //                 isMutliLine: z.boolean().optional(),
-    //                 isRegex: z.boolean().optional(),
-    //                 isCaseSensitive: z.boolean().optional(),
-    //                 isWordMatch: z.boolean().optional(),
-    //             }),
-    //             options: z.object({
-    //                 folder: z.string(),
-    //                 includes: z.array(z.string()),
-    //                 excludes: z.array(z.string()),
-    //             }),
-    //         },
-    //         responses: {},
-    //     }),
-    //     (c) => {
-    //         return c.json({});
-    //     },
-    // );
 }

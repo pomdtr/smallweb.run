@@ -165,6 +165,10 @@ export function lastlogin(
         if (req.method == "OPTIONS") {
             return new Response(null, {
                 status: 204,
+                headers: {
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Headers": "*",
+                }
             });
         }
 
@@ -183,6 +187,10 @@ export function lastlogin(
             const token = authorization.slice(7);
             const payload = await jwt.verify(token, secretKey).catch(() => null);
             if (!payload || typeof payload.email != "string") {
+                if (isPublicRoute(req.url)) {
+                    return handler(req);
+                }
+
                 return new Response("Invalid token", { status: 401 });
             }
 
@@ -237,7 +245,11 @@ export function lastlogin(
             });
 
             const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
-            const token = await createJwtToken({ email, domain: url.hostname, secretKey, exp });
+            const token = await jwt.sign({
+                email,
+                exp,
+                domain: url.hostname,
+            }, secretKey);
 
             deleteCookie(res.headers, OAUTH_COOKIE, cookieAttrs);
             setCookie(res.headers, {
@@ -335,17 +347,3 @@ export function lastlogin(
     };
 }
 
-export function createJwtToken(options: { email: string; domain: string; secretKey?: string, exp?: number }): Promise<string> {
-    const {
-        email,
-        domain,
-        secretKey = Deno.env.get("LASTLOGIN_SECRET_KEY"),
-        exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7
-    } = options;
-
-    if (!secretKey) {
-        throw new Error("Secret key is required");
-    }
-
-    return jwt.sign({ email, exp, domain }, secretKey);
-}

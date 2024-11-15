@@ -3,7 +3,7 @@ import * as path from "@std/path";
 
 export type VSCodeConfig = {
     rootDir?: string;
-    token?: string | string[];
+    token?: string;
 };
 
 export class VSCode {
