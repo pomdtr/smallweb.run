@@ -2,18 +2,9 @@
 
 This repository is a monorepo of all my apps running under the smallweb.run domain.
 
-I use the following smallweb plugin to commit changes to github (stored at `~/.local/bin/smallweb-bump`):
+I use the [bump plugin](../.smallweb/plugins/bump.sh) to commit and push changes to this repository.
 
-```sh
-#!/bin/sh
-
-cd "$SMALLWEB_DIR" || exit 1
-git add .
-git commit -m "$(date +'%e %b %Y, %H:%M')"
-git push
-```
-
-I edit these files locally, and use [mutagen](https://mutagen.io) to sync them to my VPS.
+These files are edited locally, and I use [mutagen](https://mutagen.io) to sync them to my VPS.
 
 ```sh
 mutagen sync create \
