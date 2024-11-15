@@ -1,4 +1,4 @@
-import { Smallblog } from "jsr:@tayzendev/smallblog@1.0.1";
+import { Smallblog } from "@tayzendev/smallblog";
 
 const smallblog = new Smallblog(
     {

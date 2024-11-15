@@ -15,9 +15,3 @@ The components needed are:
 - a dns server to map `*.localhost` domains to `127.0.0.1` ip address (dnsmasq)
 - a reverse proxy to automatically generate https certificates for each domain, and redirect traffic to the smallweb evaluation server (caddy)
 - smallweb itself
-
-## Guides
-
-- [MacOS](./macos.md)
-- [Linux](./linux.md)
-- Windows (TODO)
