@@ -1,5 +1,3 @@
 export default {
-    fetch() {
-        return Response.redirect("https://discord.gg/BsgQK42qZe")
-    }
+    fetch: () => Response.redirect("https://discord.gg/BsgQK42qZe")
 };
