@@ -12,16 +12,14 @@ Use the `Deno.env.get` method to access the environment variables in your app:
 
 ```ts
 // File: ~/smallweb/demo/main.ts
-export default function (req: Request) {
-  if (req.headers.get("Authorization") !== `Bearer ${Deno.env.get("BEARER_TOKEN")}`) {
-    return new Response("Unauthorized", { status: 401 });
-  }
-
-  return new Response(`I'm private!`, {
-    headers: {
-      "Content-Type": "text/plain",
-    },
-  });
+export default {
+  fetch(req: Request) {
+    return new Response(`Hello, ${Deno.env.get("BEARER_TOKEN")}`, {
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  },
 }
 ```
 
