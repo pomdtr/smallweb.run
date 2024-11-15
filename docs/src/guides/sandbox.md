@@ -2,10 +2,10 @@
 
 Smallweb apps have access to:
 
-- read access to their root directory, and the deno cache directory.
-- write access to the `data` directory in their root directory.
+- read access to their app folder, and the deno cache folder.
+- write access to the `data` subfolder in app folder
 - access to the network, to make HTTP requests.
-- access to the env files defined in the `.env` files from the smallweb directory and the app directory.
+- access to the env files defined in the `.env` files from the smallweb root folder and the app folder.
 
 This sandbox protects the host system from malicious code, and ensures that apps can only access the resources they need.
 
@@ -13,7 +13,7 @@ This sandbox protects the host system from malicious code, and ensures that apps
 
 To share files between your apps, just use symbolic links!
 
-For example, if you have two apps `app1` and `app2`, and you want `app2` to access the `users.json` file from `app1`, you can create a symbolic link in the `app2` directory:
+For example, if you have two apps `app1` and `app2`, and you want `app2` to access the `users.json` file from `app1`, you can create a symbolic link in the `app2` folder:
 
 ```sh
 ln -s app1/data/users.json ../app2/data/users.json
