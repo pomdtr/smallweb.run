@@ -33,7 +33,7 @@ type FileServerConfig = {
 } & http.ServeDirOptions;
 
 export class FileServer {
-    constructor(private config: FileServerConfig = {}) {}
+    constructor(private config: FileServerConfig = {}) { }
 
     fetch: (req: Request) => Response | Promise<Response> = async (req) => {
         const url = new URL(req.url);
@@ -52,7 +52,7 @@ export class FileServer {
                 if (
                     cached &&
                     cached.headers.get("last-modified") ===
-                        resp.headers.get("last-modified")
+                    resp.headers.get("last-modified")
                 ) {
                     return cached;
                 }
@@ -124,7 +124,7 @@ export class FileServer {
                 if (
                     cached &&
                     cached.headers.get("last-modified") ===
-                        resp.headers.get("last-modified")
+                    resp.headers.get("last-modified")
                 ) {
                     return cached;
                 }
@@ -189,6 +189,7 @@ const fileServer: FileServer = new FileServer({
     gfm: true,
     showDirListing: true,
     enableCors: true,
+    quiet: true,
     cache: true,
 });
 
