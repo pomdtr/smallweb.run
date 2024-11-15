@@ -1,5 +1,5 @@
-import { HelloWorld } from "./pkg/mod.ts";
+import { ExampleApp } from "./pkg/mod.ts";
 
-const helloWorld = new HelloWorld();
+const app = new ExampleApp();
 
-export default helloWorld;
+export default app;

@@ -5,7 +5,7 @@ export type HelloWorldConfig = {
     name?: string;
 };
 
-export class HelloWorld {
+export class ExampleApp {
     private server;
     private cli;
 
