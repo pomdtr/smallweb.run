@@ -21,16 +21,6 @@ smallweb ls | cut -f1 | fzf | xargs smallweb open
 
 And make it executable with `chmod +x smallweb-choose`, you will be able to run `smallweb choose` and get an interactive list of your apps to choose from, which will then be opened in your default browser.
 
-## Example Plugins
-
-[simpl-site](https://github.com/iamseeley/simpl-site) can be installed as a smallweb plugin. You can install it using the following command:
-
-```sh
-deno install -Agf jsr:@iamseeley/simpl-site/smallweb-simpl-site
-```
-
-You will then be able to run `smallweb simpl-site` to create a new static site.
-
 ## Environment variables available to plugins
 
 - `SMALLWEB_DIR`: The directory where the smallweb apps are stored.
