@@ -1,4 +1,10 @@
-## Ubuntu / Debian setup
+## Windows (WSL)
+
+### Install WSL
+
+Follow the instructions on the [official documentation](https://learn.microsoft.com/en-us/windows/wsl/install).
+
+The next commands in this guide should be run in the WSL terminal.
 
 ### Install Deno
 
@@ -38,7 +44,7 @@ sudo systemctl restart caddy
 caddy trust
 ```
 
-There is no need to setup dnsmasq on Ubuntu, as it seems to be already configured to resolve `.localhost` domains to `127.0.0.1`.
+There is no need to setup dnsmasq on Windows, as it seems to be already configured to resolve `.localhost` domains to `127.0.0.1`.
 
 ### Testing the setup
 

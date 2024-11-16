@@ -41,7 +41,7 @@ function App() {
                     </nav>
                     <div className="hero">
                         <h1>Your Internet Folder</h1>
-                        <p className="tagline">A self-hosted personal cloud</p>
+                        <p className="tagline">A self-hostable personal cloud</p>
                         <a href="https://docs.smallweb.run" className="cta-button">Get Started</a>
                     </div>
                 </header>
