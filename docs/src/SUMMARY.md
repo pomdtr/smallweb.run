@@ -14,8 +14,9 @@
 - [App Sandbox](./guides/sandbox.md)
 - [File Sync](./guides/file-sync.md)
 
-# Hosting
+# Hosting Smallweb
 
+- [Smallweb Cloud](./hosting/smallweb-cloud.md)
 - [Local Setup](./hosting/local/index.md)
   - [MacOS](./hosting/local/macos.md)
   - [Linux](./hosting/local/linux.md)
