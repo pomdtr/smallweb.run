@@ -39,7 +39,11 @@ install_smallweb_cli() {
   URL="$URL_PREFIX/smallweb_$TARGET.tar.gz"
   DOWNLOAD_FILE=$(mktemp -t smallweb.XXXXXXXXXX)
 
-  curl --progress-bar -L "$URL" -o "$DOWNLOAD_FILE"
+  if ! curl --progress-bar -L -f "$URL" -o "$DOWNLOAD_FILE"; then
+    printf "Failed to download $URL. Please check the URL or your network connection.\n"
+    exit 1
+  fi
+
   printf "\n${bright_blue}Installing to ${reset}$INSTALL_DIRECTORY/smallweb\n"
   mkdir -p "$INSTALL_DIRECTORY"
   tar -C "$INSTALL_DIRECTORY" -zxf "$DOWNLOAD_FILE" smallweb

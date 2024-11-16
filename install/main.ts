@@ -13,8 +13,12 @@ function fetchLatestRelease() {
 export default {
     async fetch(req: Request) {
         const url = new URL(req.url);
-        let version = url.searchParams.get("version") || url.searchParams.get("v")
-        if (!version) {
+        let version: string
+        if (url.searchParams.get("version")) {
+            version = url.searchParams.get("version")!;
+        } else if (url.searchParams.has("v")) {
+            version = url.searchParams.get("v")!;
+        } else {
             const resp = await fetchLatestRelease();
             if (!resp.ok) {
                 return new Response("Failed to fetch latest release", { status: resp.status });
@@ -22,6 +26,10 @@ export default {
 
             const release = await resp.json();
             version = release.tag_name.slice(1);
+        }
+
+        if (version.startsWith("v")) {
+            version = version.slice(1);
         }
 
         const target_dir = url.searchParams.get("target_dir") ||
