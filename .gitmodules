@@ -1,0 +1,3 @@
+[submodule "smallblog"]
+	path = smallblog
+	url = https://github.com/tayzendev/smallblog
