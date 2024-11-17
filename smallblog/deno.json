@@ -1,5 +1,0 @@
-{
-    "imports": {
-        "@tayzendev/smallblog": "jsr:@tayzendev/smallblog@^1.0.1"
-    }
-}
