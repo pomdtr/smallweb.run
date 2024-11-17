@@ -23,5 +23,6 @@ And make it executable with `chmod +x smallweb-choose`, you will be able to run 
 
 ## Environment variables available to plugins
 
+- `SMALLWEB_VERSION`: The version of the smallweb CLI.
 - `SMALLWEB_DIR`: The directory where the smallweb apps are stored.
 - `SMALLWEB_DOMAIN`: The domain where the smallweb apps are served from.
