@@ -2,12 +2,6 @@
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-## Move away from cgi-bin architecture
-
-Currently each request is sandboxed in it's own deno process. 
-
-This is required because smallweb does not have yet a way to know if an app should be restarted due to a user edit.
-
 ## Smallweb SDK
 
 An sdk for admin apps, that interact directly with the filesystem.
@@ -73,6 +67,12 @@ mutagen sync create \
   --stage-mode-alpha=internal \
   <token>@ssh.smallweb.run:/var/www/<user> ~/smallweb
 ```
+
+## Move away from cgi-bin architecture
+
+Currently each request is sandboxed in it's own deno process. 
+
+This is required because smallweb does not have yet a way to know if an app should be restarted due to a user edit.
 
 ## Adaptor for [blot.im](https://blot.im) websites
 

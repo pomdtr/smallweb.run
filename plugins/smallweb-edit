@@ -1,5 +1,0 @@
-#!/bin/bash
-
-set -e
-
-code "${SMALLWEB_DIR}/$1"
