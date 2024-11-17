@@ -1,5 +1,5 @@
 {
-    "name": "@pomdtr/telegram",
+    "name": "@pomdtr/smallweb-telegram-cli",
     "version": "0.0.1",
     "license": "MIT",
     "lock": false,

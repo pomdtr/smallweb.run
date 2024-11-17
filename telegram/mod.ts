@@ -2,28 +2,29 @@ import { Command } from "jsr:@cliffy/command@1.0.0-rc.7";
 import { Bot, webhookCallback } from "npm:grammy@1.31.1";
 
 export type TelegramConfig = {
-    chatID: string;
+    chatID?: string;
     botToken?: string;
     secretToken?: string;
-    smallwebApiToken?: string;
-    smallwebApiUrl?: string;
 };
 
-interface App {
-    fetch: (req: Request) => Response | Promise<Response>;
-    run?: (args: string[]) => void | Promise<void>;
-}
 
-export class Telegram implements App {
+export class Telegram {
     private handler;
     private command;
 
     constructor(config: TelegramConfig) {
         const {
-            chatID,
+            chatID = Deno.env.get("TELEGRAM_CHAT_ID"),
             botToken = Deno.env.get("TELEGRAM_BOT_TOKEN"),
-            secretToken,
+            secretToken = Deno.env.get("TELEGRAM_SECRET_TOKEN"),
         } = config;
+
+        if (!chatID) {
+            throw new Error(
+                "chatID is required. Set it in the config or in the environment variable TELEGRAM_CHAT_ID",
+            );
+        }
+
         if (!botToken) {
             throw new Error(
                 "botToken is required. Set it in the config or in the environment variable TELEGRAM_BOT_TOKEN",
