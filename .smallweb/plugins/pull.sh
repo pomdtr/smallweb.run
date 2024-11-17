@@ -2,4 +2,5 @@
 
 cd "$SMALLWEB_DIR" || exit 1
 
-git submodule foreach git pull origin main
+git pull --ff-only
+git submodule update --remote --merge
