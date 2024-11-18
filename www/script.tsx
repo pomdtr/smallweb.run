@@ -41,7 +41,7 @@ function App() {
                     </nav>
                     <div className="hero">
                         <h1>Your Internet Folder</h1>
-                        <p className="tagline">A self-hostable personal cloud</p>
+                        <p className="tagline">A self-hostable personal cloud inspired by serverless platforms</p>
                         <a href="https://docs.smallweb.run" className="cta-button">Get Started</a>
                     </div>
                 </header>
@@ -65,13 +65,13 @@ function App() {
                                 <rect x="90" y="140" width="220" height="40" rx="5" ry="5" fill="#34495E" stroke="#5E6AD2" strokeWidth="2" />
                                 <text x="200" y="165" textAnchor="middle" fill="#E2E8F0" fontSize="14">www</text>
                             </a>
-                            <a href="https://github.smallweb.run/blog" target="_blank">
+                            <a href="https://github.smallweb.run/vscode" target="_blank">
                                 <rect x="90" y="190" width="220" height="40" rx="5" ry="5" fill="#34495E" stroke="#5E6AD2" strokeWidth="2" />
-                                <text x="200" y="215" textAnchor="middle" fill="#E2E8F0" fontSize="14">blog</text>
+                                <text x="200" y="215" textAnchor="middle" fill="#E2E8F0" fontSize="14">vscode</text>
                             </a>
-                            <a href="https://github.smallweb.run/discord" target="_blank">
+                            <a href="https://github.smallweb.run/excalidraw" target="_blank">
                                 <rect x="90" y="240" width="220" height="40" rx="5" ry="5" fill="#34495E" stroke="#5E6AD2" strokeWidth="2" />
-                                <text x="200" y="265" textAnchor="middle" fill="#E2E8F0" fontSize="14">discord</text>
+                                <text x="200" y="265" textAnchor="middle" fill="#E2E8F0" fontSize="14">excalidraw</text>
                             </a>
                             <rect x="450" y="50" width="300" height="300" rx="10" ry="10" fill="#1E2028" stroke="#5E6AD2" strokeWidth="2" />
                             <text x="600" y="30" textAnchor="middle" fill="#E2E8F0" fontSize="20">Domains</text>
@@ -83,13 +83,13 @@ function App() {
                                 <rect x="490" y="140" width="220" height="40" rx="5" ry="5" fill="#34495E" stroke="#5E6AD2" strokeWidth="2" />
                                 <text x="600" y="165" textAnchor="middle" fill="#E2E8F0" fontSize="14">www.smallweb.run</text>
                             </a>
-                            <a href="https://blog.smallweb.run" target="_blank">
+                            <a href="https://vscode.smallweb.run" target="_blank">
                                 <rect x="490" y="190" width="220" height="40" rx="5" ry="5" fill="#34495E" stroke="#5E6AD2" strokeWidth="2" />
-                                <text x="600" y="215" textAnchor="middle" fill="#E2E8F0" fontSize="14">blog.smallweb.run</text>
+                                <text x="600" y="215" textAnchor="middle" fill="#E2E8F0" fontSize="14">vscode.smallweb.run</text>
                             </a>
-                            <a href="https://discord.smallweb.run" target="_blank">
+                            <a href="https://excalidraw.smallweb.run" target="_blank">
                                 <rect x="490" y="240" width="220" height="40" rx="5" ry="5" fill="#34495E" stroke="#5E6AD2" strokeWidth="2" />
-                                <text x="600" y="265" textAnchor="middle" fill="#E2E8F0" fontSize="14">discord.smallweb.run</text>
+                                <text x="600" y="265" textAnchor="middle" fill="#E2E8F0" fontSize="14">excalidraw.smallweb.run</text>
                             </a>
                             <line x1="310" y1="160" x2="490" y2="160" stroke="#5E6AD2" strokeWidth="2" markerEnd="url(#arrowhead)" />
                             <line x1="310" y1="210" x2="490" y2="210" stroke="#5E6AD2" strokeWidth="2" markerEnd="url(#arrowhead)" />
@@ -98,28 +98,6 @@ function App() {
                         <p>
                             Creating a new website becomes as simple as creating a folder and opening the corresponding URL in your browser.
                         </p>
-                    </section>
-
-                    <section id="features" className="features animate-on-scroll">
-                        <h2>Key Features</h2>
-                        <ul>
-                            <li>🚀 <strong>Serverless</strong>: Self-hosted platform with sandboxed execution for each request</li>
-                            <li>🗂️ <strong>Folder-based</strong>: Map domains to folders in your filesystem</li>
-                            <li>🔒 <strong>Secure</strong>: Sandboxed environment with limited access</li>
-                            <li>🔄 <strong>Easy Migration</strong>: Seamlessly move to Deno Deploy when you need to scale</li>
-                        </ul>
-                    </section>
-
-                    <section id="examples" className="examples animate-on-scroll">
-                        <h2>Examples</h2>
-                        <p>
-                            Explore these Smallweb-hosted websites:
-                        </p>
-                        <div className="example-grid">
-                            <a href="https://astro.smallweb.run" target="_blank" className="example-item">astro.smallweb.run</a>
-                            <a href="https://blog.smallweb.run" target="_blank" className="example-item">blog.smallweb.run</a>
-                            <a href="https://excalidraw.smallweb.run" target="_blank" className="example-item">excalidraw.smallweb.run</a>
-                        </div>
                     </section>
                 </main>
 
