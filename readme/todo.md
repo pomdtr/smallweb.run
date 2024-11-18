@@ -2,9 +2,34 @@
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-## Smallweb SDK
+## Email Support
 
-An sdk for admin apps, that interact directly with the filesystem.
+Each app should have it's own email address (`app@<domain>`).
+
+```ts
+import { Email } from "@smallweb/types"
+
+export default {
+  email: (msg: Email) {
+    console.log(email.subject)
+  }
+}
+```
+
+Here is the val town email type for reference:
+
+```ts
+interface Email {
+  from: string,
+  to: string,
+  cc: string,
+  bcc: string,
+  subject: string | undefined,
+  text: string | undefined,
+  html: string | undefined,
+  attachments: File[],
+}
+```
 
 ## `smallweb env`
 
@@ -54,27 +79,12 @@ ghp_1234567890
 
 I'm thinking of using [Secp256k1](https://en.bitcoin.it/wiki/Secp256k1).
 
+
+## Smallweb SDK
+
+An sdk for admin apps, that interact directly with the filesystem.
+
 ## Automatically install deno for the user
-
-## `smallweb sync` (wrapper over mutagen)
-
-```sh
-mutagen sync create \
-  --name=smallweb \
-  --ignore-vcs \
-  --ignore=node_modules \
-  --mode=two-way-resolved \
-  --stage-mode-alpha=internal \
-  <token>@ssh.smallweb.run:/var/www/<user> ~/smallweb
-```
-
-## Move away from cgi-bin architecture
-
-Currently each request is sandboxed in it's own deno process. 
-
-This is required because smallweb does not have yet a way to know if an app should be restarted due to a user edit.
-
-## Adaptor for [blot.im](https://blot.im) websites
 
 ## Automatic backups to github / git repository
 
@@ -85,6 +95,8 @@ This is required because smallweb does not have yet a way to know if an app shou
 https://github.com/pomdtr/smallweb-raycast
 
 ### VS Code Extension
+
+#### Telegram Bot
 
 ## Website Redesign
 
@@ -102,4 +114,16 @@ You'll also be able to access them using the CLI:
 
 ```sh
 smallweb logs --app <app> --type [http|cron|console]
+```
+
+## `smallweb sync` (wrapper over mutagen)
+
+```sh
+mutagen sync create \
+  --name=smallweb \
+  --ignore-vcs \
+  --ignore=node_modules \
+  --mode=two-way-resolved \
+  --stage-mode-alpha=internal \
+  <token>@ssh.smallweb.run:/var/www/<user> ~/smallweb
 ```

@@ -23,14 +23,3 @@ The cli will work seamlessly, including the `smallweb run` command:
 ```sh
 smallweb run example
 ```
-
-## Architecture
-
-I plan to use one [fly machine](https://fly.io/docs/machines/) per user. Each machine will include:
-
-- a smallweb instance
-- a custom ssh server implemented using <https://github.com/gliderlabs/ssh> running on port 22
-
-The smallweb dir will be regularly saved using [fly volumes](https://fly.io/docs/volumes/overview/)
-
-Once i'm more confortable with fly, I might group multiple users into a single machine.

@@ -1,7 +1,8 @@
 import { Command } from "jsr:@cliffy/command@1.0.0-rc.7";
-import { Bot, webhookCallback } from "npm:grammy@1.31.1";
+import { Hono } from "npm:hono@4.6.10"
+import shlex from "npm:shlex"
 
-export type TelegramConfig = {
+export type TelegramOptions = {
     chatID?: string;
     botToken?: string;
     secretToken?: string;
@@ -9,10 +10,14 @@ export type TelegramConfig = {
 
 
 export class Telegram {
-    private handler;
+    private server;
     private command;
 
-    constructor(config: TelegramConfig) {
+    constructor(config: TelegramOptions = {}) {
+        if (!Deno.env.get("SMALLWEB_ADMIN")) {
+            throw new Error("Not an admin app");
+        }
+
         const {
             chatID = Deno.env.get("TELEGRAM_CHAT_ID"),
             botToken = Deno.env.get("TELEGRAM_BOT_TOKEN"),
@@ -31,21 +36,24 @@ export class Telegram {
             );
         }
 
-        const bot = createBot({ botToken });
+        const SMALLWEB_CLI_PATH = Deno.env.get("SMALLWEB_CLI_PATH");
+        if (!SMALLWEB_CLI_PATH) {
+            throw new Error(
+                "SMALLWEB_CLI_PATH is required. Set it in the environment variable SMALLWEB_CLI_PATH",
+            );
+        }
 
-        this.handler = webhookCallback(bot, "std/http", {
-            secretToken: secretToken,
-        });
+        this.server = createServer({ botToken, secretToken, chatID, cliPath: SMALLWEB_CLI_PATH });
 
         this.command = createCommand({
-            bot,
             chatID,
+            botToken,
             secretToken,
         });
     }
 
     fetch: (req: Request) => Response | Promise<Response> = (req) => {
-        return this.handler(req);
+        return this.server.fetch(req);
     };
 
     run: (args: string[]) => void | Promise<void> = async (args) => {
@@ -53,21 +61,48 @@ export class Telegram {
     };
 }
 
-function createBot(params: { botToken: string }) {
-    const bot = new Bot(params.botToken);
+function createServer(params: { cliPath: string, chatID: string, botToken: string, secretToken?: string }) {
+    return new Hono()
+        .post("/webhook", async (c) => {
+            if (params.secretToken && c.req.header("x-telegram-webhook-secret") !== params.secretToken) {
+                return new Response("Invalid secret", { status: 401 });
+            }
 
-    bot.command("start", async (ctx) => {
-        await ctx.reply(
-            "Hello! I'm a bot that can run commands for you. Type /run <command> to run a command",
-        );
-    });
+            const update = await c.req.json()
+            if (!update.message) {
+                return new Response("OK")
+            }
 
-    return bot;
+            const text = update.message?.text;
+            if (!text) {
+                return
+            }
+
+            const args = shlex.split(text);
+            const command = new Deno.Command(params.cliPath, {
+                args,
+            })
+            const output = await command.output()
+
+            const res = new TextDecoder().decode(output.code === 0 ? output.stdout : output.stderr)
+            await fetch(`https://api.telegram.org/bot${params.botToken}/sendMessage`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    chat_id: params.chatID,
+                    text: res,
+                }),
+            });
+
+            return new Response("OK")
+        })
 }
 
 function createCommand(params: {
-    bot: Bot;
     chatID: string;
+    botToken: string;
     secretToken?: string;
 }) {
     const { SMALLWEB_APP_NAME, SMALLWEB_APP_URL } = Deno.env.toObject();
@@ -77,25 +112,32 @@ function createCommand(params: {
             command.showHelp();
         },
     ).command("set-webhook").action(async () => {
-        await params.bot.api.setWebhook(SMALLWEB_APP_URL, {
-            secret_token: params.secretToken,
+        await fetch(`https://api.telegram.org/bot${params.botToken}/setWebhook`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                url: SMALLWEB_APP_URL,
+                secret: params.secretToken,
+            }),
         });
     }).command("send").arguments("<text:string>").description(
         "Send a message to the bot",
     ).action(
         async (_, text) => {
-            await params.bot.api.sendMessage(params.chatID, text);
+            await fetch(`https://api.telegram.org/bot${params.botToken}/sendMessage`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    chat_id: params.chatID,
+                    text,
+                }),
+            });
         },
-    ).command("set-my-commands").description(
-        "Register commands with the bot",
-    ).action(async () => {
-        await params.bot.api.setMyCommands([
-            { command: "start", description: "Start the bot" },
-            { command: "help", description: "Get help" },
-            { command: "run", description: "Run a command" },
-            { command: "list", description: "List apps" },
-        ]);
-    });
+    )
 
     return command;
 }
