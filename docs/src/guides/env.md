@@ -1,4 +1,4 @@
-### Setting env variables
+## Setting env variables
 
 You can set environment variables for your app by creating a file called `.env` in the application folder.
 
@@ -29,3 +29,18 @@ If you want to set an environment variable for all your apps, you can create a `
 // ~/smallweb/.env
 GLOBAL_VAR=GLOBAL_VALUE
 ```
+
+## Injected environment variables
+
+Smallweb automatically injects the following environment variables into your app:
+
+- `SMALLWEB_VERSION`: The version of the smallweb CLI.
+- `SMALLWEB_DIR`: The directory where the smallweb apps are stored.
+- `SMALLWEB_DOMAIN`: The domain where the smallweb apps are served from.
+- `SMALLWEB_APP_NAME`: The name of the app.
+- `SMALLWEB_APP_URL`: The URL of the app.
+
+And some additional variables are available to admin apps:
+
+- `SMALLWEB_ADMIN`: Allows you to check if the app is an admin app.
+- `SMALLWEB_CLI_PATH`: The path to the smallweb CLI.

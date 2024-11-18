@@ -1,6 +1,6 @@
 # Smallweb Plugins
 
-The smallweb CLI can be extended with plugins. To create a new plugin, just add a binary to your PATH that starts with `smallweb-` and the CLI will automatically detect it.
+The smallweb CLI can be extended with plugins. To create a new plugin, just create a script in `$SMALLWEB_DIR/.smallweb/plugins`. The script name (without the extension) will be mapped to a cli subcommand.
 
 For example, if you create a new `smallweb-choose` file in your PATH with the following content:
 
