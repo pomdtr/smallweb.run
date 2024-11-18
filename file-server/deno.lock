@@ -13,6 +13,7 @@
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@^1.0.3": "1.0.3",
     "jsr:@std/fmt@~0.218.2": "0.218.2",
+    "jsr:@std/fs@^1.0.5": "1.0.5",
     "jsr:@std/fs@~0.218.2": "0.218.2",
     "jsr:@std/http@1": "1.0.9",
     "jsr:@std/io@~0.218.2": "0.218.2",
@@ -39,7 +40,7 @@
       "dependencies": [
         "jsr:@deno/graph",
         "jsr:@std/fmt@~0.218.2",
-        "jsr:@std/fs",
+        "jsr:@std/fs@~0.218.2",
         "jsr:@std/io",
         "jsr:@std/path@~0.218.2"
       ]
@@ -95,6 +96,12 @@
     },
     "@std/fs@0.218.2": {
       "integrity": "dd9431453f7282e8c577cc22c9e6d036055a9a980b5549f887d6012969fabcca"
+    },
+    "@std/fs@1.0.5": {
+      "integrity": "41806ad6823d0b5f275f9849a2640d87e4ef67c51ee1b8fb02426f55e02fd44e",
+      "dependencies": [
+        "jsr:@std/path@^1.0.7"
+      ]
     },
     "@std/http@1.0.9": {
       "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c",
@@ -274,6 +281,7 @@
     "dependencies": [
       "jsr:@deno/emit@0.45",
       "jsr:@deno/gfm@0.10",
+      "jsr:@std/fs@^1.0.5",
       "jsr:@std/http@1",
       "jsr:@std/path@^1.0.6",
       "npm:prismjs@^1.29.0"

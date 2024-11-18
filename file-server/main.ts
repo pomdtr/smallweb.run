@@ -1,7 +1,8 @@
 import { FileServer } from "./mod.ts";
 
 const fileServer = new FileServer({
-    fsRoot: ".",
+    fsRoot: "./examples",
+    showIndex: true,
     showDirListing: true,
     gfm: true,
     transpile: true,

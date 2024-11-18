@@ -1,5 +1,6 @@
 import * as http from "@std/http";
-import * as path from "@std/path";
+import * as path from "@std/path/posix";
+import * as fs from "@std/fs";
 
 import { transpile } from "@deno/emit";
 
@@ -14,7 +15,7 @@ import "prismjs/components/prism-tsx.min.js";
 
 const cache = await caches.open("file-server");
 
-type FileServerConfig = {
+type FileServerOptions = {
     /**
      * Whether to transpile files with .ts, .jsx, .tsx extensions to javascript.
      * @default false
@@ -33,129 +34,179 @@ type FileServerConfig = {
 } & http.ServeDirOptions;
 
 export class FileServer {
-    constructor(private config: FileServerConfig = {}) { }
+    constructor(private options: FileServerOptions = {}) { }
 
     fetch: (req: Request) => Response | Promise<Response> = async (req) => {
         const url = new URL(req.url);
-        const resp = await http.serveDir(req, this.config);
-        if (!resp.ok) {
-            return resp;
+        const fileinfo = await Deno.stat(path.join(this.options.fsRoot || ".", url.pathname))
+
+        if (
+            this.options.showIndex
+            && this.options.gfm
+            && fileinfo.isDirectory
+            && !await fs.exists(path.join(this.options.fsRoot || ".", url.pathname, "index.html"))
+            && await fs.exists(path.join(this.options.fsRoot || ".", url.pathname, "index.md"))
+        ) {
+            return this.serveMarkdown(req);
         }
 
         const extension = path.extname(url.pathname);
         if (
-            this.config.transpile && [".ts", ".tsx", ".jsx"].includes(extension)
+            this.options.transpile && [".ts", ".tsx", ".jsx"].includes(extension)
         ) {
-            console.error("Transforming", url.href);
-            if (this.config.cache) {
-                const cached = await cache.match(req);
-                if (
-                    cached &&
-                    cached.headers.get("last-modified") ===
-                    resp.headers.get("last-modified")
-                ) {
-                    return cached;
-                }
-            }
+            return this.serveTranspiled(req);
+        }
 
-            const script = await resp.text();
-            try {
-                let contentType: string;
-                switch (extension) {
-                    case ".ts":
-                        contentType = "text/typescript";
-                        break;
-                    case ".tsx":
-                        contentType = "text/tsx";
-                        break;
-                    case ".jsx":
-                        contentType = "text/jsx";
-                        break;
-                    default:
-                        throw new Error("Invalid extension");
-                }
+        if (this.options.gfm && extension === ".md") {
+            return this.serveMarkdown(req);
+        }
 
-                const result = await transpile(url, {
-                    load: (url) => {
-                        return Promise.resolve({
-                            kind: "module",
-                            specifier: url,
-                            headers: {
-                                "content-type": contentType,
-                            },
-                            content: script,
-                        });
-                    },
-                });
-                const code = result.get(url.href);
+        return http.serveDir(req, this.options);
+    };
 
-                const res = new Response(code, {
-                    headers: {
-                        "Content-Type": "text/javascript",
-                        "last-modified": resp.headers.get("last-modified") ||
-                            "",
-                    },
-                    status: resp.status,
-                });
 
-                if (this.config.enableCors) {
-                    res.headers.set("Access-Control-Allow-Origin", "*");
-                }
+    private serveTranspiled = async (req: Request) => {
+        const url = new URL(req.url);
+        const filepath = path.join(this.options.fsRoot || ".", url.pathname);
+        const fileinfo = await Deno.stat(filepath)
+            .catch(() => null);
+        if (!fileinfo) {
+            return new Response("Not found", { status: 404 });
+        }
 
-                if (this.config.cache) {
-                    await cache.put(req, res.clone());
-                }
+        if (fileinfo.isDirectory) {
+            return http.serveDir(req, this.options);
+        }
 
-                return res;
-            } catch (e) {
-                console.error("Error transforming", e);
-                return new Response(script, {
-                    status: 500,
-                    headers: {
-                        "Content-Type": "text/javascript",
-                    },
-                });
+        if (this.options.cache) {
+            const cached = await cache.match(req);
+            if (
+                cached &&
+                cached.headers.get("last-modified") ===
+                fileinfo.mtime?.toUTCString()
+            ) {
+                return cached;
             }
         }
 
-        if (this.config.gfm && extension === ".md") {
-            if (this.config.cache) {
-                const cached = await cache.match(req);
-                if (
-                    cached &&
-                    cached.headers.get("last-modified") ===
-                    resp.headers.get("last-modified")
-                ) {
-                    return cached;
-                }
+        const script = await Deno.readTextFile(filepath);
+        try {
+            let contentType: string;
+            switch (path.extname(url.pathname)) {
+                case ".ts":
+                    contentType = "text/typescript";
+                    break;
+                case ".tsx":
+                    contentType = "text/tsx";
+                    break;
+                case ".jsx":
+                    contentType = "text/jsx";
+                    break;
+                default:
+                    throw new Error("Invalid extension");
             }
 
-            let markdown = await resp.text();
-            const match = markdown.match(FRONTMATTER_REGEX);
-            if (match) {
-                markdown = markdown.slice(match[0].length);
-            }
-
-            const body = md2html(url.pathname, markdown);
-            const res = new Response(body, {
-                headers: {
-                    "Content-Type": "text/html; charset=utf-8",
-                    "last-modified": resp.headers.get("last-modified") || "",
+            const result = await transpile(url, {
+                load: (url) => {
+                    return Promise.resolve({
+                        kind: "module",
+                        specifier: url,
+                        headers: {
+                            "content-type": contentType,
+                        },
+                        content: script,
+                    });
                 },
             });
+            const code = result.get(url.href);
 
-            if (this.config.enableCors) {
+            const res = new Response(code, {
+                headers: {
+                    "Content-Type": "text/javascript",
+                    "last-modified": fileinfo.mtime?.toUTCString() || "",
+                },
+                status: 200,
+            });
+
+            if (this.options.enableCors) {
                 res.headers.set("Access-Control-Allow-Origin", "*");
             }
 
-            if (this.config.cache) {
+            if (this.options.cache) {
                 await cache.put(req, res.clone());
             }
+
             return res;
+        } catch (e) {
+            console.error("Error transforming", e);
+            return new Response(script, {
+                status: 500,
+                headers: {
+                    "Content-Type": "text/javascript",
+                },
+            });
         }
 
-        return resp;
-    };
+    }
+
+    private serveMarkdown = async (req: Request): Promise<Response> => {
+        const url = new URL(req.url);
+
+        const filepath = path.join(this.options.fsRoot || ".", url.pathname);
+        const fileinfo = await Deno.stat(filepath)
+            .catch(() => null);
+
+
+
+        if (!fileinfo) {
+            return new Response("Not found", { status: 404 });
+        }
+
+        if (fileinfo.isDirectory) {
+            const index = path.join(this.options.fsRoot || ".", url.pathname, "index.md");
+            if (!await fs.exists(index)) {
+                return http.serveDir(req, this.options);
+            }
+
+            return this.serveMarkdown(new Request(`${url.origin}${path.join(url.pathname, "index.md")}`));
+        }
+
+
+
+        if (this.options.cache) {
+            const cached = await cache.match(req);
+            if (
+                cached &&
+                cached.headers.get("last-modified") ===
+                fileinfo.mtime?.toUTCString()
+            ) {
+                return cached;
+            }
+        }
+
+        let markdown = await Deno.readTextFile(filepath);
+        const match = markdown.match(FRONTMATTER_REGEX);
+        if (match) {
+            markdown = markdown.slice(match[0].length);
+        }
+
+        const body = md2html(url.pathname, markdown);
+        const res = new Response(body, {
+            headers: {
+                "Content-Type": "text/html; charset=utf-8",
+                "last-modified": fileinfo.mtime?.toUTCString() || "",
+            },
+        });
+
+        if (this.options.enableCors) {
+            res.headers.set("Access-Control-Allow-Origin", "*");
+        }
+
+        if (this.options.cache) {
+            await cache.put(req, res.clone());
+        }
+        return res;
+    }
 }
 
 const FRONTMATTER_REGEX = /^---\n[\s\S]+?\n---\n/;
@@ -187,6 +238,7 @@ const md2html = (title: string, markdown: string) =>
 const fileServer: FileServer = new FileServer({
     transpile: true,
     gfm: true,
+    showIndex: true,
     showDirListing: true,
     enableCors: true,
     quiet: true,

@@ -1,6 +1,6 @@
 {
     "name": "@smallweb/file-server",
-    "version": "0.4.2",
+    "version": "0.5.0",
     "exports": "./mod.ts",
     "license": "MIT",
     "publish": {
@@ -12,6 +12,7 @@
     "imports": {
         "@deno/emit": "jsr:@deno/emit@^0.45.0",
         "@deno/gfm": "jsr:@deno/gfm@^0.10.0",
+        "@std/fs": "jsr:@std/fs@^1.0.5",
         "@std/http": "jsr:@std/http@^1.0.0",
         "@std/path": "jsr:@std/path@^1.0.6",
         "prismjs": "npm:prismjs@^1.29.0"
