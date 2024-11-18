@@ -6,13 +6,18 @@
 
 Smallweb cloud will allow you to register and run your apps under `smallweb.live` domain.
 
-First, you'll need to signup to at smallweb.live. You'll get a smallweb instance running at `<username>.smallweb.live`, with the ability to edit your apps from your browser.
-
-To edit your apps locally, you'll have to add your ssh public key to your account, then run:
+Here is how to get started:
 
 ```sh
+# install smallweb, mutagen and deno
+curl -sSfL https://install.smallweb.run | sh
+# init smallweb folders
+smallweb init
+# synchronize your smallweb folder with smallweb.live
 smallweb sync create <username>@smallweb.live
 ```
+
+Your public key will be checked against `https://github.com/<username>.keys`. You'll be able to access your logs at https://smallweb.live/logs, after authenticating using github oauth.
 
 The command will use [mutagen](https://mutagen.io) to sync any changes of your local files to the smallweb instance (and vice-versa).
 
@@ -22,10 +27,4 @@ The cli will work seamlessly, including the `smallweb run` command:
 
 ```sh
 smallweb run example
-```
-
-Another option will be to use the ssh command directly:
-
-```
-ssh pomdtr@smallweb.live run example
 ```

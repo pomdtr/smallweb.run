@@ -34,7 +34,7 @@ install_smallweb_cli() {
   URL_PREFIX="https://github.com/pomdtr/smallweb/releases/download/v{{ version }}"
   TARGET="${OS}_$ARCH"
 
-  printf "${bright_blue}Downloading ${reset}$TARGET ...\n"
+  printf "${bright_blue}Downloading smallweb {{ version }}...${reset}\n"
 
   URL="$URL_PREFIX/smallweb_$TARGET.tar.gz"
   DOWNLOAD_FILE=$(mktemp -t smallweb.XXXXXXXXXX)
