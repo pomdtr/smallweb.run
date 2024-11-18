@@ -7,6 +7,6 @@ menu:
   order: 2
 ---
 
-- Twitter: [@pomdtrr](https://twitter.com/pomdtrr)
-- Github: [pomdtr](https://github.com/pomdtr)
+- Bluesky: [@smallweb.run](https://bsky.app/profile/smallweb.run)
+- Github: [pomdtr](https://github.com/pomdtr/smallweb)
 - Discord: [Smallweb](https://discord.gg/BsgQK42qZe)

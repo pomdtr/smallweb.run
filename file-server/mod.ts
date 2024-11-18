@@ -36,16 +36,32 @@ type FileServerOptions = {
 export class FileServer {
     constructor(private options: FileServerOptions = {}) { }
 
+    private resolve(pathname: string) {
+        if (this.options.urlRoot) {
+            if (!pathname.startsWith(this.options.urlRoot)) {
+                throw new Error("Invalid pathname");
+            }
+
+            pathname = pathname.replace(this.options.urlRoot, "");
+        }
+
+
+
+        return path.join(this.options.fsRoot || ".", pathname);
+    }
+
     fetch: (req: Request) => Response | Promise<Response> = async (req) => {
         const url = new URL(req.url);
-        const fileinfo = await Deno.stat(path.join(this.options.fsRoot || ".", url.pathname))
+        const fileinfo = await Deno.stat(this.resolve(url.pathname))
+
+
 
         if (
-            this.options.showIndex
+            fileinfo.isDirectory
+            && this.options.showIndex
             && this.options.gfm
-            && fileinfo.isDirectory
-            && !await fs.exists(path.join(this.options.fsRoot || ".", url.pathname, "index.html"))
-            && await fs.exists(path.join(this.options.fsRoot || ".", url.pathname, "index.md"))
+            && !await fs.exists(this.resolve(path.join(url.pathname, "index.html")))
+            && await fs.exists(this.resolve(path.join(url.pathname, "index.md")))
         ) {
             return this.serveMarkdown(req);
         }
@@ -67,7 +83,7 @@ export class FileServer {
 
     private serveTranspiled = async (req: Request) => {
         const url = new URL(req.url);
-        const filepath = path.join(this.options.fsRoot || ".", url.pathname);
+        const filepath = this.resolve(url.pathname);
         const fileinfo = await Deno.stat(filepath)
             .catch(() => null);
         if (!fileinfo) {
@@ -152,7 +168,7 @@ export class FileServer {
     private serveMarkdown = async (req: Request): Promise<Response> => {
         const url = new URL(req.url);
 
-        const filepath = path.join(this.options.fsRoot || ".", url.pathname);
+        const filepath = this.resolve(url.pathname);
         const fileinfo = await Deno.stat(filepath)
             .catch(() => null);
 
