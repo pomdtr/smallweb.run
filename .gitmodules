@@ -4,3 +4,6 @@
 [submodule "file-server"]
 	path = file-server
 	url = https://github.com/pomdtr/smallweb-file-server
+[submodule "vscode-dev"]
+	path = vscode-dev
+	url = https://github.com/pomdtr/smallweb-vscode
