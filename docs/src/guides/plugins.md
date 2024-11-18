@@ -2,24 +2,20 @@
 
 The smallweb CLI can be extended with plugins. To create a new plugin, just create a script in `$SMALLWEB_DIR/.smallweb/plugins`. The script name (without the extension) will be mapped to a cli subcommand.
 
-For example, if you create a new `smallweb-choose` file in your PATH with the following content:
+Ex: if i create the following file as `$SMALLWEB_DIR/.smallweb/plugins/edit.sh`:
 
 ```sh
 #!/bin/sh
 
-# check if fzf is installed
-if ! command -v fzy 2> /dev/null
-then
-    echo "fzf could not be found" >&2
-    echo "Please install fzf to use this script" >&2
-    echo "Docs: https://github.com/junegunn/fzf?tab=readme-ov-file#installation" >&2
+if [ -z "$1" ]; then
+    echo "Usage: smallweb edit <app>"
     exit 1
 fi
 
-smallweb ls | cut -f1 | fzf | xargs smallweb open
+code "$SMALLWEB_DIR/$1"
 ```
 
-And make it executable with `chmod +x smallweb-choose`, you will be able to run `smallweb choose` and get an interactive list of your apps to choose from, which will then be opened in your default browser.
+I will be able to run `smallweb edit my-app` to open the `my-app` folder in VSCode.
 
 ## Environment variables available to plugins
 
