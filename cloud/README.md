@@ -17,9 +17,7 @@ smallweb init
 smallweb sync create <username>@smallweb.live
 ```
 
-Your public key will be checked against `https://github.com/<username>.keys`. You'll be able to access your logs at https://smallweb.live/logs, after authenticating using github oauth.
-
-The command will use [mutagen](https://mutagen.io) to sync any changes of your local files to the smallweb instance (and vice-versa).
+Your public key will be checked against `https://github.com/<username>.keys`.
 
 You'll then be able to access your apps at `https://<app>.<user>.smallweb.live` (or `https://<app>.<your-domain>` if you setup a custom domain).
 
@@ -28,3 +26,5 @@ The cli will work seamlessly, including the `smallweb run` command:
 ```sh
 smallweb run example
 ```
+
+You'll be able to access your logs at `https://smallweb.live/logs`, after authenticating using github oauth.
