@@ -1,4 +1,5 @@
 creation_rules:
   - key_groups:
       - age:
-          - age184aa2h77n8hjhwthjv0ddz3leu49jtuhlafspwm29sej84zayd6qcrrwe6
+          - age184aa2h77n8hjhwthjv0ddz3leu49jtuhlafspwm29sej84zayd6qcrrwe6 # macbook
+          - age1lzt3p2vwf7vtv9lpyt63t8kdtgwjm8td2yzj88xwygr3c5rvxdsqwr3rge # vps
