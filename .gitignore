@@ -1,6 +1,5 @@
 # env files
 .env
-.envrc
 
 # dependencies
 node_modules
