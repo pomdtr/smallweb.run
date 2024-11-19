@@ -2,8 +2,5 @@
 .env
 .envrc
 
-# app data
-/*/data
-
 # dependencies
 node_modules
