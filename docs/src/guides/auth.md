@@ -15,6 +15,8 @@ But smallweb also provides a few authentication middlewares that you can use ove
 
 Generally, you can use these middlewares by wrapping your app fetch handler with them.
 
+For example, if you want to protect your app behind email using <https://lastlogin.net>:
+
 ```ts
 // ~/smallweb/excalidraw/main.ts
 import { Excalidraw } from "jsr:@pomdtr/excalidraw";
@@ -29,6 +31,6 @@ export default excalidraw;
 ```sh
 # ~/smallweb/excalidraw/.env
 
-LASTLOGIN_SECRET_KEY=your-secret-key # randomly generated
+LASTLOGIN_SECRET_KEY=your-secret-key # a randomly generated string
 LASTLOGIN_EMAIL=pomdtr@smallweb.run
 ```

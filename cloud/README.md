@@ -1,12 +1,22 @@
 # Smallweb Cloud
 
-> Interested in smallweb cloud? Join the [waitlist](https://cloud.smallweb.run).
+> Interested in smallweb cloud? Join the [waitlist](https://cloud.smallweb.run). 
+>
+> Want to learn more about smallweb ? See the [homepage](https://smallweb.run).
 
-## User Experience
+Smallweb cloud will run your apps under `smallweb.live` domain (or your own custom domain). No need to buy a VPS / domain, or install anything on your device.
 
-Smallweb cloud will allow you to register and run your apps under `smallweb.live` domain.
+When you go to `smallweb.live`, you'll have the ability to signup using github. After login in, you'll be greated with your smallweb folder, opened in a web version of vscode.
 
-Here is how to get started:
+![](https://assets.smallweb.run/vscode-cloud.png)
+
+Each time you create a new app, it will instantly be available at `https://<app>.<user>.smallweb.live` (ex: `https://smallblog.pomdtr.smallweb.live`). Going to `https://<user>.smallweb.live` will redirect you to `https://www.<user>.smallweb.live` (if the `www` app exists).
+
+You'll be able to access the `smallweb` cli using `ssh <user>@smallweb.live` (ex: `ssh pomdtr@smallweb.live run smallblog --help`). For it to work, you'll need to add your public ssh key to github (as smallweb cloud will use `https://github.com/<user>.keys` to check your key).
+
+Of course, you'll have the ability to sync your folder locally using mutagen, and use the `smallweb` cli to manager your websites.
+
+<!-- Here is how to get started:
 
 ```sh
 # install smallweb, mutagen and deno
@@ -27,4 +37,4 @@ The cli will work seamlessly, including the `smallweb run` command:
 smallweb run example
 ```
 
-You'll be able to access your logs at `https://smallweb.live/logs`, after authenticating using github oauth.
+You'll be able to access your logs at `https://smallweb.live/logs`, after authenticating using github oauth. -->
