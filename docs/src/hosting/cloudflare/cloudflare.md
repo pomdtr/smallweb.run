@@ -55,7 +55,7 @@ Create a dummy smallweb app in `~/smallweb/example`
 
 ```sh
 mkdir -p ~/smallweb/example
-CAT <<EOF > ~/smallweb/example/main.ts
+cat <<EOF > ~/smallweb/example/main.ts
 export default {
   fetch() {
     return new Response("Smallweb is running");
