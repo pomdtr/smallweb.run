@@ -1,4 +1,4 @@
-import { serveDir } from "jsr:@std/http@1.0.11"
+import { serveDir, serveFile } from "jsr:@std/http@1.0.11"
 
 export default {
     fetch: async (req: Request) => {
@@ -7,13 +7,7 @@ export default {
         })
 
         if (resp.status === 404) {
-            const content = await Deno.readTextFile(".vitepress/dist/404.html")
-            return new Response(content, {
-                status: 404,
-                headers: {
-                    "Content-Type": "text/html",
-                },
-            })
+            return serveFile(req, ".vitepress/dist/404.html")
         }
 
         return resp
