@@ -7,8 +7,12 @@
   "tasks": {
     "install": "cd frontend && npm install",
     "build-frontend": "cd frontend && npm run build",
-    "embed-frontend": "deno run -A jsr:@smallweb/embed@0.0.15 frontend/dist pkg/static",
-    "build": "deno task build-frontend && deno task embed-frontend"
+    "build": {
+      "command": "deno run -A jsr:@smallweb/embed@0.0.15 frontend/dist pkg/static",
+      "dependencies": [
+        "build-frontend"
+      ]
+    }
   },
   "publish": {
     "include": [
