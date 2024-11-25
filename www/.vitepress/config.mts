@@ -1,7 +1,7 @@
 import { defineConfig, createContentLoader } from 'vitepress'
 import { Feed } from 'feed'
-import path from 'path';
-import { writeFileSync } from 'fs';
+import path from 'node:path';
+import { writeFileSync } from 'node:fs';
 
 const title = "Smallweb"
 const description = "Your internet folder"
@@ -11,6 +11,7 @@ const description = "Your internet folder"
 export default defineConfig({
   title,
   description: description,
+  cleanUrls: true,
   head: [
     ["link", { rel: "icon", href: "https://fav.farm/📁" }]
   ],
@@ -132,7 +133,7 @@ export default defineConfig({
         link: `https://smallweb.run${post.url}`,
         date: new Date(post.frontmatter.date),
         author: post.frontmatter.author ? [{ name: post.frontmatter.author }] : [],
-        category: post.frontmatter.tags ? post.frontmatter.tags.map(tag => ({ name: tag })) : [],
+        category: post.frontmatter.tags ? post.frontmatter.tags.map((tag: string) => ({ name: tag })) : [],
         content: post.html,
       })
     }

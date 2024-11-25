@@ -1,6 +1,5 @@
 {
     "markdownlint.config": {
         "no-inline-html": false
-    },
-    "deno.enable": false
+    }
 }
