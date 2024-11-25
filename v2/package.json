@@ -1,5 +1,8 @@
 {
+  "type": "module",
   "devDependencies": {
+    "@types/node": "^22.9.3",
+    "feed": "^4.2.2",
     "vitepress": "^1.5.0"
   },
   "scripts": {
