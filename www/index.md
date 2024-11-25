@@ -13,15 +13,18 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /docs/getting-started
+      link: /docs
     - theme: alt
-      text: View Source
+      text: View on GitHub
       link: https://github.com/pomdtr/smallweb
 
 features:
   - icon: 📂
     title: File-Based Hosting
     details: Smallweb maps subdomains to subfolders in your smallweb directory. Creating a new app is as simple as creating a new folder.
+  - icon: ⚡
+    title: Instant Feedback
+    details: No build or deploy step is required. Just save your changes and refresh your browser.
   - icon: 🔐
     title: Secure by Default
     details: Each smallweb app is sandboxed using Deno. By default, it only has access to it's own folder.

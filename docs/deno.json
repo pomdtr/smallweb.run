@@ -1,6 +1,0 @@
-{
-    "tasks": {
-        "build": "mdbook build",
-        "watch": "mdbook watch"
-    }
-}

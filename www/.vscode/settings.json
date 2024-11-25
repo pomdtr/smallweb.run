@@ -1,5 +1,6 @@
 {
     "markdownlint.config": {
-        "no-inline-html": false
+        "no-inline-html": false,
+        "no-duplicate-heading": false
     }
 }

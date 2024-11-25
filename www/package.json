@@ -6,6 +6,7 @@
   },
   "scripts": {
     "dev": "vitepress dev",
+    "watch": "fd -H | entr deno task build",
     "build": "vitepress build",
     "preview": "vitepress preview"
   }

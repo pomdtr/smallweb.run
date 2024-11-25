@@ -18,8 +18,9 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Docs', link: '/docs/getting-started' },
+      { text: 'Docs', link: '/docs' },
       { text: 'Blog', link: '/blog' },
+      { text: 'Examples', link: '/examples' },
     ],
     logo: {
       dark: "/icon-dark.svg",
@@ -31,7 +32,7 @@ export default defineConfig({
         items: [
           {
             text: "Getting Started",
-            link: "/docs/getting-started"
+            link: "/docs"
           }
         ]
       },
