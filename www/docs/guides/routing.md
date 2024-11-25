@@ -23,7 +23,7 @@ The routing system maps domains to directories as follows:
 
 ## Naming constraints
 
-Subdomains must be alphanumeric, and can contain hyphens. You should also avoid using uppercase letters in your subdomains, as they are usually converted to lowercahttp.md"
+Subdomains must be alphanumeric, and can contain hyphens. You should also avoid using uppercase letters in your subdomains, as they are usually converted to lowercase.
 
 Any folder in the smallweb directory that does not match this pattern is ignored.
 

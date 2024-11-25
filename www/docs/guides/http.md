@@ -2,7 +2,7 @@
 
 > ℹ️ All the websites hosted under the `smallweb.run` domain are open-source.
 >
-> You can find their source code in the [smallweb monorepo](https://github.com/pomdtr/smallweb).
+> You can find their source code in the [smallweb.run monorepo](https://github.com/pomdtr/smallweb.run).
 
 ## Dynamic Websites
 

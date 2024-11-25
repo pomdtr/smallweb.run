@@ -4,8 +4,6 @@ The smallweb config is located at `$SMALLWEB_DIR/.smallweb/config.json`.
 
 If `SMALLWEB_DIR` is not set, it defaults to `~/smallweb`.
 
-It is a json file that defines global settings for smallweb.
-
 If you sync the smallweb dir between multiple servers, but want to set different config value depending on the server, you can use env variables to set config value.
 
 ```sh
