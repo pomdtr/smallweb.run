@@ -1,7 +1,6 @@
 ---
 next: false
 prev: false
-sidebar: false
 ---
 
 # Examples

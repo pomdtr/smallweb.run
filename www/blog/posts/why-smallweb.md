@@ -1,13 +1,15 @@
 ---
 title: Why smallweb?
-sidebar: false
 prev: false
 aside: false
 next: false
+date: 2024-07-23
 author: Achille Lacoin
 tags:
     - article
 ---
+
+# {{ $frontmatter.title }}
 
 Think about the last time you worked on a local project. You probably had to:
 

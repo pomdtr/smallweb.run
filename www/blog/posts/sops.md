@@ -1,16 +1,16 @@
 ---
 title: SOPS - A new way to manage secrets in smallweb
-sidebar: false
 aside: false
 prev: false
 next: false
 draft: true
 author: Achille Lacoin
+date: 2024-11-19
 tags:
     - release
 ---
 
-# SOPS - A new way to manage secrets in smallweb
+# {{ $frontmatter.title }}
 
 > ⚠️ This is an experimental feature, and the API might change in the future. It's targeted at advanced users who want to store secrets in their git repositories.
 

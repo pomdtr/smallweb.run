@@ -1,28 +1,22 @@
 ---
 title: Blog
-sidebar: false
 aside: false
 prev: false
 next: false
 ---
 
+# {{ $frontmatter.title }}
+
 <script setup>
 import { data } from "./posts.data.ts";
 
-const posts = data.filter(post => !post.frontmatter.draft).map(post => {
-    const basename = post.url.split("/").pop();
-    const date = basename.split("_")[0];
-    return {
-        date,
-        ...post
-    }
-}).sort((a, b) => b.date.localeCompare(a.date));
+const posts = data.filter(post => !post.frontmatter.draft).sort((a, b) => b.frontmatter.date.localeCompare(a.frontmatter.date));
 </script>
 
 <ul>
     <li v-for="post of posts">
         <strong><a :href="post.url">{{ post.frontmatter.title }}</a></strong><br/>
-        <span>{{ post.date }}</span>
+        <span>{{ post.frontmatter.date.toString().split("T")[0] }}</span>
     </li>
 </ul>
 

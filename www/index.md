@@ -13,7 +13,7 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /docs
+      link: /docs/getting-started
     - theme: alt
       text: View on GitHub
       link: https://github.com/pomdtr/smallweb
@@ -27,7 +27,7 @@ features:
     details: No build or deploy step is required. Just save your changes and refresh your browser.
   - icon: 🔐
     title: Secure by Default
-    details: Each smallweb app is sandboxed using Deno. By default, it only has access to it's own folder.
+    details: Each smallweb app is sandboxed using Deno. By default, it only has access to its own folder.
   - icon: 🚀
     title: Deploy anywhere
     details: The whole smallweb codebase is compiled to a single binary. You can run it on your local machine, a VPS, or a cloud provider.

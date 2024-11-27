@@ -347,3 +347,22 @@ export function lastlogin(
     };
 }
 
+export type JwtPayload = {
+    [key: string]: unknown
+    /**
+     * The token is checked to ensure it has not expired.
+     */
+    exp?: number
+    /**
+     * The token is checked to ensure it is not being used before a specified time.
+     */
+    nbf?: number
+    /**
+     * The token is checked to ensure it is not issued in the future.
+     */
+    iat?: number
+}
+
+export function createToken(payload: JwtPayload, secretKey: string): Promise<string> {
+    return jwt.sign(payload, secretKey);
+}

@@ -1,13 +1,15 @@
 ---
 title: My Smallweb Setup
-sidebar: false
 aside: false
 prev: false
 next: false
 author: Achille Lacoin
+date: 2024-10-02
 tags:
     - article
 ---
+
+# {{ $frontmatter.title }}
 
 Smallweb is still WIP, so I'm discovering new ways to use it every weeks. But in the past month, I've found a setup I'm satisfied with, so I'm sharing it here.
 
