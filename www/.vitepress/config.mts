@@ -1,7 +1,4 @@
-import { defineConfig, createContentLoader } from 'vitepress'
-import { Feed } from 'feed'
-import path from 'node:path';
-import { writeFileSync } from 'node:fs';
+import { defineConfig } from 'vitepress'
 
 const title = "Smallweb"
 const description = "Your internet folder"
@@ -19,8 +16,8 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Docs', link: '/docs/getting-started' },
-      { text: 'Blog', link: '/blog/' },
       { text: 'Examples', link: '/examples' },
+      { text: 'Blog', link: 'https://blog.smallweb.run' },
     ],
     logo: {
       dark: "/icon-dark.svg",
@@ -126,30 +123,4 @@ export default defineConfig({
       { icon: 'bluesky', link: 'https://bsky.app/profile/smallweb.run' }
     ]
   },
-  async buildEnd(config) {
-    const feed = new Feed({
-      id: "smallweb.run",
-      title,
-      copyright: "",
-    })
-    const contentLoader = createContentLoader("blog/*.md", {
-      render: true,
-    })
-    const posts = await (await contentLoader.load()).sort((a, b) => {
-      return new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime()
-    })
-
-    for (const post of posts) {
-      feed.addItem({
-        title: post.frontmatter.title,
-        link: `https://smallweb.run${post.url}`,
-        date: new Date(post.frontmatter.date),
-        author: post.frontmatter.author ? [{ name: post.frontmatter.author }] : [],
-        category: post.frontmatter.tags ? post.frontmatter.tags.map((tag: string) => ({ name: tag })) : [],
-        content: post.html,
-      })
-    }
-
-    writeFileSync(path.join(config.outDir, 'feed.rss'), feed.rss2());
-  }
 })
