@@ -1,0 +1,5 @@
+{
+  "imports": {
+    "@pomdtr/lastlogin": "jsr:@pomdtr/lastlogin@^0.5.10"
+  }
+}
