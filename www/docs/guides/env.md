@@ -1,4 +1,4 @@
-## Setting env variables
+# Env Variables
 
 You can set environment variables for your app by creating a file called `.env` in the application folder.
 

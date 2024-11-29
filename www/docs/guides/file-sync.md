@@ -10,10 +10,19 @@ First, install mutagen on your development machine:
 brew install mutagen-io/mutagen/mutagen
 ```
 
-Then enable the daemon using `mutagen daemon register` or `smallweb sync daemon register`, and finally, run the following command to sync your files:
+Then, run the following command to sync your files:
 
 ```bash
-smallweb sync create [host]
+# enable the mutagen daemon
+mutagen daemon register
+
+# create a sync session
+mutagen sync create \
+    --name=smallweb \
+    --ignore=node_modules,.DS_Store \
+    --ignore-vcs \
+    --mode=two-way-resolved \
+    <remote-smallweb-dir> <local-smallweb-dir>
 ```
 
 From now on, each time you make a change to your files, they will be automatically synced to the server, and vice-versa.

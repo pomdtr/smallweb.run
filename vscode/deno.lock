@@ -2,22 +2,177 @@
   "version": "4",
   "specifiers": {
     "jsr:@hono/hono@^4.6.9": "4.6.12",
+    "jsr:@pomdtr/lastlogin@0.5.7": "0.5.7",
     "jsr:@pomdtr/lastlogin@~0.5.10": "0.5.10",
-    "jsr:@std/http@^1.0.9": "1.0.11"
+    "jsr:@smallweb/embed@0.0.15": "0.0.15",
+    "jsr:@smallweb/vscode@0.0.9": "0.0.9",
+    "jsr:@smallweb/vscode@0.1.0": "0.1.0",
+    "jsr:@std/cli@^1.0.0-rc.5": "1.0.7",
+    "jsr:@std/cli@^1.0.7": "1.0.7",
+    "jsr:@std/encoding@1.0.1": "1.0.1",
+    "jsr:@std/encoding@^1.0.1": "1.0.5",
+    "jsr:@std/encoding@^1.0.5": "1.0.5",
+    "jsr:@std/fmt@^1.0.0-rc.1": "1.0.3",
+    "jsr:@std/fs@^1.0.5": "1.0.5",
+    "jsr:@std/html@^1.0.3": "1.0.3",
+    "jsr:@std/http@1.0.0-rc.4": "1.0.0-rc.4",
+    "jsr:@std/http@^1.0.9": "1.0.11",
+    "jsr:@std/media-types@^1.0.0-rc.1": "1.1.0",
+    "jsr:@std/media-types@^1.0.1": "1.1.0",
+    "jsr:@std/net@^1.0.0-rc.1": "1.0.4",
+    "jsr:@std/path@1": "1.0.8",
+    "jsr:@std/path@1.0.0-rc.2": "1.0.0-rc.2",
+    "jsr:@std/path@^1.0.7": "1.0.8",
+    "jsr:@std/path@^1.0.8": "1.0.8",
+    "jsr:@std/streams@^1.0.0-rc.3": "1.0.8",
+    "npm:hono-zod-openapi@0.5": "0.5.0_hono@4.6.10_zod@3.23.8",
+    "npm:hono-zod-openapi@0.5.0": "0.5.0_hono@4.6.10_zod@3.23.8",
+    "npm:hono@4.6.10": "4.6.10",
+    "npm:hono@^4.6.10": "4.6.10",
+    "npm:zod@3.23.8": "3.23.8"
   },
   "jsr": {
     "@hono/hono@4.6.12": {
       "integrity": "fa0b97fa7c3292f0d9957109ac07a475fe485868795b71b8e3114c284152cdb5"
     },
+    "@pomdtr/lastlogin@0.5.7": {
+      "integrity": "ff463e08458d13e2d4323f6a1f7156d6d1ae73c3d30211330b1af6b1196cb7a7",
+      "dependencies": [
+        "jsr:@hono/hono",
+        "jsr:@std/http@^1.0.9"
+      ]
+    },
     "@pomdtr/lastlogin@0.5.10": {
       "integrity": "2674176ad2a8d666a38cc9c5eb7ec87f9b3e715044c074fa2e82afab2539b99e",
       "dependencies": [
         "jsr:@hono/hono",
-        "jsr:@std/http"
+        "jsr:@std/http@^1.0.9"
+      ]
+    },
+    "@smallweb/embed@0.0.15": {
+      "integrity": "afb6e99b059681bbc3dd92adcba023a0941b1cd38a249e98d815d662ffbf0f7d",
+      "dependencies": [
+        "jsr:@std/encoding@1.0.1",
+        "jsr:@std/http@1.0.0-rc.4",
+        "jsr:@std/media-types@^1.0.0-rc.1",
+        "jsr:@std/path@1.0.0-rc.2"
+      ]
+    },
+    "@smallweb/vscode@0.0.9": {
+      "integrity": "43ec7bfa0a0f41e91a8e74b689e0c58e32309de942f5b0b81cc392e1731cdb5b",
+      "dependencies": [
+        "jsr:@smallweb/embed",
+        "jsr:@std/encoding@^1.0.5",
+        "jsr:@std/fs",
+        "jsr:@std/html",
+        "jsr:@std/path@^1.0.8",
+        "npm:hono-zod-openapi@0.5",
+        "npm:hono-zod-openapi@0.5.0",
+        "npm:hono@4.6.10",
+        "npm:hono@^4.6.10",
+        "npm:zod"
+      ]
+    },
+    "@smallweb/vscode@0.1.0": {
+      "integrity": "c92cd099f2583da96dbc2d595c34b617383d495759083b6c181471ee5def1d85",
+      "dependencies": [
+        "jsr:@pomdtr/lastlogin@~0.5.10",
+        "jsr:@smallweb/embed",
+        "jsr:@std/cli@^1.0.7",
+        "jsr:@std/encoding@^1.0.5",
+        "jsr:@std/fs",
+        "jsr:@std/html",
+        "jsr:@std/path@^1.0.8",
+        "npm:hono-zod-openapi@0.5",
+        "npm:hono-zod-openapi@0.5.0",
+        "npm:hono@4.6.10",
+        "npm:hono@^4.6.10",
+        "npm:zod"
+      ]
+    },
+    "@std/cli@1.0.6": {
+      "integrity": "d22d8b38c66c666d7ad1f2a66c5b122da1704f985d3c47f01129f05abb6c5d3d"
+    },
+    "@std/cli@1.0.7": {
+      "integrity": "98359df9df586a69015ba570305183b0cb9e7d53c05ea2016ef9a3e77e82c7cd"
+    },
+    "@std/encoding@1.0.1": {
+      "integrity": "5955c6c542ebb4ce6587c3b548dc71e07a6c27614f1976d1d3887b1196cf4e65"
+    },
+    "@std/encoding@1.0.5": {
+      "integrity": "ecf363d4fc25bd85bd915ff6733a7e79b67e0e7806334af15f4645c569fefc04"
+    },
+    "@std/fmt@1.0.3": {
+      "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
+    },
+    "@std/fs@1.0.5": {
+      "integrity": "41806ad6823d0b5f275f9849a2640d87e4ef67c51ee1b8fb02426f55e02fd44e",
+      "dependencies": [
+        "jsr:@std/path@^1.0.7"
+      ]
+    },
+    "@std/html@1.0.3": {
+      "integrity": "7a0ac35e050431fb49d44e61c8b8aac1ebd55937e0dc9ec6409aa4bab39a7988"
+    },
+    "@std/http@1.0.0-rc.4": {
+      "integrity": "4f2cdd35a85713e8d645cfd49c4db8c3473f1c44006a8dd252689a38ac9ae6a9",
+      "dependencies": [
+        "jsr:@std/cli@^1.0.0-rc.5",
+        "jsr:@std/encoding@^1.0.1",
+        "jsr:@std/fmt",
+        "jsr:@std/media-types@^1.0.1",
+        "jsr:@std/net",
+        "jsr:@std/path@1",
+        "jsr:@std/streams"
       ]
     },
     "@std/http@1.0.11": {
       "integrity": "f1928e69e7dcf1664e22d153934cb866bf31e1bbe4bc59f8ac1b4d0e98cb7558"
+    },
+    "@std/media-types@1.1.0": {
+      "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"
+    },
+    "@std/net@1.0.4": {
+      "integrity": "2f403b455ebbccf83d8a027d29c5a9e3a2452fea39bb2da7f2c04af09c8bc852"
+    },
+    "@std/path@1.0.0-rc.2": {
+      "integrity": "39f20d37a44d1867abac8d91c169359ea6e942237a45a99ee1e091b32b921c7d"
+    },
+    "@std/path@1.0.8": {
+      "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"
+    },
+    "@std/streams@1.0.8": {
+      "integrity": "b41332d93d2cf6a82fe4ac2153b930adf1a859392931e2a19d9fabfb6f154fb3"
+    }
+  },
+  "npm": {
+    "@hono/zod-validator@0.4.1_hono@4.6.10_zod@3.23.8": {
+      "integrity": "sha512-I8LyfeJfvVmC5hPjZ2Iij7RjexlgSBT7QJudZ4JvNPLxn0JQ3sqclz2zydlwISAnw21D2n4LQ0nfZdoiv9fQQA==",
+      "dependencies": [
+        "hono",
+        "zod"
+      ]
+    },
+    "hono-zod-openapi@0.5.0_hono@4.6.10_zod@3.23.8": {
+      "integrity": "sha512-jXRvuqa2n1DmwRpAFCluiBd7JupM7cE6vAM5CZM9LsLwZqtadwePzbdLe+t7F5fC3p1DXulKOZ2nj09X6+87tg==",
+      "dependencies": [
+        "@hono/zod-validator",
+        "hono",
+        "zod",
+        "zod-openapi"
+      ]
+    },
+    "hono@4.6.10": {
+      "integrity": "sha512-IXXNfRAZEahFnWBhUUlqKEGF9upeE6hZoRZszvNkyAz/CYp+iVbxm3viMvStlagRJohjlBRGOQ7f4jfcV0XMGg=="
+    },
+    "zod-openapi@4.0.0_zod@3.23.8": {
+      "integrity": "sha512-X/YT3VTYMon10rdTGApBIMPpSm17l/sxyVz3cao9M6ynv348ctYi62TDwdnDO+Po1YxA0KiguIW1gIGVRRGqvA==",
+      "dependencies": [
+        "zod"
+      ]
+    },
+    "zod@3.23.8": {
+      "integrity": "sha512-XBx9AXhXktjUqnepgTiE5flcKIYWi/rme0Eaj+5Y0lftuGBq+jyRu/md4WnuxqgP1ubdpNCsYEYPxrzVHD8d6g=="
     }
   },
   "workspace": {
