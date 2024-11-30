@@ -183,10 +183,10 @@ smallweb completion zsh [flags]
 
 ## smallweb config
 
-Open the smallweb config in your editor
+Get a configuration value
 
 ```
-smallweb config [key] [flags]
+smallweb config <key> [flags]
 ```
 
 ### Options
@@ -206,7 +206,8 @@ smallweb create <app> [flags]
 ### Options
 
 ```
-  -h, --help   help for create
+  -h, --help              help for create
+      --template string   template to use
 ```
 
 ## smallweb cron
@@ -291,6 +292,34 @@ smallweb docs [flags]
   -h, --help   help for docs
 ```
 
+## smallweb doctor
+
+Check the system for potential problems 🩺
+
+```
+smallweb doctor [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for doctor
+```
+
+## smallweb edit
+
+Run the edit plugin
+
+```
+smallweb edit [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for edit
+```
+
 ## smallweb fetch
 
 Fetch a path from an app
@@ -319,8 +348,10 @@ smallweb list [flags]
 ### Options
 
 ```
-  -h, --help   help for list
-      --json   output as json
+  -h, --help                   help for list
+      --json                   output as json
+      --template string        template to use
+      --template-file string   template file to use
 ```
 
 ## smallweb logs
@@ -328,15 +359,16 @@ smallweb list [flags]
 View app logs
 
 ```
-smallweb logs [flags]
+smallweb logs [remote] [flags]
 ```
 
 ### Options
 
 ```
-      --app string   app to view logs for
-  -h, --help         help for logs
-      --json         output logs in JSON format
+  -a, --app string        app to view logs for
+  -h, --help              help for logs
+      --json              output logs in JSON format
+      --template string   output logs using a Go template
 ```
 
 ## smallweb open
@@ -351,6 +383,34 @@ smallweb open [app] [flags]
 
 ```
   -h, --help   help for open
+```
+
+## smallweb pull
+
+Run the pull plugin
+
+```
+smallweb pull [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for pull
+```
+
+## smallweb push
+
+Run the push plugin
+
+```
+smallweb push [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for push
 ```
 
 ## smallweb rename
@@ -379,6 +439,20 @@ smallweb run <app> [args...] [flags]
 
 ```
   -h, --help   help for run
+```
+
+## smallweb secrets
+
+Run the secrets plugin
+
+```
+smallweb secrets [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for secrets
 ```
 
 ## smallweb service

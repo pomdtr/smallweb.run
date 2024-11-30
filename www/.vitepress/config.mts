@@ -58,6 +58,10 @@ export default defineConfig({
               link: "/docs/guides/env"
             },
             {
+              text: "Secrets",
+              link: "/docs/guides/secrets"
+            },
+            {
               text: "Plugins",
               link: "/docs/guides/plugins"
             },
