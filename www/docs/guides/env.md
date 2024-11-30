@@ -23,13 +23,6 @@ export default {
 }
 ```
 
-If you want to set an environment variable for all your apps, you can create a `.env` file in the at the root of your smallweb dir.
-
-```json
-// ~/smallweb/.env
-GLOBAL_VAR=GLOBAL_VALUE
-```
-
 ## Injected environment variables
 
 Smallweb automatically injects the following environment variables into your app:

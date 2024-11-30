@@ -1,3 +1,3 @@
 export default {
-    fetch: () => Response.redirect("https://smallweb.run/docs")
+    fetch: () => Response.redirect("https://smallweb.run/docs/getting-started")
 }
