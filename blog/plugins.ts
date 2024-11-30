@@ -28,7 +28,7 @@ export interface Options {
 export const defaults: Options = {
   feed: {
     output: ["/feed.xml", "/feed.json"],
-    query: "type=post",
+    query: "type=post !draft=true",
     info: {
       title: "=metas.site",
       description: "=metas.description",

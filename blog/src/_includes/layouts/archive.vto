@@ -20,7 +20,7 @@ bodyClass: body-tag
 {{ if pageTags.length }}
 <nav class="page-navigation">
   <h2>{{ i18n.search.tags }}:</h2>
-  
+
   <ul class="page-navigation-tags">
   {{ for page of pageTags }}
     <li><a href="{{ page.url }}" class="badge">{{ page.tag }}</a></li>

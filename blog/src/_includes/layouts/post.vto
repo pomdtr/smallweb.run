@@ -61,7 +61,7 @@ bodyClass: body-post
     </li>
     {{ /if }}
 
-    {{- set nextPost = search.nextPage(url, "type=post") }}
+    {{- set nextPost = search.nextPage(url, "type=post !draft=true") }}
     {{- if nextPost }}
     <li class="pagination-next">
       <a href="{{ nextPost.url }}" rel="next">

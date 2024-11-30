@@ -6,6 +6,7 @@ import "npm:prismjs@1.29.0/components/prism-typescript.js";
 
 const site = lume({
   src: "./src",
+  location: new URL(`https://blog.smallweb.run/`),
 });
 
 site.use(plugins());

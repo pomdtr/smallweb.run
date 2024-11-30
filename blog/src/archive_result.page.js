@@ -7,7 +7,7 @@ export default function* ({ search, i18n }) {
       url: `/archive/${tag}/`,
       title: `${i18n.search.by_tag}  “${tag}”`,
       type: "tag",
-      search_query: `type=post '${tag}'`,
+      search_query: `type=post !draft=true '${tag}'`,
       tag,
     };
   }
@@ -18,7 +18,7 @@ export default function* ({ search, i18n }) {
       url: `/author/${author}/`,
       title: `${i18n.search.by_author} ${author}`,
       type: "author",
-      search_query: `type=post author='${author}'`,
+      search_query: `type=post !draft=true author='${author}'`,
       author,
     };
   }

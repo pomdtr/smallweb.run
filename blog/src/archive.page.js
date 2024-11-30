@@ -2,7 +2,7 @@ export const layout = "layouts/archive.vto";
 export const title = "Archive";
 
 export default function* ({ search, paginate }) {
-  const posts = search.pages("type=post", "date=desc");
+  const posts = search.pages("type=post !draft=true", "date=desc");
 
   for (
     const data of paginate(posts, { url, size: 10 })
