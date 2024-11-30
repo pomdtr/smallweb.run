@@ -44,6 +44,7 @@ creation_rules:
 
 > [!INFO] You can repeat the process to add more public keys
 > ex: <https://github.com/pomdtr/smallweb.run/tree/main/.sops.yaml>
+> Make sure to run `sops updatekeys ~/samllweb/*/secrets.enc.env` after adding new public keys
 
 From now on, we can generate/edit a`secrets.enc.env` using the following command:
 
