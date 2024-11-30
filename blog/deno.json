@@ -3,8 +3,8 @@
     "lume/": "https://deno.land/x/lume@v2.3.3/"
   },
   "tasks": {
-    "lume": "echo \"import 'lume/cli.ts'\" | deno run -A -",
-    "build": "LUME_DRAFTS=true deno task lume",
+    "lume": "echo \"import 'lume/cli.ts'\" | LUME_DRAFTS=true deno run -A -",
+    "build": "deno task lume",
     "serve": "deno task lume -s",
     "update-deps": "deno run -A --quiet 'https://deno.land/x/nudd@v0.2.8/cli.ts' update plugins.ts deno.json"
   },

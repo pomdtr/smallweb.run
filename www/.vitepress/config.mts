@@ -12,6 +12,7 @@ export default defineConfig({
   head: [
     ["link", { rel: "icon", href: "https://fav.farm/📁" }]
   ],
+  appearance: "force-auto",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
