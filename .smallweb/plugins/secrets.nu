@@ -12,6 +12,6 @@ def main [
     } else if ((pwd | path dirname) == $env.SMALLWEB_DIR) {
         sops secrets.enc.env
     } else {
-        echo "No application specified and not in a smallweb application directory."
+        print --stderr "No application specified and not in a smallweb application directory."
     }
 }
