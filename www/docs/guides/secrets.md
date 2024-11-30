@@ -53,14 +53,24 @@ sops secrets.enc.env
 
 > [!WARNING] Make sure to never edit the encrypted file directly!
 
-If you want to use a smallweb subcommand instead, you can create a plugin at `$SMALLWEB_DIR/.smallweb/plugins/secrets.sh`:
+If you want to use a smallweb subcommand instead, you can use the following plugin at `$SMALLWEB_DIR/.smallweb/plugins/secrets.sh` (it requires [nushell](https://www.nushell.sh/) to be installed):
 
 ```sh
-#!/bin/sh
+#!/usr/bin/env nu
 
-if [ ! -f secrets.enc.json ]; then
-    exec sops "$SMALLWEB_DIR/.smallweb/secrets.enc.env"
-fi
-
-exec sops secrets.enc.env
+# Edit smallweb secrets
+def main [
+    app?: string # The application to manage secrets for
+    --global (-g) # Use the global secrets file
+]: nothing -> nothing {
+    if ($global) {
+        sops $"($env.SMALLWEB_DIR)/.smallweb/secrets.enc.env"
+    } else if ($app != null) {
+        sops $"($env.SMALLWEB_DIR)/($app)/secrets.enc.env"
+    } else if ((pwd | path dirname) == $env.SMALLWEB_DIR) {
+        sops secrets.enc.env
+    } else {
+        print --stderr "No application specified and not in a smallweb application directory."
+    }
+}
 ```
