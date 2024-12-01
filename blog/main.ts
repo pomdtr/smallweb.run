@@ -1,15 +1,21 @@
-import { serveDir, serveFile } from "jsr:@std/http/file-server"
+import { serveDir } from "jsr:@std/http@1.0.11"
 
 export default {
-    fetch: async (req) => {
+    fetch: async (req: Request) => {
         const resp = await serveDir(req, {
-            fsRoot: "./_site"
+            fsRoot: "./_site",
         })
 
         if (resp.status === 404) {
-            return await serveFile(req, "./_site/404.html")
+            const body = await Deno.open("./_site/404.html")
+            return new Response(body.readable, {
+                status: 404,
+                headers: {
+                    "Content-Type": "text/html",
+                },
+            })
         }
 
         return resp
-    }
-} satisfies Deno.ServeDefaultExport
+    },
+}

@@ -8,7 +8,6 @@ const description = "Your internet folder"
 export default defineConfig({
   title,
   description: description,
-  cleanUrls: true,
   head: [
     ["link", { rel: "icon", href: "https://fav.farm/📁" }]
   ],

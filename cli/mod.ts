@@ -1,4 +1,5 @@
-import stripAnsi from 'strip-ansi'
+import { mergeReadableStreams } from "@std/streams"
+import { accepts } from "@std/http/negotiation"
 
 export class Cli {
     constructor() { }
@@ -37,16 +38,70 @@ export class Cli {
             args.push(`--${key}`, value)
         }
 
-        const command = new Deno.Command(SMALLWEB_CLI_PATH, {
-            args
-        })
-        const res = await command.output()
-        const text = new TextDecoder().decode(res.code === 0 ? res.stdout : res.stderr)
-        return new Response(stripAnsi(text), {
-            status: res.code === 0 ? 200 : 500,
-            headers: new Headers({
-                "content-type": "text/plain",
-            }),
-        })
+        const accept = accepts(req, "text/html", "application/json", "text/json")
+        if (accept && accept != "text/html") {
+            try {
+                const command = new Deno.Command(SMALLWEB_CLI_PATH)
+                const output = await command.output()
+                return Response.json({
+                    success: output.success,
+                    signal: output.signal,
+                    code: output.code,
+                    stdout: new TextDecoder().decode(output.stdout),
+                    stderr: new TextDecoder().decode(output.stderr),
+                })
+            } catch (e) {
+                if (e instanceof Error) {
+                    return Response.json({
+                        error: e.message
+                    }, {
+                        status: 500
+                    })
+                }
+                return Response.json({
+                    error: "Unknown error"
+                }, {
+                    status: 500
+                })
+            }
+        }
+
+        try {
+            const command = new Deno.Command(SMALLWEB_CLI_PATH, {
+                args,
+                stdout: "piped",
+                stderr: "piped",
+                stdin: "null",
+            })
+
+            const ps = await command.spawn()
+            const merged = mergeReadableStreams(ps.stdout, ps.stderr)
+            return new Response(merged, {
+                status: 200,
+                headers: new Headers({
+                    "content-type": "text/plain",
+                    "Transfer-Encoding": "chunked",
+                    "Cache-Control": "no-cache",
+                    "Connection": "keep-alive",
+                    "X-Content-Type-Options": "nosniff",
+                }),
+            })
+        } catch (e) {
+            if (e instanceof Error) {
+                return new Response(e.message, {
+                    status: 500,
+                    headers: new Headers({
+                        "content-type": "text/plain",
+                    }),
+                })
+            }
+
+            return new Response("Unknown error", {
+                status: 500,
+                headers: new Headers({
+                    "content-type": "text/plain",
+                }),
+            })
+        }
     }
 }
