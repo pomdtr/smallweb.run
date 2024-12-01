@@ -9,8 +9,8 @@ export default defineConfig({
   title,
   description: description,
   head: [
-    ["link", { rel: "icon", href: "/icon-light.svg", media: "(prefers-color-scheme: light)" }],
-    ["link", { rel: "icon", href: "/icon-dark.svg", media: "(prefers-color-scheme: dark)" }]
+    ["link", { rel: "icon", href: "/favicon-light.ico", media: "(prefers-color-scheme: light)" }],
+    ["link", { rel: "icon", href: "/favicon-dark.ico", media: "(prefers-color-scheme: dark)" }],
   ],
   appearance: "force-auto",
   themeConfig: {
