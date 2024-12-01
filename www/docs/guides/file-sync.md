@@ -22,7 +22,13 @@ mutagen sync create \
     --ignore=node_modules,.DS_Store \
     --ignore-vcs \
     --mode=two-way-resolved \
-    <remote-smallweb-dir> <local-smallweb-dir>
+    my-ssh-server:/remote/smallweb/dir ~/smallweb
+```
+
+Alternatively, you can use the `sync` command provided by Smallweb:
+
+```bash
+smallweb sync my-ssh-server:/remote/smallweb/dir
 ```
 
 From now on, each time you make a change to your files, they will be automatically synced to the server, and vice-versa.
