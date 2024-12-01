@@ -41,7 +41,13 @@ export class Cli {
         const accept = accepts(req, "text/html", "application/json", "text/json")
         if (accept && accept != "text/html") {
             try {
-                const command = new Deno.Command(SMALLWEB_CLI_PATH)
+                const abortController = new AbortController()
+                req.signal.addEventListener("abort", () => {
+                    abortController.abort()
+                })
+                const command = new Deno.Command(SMALLWEB_CLI_PATH, {
+                    signal: abortController.signal,
+                })
                 const output = await command.output()
                 return Response.json({
                     success: output.success,
@@ -58,6 +64,7 @@ export class Cli {
                         status: 500
                     })
                 }
+
                 return Response.json({
                     error: "Unknown error"
                 }, {
@@ -67,8 +74,13 @@ export class Cli {
         }
 
         try {
+            const abortController = new AbortController()
+            req.signal.addEventListener("abort", () => {
+                abortController.abort()
+            })
             const command = new Deno.Command(SMALLWEB_CLI_PATH, {
                 args,
+                signal: abortController.signal,
                 stdout: "piped",
                 stderr: "piped",
                 stdin: "null",

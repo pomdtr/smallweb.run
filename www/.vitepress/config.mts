@@ -9,8 +9,16 @@ export default defineConfig({
   title,
   description: description,
   head: [
-    ["link", { rel: "icon", href: "/favicon-light.ico", media: "(prefers-color-scheme: light)" }],
-    ["link", { rel: "icon", href: "/favicon-dark.ico", media: "(prefers-color-scheme: dark)" }],
+    ["meta", { name: "description", content: description }],
+    ["meta", { name: "og:title", content: title }],
+    ["meta", { name: "og:description", content: description }],
+    ["meta", { name: "og:type", content: "website" }],
+    ["link", { rel: "icon", type: "image/png", href: "/favicon-96x96.png", sizes: "96x96" }],
+    ["link", { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" }],
+    ["link", { rel: "shortcut icon", href: "/favicon.ico" }],
+    ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
+    ["meta", { name: "apple-mobile-web-app-title", content: "Smallweb" }],
+    ["link", { rel: "manifest", href: "/site.webmanifest" }],
   ],
   appearance: "force-auto",
   themeConfig: {
@@ -23,6 +31,10 @@ export default defineConfig({
     logo: {
       dark: "/icon-dark.svg",
       light: "/icon-light.svg"
+    },
+    siteTitle: title,
+    editLink: {
+      pattern: "https://github.com/pomdtr/smallweb.run/tree/main/www/:path",
     },
     sidebar: {
       '/docs/': [
