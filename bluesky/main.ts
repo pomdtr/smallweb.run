@@ -10,7 +10,7 @@ export default {
 
         const agent = new AtpAgent({ service: 'https://bsky.social' })
 
-        const res = await agent.login({
+        await agent.login({
             identifier: 'smallweb.run',
             password,
         })
@@ -18,7 +18,5 @@ export default {
         await agent.post({
             text: "Sent from smallweb cli!"
         })
-
-        console.log(res)
     }
 }
