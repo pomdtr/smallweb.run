@@ -20,8 +20,8 @@ app.get("/:version/:schema", async (c) => {
 
     const req = new Request(
         version === "latest"
-            ? `https://raw.githubusercontent.com/pomdtr/smallweb/refs/heads/main/schemas/${schema}.schema.json`
-            : `https://raw.githubusercontent.com/pomdtr/smallweb/refs/tags/v${version}/schemas/${schema}.schema.json`,
+            ? `https://github.com/pomdtr/smallweb/releases/latest/download/${schema}.schema.json`
+            : `https://github.com/pomdtr/smallweb/releases/download/v${version}/${schema}.schema.json`,
     );
 
 
