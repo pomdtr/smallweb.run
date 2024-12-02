@@ -1,6 +1,6 @@
 {
     "name": "@smallweb/cli",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "exports": "./mod.ts",
     "publish": {
@@ -9,7 +9,6 @@
         ]
     },
     "imports": {
-        "@std/cli": "jsr:@std/cli@^1.0.7",
         "@std/http": "jsr:@std/http@^1.0.11",
         "@std/streams": "jsr:@std/streams@^1.0.8"
     }

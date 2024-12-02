@@ -1,6 +1,6 @@
 import { Cli } from "./mod.ts";
 import { lastlogin, createToken } from "jsr:@pomdtr/lastlogin@0.5.10"
-import { parseArgs } from "@std/cli"
+import { parseArgs } from "jsr:@std/cli@^1.0.7"
 
 const cli = new Cli();
 cli.fetch = lastlogin(cli.fetch)

@@ -91,7 +91,7 @@ export class Cli {
             return new Response(merged, {
                 status: 200,
                 headers: new Headers({
-                    "content-type": "text/plain",
+                    "content-type": "text/plain; charset=utf-8",
                     "Transfer-Encoding": "chunked",
                     "Cache-Control": "no-cache",
                     "Connection": "keep-alive",
@@ -103,7 +103,7 @@ export class Cli {
                 return new Response(e.message, {
                     status: 500,
                     headers: new Headers({
-                        "content-type": "text/plain",
+                        "content-type": "text/plain; charset=utf-8",
                     }),
                 })
             }
@@ -111,7 +111,7 @@ export class Cli {
             return new Response("Unknown error", {
                 status: 500,
                 headers: new Headers({
-                    "content-type": "text/plain",
+                    "content-type": "text/plain; charset=utf-8",
                 }),
             })
         }
