@@ -18,15 +18,8 @@
     "deno.enable": true,
     "deno.disablePaths": [
         "astro",
-        "vscode/extension"
+        "vscode/extension",
+        "vite-project"
     ],
-    "search.useIgnoreFiles": false,
-    "search.exclude": {
-        "**/_site": true,
-        "**/dist": true,
-        "**/node_modules": true,
-        "**/bower_components": true,
-        "**/*.code-search": true,
-        "docs": true,
-    }
+    "search.useIgnoreFiles": true,
 }

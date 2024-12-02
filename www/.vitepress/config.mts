@@ -19,6 +19,7 @@ export default defineConfig({
     ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
     ["meta", { name: "apple-mobile-web-app-title", content: "Smallweb" }],
     ["link", { rel: "manifest", href: "/site.webmanifest" }],
+    ["script", { type: "module", src: "https://esm.smallweb.run/dot-shortcut.ts?url=https://gh.smallweb.run/www" }],
   ],
   appearance: "force-auto",
   themeConfig: {
