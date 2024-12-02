@@ -23,8 +23,6 @@ The routing system maps domains to directories as follows:
 
 ## Naming constraints
 
-Subdomains must be alphanumeric, and can contain hyphens. You should also avoid using uppercase letters in your subdomains, as they are usually converted to lowercase.
+Subdomains must be alphanumeric, and can contain hyphens. You should also avoid using uppercase letters in your subdomains, as they are usually converted to lowercase. Underscores are allowed, but not recommended.
 
-Any folder in the smallweb directory that does not match this pattern is ignored.
-
-You can use it to your advantage to create hidden directories that are not accessible from the web (ex: `.github`, or `_notes`).
+Any folder starting with `.` is ignored by the routing system. You can use it to your advantage to create hidden directories that are not accessible from the web (ex: `.github`, or `.data`).

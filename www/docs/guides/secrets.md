@@ -1,8 +1,10 @@
-# Secrets
+# Handling Secrets
 
 Smallweb delegates encryption to [SOPS](https://github.com/getsops/sops).
 
-If your app dir contains a `secrets.enc.env` file encrypted with SOPS, Smallweb will automatically decrypt it and inject the secrets it contains as environment variables into your app.
+Encrypted secrets are stored in a `secrets.enc.env` file at the root of your app dir, or in the `.smallweb` (for global secrets).
+
+Smallweb will automatically decrypt the file and inject the secrets as environment variables into your app at runtime.
 
 ## Usage
 
@@ -29,13 +31,14 @@ $ age-keygen -o $HOME/.config/sops/age/keys.txt
 Public key: age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc
 
 # macOS
-$ age-keygen -o $HOME/Library/Application Support/sops/age/keys.txt
+$ age-keygen -o $HOME/Library/Application\ Support/sops/age/keys.txt
 Public key: age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc
 ```
 
 Then we'll create a `.sops.yaml` file at the root of our smallweb dir:
 
 ```yaml
+# ~/smallweb/.sops.yaml
 creation_rules:
   - key_groups:
       - age:
@@ -45,10 +48,14 @@ creation_rules:
 > [!TIP] You can repeat the process to add more public keys
 > Make sure to run `smallweb secrets --update-keys` after adding new public keys
 
-From now on, we can generate/edit a`secrets.enc.env` using the following command:
+From now on, we can generate/edit a `secrets.enc.env` for your app using the following command:
 
 ```sh
-smallweb secrets [app] # app is optional in case you are in the app dir
+# app is optional in case you are in the app dir
+smallweb secrets [app]
+
+# edit global secrets
+smallweb secrets -g
 ```
 
 > [!WARNING] Make sure to never edit the encrypted file directly!
