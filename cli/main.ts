@@ -1,5 +1,5 @@
 import { Cli } from "./mod.ts";
-import { lastlogin, createToken } from "jsr:@pomdtr/lastlogin@0.5.10"
+import { lastlogin, createToken } from "jsr:@pomdtr/lastlogin@0.5.11"
 import { parseArgs } from "jsr:@std/cli@^1.0.7"
 
 const cli = new Cli();
@@ -8,11 +8,19 @@ cli.fetch = lastlogin(cli.fetch)
 export default {
     fetch: lastlogin(cli.fetch),
     run: async (args: string[]) => {
-        const { email } = parseArgs(args)
+        const { email, help } = parseArgs(args)
+        if (help) {
+            console.log("Usage: cli --email <email>")
+            return
+        }
+
+        if (!email) {
+            console.error("Email is required")
+            Deno.exitCode = 1
+            return
+        }
         const token = await createToken({
             email,
-            domain: Deno.env.get("SMALLWEB_APP_DOMAIN"),
-            exp: Date.now() + 1000 * 60 * 60 * 24 * 7
         })
         console.log(token)
     }

@@ -1,6 +1,6 @@
 {
     "name": "@pomdtr/lastlogin",
-    "version": "0.5.10",
+    "version": "0.5.11",
     "exports": "./mod.ts",
     "license": "MIT",
     "publish": {

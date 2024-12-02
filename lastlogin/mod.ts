@@ -195,7 +195,7 @@ export function lastlogin(
                 return new Response("Invalid token", { status: 401 });
             }
 
-            if (payload.domain != url.hostname) {
+            if (payload.domain && payload.domain != url.hostname) {
                 return new Response("Invalid domain", { status: 401 });
             }
 
@@ -251,6 +251,7 @@ export function lastlogin(
             const exp = Math.floor(Date.now() / 1000) + 60 * 60 * 24 * 7;
             const token = await jwt.sign({
                 email,
+                iat: Math.floor(Date.now() / 1000),
                 exp,
                 domain: url.hostname,
             }, secretKey);
@@ -376,6 +377,10 @@ export type CreateTokenOptions = {
 }
 
 export function createToken(payload: JwtPayload, options: CreateTokenOptions = {}): Promise<string> {
+    if (!payload.iat) {
+        payload.iat = Math.floor(Date.now() / 1000);
+    }
+
     const secretKey = options.secretKey || Deno.env.get("LASTLOGIN_SECRET_KEY");
     if (!secretKey) {
         throw new Error("Secret key is required");

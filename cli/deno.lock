@@ -1,9 +1,10 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@hono/hono@^4.6.9": "4.6.10",
+    "jsr:@hono/hono@^4.6.9": "4.6.12",
     "jsr:@pomdtr/lastlogin@*": "0.5.7",
     "jsr:@pomdtr/lastlogin@0.5.10": "0.5.10",
+    "jsr:@pomdtr/lastlogin@0.5.11": "0.5.11",
     "jsr:@std/bytes@^1.0.3": "1.0.4",
     "jsr:@std/cli@^1.0.6": "1.0.7",
     "jsr:@std/cli@^1.0.7": "1.0.7",
@@ -21,6 +22,9 @@
     "@hono/hono@4.6.10": {
       "integrity": "dae93ac8bb49881f99506aa8e01e5536d5d72cc3c2b556bde2816fdf25ca609c"
     },
+    "@hono/hono@4.6.12": {
+      "integrity": "fa0b97fa7c3292f0d9957109ac07a475fe485868795b71b8e3114c284152cdb5"
+    },
     "@pomdtr/lastlogin@0.5.7": {
       "integrity": "ff463e08458d13e2d4323f6a1f7156d6d1ae73c3d30211330b1af6b1196cb7a7",
       "dependencies": [
@@ -30,6 +34,13 @@
     },
     "@pomdtr/lastlogin@0.5.10": {
       "integrity": "2674176ad2a8d666a38cc9c5eb7ec87f9b3e715044c074fa2e82afab2539b99e",
+      "dependencies": [
+        "jsr:@hono/hono",
+        "jsr:@std/http@^1.0.9"
+      ]
+    },
+    "@pomdtr/lastlogin@0.5.11": {
+      "integrity": "ce396a7e2574ca130b06f211b75940c82106d7e089e2aea58548bfed30402b93",
       "dependencies": [
         "jsr:@hono/hono",
         "jsr:@std/http@^1.0.9"
