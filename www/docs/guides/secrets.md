@@ -42,36 +42,13 @@ creation_rules:
           - age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc # public key
 ```
 
-> [!INFO] You can repeat the process to add more public keys
-> ex: <https://github.com/pomdtr/smallweb.run/tree/main/.sops.yaml>
-> Make sure to run `sops updatekeys ~/samllweb/*/secrets.enc.env` after adding new public keys
+> [!TIP] You can repeat the process to add more public keys
+> Make sure to run `smallweb secrets --update-keys` after adding new public keys
 
 From now on, we can generate/edit a`secrets.enc.env` using the following command:
 
 ```sh
-sops secrets.enc.env
+smallweb secrets [app] # app is optional in case you are in the app dir
 ```
 
 > [!WARNING] Make sure to never edit the encrypted file directly!
-
-If you want to use a smallweb subcommand instead, you can use the following plugin at `$SMALLWEB_DIR/.smallweb/plugins/secrets.sh` (it requires [nushell](https://www.nushell.sh/) to be installed):
-
-```sh
-#!/usr/bin/env nu
-
-# Edit smallweb secrets
-def main [
-    app?: string # The application to manage secrets for
-    --global (-g) # Use the global secrets file
-]: nothing -> nothing {
-    if ($global) {
-        sops $"($env.SMALLWEB_DIR)/.smallweb/secrets.enc.env"
-    } else if ($app != null) {
-        sops $"($env.SMALLWEB_DIR)/($app)/secrets.enc.env"
-    } else if ((pwd | path dirname) == $env.SMALLWEB_DIR) {
-        sops secrets.enc.env
-    } else {
-        print --stderr "No application specified and not in a smallweb application directory."
-    }
-}
-```

@@ -31,6 +31,7 @@ Smallweb automatically injects the following environment variables into your app
 - `SMALLWEB_DIR`: The directory where the smallweb apps are stored.
 - `SMALLWEB_DOMAIN`: The domain where the smallweb apps are served from.
 - `SMALLWEB_APP_NAME`: The name of the app.
+- `SMALLWEB_APP_DOMAIN`: The domain of the app.
 - `SMALLWEB_APP_URL`: The URL of the app.
 
 And some additional variables are available to admin apps:
