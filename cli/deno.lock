@@ -84,7 +84,6 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@std/cli@^1.0.7",
       "jsr:@std/http@^1.0.11",
       "jsr:@std/streams@^1.0.8"
     ]
