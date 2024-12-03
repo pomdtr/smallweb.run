@@ -1,7 +1,14 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
-
+head:
+  - [
+      'meta',
+      {
+        property: 'og:description',
+        content: 'A self-hostable personal cloud inspired by serverless platforms and cgi-bin.',
+      }
+    ]
 hero:
   name: "Smallweb"
   text: "Your internet folder"

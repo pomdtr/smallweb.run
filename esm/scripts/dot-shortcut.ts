@@ -9,7 +9,8 @@ document.addEventListener("keydown", (event) => {
 
     const url: string | null = new URL(import.meta.url).searchParams.get("url");
     if (!url) {
-        console.error("No URL found in query string");
+        const app = globalThis.location.hostname.replace(/.smallweb.run$/, "");
+        globalThis.open(`https://vscode.smallweb.run/${app}`);
         return;
     }
 

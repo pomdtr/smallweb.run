@@ -4,14 +4,66 @@
 
 Host websites from your internet folder
 
+### Options
+
 ```
-smallweb [flags]
+  -h, --help   help for smallweb
+```
+
+## smallweb _carapace
+
+
+
+```
+smallweb _carapace [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for smallweb
+  -h, --help   help for _carapace
+```
+
+## smallweb _carapace spec
+
+
+
+```
+smallweb _carapace spec [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for spec
+```
+
+## smallweb _carapace style
+
+
+
+```
+smallweb _carapace style [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for style
+```
+
+## smallweb _carapace style set
+
+
+
+```
+smallweb _carapace style set [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for set
 ```
 
 ## smallweb changelog
@@ -195,87 +247,20 @@ smallweb config <key> [flags]
   -h, --help   help for config
 ```
 
-## smallweb create
-
-Create a new smallweb app
-
-```
-smallweb create <app> [flags]
-```
-
-### Options
-
-```
-  -h, --help              help for create
-      --template string   template to use
-```
-
-## smallweb cron
-
-Manage cron jobs
-
-### Options
-
-```
-  -h, --help   help for cron
-```
-
-## smallweb cron list
+## smallweb crons
 
 List cron jobs
 
 ```
-smallweb cron list [flags]
+smallweb crons [flags]
 ```
 
 ### Options
 
 ```
       --app string   filter by app
-  -h, --help         help for list
+  -h, --help         help for crons
       --json         output as json
-```
-
-## smallweb cron trigger
-
-Trigger a cron job
-
-```
-smallweb cron trigger <id> [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for trigger
-```
-
-## smallweb cron up
-
-Start the cron daemon
-
-```
-smallweb cron up [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for up
-```
-
-## smallweb delete
-
-Delete an app
-
-```
-smallweb delete [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for delete
 ```
 
 ## smallweb docs
@@ -325,7 +310,7 @@ smallweb edit [flags]
 Fetch a path from an app
 
 ```
-smallweb fetch [app] <path> [flags]
+smallweb fetch <app> [path] [flags]
 ```
 
 ### Options
@@ -335,6 +320,20 @@ smallweb fetch [app] <path> [flags]
   -H, --header stringArray   HTTP headers to use
   -h, --help                 help for fetch
   -X, --method string        HTTP method to use (default "GET")
+```
+
+## smallweb link
+
+Create symbolic links
+
+```
+smallweb link <source> <target> [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for link
 ```
 
 ## smallweb list
@@ -359,13 +358,13 @@ smallweb list [flags]
 View app logs
 
 ```
-smallweb logs [remote] [flags]
+smallweb logs [flags]
 ```
 
 ### Options
 
 ```
-  -a, --app string        app to view logs for
+      --app string        filter by app
   -h, --help              help for logs
       --json              output logs in JSON format
       --template string   output logs using a Go template
@@ -413,20 +412,6 @@ smallweb push [flags]
   -h, --help   help for push
 ```
 
-## smallweb rename
-
-Rename an app
-
-```
-smallweb rename [app] [new-name] [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for rename
-```
-
 ## smallweb run
 
 Run an app cli
@@ -443,16 +428,18 @@ smallweb run <app> [args...] [flags]
 
 ## smallweb secrets
 
-Run the secrets plugin
+Manage app secrets
 
 ```
-smallweb secrets [flags]
+smallweb secrets [app] [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for secrets
+  -g, --global        Set global secrets
+  -h, --help          help for secrets
+      --update-keys   Update all keys
 ```
 
 ## smallweb service
@@ -562,6 +549,20 @@ smallweb service uninstall [flags]
 
 ```
   -h, --help   help for uninstall
+```
+
+## smallweb sync
+
+Sync the smallweb config with the filesystem
+
+```
+smallweb sync <target> [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for sync
 ```
 
 ## smallweb up

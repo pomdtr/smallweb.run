@@ -44,15 +44,3 @@ const command = new Deno.Command(SMALLWEB_CLI_PATH, {
 const output = await command.output();
 const apps = JSON.parse(new TextDecoder().decode(output));
 ```
-
-## Sharing files between apps
-
-To share files between your apps, just use symbolic links!
-
-For example, if you have two apps `app1` and `app2`, and you want `app2` to access the `users.json` file from `app1`, you can create a symbolic link in the `app2` folder:
-
-```sh
-ln -s app1/data/users.json ../app2/data/users.json
-```
-
-You should only use relative paths when creating symbolic links, as the absolute path will not be synced between servers by [mutagen](https://mutagen.io/).

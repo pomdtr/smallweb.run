@@ -1,4 +1,4 @@
-# Hosting Websites
+# Handling HTTP Requests
 
 > ℹ️ All the websites hosted under the `smallweb.run` domain are open-source.
 >
@@ -97,7 +97,7 @@ To access the server, open `https://example-server.localhost` in your browser.
 
 Smallweb use the [deno](https://deno.com) runtime to evaluate the server code. You get typescript and jsx support out of the box, and you can import any module from the npm and jsr registry by prefixing the module name with `npm:` or `jsr:`.
 
-As an example, the following code snippet use the `@hono/hono` extract params from the request url.
+As an example, the following code snippet use the [hono package](https://hono.dev) to extract params from the request url.
 
 ```jsx
 // File: ~/smallweb/hono-example/main.ts
