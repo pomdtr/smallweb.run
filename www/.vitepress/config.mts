@@ -1,11 +1,9 @@
 import { defineConfig } from 'vitepress'
 
-const title = "Smallweb - Your internet folder"
-
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title,
-  description: "A self-host able personal cloud inspired by serverless platforms and cgi-bin.",
+  title: "Smallweb - Your internet folder",
+  description: "A self-hostable personal cloud inspired by serverless platforms and cgi-bin.",
   head: [
     [
       'meta',
@@ -14,7 +12,7 @@ export default defineConfig({
         content: '/banner-icon.png',
       },
     ],
-    ["meta", { name: "og:title", content: title }],
+    ["meta", { name: "og:title", content: "Smallweb - Your internet folder" }],
     ["meta", { name: "og:type", content: "website" }],
     ["meta", { name: "twitter:domain", content: "smallweb.run" }],
     [
@@ -48,7 +46,7 @@ export default defineConfig({
       dark: "/icon-dark.svg",
       light: "/icon-light.svg"
     },
-    siteTitle: title,
+    siteTitle: "Smallweb",
     editLink: {
       pattern: "https://github.com/pomdtr/smallweb.run/tree/main/www/:path",
     },

@@ -22,6 +22,9 @@ hero:
       text: Get Started
       link: /docs/getting-started
     - theme: alt
+      text: Live Demo
+      link: https://smallweb.live
+    - theme: alt
       text: View on GitHub
       link: https://github.com/pomdtr/smallweb
 

@@ -41,12 +41,8 @@ export class Cli {
         const accept = accepts(req, "text/html", "application/json", "text/json")
         if (accept && accept != "text/html") {
             try {
-                const abortController = new AbortController()
-                req.signal.addEventListener("abort", () => {
-                    abortController.abort()
-                })
                 const command = new Deno.Command(SMALLWEB_CLI_PATH, {
-                    signal: abortController.signal,
+                    signal: req.signal,
                 })
                 const output = await command.output()
                 return Response.json({
