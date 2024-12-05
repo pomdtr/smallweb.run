@@ -127,6 +127,7 @@ export default defineConfig({
             },
             { text: "Cloudflare Tunnel", link: "/docs/hosting/cloudflare" },
             { text: "VPS", link: "/docs/hosting/vps" },
+            { text: "Runtipi", link: "/docs/hosting/runtipi" },
             { text: "Deno Deploy", link: "/docs/hosting/deno-deploy" },
             { text: "Smallweb Cloud", link: "/docs/hosting/smallweb-cloud" },
           ]
