@@ -6,6 +6,7 @@
     "jsr:@deno/gfm@0.10": "0.10.0",
     "jsr:@denosaurs/emoji@0.3": "0.3.1",
     "jsr:@smallweb/file-server@0.5.5": "0.5.5",
+    "jsr:@smallweb/file-server@0.5.7": "0.5.7",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@~0.218.2": "0.218.2",
     "jsr:@std/bytes@~0.218.2": "0.218.2",
@@ -76,6 +77,18 @@
     },
     "@smallweb/file-server@0.5.5": {
       "integrity": "1e07b19be105398c1fcc71d19c7bf4ec12bc557283e31204cac1e45298af457b",
+      "dependencies": [
+        "jsr:@deno/emit",
+        "jsr:@deno/gfm",
+        "jsr:@std/front-matter",
+        "jsr:@std/fs@^1.0.6",
+        "jsr:@std/http",
+        "jsr:@std/path@^1.0.6",
+        "npm:prismjs"
+      ]
+    },
+    "@smallweb/file-server@0.5.7": {
+      "integrity": "ade07323eb1aa283c72d24351c1d4b9e7308102a733f8dcdbee1fd6a2c0fa302",
       "dependencies": [
         "jsr:@deno/emit",
         "jsr:@deno/gfm",

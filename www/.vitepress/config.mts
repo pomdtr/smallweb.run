@@ -31,7 +31,6 @@ export default defineConfig({
     ["link", { rel: "shortcut icon", href: "/favicon.ico" }],
     ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
     ["meta", { name: "apple-mobile-web-app-title", content: "Smallweb" }],
-    ["link", { rel: "manifest", href: "/site.webmanifest" }],
     ["script", { type: "module", src: "https://esm.smallweb.run/dot-shortcut.ts" }],
   ],
   appearance: "force-auto",
@@ -87,6 +86,10 @@ export default defineConfig({
             {
               text: "Secrets",
               link: "/docs/guides/secrets"
+            },
+            {
+              text: "Logs",
+              link: "/docs/guides/logs"
             },
             {
               text: "Plugins",

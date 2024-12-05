@@ -2,7 +2,19 @@
 
 ## Why Smallweb ?
 
-See the [homepage](/) for a quick overview of the project.
+Smallweb is a new take on self-hosting. The goal is to make it as easy as possible to host your own apps. To achieve this, it uses a "file-based hosting" approach: every subfolder in your smallweb folder becomes a unique domain.
+
+Smallweb is obsessed with scaling down. No dev server or a build is required, and you don't even need to care about deployment. You can just write a single file, hit save, and voila! Your app is live.
+
+## Live Demo
+
+A shared public instance of smallweb is available at [smallweb.live](https://smallweb.live). You can use it to test smallweb without setting up your own instance.
+
+Please ping me either on [bluesky](https://bsky.app/profile/pomdtr.me) or [discord](https://discord.gg/BsgQK42qZe) if the demo is down.
+
+## Community
+
+Join the [discord server](https://discord.gg/BsgQK42qZe) to ask questions, share your projects, and get help.
 
 ## Installation
 
