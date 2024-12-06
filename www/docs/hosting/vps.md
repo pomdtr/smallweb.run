@@ -21,7 +21,10 @@ usermod -aG systemd-journal smallweb
 loginctl enable-linger smallweb
 ```
 
-At this point, you can switch to the `smallweb` user (ex: using `ssh smallweb@<ip>`) and install smallweb:
+At this point, disconnect from the ssh session and switch to the `smallweb` user by running `ssh smallweb@your-server-ip`.
+
+> [!WARNING] Do not use su!
+> It will prevent you from installing the service.
 
 ```bash
 # install unzip (required for deno)

@@ -84,10 +84,6 @@ export default defineConfig({
               link: "/docs/guides/env"
             },
             {
-              text: "Secrets",
-              link: "/docs/guides/secrets"
-            },
-            {
               text: "Logs",
               link: "/docs/guides/logs"
             },

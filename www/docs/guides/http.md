@@ -38,23 +38,26 @@ The static server also supports transpiling `.ts`, `.tsx`, `.jsx`, meaning that 
 <!-- ~/smallweb/example-static/index.html -->
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Example Static Website</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <div id="root"></div>
-    <script src="script.tsx"></script>
-  </body>
+    <script type="module" src="./script.tsx"></script>
+</body>
 ```
 
 You'll need to add a pragma to the script file to tell smallweb how to transpile it.
 
 ```tsx
 // ~/smallweb/example-static/script.tsx
-/** @jsxImportSource https://esm.sh/react **/
-import { render } from "react-dom";
+/** @jsxImportSource https://esm.sh/react@19.0.0 **/
+import { createRoot } from "https://esm.sh/react-dom@19.0.0/client";
 
-render(<h1>Hello, world!</h1>, document.getElementById("root"));
+const root = createRoot(document.getElementById("root")!);
+root.render(<h1>Hello, world!</h1>);
 ```
 
 Only use imports that are usable from the browser. `jsr:` and `npm:` specifiers are not supported in the browser.
