@@ -1,7 +1,6 @@
 {
     "domain": "smallweb.run",
     "customDomains": {
-        "localhost": "*",
-        "example.com": "www"
+        "localhost": "*"
     }
 }

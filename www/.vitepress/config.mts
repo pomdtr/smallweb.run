@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Smallweb - Your internet folder",
+  title: "Smallweb",
   description: "A self-hostable personal cloud inspired by serverless platforms and cgi-bin.",
   head: [
     [
@@ -12,7 +12,6 @@ export default defineConfig({
         content: '/banner-icon.png',
       },
     ],
-    ["meta", { name: "og:title", content: "Smallweb - Your internet folder" }],
     ["meta", { name: "og:type", content: "website" }],
     ["meta", { name: "twitter:domain", content: "smallweb.run" }],
     [
