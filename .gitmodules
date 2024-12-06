@@ -7,3 +7,6 @@
 [submodule "vscode-dev"]
 	path = vscode-dev
 	url = https://github.com/pomdtr/smallweb-vscode
+[submodule "lastlogin"]
+	path = lastlogin
+	url = https://github.com/pomdtr/deno-lastlogin
