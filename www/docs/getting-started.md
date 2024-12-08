@@ -18,6 +18,14 @@ Join the [discord server](https://discord.gg/BsgQK42qZe) to ask questions, share
 
 ## Installation
 
+```sh
+# use the install script
+curl -fsSL https://install.smallweb.run | sh
+
+# or use homebrew
+brew install pomdtr/tap/smallweb
+```
+
 Smallweb installations steps heavily depends on the experience you want to have with Smallweb. Here are a few options:
 
 - [Local Setup](./hosting/local/index.md) - Easiest way to get started, no need for a dedicated server or a domain name. Work on MacOS and Linux.

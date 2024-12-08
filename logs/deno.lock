@@ -1,12 +1,28 @@
 {
   "version": "4",
   "specifiers": {
+    "jsr:@hono/hono@^4.6.9": "4.6.13",
+    "jsr:@pomdtr/lastlogin@0.5.13": "0.5.13",
     "jsr:@std/bytes@^1.0.3": "1.0.4",
+    "jsr:@std/http@^1.0.9": "1.0.12",
     "jsr:@std/streams@^1.0.8": "1.0.8"
   },
   "jsr": {
+    "@hono/hono@4.6.13": {
+      "integrity": "198970fc6facf71a88ee57aa1ed32143b56bcb0f842fa965ca3ee7d6fdd21a8e"
+    },
+    "@pomdtr/lastlogin@0.5.13": {
+      "integrity": "7257d4a5f513effc91e34516f732cee318de34677b70252795c11cc8ccc28f75",
+      "dependencies": [
+        "jsr:@hono/hono",
+        "jsr:@std/http"
+      ]
+    },
     "@std/bytes@1.0.4": {
       "integrity": "11a0debe522707c95c7b7ef89b478c13fb1583a7cfb9a85674cd2cc2e3a28abc"
+    },
+    "@std/http@1.0.12": {
+      "integrity": "85246d8bfe9c8e2538518725b158bdc31f616e0869255f4a8d9e3de919cab2aa"
     },
     "@std/streams@1.0.8": {
       "integrity": "b41332d93d2cf6a82fe4ac2153b930adf1a859392931e2a19d9fabfb6f154fb3",

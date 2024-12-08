@@ -1,6 +1,17 @@
 {
     "domain": "smallweb.run",
     "customDomains": {
+        "sunbeam.pomdtr.me": "sunbeam",
         "localhost": "*"
-    }
+    },
+    "adminApps": [
+        "api",
+        "cli",
+        "editor",
+        "logs",
+        "ray",
+        "telegram",
+        "vscode",
+        "vscode-dev"
+    ]
 }
