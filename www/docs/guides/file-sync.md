@@ -16,19 +16,8 @@ Then, run the following command to sync your files:
 # enable the mutagen daemon
 mutagen daemon register
 
-# create a sync session
-mutagen sync create \
-    --name=smallweb \
-    --ignore=node_modules,.DS_Store \
-    --ignore-vcs \
-    --mode=two-way-resolved \
-    my-ssh-server:/remote/smallweb/dir ~/smallweb
-```
-
-Alternatively, you can use the `sync` command provided by Smallweb:
-
-```bash
-smallweb sync my-ssh-server:/remote/smallweb/dir
+# sync your local smallweb dir with /home/smallweb/smallweb on my-ssh-server
+smallweb sync my-ssh-server /home/smallweb/smallweb
 ```
 
 From now on, each time you make a change to your files, they will be automatically synced to the server, and vice-versa.

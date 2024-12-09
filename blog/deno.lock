@@ -50,11 +50,13 @@
     "jsr:@std/fs@~0.229.2": "0.229.3",
     "jsr:@std/html@0.224.2": "0.224.2",
     "jsr:@std/html@1.0.0": "1.0.0",
+    "jsr:@std/html@1.0.3": "1.0.3",
     "jsr:@std/html@^1.0.3": "1.0.3",
     "jsr:@std/http@*": "1.0.7",
     "jsr:@std/http@0.224.5": "0.224.5",
     "jsr:@std/http@1": "1.0.7",
     "jsr:@std/http@1.0.11": "1.0.11",
+    "jsr:@std/http@1.0.12": "1.0.12",
     "jsr:@std/http@1.0.7": "1.0.7",
     "jsr:@std/io@~0.218.2": "0.218.2",
     "jsr:@std/io@~0.224.1": "0.224.3",
@@ -377,6 +379,9 @@
         "jsr:@std/path@^1.0.8",
         "jsr:@std/streams@^1.0.8"
       ]
+    },
+    "@std/http@1.0.12": {
+      "integrity": "85246d8bfe9c8e2538518725b158bdc31f616e0869255f4a8d9e3de919cab2aa"
     },
     "@std/io@0.218.2": {
       "integrity": "c64fbfa087b7c9d4d386c5672f291f607d88cb7d44fc299c20c713e345f2785f",
