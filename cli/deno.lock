@@ -10,7 +10,9 @@
     "jsr:@std/cli@^1.0.7": "1.0.7",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@^1.0.3": "1.0.3",
+    "jsr:@std/html@1.0.3": "1.0.3",
     "jsr:@std/html@^1.0.3": "1.0.3",
+    "jsr:@std/http@1.0.12": "1.0.12",
     "jsr:@std/http@^1.0.11": "1.0.11",
     "jsr:@std/http@^1.0.9": "1.0.11",
     "jsr:@std/media-types@^1.1.0": "1.1.0",
@@ -70,12 +72,15 @@
         "jsr:@std/cli@^1.0.6",
         "jsr:@std/encoding",
         "jsr:@std/fmt",
-        "jsr:@std/html",
+        "jsr:@std/html@^1.0.3",
         "jsr:@std/media-types",
         "jsr:@std/net",
         "jsr:@std/path",
         "jsr:@std/streams"
       ]
+    },
+    "@std/http@1.0.12": {
+      "integrity": "85246d8bfe9c8e2538518725b158bdc31f616e0869255f4a8d9e3de919cab2aa"
     },
     "@std/media-types@1.1.0": {
       "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"

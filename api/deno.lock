@@ -8,6 +8,8 @@
     "jsr:@pomdtr/bearer-auth@0.1.0": "0.1.0",
     "jsr:@pomdtr/lastlogin@0.2.0": "0.2.0",
     "jsr:@std/fmt@~1.0.2": "1.0.3",
+    "jsr:@std/html@1.0.3": "1.0.3",
+    "jsr:@std/http@1.0.12": "1.0.12",
     "jsr:@std/http@^1.0.9": "1.0.9",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/text@~1.0.7": "1.0.8",
@@ -49,15 +51,21 @@
     "@pomdtr/lastlogin@0.2.0": {
       "integrity": "fdb6e7bd78213cd3bdf4d2c6da2a30f3942aa43e5b1dcf8159790a518e60b54d",
       "dependencies": [
-        "jsr:@std/http",
+        "jsr:@std/http@^1.0.9",
         "npm:lowdb"
       ]
     },
     "@std/fmt@1.0.3": {
       "integrity": "97765c16aa32245ff4e2204ecf7d8562496a3cb8592340a80e7e554e0bb9149f"
     },
+    "@std/html@1.0.3": {
+      "integrity": "7a0ac35e050431fb49d44e61c8b8aac1ebd55937e0dc9ec6409aa4bab39a7988"
+    },
     "@std/http@1.0.9": {
       "integrity": "d409fc319a5e8d4a154e576c758752e9700282d74f31357a12fec6420f9ecb6c"
+    },
+    "@std/http@1.0.12": {
+      "integrity": "85246d8bfe9c8e2538518725b158bdc31f616e0869255f4a8d9e3de919cab2aa"
     },
     "@std/path@1.0.8": {
       "integrity": "548fa456bb6a04d3c1a1e7477986b6cffbce95102d0bb447c67c4ee70e0364be"

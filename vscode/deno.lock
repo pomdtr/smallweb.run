@@ -14,8 +14,10 @@
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/fmt@^1.0.0-rc.1": "1.0.3",
     "jsr:@std/fs@^1.0.5": "1.0.5",
+    "jsr:@std/html@1.0.3": "1.0.3",
     "jsr:@std/html@^1.0.3": "1.0.3",
     "jsr:@std/http@1.0.0-rc.4": "1.0.0-rc.4",
+    "jsr:@std/http@1.0.12": "1.0.12",
     "jsr:@std/http@^1.0.9": "1.0.11",
     "jsr:@std/media-types@^1.0.0-rc.1": "1.1.0",
     "jsr:@std/media-types@^1.0.1": "1.1.0",
@@ -64,7 +66,7 @@
         "jsr:@smallweb/embed",
         "jsr:@std/encoding@^1.0.5",
         "jsr:@std/fs",
-        "jsr:@std/html",
+        "jsr:@std/html@^1.0.3",
         "jsr:@std/path@^1.0.8",
         "npm:hono-zod-openapi@0.5",
         "npm:hono-zod-openapi@0.5.0",
@@ -81,7 +83,7 @@
         "jsr:@std/cli@^1.0.7",
         "jsr:@std/encoding@^1.0.5",
         "jsr:@std/fs",
-        "jsr:@std/html",
+        "jsr:@std/html@^1.0.3",
         "jsr:@std/path@^1.0.8",
         "npm:hono-zod-openapi@0.5",
         "npm:hono-zod-openapi@0.5.0",
@@ -128,6 +130,9 @@
     },
     "@std/http@1.0.11": {
       "integrity": "f1928e69e7dcf1664e22d153934cb866bf31e1bbe4bc59f8ac1b4d0e98cb7558"
+    },
+    "@std/http@1.0.12": {
+      "integrity": "85246d8bfe9c8e2538518725b158bdc31f616e0869255f4a8d9e3de919cab2aa"
     },
     "@std/media-types@1.1.0": {
       "integrity": "c9d093f0c05c3512932b330e3cc1fe1d627b301db33a4c2c2185c02471d6eaa4"

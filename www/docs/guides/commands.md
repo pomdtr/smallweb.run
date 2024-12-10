@@ -20,21 +20,24 @@ Hello world
 
 ## Using a cli framework
 
-[Cliffy](https://cliffy.io/) is an excellent Deno CLI framework that you can use to build more complex CLI applications.
+[Commander.js](https://github.com/tj/commander.js) is a popular cli framework for Node.js.
 
 You can easily wire it to smallweb:
 
 ```ts
-import { Command } from "jsr:@cliffy/command@1.0.0-rc.5";
-
-const name = basename(Deno.cwd());
-const command = new Command().name().action(() => {
-    console.log(`Hello ${name}`);
-});
+import { program } from '@commander-js/extra-typings';
 
 export default {
     run(args: string[]) {
-        await command.parse(args);
+        program.action(() => {
+            console.log("Hello world");
+        });
+
+        await program.parseAsync(args, { from: "user" });
     }
 }
 ```
+
+See the [Commander.js documentation](https://www.npmjs.com/package/commander) for more information.
+
+If you want to open urls in the user's browser, you can checkout the [@smallweb/open](https://jsr.io/@smallweb/open) package.
