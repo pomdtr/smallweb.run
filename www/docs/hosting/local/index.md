@@ -12,6 +12,6 @@ The following diagram illustrates the architecture of the local setup:
 
 The components needed are:
 
-- a dns server to map `*.localhost` domains to `127.0.0.1` ip address (dnsmasq)
-- a reverse proxy to automatically generate https certificates for each domain, and redirect traffic to the smallweb evaluation server (caddy)
+- a dns server to map `localhost` domains to `127.0.0.1` ip address (only needed on macOS)
+- a reverse proxy to generate and renew SSL certificates for the domains, and forward requests to the smallweb server
 - smallweb itself

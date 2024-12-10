@@ -33,10 +33,8 @@ Caddy’s configuration path depends on whether you're using an Intel-based Mac 
 
   # Write caddy configuration
   cat <<EOF > /opt/homebrew/etc/Caddyfile
-  *.localhost {
-    tls internal {
-      on_demand
-    }
+  smallweb.localhost, *.smallweb.localhost {
+    tls internal
 
     reverse_proxy localhost:7777
   }
@@ -50,10 +48,8 @@ Caddy’s configuration path depends on whether you're using an Intel-based Mac 
 
   # Write caddy configuration
   cat <<EOF > /usr/local/etc/Caddyfile
-  *.localhost {
-    tls internal {
-      on_demand
-    }
+  smallweb.localhost, *.smallweb.localhost {
+    tls internal
 
     reverse_proxy localhost:7777
   }
@@ -120,4 +116,4 @@ export default {
 EOF
 ```
 
-If everything went well, you should be able to access `https://example.localhost` in your browser, and see the message `Smallweb is running`.
+If everything went well, you should be able to access `https://example.smallweb.localhost` in your browser, and see the message `Smallweb is running`.

@@ -31,10 +31,8 @@ sudo apt-get install -y caddy
 
 # Write caddy configuration
 cat <<EOF | sudo tee /etc/caddy/Caddyfile
-*.localhost {
-  tls internal {
-    on_demand
-  }
+smallweb.localhost, *.smallweb.localhost {
+  tls internal
 
   reverse_proxy localhost:7777
 }
@@ -44,7 +42,7 @@ sudo systemctl restart caddy
 caddy trust
 ```
 
-There is no need to setup dnsmasq on Windows, as it seems to be already configured to resolve `.localhost` domains to `127.0.0.1`.
+There is no need to setup dnsmasq on Windows, as it seems to be already configured to resolve `.smallweb.localhost` domains to `127.0.0.1`.
 
 ## Testing the setup
 
@@ -61,4 +59,4 @@ export default {
 EOF
 ```
 
-If everything went well, you should be able to access `https://example.localhost` in your browser, and see the message `Smallweb is running`.
+If everything went well, you should be able to access `https://example.smallweb.localhost` in your browser, and see the message `Smallweb is running`.

@@ -25,10 +25,8 @@ sudo apt-get install -y caddy
 
 # Write caddy configuration
 cat <<EOF | sudo tee /etc/caddy/Caddyfile
-*.localhost {
-  tls internal {
-    on_demand
-  }
+smallweb.localhost, *.smallweb.localhost {
+  tls internal
 
   reverse_proxy localhost:7777
 }
@@ -38,7 +36,7 @@ sudo systemctl restart caddy
 caddy trust
 ```
 
-There is no need to setup dnsmasq on Ubuntu, as it seems to be already configured to resolve `.localhost` domains to `127.0.0.1`.
+There is no need to setup dnsmasq on Ubuntu, as it seems to be already configured to resolve `.smallweb.localhost` domains to `127.0.0.1`.
 
 ## Testing the setup
 

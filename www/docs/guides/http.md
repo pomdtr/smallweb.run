@@ -30,7 +30,7 @@ You can create a website by just adding an `index.html` file in the folder.
 </html>
 ```
 
-To access the website, open `https://example-static.localhost` in your browser.
+To access the website, open `https://example-static.<smallweb-domain>` in your browser.
 
 The static server also supports transpiling `.ts`, `.tsx`, `.jsx`, meaning that you can just import them from your static website.
 
@@ -94,7 +94,7 @@ export default {
 }
 ```
 
-To access the server, open `https://example-server.localhost` in your browser.
+To access the server, open `https://example-server.<smallweb-domain>` in your browser.
 
 ### Routing Requests using Hono
 
@@ -117,4 +117,4 @@ app.get("/:name", c => c.text(`Hello, ${c.params.name}!`));
 export default app;
 ```
 
-To access the server, open `https://hono-example.localhost` in your browser.
+To access the server, open `https://hono-example.<smallweb-domain>` in your browser.

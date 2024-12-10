@@ -2,7 +2,7 @@
 
 ## smallweb
 
-Host websites from your internet folder
+Host websites from your internet playground
 
 ### Options
 
