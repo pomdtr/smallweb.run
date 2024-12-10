@@ -45,7 +45,7 @@ And some additional variables are available to admin apps:
 - `SMALLWEB_ADMIN`: Allows you to check if the app is an admin app.
 - `SMALLWEB_CLI_PATH`: The path to the smallweb CLI.
 
-## Encryption support
+## Encryption
 
 > [!WARNING] This feature is recommended only for advanced users.
 

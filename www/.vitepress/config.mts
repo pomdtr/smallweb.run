@@ -83,6 +83,10 @@ export default defineConfig({
               link: "/docs/guides/env"
             },
             {
+              text: "Data Storage",
+              link: "/docs/guides/data"
+            },
+            {
               text: "Logs",
               link: "/docs/guides/logs"
             },

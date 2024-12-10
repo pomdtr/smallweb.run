@@ -22,3 +22,5 @@ In smallweb, subdomains are mapped to directories. If you want to map multiple s
 # Make gh.<domain> point to the github app
 smallweb link github gh
 ```
+
+Of course, you can also use the `customDomains` field in the global config file to achieve the same result, but using symlinks make them visible from the filesystem.

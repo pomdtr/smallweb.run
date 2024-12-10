@@ -6,44 +6,19 @@ Additionally, it provides some protection against DDoS attacks, and allows you t
 
 1. Make sure that you have a domain name that you can manage with Cloudflare.
 
-1. Install smallweb on your server, and register it as a service.
-
-    ```ts
-    // install deno
-    curl -fsSL https://deno.land/install.sh | sh
-
-    // install smallweb
-    curl -sSfL https://install.smallweb.run | sh
-
-    // register smallweb as a service
-    smallweb service install
-
-    // make sure that the server service is running
-    smallweb service status
-    ```
-
-1. Set the `domain` field in your smallweb config to your domain name.
-
-    ```json
-    // ~/smallweb/.smallweb/config.json
-    {
-      "domain": "<your-domain>"
-    }
-    ```
-
 1. From your cloudflare dashboard, navigate to `Zero Trust > Networks > Tunnels`
 
 1. Click on `Create a tunnel`, and select the `Clouflared` option
 
 1. Follow the intructions to install cloudflared, and create a connector on your device.
 
-1. Add a wildcard hostname for your tunnel (ex: `*.<your-domain>`), and use `http://localhost:7777` as the origin service.
+1. Add a hostname for your apex domain (ex: `example.com`), and use `http://localhost:7777` as the origin service.
 
     ![Tunnel Configuration](./tunnel.png)
 
-1. Do the same for your apex domain, if you want to manage it using smallweb.
+1. Do the same for your wildcard domain (ex: `*.example.com`). You'll need to then go to the DNS configuration of your domain, and add a `CNAME` record for your wildcard hostname, with a target of `<tunnel-id>.cfargotunnel.com`.
 
-1. Copy the tunnel ID, and go to `Websites > DNS > Records`.
+    ![DNS Configuration](./dns.png)
 
 1. Add a new `CNAME` record for your wildcard hostname, with a target of `<tunnel-id>.cfargotunnel.com`.
 

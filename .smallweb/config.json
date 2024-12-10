@@ -2,7 +2,7 @@
     "domain": "smallweb.run",
     "customDomains": {
         "sunbeam.pomdtr.me": "sunbeam",
-        "localhost": "*"
+        "smallweb.localhost": "*"
     },
     "adminApps": [
         "api",
