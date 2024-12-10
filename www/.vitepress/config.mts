@@ -32,7 +32,6 @@ export default defineConfig({
     ["meta", { name: "apple-mobile-web-app-title", content: "Smallweb" }],
     ["script", { type: "module", src: "https://esm.smallweb.run/dot-shortcut.ts" }],
   ],
-  appearance: "force-auto",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
