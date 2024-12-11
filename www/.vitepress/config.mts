@@ -98,8 +98,8 @@ export default defineConfig({
               link: "/docs/guides/auth"
             },
             {
-              text: "App Sandbox",
-              link: "/docs/guides/sandbox"
+              text: "Permmisions",
+              link: "/docs/guides/permissions"
             },
             {
               text: "Symlinks",
@@ -135,6 +135,7 @@ export default defineConfig({
           items: [
             { text: "Global Config", link: "/docs/reference/global-config" },
             { text: "App Config", link: "/docs/reference/app-config" },
+            { text: "Editor Support", link: "/docs/reference/editor" },
             { text: "CLI", link: "/docs/reference/cli" },
           ]
         }

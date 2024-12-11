@@ -1,4 +1,4 @@
-# App Sandbox
+# Permissions
 
 Smallweb apps have access to:
 
