@@ -10,3 +10,6 @@
 [submodule "lastlogin"]
 	path = lastlogin
 	url = https://github.com/pomdtr/deno-lastlogin
+[submodule "app-template"]
+	path = app-template
+	url = https://github.com/pomdtr/smallweb-app-template
