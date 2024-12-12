@@ -35,7 +35,7 @@ printf "\n⬇️ Installing smallweb...\n\n"
 sleep 2
 curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.4&target_dir=/usr/local/bin' | sh
 
-printf "\n🔧 Creating default smallweb directory...\n"
+printf "\n🔧 Creating default smallweb directory...\n\n"
 
 SMALLWEB_DIR="$HOME/smallweb"
 mkdir -p "$SMALLWEB_DIR/.smallweb"
