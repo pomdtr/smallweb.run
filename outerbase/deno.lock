@@ -1,0 +1,26 @@
+{
+  "version": "4",
+  "specifiers": {
+    "jsr:@std/html@1.0.3": "1.0.3",
+    "jsr:@std/http@1.0.12": "1.0.12",
+    "npm:hono@^4.6.13": "4.6.13"
+  },
+  "jsr": {
+    "@std/html@1.0.3": {
+      "integrity": "7a0ac35e050431fb49d44e61c8b8aac1ebd55937e0dc9ec6409aa4bab39a7988"
+    },
+    "@std/http@1.0.12": {
+      "integrity": "85246d8bfe9c8e2538518725b158bdc31f616e0869255f4a8d9e3de919cab2aa"
+    }
+  },
+  "npm": {
+    "hono@4.6.13": {
+      "integrity": "sha512-haV0gaMdSjy9URCRN9hxBPlqHa7fMm/T72kAImIxvw4eQLbNz1rgjN4hHElLJSieDiNuiIAXC//cC6YGz2KCbg=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:hono@^4.6.13"
+    ]
+  }
+}

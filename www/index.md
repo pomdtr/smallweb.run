@@ -5,6 +5,13 @@ head:
   - [
       'meta',
       {
+        name: 'og:title',
+        content: 'Smallweb - Your internet folder'
+      }
+    ]
+  - [
+      'meta',
+      {
         property: 'og:description',
         content: 'A self-hostable cloud contained in a single directory.',
       }
