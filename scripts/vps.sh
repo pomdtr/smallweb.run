@@ -82,7 +82,7 @@ const smallblog = new Smallblog()
 export default smallblog
 EOF
 
-smallweb --dir "$SMALLWEB_DIR" service install -- --on-demand-tls
+smallweb --dir "$SMALLWEB_DIR" service install -- --cron --on-demand-tls
 
 printf "\n✅ Smallweb installed successfully!\n\n"
 sleep 2
