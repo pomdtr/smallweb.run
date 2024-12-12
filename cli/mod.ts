@@ -2,7 +2,11 @@ import { mergeReadableStreams } from "@std/streams"
 import { accepts } from "@std/http/negotiation"
 
 export class Cli {
-    constructor() { }
+    app: string | undefined
+
+    constructor(app?: string) {
+        this.app = app
+    }
 
     fetch: (req: Request) => Response | Promise<Response> = async (req) => {
         const { SMALLWEB_ADMIN, SMALLWEB_CLI_PATH } = Deno.env.toObject();
@@ -14,8 +18,9 @@ export class Cli {
                 }),
             })
         }
+
         const url = new URL(req.url)
-        const args: string[] = []
+        const args: string[] = this.app ? ["run", this.app, "--"] : []
         if (url.pathname != "/") {
             args.push(...url.pathname.slice(1).split("/").map(decodeURIComponent))
         }
@@ -46,6 +51,7 @@ export class Cli {
                 })
                 const output = await command.output()
                 return Response.json({
+                    args,
                     success: output.success,
                     signal: output.signal,
                     code: output.code,
