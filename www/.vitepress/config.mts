@@ -4,6 +4,7 @@ import { defineConfig } from 'vitepress'
 export default defineConfig({
   title: "Smallweb",
   description: "A self-hostable personal cloud inspired by serverless platforms and cgi-bin.",
+  cleanUrls: true,
   head: [
     [
       'meta',

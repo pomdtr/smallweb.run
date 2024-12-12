@@ -6,13 +6,13 @@ head:
       'meta',
       {
         property: 'og:description',
-        content: 'A self-hostable personal cloud inspired by serverless platforms and cgi-bin.',
+        content: 'A self-hostable cloud contained in a single directory.',
       }
     ]
 hero:
   name: "Smallweb"
   text: "Your internet folder"
-  tagline: A self-hostable personal cloud inspired by serverless platforms and cgi-bin.
+  tagline: A self-hostable cloud contained in a single directory.
   image:
     light: /icon-light.svg
     dark: /icon-dark.svg
