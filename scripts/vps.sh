@@ -1,12 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 # usage: curl -fsSL https://scripts.smallweb.run/vps.sh | sh -s -- <domain>
 
 set -e
 
+
+IPV4=$(curl -s https://api.ipify.org)
+IPV6=$(curl -s https://api6.ipify.org)
+
+DEFAULT_DOMAIN="${IPV4//./-}.xip.smallweb.live"
+
 SMALLWEB_DOMAIN=$1
 if [ -z "$SMALLWEB_DOMAIN" ]; then
-    printf "🚨 Usage: curl -fsSL https://scripts.smallweb.run/vps.sh | sh -s -- <domain>\n"
-    exit 1
+    SMALLWEB_DOMAIN=$DEFAULT_DOMAIN
 fi
 
 printf "\n🔧 Installing required packages...\n\n"
@@ -84,15 +89,16 @@ EOF
 
 smallweb --dir "$SMALLWEB_DIR" service install -- --cron --on-demand-tls
 
-printf "\n✅ Smallweb installed successfully!\n\n"
+printf "\n✅ Smallweb installed successfully!\n"
 sleep 2
 
-IPV4=$(curl -s https://api.ipify.org)
-IPV6=$(curl -s https://api6.ipify.org)
+printf "\n🎉 Smallweb is now installed and running!\n\n"
 
-cat <<EOF
-🎉 Smallweb is now installed and running!
-
+if [ "$SMALLWEB_DOMAIN" == "$DEFAULT_DOMAIN" ]; then
+    printf "🌐 Visit https://%s in your browser to see your first smallweb site.\n" "$DEFAULT_DOMAIN"
+    printf "🚨 Warning: You are using the default domain. Please set your own domain to use Smallweb in production.\n"
+else
+    cat <<EOF
 🌐 Now set your domain's A and AAAA records to your server's IP addresses:
 
 A Record: $SMALLWEB_DOMAIN -> $IPV4
@@ -100,10 +106,13 @@ AAAA Record: $SMALLWEB_DOMAIN -> $IPV6
 A Record: *.$SMALLWEB_DOMAIN -> $IPV4
 AAAA Record: *.$SMALLWEB_DOMAIN -> $IPV6
 
+cat
 Once you've set your domain's DNS records, visit https://$SMALLWEB_DOMAIN in your browser to see your first smallweb site.
+EOF
+fi
 
+cat <<EOF
 An editor is available at https://vscode.$SMALLWEB_DOMAIN. Once you access it, you will be prompted for a password.
 
 The password is: $VSCODE_PASSWORD
-
 EOF

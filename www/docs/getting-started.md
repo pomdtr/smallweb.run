@@ -8,7 +8,7 @@ Smallweb is obsessed with scaling down. No dev server or a build is required, an
 
 ## Live Demo
 
-A shared public instance of smallweb is available at [smallweb.live](https://smallweb.live). You can use it to test smallweb without setting up your own instance.
+A shared public instance of smallweb is available at [demo.smallweb.live](https://demo.smallweb.live). You can use it to test smallweb without setting up your own instance.
 
 Please ping me either on [bluesky](https://bsky.app/profile/pomdtr.me) or [discord](https://discord.gg/BsgQK42qZe) if the demo is down.
 

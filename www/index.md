@@ -13,13 +13,13 @@ head:
       'meta',
       {
         property: 'og:description',
-        content: 'A self-hostable cloud contained in a single directory.',
+        content: 'A personal cloud contained in a single directory.',
       }
     ]
 hero:
   name: "Smallweb"
   text: "Your internet folder"
-  tagline: A self-hostable cloud contained in a single directory.
+  tagline: A personal cloud contained in a single directory.
   image:
     light: /icon-light.svg
     dark: /icon-dark.svg
@@ -29,11 +29,8 @@ hero:
       text: Get Started
       link: /docs/getting-started
     - theme: alt
-      text: Live Demo
-      link: https://smallweb.live
-    - theme: alt
-      text: View on GitHub
-      link: https://github.com/pomdtr/smallweb
+      text: Open Demo
+      link: https://demo.smallweb.live
 
 features:
   - icon: 📂
