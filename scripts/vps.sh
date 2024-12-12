@@ -28,42 +28,16 @@ sleep 2
 printf "\n📦 Installing Deno...\n\n"
 
 curl -fsSL https://deno.land/install.sh | sh -s -- --yes --no-modify-path
-chmod +x "$HOME/.deno/bin/deno"
 printf "\n✅  Deno installed successfully!\n\n"
 sleep 2
 
 printf "\n⬇️ Installing smallweb...\n\n"
 sleep 2
-curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.1' | sh
+curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.4&target_dir=/usr/local/bin' | sh
 
-printf "\n🔧 Configuring Smallweb Service...\n\n"
+printf "\n🔧 Creating default smallweb directory...\n"
 
-SMALLWEB_DIR=$HOME/smallweb
-# add service to systemd
-cat <<EOF > /etc/systemd/system/smallweb.service
-[Unit]
-Description=Smallweb
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=$HOME/.local/bin/smallweb up --cron --on-demand-tls
-Restart=always
-RestartSec=10
-Environment="HOME=$HOME"
-Environment="SMALLWEB_DIR=$SMALLWEB_DIR"
-Environment="DENO_EXEC_PATH=$HOME/.deno/bin/deno"
-
-[Install]
-WantedBy=default.target
-EOF
-
-systemctl daemon-reload
-systemctl enable smallweb
-systemctl restart smallweb
-
-printf "\n🔧 Creating default smallweb directory...\n\n"
-
+SMALLWEB_DIR="$HOME/smallweb"
 mkdir -p "$SMALLWEB_DIR/.smallweb"
 cat <<EOF > "$SMALLWEB_DIR/.smallweb/config.json"
 {
@@ -107,6 +81,8 @@ const smallblog = new Smallblog()
 
 export default smallblog
 EOF
+
+smallweb --dir "$SMALLWEB_DIR" service install -- --on-demand-tls
 
 printf "\n✅ Smallweb installed successfully!\n\n"
 sleep 2
