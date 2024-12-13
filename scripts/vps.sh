@@ -3,12 +3,6 @@
 
 set -eo pipefail
 
-IPV4=$(curl -s https://api.ipify.org)
-IPV6=$(curl -s https://api6.ipify.org)
-
-DEFAULT_DOMAIN="${IPV4//./-}.sslip.io"
-SMALLWEB_DOMAIN=${1:-$DEFAULT_DOMAIN}
-
 printf "\n🔧 Installing required packages...\n\n"
 
 if [ -f /etc/debian_version ]; then
@@ -37,6 +31,11 @@ curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.6&target_dir=/usr/local/bin
 
 printf "\n🔧 Creating default smallweb directory...\n\n"
 
+IPV4=$(curl -s https://api.ipify.org)
+IPV6=$(curl -s https://api6.ipify.org)
+
+DEFAULT_DOMAIN="${IPV4//./-}.sslip.io"
+SMALLWEB_DOMAIN=${1:-$DEFAULT_DOMAIN}
 SMALLWEB_DIR="$HOME/smallweb"
 mkdir -p "$SMALLWEB_DIR/.smallweb"
 cat <<EOF > "$SMALLWEB_DIR/.smallweb/config.json"
