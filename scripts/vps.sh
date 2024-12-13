@@ -47,7 +47,7 @@ cat <<EOF > "$SMALLWEB_DIR/.smallweb/config.json"
 }
 EOF
 
-VSCODE_PASSWORD=$(head -c 16 /dev/urandom | base64 | tr -d '\n')
+VSCODE_PASSWORD=$(cat /proc/sys/kernel/random/uuid)
 
 mkdir -p "$SMALLWEB_DIR/www"
 cat <<EOF > "$SMALLWEB_DIR/www/index.md"
