@@ -14,4 +14,5 @@ If you want to view console logs instead, you can use the `--console` flag.
 smallweb logs --console
 ```
 
-> ![WARNING] The `smallweb logs` command should be run on the machine where the smallweb evaluation server is running. If you are using a VPS, you should use the `ssh` command to connect to the server and run the `smallweb logs` command.
+> [!WARNING] Run the `smallweb logs` command on the machine where the smallweb server is running.
+> If you're using a VPS, you should use `ssh <remote> smallweb logs` to view the logs.

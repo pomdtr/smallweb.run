@@ -1,18 +1,13 @@
 #!/bin/bash
-# usage: curl -fsSL https://scripts.smallweb.run/vps.sh | sh -s -- <domain>
+# usage: curl -fsSL https://scripts.smallweb.run/vps.sh | bash -s <domain>
 
-set -e
-
+set -eo pipefail
 
 IPV4=$(curl -s https://api.ipify.org)
 IPV6=$(curl -s https://api6.ipify.org)
 
-DEFAULT_DOMAIN="${IPV4//./-}.xip.smallweb.live"
-
-SMALLWEB_DOMAIN=$1
-if [ -z "$SMALLWEB_DOMAIN" ]; then
-    SMALLWEB_DOMAIN=$DEFAULT_DOMAIN
-fi
+DEFAULT_DOMAIN="${IPV4//./-}.sslip.io"
+SMALLWEB_DOMAIN=${1:-$DEFAULT_DOMAIN}
 
 printf "\n🔧 Installing required packages...\n\n"
 
@@ -38,7 +33,7 @@ sleep 2
 
 printf "\n⬇️ Installing smallweb...\n\n"
 sleep 2
-curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.4&target_dir=/usr/local/bin' | sh
+curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.6&target_dir=/usr/local/bin' | sh
 
 printf "\n🔧 Creating default smallweb directory...\n\n"
 
@@ -89,14 +84,11 @@ EOF
 
 smallweb --dir "$SMALLWEB_DIR" service install -- --cron --on-demand-tls
 
-printf "\n✅ Smallweb installed successfully!\n"
-sleep 2
-
 printf "\n🎉 Smallweb is now installed and running!\n\n"
 
 if [ "$SMALLWEB_DOMAIN" == "$DEFAULT_DOMAIN" ]; then
     printf "🌐 Visit https://%s in your browser to see your first smallweb site.\n" "$DEFAULT_DOMAIN"
-    printf "🚨 Warning: You are using the default domain. Please set your own domain to use Smallweb in production.\n"
+    printf "🚨 Warning: You are using the default domain. Please set your own domain to use Smallweb in production.\n\n"
 else
     cat <<EOF
 🌐 Now set your domain's A and AAAA records to your server's IP addresses:
@@ -115,4 +107,5 @@ cat <<EOF
 An editor is available at https://vscode.$SMALLWEB_DOMAIN. Once you access it, you will be prompted for a password.
 
 The password is: $VSCODE_PASSWORD
+
 EOF

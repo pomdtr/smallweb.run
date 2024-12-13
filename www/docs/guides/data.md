@@ -57,4 +57,4 @@ db.close();
 
 ## Using an external database
 
-Of course, you can also use an external service to store your data. I personally recommand [Turso](https://turso.tech/), which has a generous free tier.
+Of course, you can also use an external service to store your data. I personally recommend [Turso](https://turso.tech/), which has a generous free tier.

@@ -213,7 +213,7 @@
       "containerId": null,
       "originalText": "Your turn",
       "lineHeight": 1.25,
-      "baseline": 33
+      "baseline": 31.500000000000014
     },
     {
       "type": "ellipse",
@@ -366,7 +366,7 @@
       "containerId": null,
       "originalText": "Not fair :/",
       "lineHeight": 1.25,
-      "baseline": 18
+      "baseline": 17
     },
     {
       "type": "ellipse",
@@ -1356,8 +1356,8 @@
     },
     {
       "type": "freedraw",
-      "version": 27,
-      "versionNonce": 281429502,
+      "version": 34,
+      "versionNonce": 354617373,
       "isDeleted": false,
       "id": "QBSSN4YtkOMCirVDebsrH",
       "fillStyle": "solid",
@@ -1366,8 +1366,8 @@
       "roughness": 1,
       "opacity": 100,
       "angle": 0,
-      "x": -650.7026101568424,
-      "y": -2609.1059257398747,
+      "x": -1012.5750012929389,
+      "y": -2641.2723605075275,
       "strokeColor": "#1e1e1e",
       "backgroundColor": "transparent",
       "width": 27,
@@ -1377,7 +1377,7 @@
       "frameId": null,
       "roundness": null,
       "boundElements": [],
-      "updated": 1734031244151,
+      "updated": 1734044829578,
       "link": null,
       "locked": false,
       "points": [
