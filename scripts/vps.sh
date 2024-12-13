@@ -6,11 +6,11 @@ set -eo pipefail
 printf "\n🔧 Installing required packages...\n\n"
 
 if [ -f /etc/debian_version ]; then
-    apt update -qq && apt install -y -qq curl unzip
+    apt update -qq && apt install -y -qq unzip
 elif [ -f /etc/redhat-release ]; then
-    yum update -q && yum install -y -q curl unzip
+    yum update -q && yum install -y -q unzip
 elif [ -f /etc/arch-release ]; then
-    pacman -Syu --noconfirm --quiet curl unzip
+    pacman -Syu --noconfirm --quiet unzip
 else
     printf "❌ Unsupported distribution\n"
     exit 1
