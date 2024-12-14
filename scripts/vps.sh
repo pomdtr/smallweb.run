@@ -57,9 +57,9 @@ su smallweb -c "smallweb --dir $SMALLWEB_DIR init $SMALLWEB_DOMAIN"
 
 cat <<EOF > /etc/systemd/system/smallweb.service
 [Unit]
-Description=Smallweb
+Description=Smallweb Service
 After=network.target
-
+Wants=network-online.target
 
 [Service]
 Type=simple
@@ -68,10 +68,15 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 User=smallweb
 Restart=always
 RestartSec=10
-Environment="SMALLWEB_DIR=/home/smallweb/smallweb"
 
 [Install]
-WantedBy=default.target
+WorkingDirectory=/home/smallweb
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=smallweb
+
+[Install]
+WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
