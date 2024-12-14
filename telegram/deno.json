@@ -1,14 +1,13 @@
 {
-    "name": "@pomdtr/smallweb-telegram-cli",
-    "version": "0.0.1",
+    "name": "@pomdtr/smallweb-telegram-bot",
+    "version": "0.1.0",
     "license": "MIT",
-    "lock": false,
     "exports": {
         ".": "./mod.ts"
     },
     "publish": {
         "include": [
-            "mod.ts",
+            "pkg",
             "README.md"
         ]
     }
