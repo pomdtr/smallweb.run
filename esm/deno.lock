@@ -7,6 +7,8 @@
     "jsr:@denosaurs/emoji@0.3": "0.3.1",
     "jsr:@smallweb/file-server@0.5.5": "0.5.5",
     "jsr:@smallweb/file-server@0.5.7": "0.5.7",
+    "jsr:@smallweb/file-server@0.6.1": "0.6.1",
+    "jsr:@smallweb/file-server@0.6.3": "0.6.3",
     "jsr:@std/assert@0.223": "0.223.0",
     "jsr:@std/assert@~0.218.2": "0.218.2",
     "jsr:@std/bytes@~0.218.2": "0.218.2",
@@ -97,6 +99,31 @@
         "jsr:@deno/gfm",
         "jsr:@std/front-matter",
         "jsr:@std/fs@^1.0.6",
+        "jsr:@std/http@^1.0.11",
+        "jsr:@std/path@^1.0.6",
+        "npm:prismjs"
+      ]
+    },
+    "@smallweb/file-server@0.6.1": {
+      "integrity": "3982e3e80a2606b4c538214c206b43018fb7fe76b07e2d75b207330bdb0fc4a1",
+      "dependencies": [
+        "jsr:@deno/emit",
+        "jsr:@deno/gfm",
+        "jsr:@std/front-matter",
+        "jsr:@std/fs@^1.0.6",
+        "jsr:@std/http@^1.0.11",
+        "jsr:@std/path@^1.0.6",
+        "npm:prismjs"
+      ]
+    },
+    "@smallweb/file-server@0.6.3": {
+      "integrity": "6b31a81574656387c795a19b567e1dc3c76af58df60d9a57a53faf5fd74f967c",
+      "dependencies": [
+        "jsr:@deno/emit",
+        "jsr:@deno/gfm",
+        "jsr:@std/front-matter",
+        "jsr:@std/fs@^1.0.6",
+        "jsr:@std/html@^1.0.3",
         "jsr:@std/http@^1.0.11",
         "jsr:@std/path@^1.0.6",
         "npm:prismjs"

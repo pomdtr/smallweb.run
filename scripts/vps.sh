@@ -1,9 +1,9 @@
-#!/bin/bash
-# usage: curl -fsSL https://scripts.smallweb.run/vps.sh | bash -s <domain>
+#!/bin/sh
+# usage: curl -fsSL https://scripts.smallweb.run/vps.sh | sh -s <domain>
 
-set -eo pipefail
+set -e
 
-if [ "$EUID" -ne 0 ]; then
+if [ "$(id -u)" -ne 0 ]; then
     printf "❌ This script must be run as root\n"
     exit 1
 fi
@@ -24,32 +24,63 @@ fi
 printf "\n✅ Required packages installed successfully!\n"
 sleep 2
 
+useradd --system --user-group --create-home --shell "$(which bash)" smallweb
+
+# move the authorized_keys file to the smallweb user
+if [ -f /root/.ssh/authorized_keys ]; then
+    mkdir -p /home/smallweb/.ssh
+    cp /root/.ssh/authorized_keys /home/smallweb/.ssh/authorized_keys
+    chown -R smallweb:smallweb /home/smallweb/.ssh
+fi
+
 printf "\n📦 Installing Deno...\n\n"
 
-curl -fsSL https://deno.land/install.sh | sh -s -- --yes --no-modify-path
+su smallweb -c 'curl -fsSL https://deno.land/install.sh | sh -s -- --yes'
 printf "\n✅  Deno installed successfully!\n\n"
 sleep 2
 
 printf "\n⬇️ Installing smallweb...\n\n"
 sleep 2
-curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.7&target_dir=/usr/local/bin' | sh
+curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.7' | sh
 
 printf "\n🔧 Creating default smallweb directory...\n\n"
 
 IPV4=$(curl -s https://api.ipify.org)
 IPV6=$(curl -s https://api6.ipify.org)
 
-DEFAULT_DOMAIN="${IPV4//./-}.sslip.io"
+DEFAULT_DOMAIN=$(printf "%s" "$IPV4" | tr '.' '-').sslip.io
 SMALLWEB_DOMAIN=${1:-$DEFAULT_DOMAIN}
-SMALLWEB_DIR="$HOME/smallweb"
+SMALLWEB_DIR="/home/smallweb/smallweb"
 
-smallweb --dir "$SMALLWEB_DIR" init "$SMALLWEB_DOMAIN"
+# shellcheck disable=SC2016
+su smallweb -c "smallweb --dir $SMALLWEB_DIR init $SMALLWEB_DOMAIN"
 
-smallweb --dir "$SMALLWEB_DIR" service install -- --cron --on-demand-tls
+cat <<EOF > /etc/systemd/system/smallweb.service
+[Unit]
+Description=Smallweb
+After=network.target
+
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/smallweb up --cron --on-demand-tls
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+User=smallweb
+Restart=always
+RestartSec=10
+Environment="SMALLWEB_DIR=/home/smallweb/smallweb"
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl daemon-reload
+systemctl enable smallweb
+systemctl start smallweb
 
 printf "\n🎉 Smallweb is now installed and running!\n\n"
 
-if [ "$SMALLWEB_DOMAIN" == "$DEFAULT_DOMAIN" ]; then
+if [ "$SMALLWEB_DOMAIN" = "$DEFAULT_DOMAIN" ]; then
     printf "🌐 Visit https://%s in your browser to see your first smallweb site.\n" "$DEFAULT_DOMAIN"
     printf "🚨 Warning: You are using the default domain. Please set your own domain to use Smallweb in production.\n\n"
 else
@@ -61,7 +92,6 @@ AAAA Record: $SMALLWEB_DOMAIN -> $IPV6
 A Record: *.$SMALLWEB_DOMAIN -> $IPV4
 AAAA Record: *.$SMALLWEB_DOMAIN -> $IPV6
 
-cat
 Once you've set your domain's DNS records, visit https://$SMALLWEB_DOMAIN in your browser to see your first smallweb site.
 EOF
 fi

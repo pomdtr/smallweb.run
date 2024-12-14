@@ -56,6 +56,13 @@ main() {
   probe_os
 
   INSTALL_DIRECTORY="{{ target_dir }}"
+  if [ -z "$INSTALL_DIRECTORY" ]; then
+    if [ "$(id -u)" -eq 0 ]; then
+      INSTALL_DIRECTORY="/usr/local/bin"
+    else
+      INSTALL_DIRECTORY="$HOME/.local/bin"
+    fi
+  fi
   install_smallweb_cli
   printf "\n${bright_blue}Smallweb CLI has been installed!${reset}\n"
   command -v smallweb >/dev/null 2>&1 || printf "\n${bright_blue}Please add $INSTALL_DIRECTORY to your \$PATH${reset}\n"

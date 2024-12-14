@@ -32,10 +32,8 @@ export default {
             version = version.slice(1);
         }
 
-        const target_dir = url.searchParams.get("target_dir") ||
-            "${XDG_BIN_HOME:-$HOME/.local/bin}";
         const env = vento();
-        const script = await env.run("install.sh", { version, target_dir });
+        const script = await env.run("install.sh", { version, target_dir: url.searchParams.get("target_dir") });
         return new Response(script.content, {
             headers: { "Content-Type": "text/plain" },
         });
