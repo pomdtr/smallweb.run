@@ -10,6 +10,7 @@
         "editor",
         "logs",
         "ray",
+        "webdav",
         "telegram",
         "vscode",
         "vscode-dev"

@@ -3,18 +3,26 @@ import * as http from "@std/http";
 import type { FetchFn } from "@smallweb/types"
 
 export type CodejarOptions = {
-  rootDir?: string;
+  fsRoot?: string;
+  urlRoot?: string;
 };
 
 export class Codejar {
   private rootDir
+  private urlRoot
+
   constructor(options: CodejarOptions = {}) {
-    this.rootDir = path.resolve(options.rootDir || ".");
+    this.rootDir = path.resolve(options.fsRoot || ".");
+    this.urlRoot = options.urlRoot || "/";
   }
 
   fetch: FetchFn = async (req) => {
     const url = new URL(req.url);
-    const filepath = path.join(this.rootDir, url.pathname);
+    if (!url.pathname.startsWith(this.urlRoot)) {
+      return new Response("Not found", { status: 404 });
+    }
+
+    const filepath = path.join(this.rootDir, url.pathname.slice(this.urlRoot.length))
     const stat = await Deno.stat(filepath).catch(() => null);
     if (!stat) {
       return new Response("File not found", { status: 404 });
@@ -30,10 +38,7 @@ export class Codejar {
     }
 
     if (req.method == "POST") {
-      await Deno.writeTextFile(
-        path.join(this.rootDir, url.pathname),
-        await req.text(),
-      );
+      await Deno.writeTextFile(filepath, await req.text());
       return new Response("File created", { status: 200 });
     }
 
@@ -42,9 +47,7 @@ export class Codejar {
     }
 
     if (req.headers.get("accept") == "text/plain") {
-      const content = await Deno.readTextFile(
-        path.join(this.rootDir, url.pathname),
-      );
+      const content = await Deno.readTextFile(filepath);
       return new Response(content, {
         headers: {
           "Content-Type": "text/plain",
