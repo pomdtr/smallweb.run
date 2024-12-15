@@ -9,7 +9,11 @@ const codejar = new Codejar({
 export default {
   fetch(req: Request) {
     const url = new URL(req.url)
-    if (url.pathname == "/edit" || url.pathname.startsWith('/edit/')) {
+    if (url.pathname == "/edit") {
+      return Response.redirect(new URL("/edit/slides.md", url))
+    }
+
+    if (url.pathname.startsWith('/edit/')) {
       return codejar.fetch(req)
     }
 
