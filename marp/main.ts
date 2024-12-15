@@ -1,6 +1,5 @@
-import { Marp } from 'npm:@marp-team/marp-core'
-
 import { Codejar } from "jsr:@pomdtr/smallweb-codejar@0.6.1"
+import { Marp } from 'npm:@marp-team/marp-core'
 
 const codejar = new Codejar({
   fsRoot: "./data",
