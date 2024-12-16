@@ -1,5 +1,11 @@
 # VPS / Home Server
 
+This page will guide you through the process of hosting smallweb on a VPS. Any VPS provider will work, but if you're looking for a recommendation, I had a good experience with [Hetzner](https://www.hetzner.com/cloud).
+
+If you prefer a video tutorial, just click on the image below.
+
+[![video thumbnail](./vps.png)](https://videos.smallweb.run/watch/14eb68b3-6433-49e3-8256-c06482533031)
+
 ## Installation
 
 To install smallweb on a new VPS, just use the installation script:

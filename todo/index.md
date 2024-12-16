@@ -1,6 +1,8 @@
-# Smallweb TODO
+---
+title: Smallweb TODO
+---
 
-thibault est docteur
+# Smallweb TODO
 
 This website list what's next for [smallweb](https://smallweb.run).
 
