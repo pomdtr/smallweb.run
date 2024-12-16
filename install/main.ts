@@ -1,15 +1,16 @@
 import { serveFile } from "jsr:@std/http@1.0.12/file-server"
 import vento from "jsr:@vento/vento@1.12.10";
 
+const { GITHUB_TOKEN } = Deno.env.toObject();
+
 function fetchLatestRelease() {
     const url = new URL("https://api.github.com/repos/pomdtr/smallweb/releases/latest");
     return fetch(url, {
         headers: {
-            Authorization: `Bearer ${Deno.env.get("GITHUB_TOKEN")}`,
+            Authorization: `Bearer ${GITHUB_TOKEN}`,
         },
     });
 }
-
 
 export default {
     async fetch(req: Request) {
@@ -42,7 +43,7 @@ export default {
         const env = vento();
         const script = await env.run("install.sh", { version, target_dir: url.searchParams.get("target_dir") });
         return new Response(script.content, {
-            headers: { "Content-Type": "text/plain" },
+            headers: { "Content-Type": "text/plain; charset=utf-8" },
         });
     },
 };
