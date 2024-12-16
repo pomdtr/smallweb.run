@@ -29,7 +29,7 @@ Then update the `domain` field from the `.smallweb/config.json` file to `example
 
 ## Accessing your smallweb workspace locally
 
-First, install deno, smallweb and mutagen to your local machine.
+First, install deno, smallweb and mutagen to your local machine. You can do this using Homebrew.
 
 ```bash
 brew install deno
@@ -49,5 +49,7 @@ mutagen daemon register
 Finally, run the following command to sync your smallweb directory to your local machine.
 
 ```bash
-smallweb --dir <local-dir> sync <remote> <remote-dir>
+smallweb --dir ~/smallweb sync <remote> /home/smallweb/smallweb
 ```
+
+You should now be able to edit your smallweb workspace from `~/smallweb` on your local machine.

@@ -41,7 +41,7 @@ sleep 2
 
 printf "\n⬇️ Installing smallweb...\n\n"
 sleep 2
-curl -fsSL 'https://install.smallweb.run?v=0.19.0-rc.7' | sh
+curl -fsSL 'https://install.smallweb.run' | sh
 
 printf "\n🔧 Creating default smallweb directory...\n\n"
 

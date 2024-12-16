@@ -15,7 +15,9 @@ export default {
     async fetch(req: Request) {
         const url = new URL(req.url);
         if (url.pathname === "/vps.sh") {
-            return serveFile(req, "./vps.sh");
+            const res = await serveFile(req, "./vps.sh");
+            res.headers.set("Content-Type", "text/plain; charset=utf-8");
+            return res;
         }
 
         let version: string
