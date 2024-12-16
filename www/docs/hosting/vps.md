@@ -1,55 +1,53 @@
 # VPS / Home Server
 
-If you're using a Debian-based Server, you can follow these steps to setup smallweb.
+## Installation
 
-These steps will also work on other distributions, but you may need to adjust the package manager commands (ex: `dnf install -y` instead of `apt install -y` for Fedora).
+To install smallweb on a new VPS, just use the installation script:
 
-> [!TIP] If you want to host multiple smallweb instances, you should use on user per instance.
-> A good practice is to use the smallweb domain as the username (ex: smallweb.run and pomdtr.me).
-
-```sh
-# connect to your server as root
-ssh <root@your-server-ip>
-
-# install some packages required for smallweb
-apt update && apt install -y curl unzip
-
-# create user with homedir and default shell
-useradd --system --user-group --create-home --shell $(which bash) smallweb
-
-# run user services on login
-loginctl enable-linger smallweb
-
-# add your public key to the smallweb user
-mkdir -p /home/smallweb/.ssh
-cp -r /root/.ssh/authorized_keys /home/smallweb/.ssh/authorized_keys
-chown -R smallweb:smallweb /home/smallweb/.ssh
+```bash
+curl -sSL https://install.smallweb.run/vps.sh | sh
 ```
 
-At this point, disconnect from the ssh session and switch to the `smallweb` user:
+You'll smallweb instance will be accessible through a [sslip.io](https://sslip.io) domain. No need to configure DNS records to get started!
 
-> [!WARNING] Do not use su!
-> It will prevent you from installing the service.
+## Wire your own domain
 
-```sh
-# connect to your server as smallweb
-ssh smallweb@<your-server-ip>
+If your domain is `example.com`, you'll need to set the following DNS records:
 
-# install deno
-curl -fsSL https://deno.land/install.sh | sh # install deno
+- `A` record for `example.com` pointing to your server's IPV4 address.
+- `AAAA` record for `example.com` pointing to your server's IPv6 address.
+- `A` record for `*.example.com` pointing to your server's IPV4 address.
+- `AAAA` record for `*.example.com` pointing to your server's IPv6 address.
 
-# install smallweb
-curl -sSfL https://install.smallweb.run | sh # install smallweb
+Then update the `domain` field from the `.smallweb/config.json` file to `example.com`.
 
-# start the smallweb service
-/home/smallweb/.local/bin/smallweb service install
+```json
+{
+    "domain": "example.com"
+}
 ```
 
-To make your service accessible from the internet, you have multiple options:
+## Accessing your smallweb workspace locally
 
-1. setup a reverse proxy on port 443, mapping http requests to the smallweb service port (default 7777)
-2. using cloudflare tunnel (see [cloudflare setup](./cloudflare/index.md))
+First, install deno, smallweb and mutagen to your local machine.
 
-## Syncing files using mutagen
+```bash
+brew install deno
+brew install pomdtr/tap/smallweb
+brew install mutagen-io/mutagen/mutagen
+```
 
-Make sure to follow the [Syncing files using mutagen](../guides/file-sync.md) guide to keep your files in sync between your development machine and the server.
+Then, make sure mutagen is running by running the following command.
+
+```bash
+mutagen daemon start
+
+# optional: start the mutagen daemon on boot
+mutagen daemon register
+```
+
+Finally, run the following command to sync your smallweb directory to your local machine.
+
+```bash
+smallweb --dir <local-dir> sync <remote> <remote-dir>
+```

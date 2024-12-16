@@ -15,6 +15,7 @@ Then, run the following command to sync your files:
 ```bash
 # enable the mutagen daemon
 mutagen daemon register
+mutagen daemon start
 
 # sync your local smallweb dir with /home/smallweb/smallweb on my-ssh-server
 smallweb sync my-ssh-server /home/smallweb/smallweb

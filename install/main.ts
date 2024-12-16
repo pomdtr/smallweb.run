@@ -1,3 +1,4 @@
+import { serveFile } from "jsr:@std/http@1.0.12/file-server"
 import vento from "jsr:@vento/vento@1.12.10";
 
 function fetchLatestRelease() {
@@ -13,6 +14,10 @@ function fetchLatestRelease() {
 export default {
     async fetch(req: Request) {
         const url = new URL(req.url);
+        if (url.pathname === "/vps.sh") {
+            return serveFile(req, "./vps.sh");
+        }
+
         let version: string
         if (url.searchParams.get("version")) {
             version = url.searchParams.get("version")!;
