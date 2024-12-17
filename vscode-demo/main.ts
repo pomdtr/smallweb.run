@@ -1,4 +1,4 @@
-import { VSCode } from "jsr:@smallweb/vscode@0.0.9"
+import { VSCode } from "jsr:@smallweb/vscode@0.1.7"
 
 const vscode = new VSCode({
     rootDir: "./data"

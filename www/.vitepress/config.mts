@@ -99,7 +99,7 @@ export default defineConfig({
               link: "/docs/guides/auth"
             },
             {
-              text: "Permmisions",
+              text: "Permisions",
               link: "/docs/guides/permissions"
             },
             {
