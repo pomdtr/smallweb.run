@@ -1,9 +1,11 @@
 import { JSONFilePreset } from "npm:lowdb@7.0.1/node";
 import { serveFile } from "jsr:@std/http";
 import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.2";
-import { ValTown } from "npm:@valtown/sdk@0.23.0";
+import { Resend } from "npm:resend@4.0.1"
 import * as cli from "jsr:@std/cli";
 
+const { EMAIL, RESEND_API_KEY } = Deno.env.toObject();
+const resend = new Resend(RESEND_API_KEY);
 type Data = {
     emails: string[];
 };
@@ -22,8 +24,9 @@ const handleRequest = async (req: Request) => {
         });
 
         try {
-            const vt = new ValTown();
-            await vt.emails.send({
+            await resend.emails.send({
+                from: "cloud.smallweb.run <cloud@smallweb.run>",
+                to: EMAIL,
                 subject: "A new user has joined the waitlist!",
                 text: `A new user with the email ${email} has joined the waitlist!`,
             })
