@@ -32,7 +32,7 @@ A port of Excalidraw for smallweb. Files are stored in the app `data` folder.
 
 ### Demo
 
-<https://excalidraw.smallweb.run>
+<https://excalidraw-demo.smallweb.run>
 
 ```ts
 // ~/smallweb/excalidraw/main.ts

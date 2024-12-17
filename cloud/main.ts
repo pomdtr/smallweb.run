@@ -25,7 +25,7 @@ const handleRequest = async (req: Request) => {
 
         try {
             await resend.emails.send({
-                from: "cloud.smallweb.run <cloud@smallweb.run>",
+                from: "Smallweb Cloud <cloud@smallweb.run>",
                 to: EMAIL,
                 subject: "A new user has joined the waitlist!",
                 text: `A new user with the email ${email} has joined the waitlist!`,
