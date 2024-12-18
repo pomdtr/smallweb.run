@@ -6,6 +6,7 @@ import { contentType } from "@std/media-types"
 
 export type WebdavConfig = {
     rootDir?: string;
+    verifyUser?: (username: string, password: string) => boolean | Promise<boolean>;
 };
 
 export class Webdav {
