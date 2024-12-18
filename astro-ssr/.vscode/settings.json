@@ -1,5 +1,0 @@
-{
-    "deno.enablePaths": [
-        "main.ts"
-    ]
-}
