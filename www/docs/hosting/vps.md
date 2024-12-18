@@ -1,4 +1,4 @@
-# VPS / Home Server
+# VPS
 
 This page will guide you through the process of hosting smallweb on a VPS. Any VPS provider will work, but if you're looking for a recommendation, I had a good experience with [Hetzner](https://www.hetzner.com/cloud).
 
