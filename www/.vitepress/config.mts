@@ -37,7 +37,7 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Docs', link: '/docs/getting-started' },
-      { text: 'Examples', link: '/examples' },
+      { text: 'Apps', link: 'https://github.com/topics/smallweb-app' },
       { text: 'Blog', link: 'https://blog.smallweb.run' },
     ],
     logo: {
@@ -60,7 +60,7 @@ export default defineConfig({
           ]
         },
         {
-          text: "Guides",
+          text: "Concepts",
           items: [
             {
               text: "Routing",
@@ -99,7 +99,7 @@ export default defineConfig({
               link: "/docs/guides/auth"
             },
             {
-              text: "Permisions",
+              text: "Permissions",
               link: "/docs/guides/permissions"
             },
             {
