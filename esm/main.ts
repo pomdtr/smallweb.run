@@ -1,16 +1,25 @@
 const repo = "pomdtr/smallweb.run"
 
+const esmCache = await caches.open("esm")
+
 export default {
-    fetch(req: Request) {
+    async fetch(req: Request) {
         const url = new URL(req.url)
         if (url.pathname === "/") {
-            return Response.redirect(new URL("/esm/main.ts", req.url))
+            return Response.redirect(new URL("/latest/esm/main.ts", req.url))
         }
 
-        if (url.searchParams.has("v")) {
-            return fetch(`https://raw.githubusercontent.com/${repo}/${url.searchParams.get("v")}${url.pathname}`)
+        const [_, version, ...parts] = url.pathname.split("/")
+        const match = await esmCache.match(req)
+        if (match) {
+            return match
         }
 
-        return fetch(`https://raw.githubusercontent.com/${repo}/refs/heads/main${url.pathname}`)
+        const resp = await fetch(`https://raw.githubusercontent.com/${repo}/${version}/${parts.join("/")}`)
+        if (resp.ok) {
+            esmCache.put(req, resp.clone())
+        }
+
+        return resp
     }
 }
