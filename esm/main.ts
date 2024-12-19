@@ -6,10 +6,10 @@ export default {
     async fetch(req: Request) {
         const url = new URL(req.url)
         if (url.pathname === "/") {
-            return Response.redirect(new URL("/latest/esm/main.ts", req.url))
+            return new Response(`Usage: ${url.origin}/<sha>/<path>`)
         }
 
-        const [_, version, ...parts] = url.pathname.split("/")
+        const [version, ...parts] = url.pathname.slice(1).split("/")
         const match = await esmCache.match(req)
         if (match) {
             return match
@@ -17,7 +17,7 @@ export default {
 
         const resp = await fetch(`https://raw.githubusercontent.com/${repo}/${version}/${parts.join("/")}`)
         if (resp.ok) {
-            esmCache.put(req, resp.clone())
+            await esmCache.put(req, resp.clone())
         }
 
         return resp

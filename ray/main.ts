@@ -1,5 +1,5 @@
 import { Ray } from "./mod.ts";
-import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.2";
+import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.13";
 
 const { SMALLWEB_DIR } = Deno.env.toObject();
 
