@@ -1,4 +1,4 @@
-import { VSCode } from "jsr:@smallweb/vscode@0.1.9"
+import { VSCode } from "jsr:@smallweb/vscode@0.1.10"
 
 const vscode = new VSCode({
     rootDir: Deno.env.get("SMALLWEB_DIR")

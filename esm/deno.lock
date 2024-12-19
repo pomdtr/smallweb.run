@@ -360,5 +360,13 @@
     "source-map-js@1.2.1": {
       "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
     }
+  },
+  "remote": {
+    "https://esm.smallweb.run/discord/main.ts": "9201faaf63b68f925ad7738cdfa8db8cd9fa1bcbd58da3ba19148c31c29580ff"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/media-types@^1.1.0"
+    ]
   }
 }

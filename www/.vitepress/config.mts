@@ -31,7 +31,6 @@ export default defineConfig({
     ["link", { rel: "shortcut icon", href: "/favicon.ico" }],
     ["link", { rel: "apple-touch-icon", sizes: "180x180", href: "/apple-touch-icon.png" }],
     ["meta", { name: "apple-mobile-web-app-title", content: "Smallweb" }],
-    ["script", { type: "module", src: "https://esm.smallweb.run/dot-shortcut.ts" }],
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
