@@ -1,5 +1,6 @@
 import { contentType } from "jsr:@std/media-types"
 import { extname } from "jsr:@std/path"
+import { transpile } from "jsr:@deno/emit";
 
 const repo = "pomdtr/smallweb.run"
 
@@ -43,6 +44,23 @@ export default {
             return match
         }
 
+
+        const extension = extname(url.pathname)
+        if (extension === ".ts") {
+            const rawUrl = new URL(`https://raw.githubusercontent.com/${repo}/${version}/${parts.join("/")}`)
+            const result = await transpile(rawUrl)
+            const code = await result.get(rawUrl.href)
+            const resp = new Response(code, {
+                headers: {
+                    "Content-Type": "application/javascript",
+                    "Access-Control-Allow-Origin": "*"
+                }
+            })
+
+            await esmCache.put(req, resp.clone())
+            return resp
+        }
+
         const resp = await fetch(`https://raw.githubusercontent.com/${repo}/${version}/${parts.join("/")}`)
         if (!resp.ok) {
             return new Response(`Failed to fetch file: ${resp.statusText}`, {
@@ -52,7 +70,7 @@ export default {
 
         const res = new Response(resp.body, {
             headers: {
-                "Content-Type": contentType(extname(url.pathname)) || "text/plain",
+                "Content-Type": contentType(extension) || "text/plain",
                 "Access-Control-Allow-Origin": "*"
             }
         })
