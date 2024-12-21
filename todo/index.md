@@ -4,8 +4,7 @@ favicon: https://icons.smallweb.run/smallweb.svg
 head:
   - tag: script
     attrs:
-      src: https://esm.smallweb.run/a197faf/scripts/dot-shortcut.js
-      type: module
+      src: https://esm.smallweb.run/f76f35c/scripts/dot-shortcut.js
       data-url: https://editor.smallweb.run/todo/index.md
 ---
 
