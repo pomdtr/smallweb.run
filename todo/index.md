@@ -1,9 +1,11 @@
 ---
 title: Smallweb TODO
+favicon: https://icons.smallweb.run/smallweb.svg
 head:
   - tag: script
-    attr:
-      src: https://raw.esm.sh/gh/pomdtr/smallweb.run@
+    attrs:
+      src: https://esm.smallweb.run/2919f5b/scripts/dot-shortcut.js?url=https://editor.smallweb.run/todo/index.md
+      type: module
 ---
 
 # Smallweb TODO
