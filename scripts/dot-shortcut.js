@@ -7,7 +7,8 @@ document.addEventListener("keydown", (event) => {
         return;
     }
 
-    const url = new URL(import.meta.url).searchParams.get("url");
+    const script = document.currentScript;
+    const url = script.getAttribute("data-url");
     if (!url) {
         throw new Error("URL not provided");
     }
