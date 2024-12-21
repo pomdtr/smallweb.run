@@ -16,7 +16,9 @@ export default {
         const [version, ...parts] = url.pathname.slice(1).split("/")
         if (version == "latest") {
             if (!GITHUB_TOKEN) {
-                return new Response("GITHUB_TOKEN is required for 'latest' version")
+                return new Response("GITHUB_TOKEN is required for fetching 'latest' version", {
+                    status: 500
+                })
             }
 
             const resp = await fetch(`https://api.github.com/repos/${repo}/commits`, {
@@ -26,7 +28,9 @@ export default {
             })
 
             if (!resp.ok) {
-                return resp
+                return new Response(`Failed to fetch commits: ${resp.statusText}`, {
+                    status: 500
+                })
             }
 
             const commits = await resp.json()
@@ -41,7 +45,9 @@ export default {
 
         const resp = await fetch(`https://raw.githubusercontent.com/${repo}/${version}/${parts.join("/")}`)
         if (!resp.ok) {
-            return resp
+            return new Response(`Failed to fetch file: ${resp.statusText}`, {
+                status: 404
+            })
         }
 
         const res = new Response(resp.body, {
