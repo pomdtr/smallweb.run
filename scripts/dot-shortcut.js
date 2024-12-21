@@ -1,3 +1,5 @@
+const currentScript = document.currentScript;
+
 document.addEventListener("keydown", (event) => {
     if (event.key != ".") {
         return;
@@ -7,8 +9,7 @@ document.addEventListener("keydown", (event) => {
         return;
     }
 
-    const script = document.currentScript;
-    const url = script.getAttribute("data-url");
+    const url = currentScript.getAttribute("data-url");
     if (!url) {
         throw new Error("URL not provided");
     }
