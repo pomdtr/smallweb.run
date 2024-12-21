@@ -46,7 +46,8 @@ export default {
 
         const res = new Response(resp.body, {
             headers: {
-                "Content-Type": contentType(extname(url.pathname)) || "text/plain"
+                "Content-Type": contentType(extname(url.pathname)) || "text/plain",
+                "Access-Control-Allow-Origin": "*"
             }
         })
         await esmCache.put(req, res.clone())
