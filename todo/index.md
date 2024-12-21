@@ -1,5 +1,9 @@
 ---
 title: Smallweb TODO
+head:
+  - tag: script
+    attr:
+      src: https://raw.esm.sh/gh/pomdtr/smallweb.run@
 ---
 
 # Smallweb TODO
@@ -10,4 +14,3 @@ This website list what's next for [smallweb](https://smallweb.run).
 
 - Loom alternative using the [MUX](https://www.mux.com/) api
 - Store based on the [`smallweb-app` github topic](https://github.com/topics/smallweb-app)
-
