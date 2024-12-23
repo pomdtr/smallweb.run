@@ -1,5 +1,3 @@
-Ah yes, I see the error in the documentation! Let me correct it to match the actual working command structure:
-
 # Syncing files using mutagen
 
 I recommend using [mutagen](https://mutagen.io) to sync your files between your development machine and the server.
@@ -47,7 +45,5 @@ smallweb sync debian@example.com /home/debian/smallweb
 ```
 
 From now on, each time you make a change to your files, they will be automatically synced to the server, and vice-versa.
-
-## Important note about git
 
 Your git repository will only be present on one machine. You can choose if you want to keep it on your development machine or on the server (syncing git repositories between machines [is not recommended](https://mutagen.io/documentation/synchronization/version-control-systems)).
