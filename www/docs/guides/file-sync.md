@@ -1,3 +1,5 @@
+Ah yes, I see the error in the documentation! Let me correct it to match the actual working command structure:
+
 # Syncing files using mutagen
 
 I recommend using [mutagen](https://mutagen.io) to sync your files between your development machine and the server.
@@ -31,21 +33,20 @@ mutagen daemon register
 The sync command follows this format:
 
 ```sh
-smallweb --dir ~/smallweb sync <remote-server> /home/<user>/smallweb
+smallweb sync <remote-server> /home/<user>/smallweb
 ```
 
 Where:
-- `~/smallweb` is your local directory
 - `<remote-server>` is your SSH connection string (e.g., `user@hostname`)
 - `/home/<user>/smallweb` is the path to smallweb on your server
 
 For example, if you connect to your server using `ssh debian@example.com`, your sync command would be:
 
 ```sh
-smallweb --dir ~/smallweb sync debian@example.com /home/debian/smallweb
+smallweb sync debian@example.com /home/debian/smallweb
 ```
 
-From now on, each time you make a change to your files, they will be automatically synced between your local machine and the server.
+From now on, each time you make a change to your files, they will be automatically synced to the server, and vice-versa.
 
 ## Important note about git
 
