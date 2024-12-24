@@ -1,0 +1,4 @@
+{
+    "entrypoint": "jsr:@smallweb/file-server@0.6.6",
+    "root": "./_site"
+}

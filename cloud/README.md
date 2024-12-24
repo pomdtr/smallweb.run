@@ -1,23 +1,56 @@
+---
+title: Smallweb Cloud
+favicon: https://icons.smallweb.run/smallweb.svg
+---
+
 # smallweb.live
 
-> Interested in smallweb.live? Join the [waitlist](https://cloud.smallweb.run).
->
-> Want to learn more about smallweb ? See the [homepage](https://smallweb.run).
+> [!WARNING]
+> Smallweb Cloud does not exist yet. This is a proposal.
 
-Your apps under `smallweb.live` domain (or your own custom domain). No need to buy a VPS / domain, or install anything on your device.
+## Introduction
 
-I want to delegate identity to github.  When you run:
+Smallweb cloud will allow to use smallweb without having to buy a VPS or register a domain.
 
+You apps will be available at `https://<app>.<username>.smallweb.live`.
+
+## Authentication
+
+First, you'll need to sign up for an account. You can do this by running the following command:
+
+```sh
+# send an email with a confirmation code
+ssh accounts@smallweb.live signup --email <email> --user <username>
+
+# confirm the code
+ssh accounts@smallweb.live confirm <code>
 ```
-smallweb sync <user>@ssh.smallweb.live
+
+On sucessful signup, smallweb cloud associate your public ssh key with your account.
+
+To link a public key from another device to your account, just run the following command:
+
+```sh
+# send an email with a confirmation code
+ssh accounts@smallweb.live link <username>
+
+# confirm the code
+ssh accounts@smallweb.live confirm <code>
 ```
 
-smallweb.live will check that your public key against `https://github.com/<user>.keys`. If the check is successful, your smallweb dir will be synced with smallweb.live.
+## Syncing your local smallweb dir
 
-Each time you create a new app, it will instantly be available at `https://<app>.<user>.smallweb.live` (ex: `https://smallblog.pomdtr.smallweb.live`). Of course, you'll be able to associate your own domain, and access your apps at `https://<app>.<domain>`.
+To edit your apps with your local editor, you'll need to sync your local smallweb directory with the cloud.
 
-Going to `https://<user>.smallweb.live` will redirect you to `https://www.<user>.smallweb.live` (if the `www` app exists).
+```sh
+# start the sync
+smallweb sync <user>@smallweb.live
 
-Since the smallweb folder is synced locally, the smallweb cli will just work!
+# list your apps
+smallweb ls
+```
 
-Of course, you'll have the ability to sync your folder locally using mutagen, and use the `smallweb` cli to manager your websites.
+---
+
+> [!NOTE]
+> Interested in smallweb.live ? Join the [waitlist](https://cloud.smallweb.run).

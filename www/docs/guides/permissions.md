@@ -11,12 +11,14 @@ This sandbox protects the host system from malicious code, and ensures that apps
 
 ## Admin Apps
 
-If you want to create an app that can access the whole smallweb directory, you'll need to add the `admin` field to your `smallweb.json`:
+If you want to create an app that can access the whole smallweb directory, you'll need to it to the `adminApps` array in your global config (`~/.smallweb/config.json`).
 
 ```json
-// ~/smallweb/my-admin-app/smallweb.json
+// ~/smallweb/.smallweb/config.json
 {
-    "admin": true
+    "adminApps": [
+        "my-admin-app"
+    ]
 }
 ```
 
