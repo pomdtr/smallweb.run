@@ -38,17 +38,25 @@ ssh accounts@smallweb.live link <username>
 ssh accounts@smallweb.live confirm <code>
 ```
 
-## Syncing your local smallweb dir
+## Editing your files
 
-To edit your apps with your local editor, you'll need to sync your local smallweb directory with the cloud.
+All the standard ssh commands will be supported: `sshfs`, `scp`, `sftp`, `rsync`, etc.
+
+In addition to these, smallweb.live will supports [mutagen](https://mutagen.io) for real-time file sync.
 
 ```sh
-# start the sync
+# install mutagen
+brew intall mutagen-io/mutagen/mutagen
+mutagen daemon register
+
+# start the mutagen-powered sync
 smallweb sync <user>@smallweb.live
 
 # list your apps
 smallweb ls
 ```
+
+You'll also be able to access an admin TUI by running `ssh <user>@smallweb.live`.
 
 ---
 
