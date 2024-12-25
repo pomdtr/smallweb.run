@@ -1,12 +1,10 @@
 {
     "domain": "smallweb.run",
     "customDomains": {
-        "sunbeam.pomdtr.me": "sunbeam",
         "smallweb.localhost": "*"
     },
     "adminApps": [
         "api",
-        "mon-editeur",
         "cli",
         "editor",
         "logs",

@@ -1,6 +1,11 @@
 ---
 title: Smallweb Cloud
 favicon: https://icons.smallweb.run/smallweb.svg
+head:
+  - tag: script
+    attrs:
+      src: https://raw.esm.sh/gh/pomdtr/smallweb.run/scripts/dot-shortcut.js
+      data-url: https://editor.smallweb.run/cloud/README.md
 ---
 
 # smallweb.live
@@ -38,18 +43,20 @@ ssh accounts@smallweb.live link <username>
 ssh accounts@smallweb.live confirm <code>
 ```
 
-## Editing your files
+## Creating apps
 
-All the standard ssh commands will be supported: `sshfs`, `scp`, `sftp`, `rsync`, etc.
+The whole experience will be inspired by [pico.sh](https://pico.sh).
+All the standard ssh commands will be supported: `sshfs`, `scp`, `sftp`, `rsync`, etc...
 
-In addition to these, smallweb.live will supports [mutagen](https://mutagen.io) for real-time file sync.
+Want to quickly edit a file ? Just use `vim scp://<user>@smallweb.live/example/main.ts`.
+But if you want to do proper work, you'll probably want to install [mutagen](https://mutagen.io) and setup the bi-directional sync:
 
 ```sh
 # install mutagen
 brew intall mutagen-io/mutagen/mutagen
 mutagen daemon register
 
-# start the mutagen-powered sync
+# start the mutagen-powered between ~/smallweb and <user>.smallweb.live:/home/<user>/smallweb
 smallweb sync <user>@smallweb.live
 
 # list your apps
