@@ -15,55 +15,41 @@ head:
 
 ## Introduction
 
-Smallweb cloud will allow to use smallweb without having to buy a VPS or register a domain.
+Smallweb cloud will allow you to use smallweb without having to rent a VPS or register a new domain.
 
-You apps will be available at `https://<app>.<username>.smallweb.live`.
+Your app websites will be accessible at `https://<app>.<username>.smallweb.live`, and the cli entrypoint will be at `ssh <username>@smallweb.live run <app>`.
 
-## Authentication
+The whole experience is inspired by [pico.sh](https://pico.sh).
 
-First, you'll need to sign up for an account. You can do this by running the following command:
+## Connecting to your account
 
-```sh
-# send an email with a confirmation code
-ssh accounts@smallweb.live signup --email <email> --user <username>
+Smallweb Cloud will delegate user management to github. To authenticate, you'll just need to run `ssh <username>@smallweb.live`. 
 
-# confirm the code
-ssh accounts@smallweb.live confirm <code>
-```
-
-On sucessful signup, smallweb cloud associate your public ssh key with your account.
-
-To link a public key from another device to your account, just run the following command:
-
-```sh
-# send an email with a confirmation code
-ssh accounts@smallweb.live link <username>
-
-# confirm the code
-ssh accounts@smallweb.live confirm <code>
-```
+You'll then go through github device flow, and associate a github account to your public key.  Your public key will be added to the `~/smallweb/.smallweb/authorized_keys` file.
 
 ## Creating apps
 
-The whole experience will be inspired by [pico.sh](https://pico.sh).
-All the standard ssh commands will be supported: `sshfs`, `scp`, `sftp`, `rsync`, etc...
+All the standard ssh commands will be available: `sshfs`, `scp`, `sftp`, `rsync`... In addition to these, some subcommands from the smallweb cli will be supported (ex: `ls`, `logs`, ...).
 
-Want to quickly edit a file ? Just use `vim scp://<user>@smallweb.live/example/main.ts`.
+Want to quickly edit a file ? Just use `vim scp://<username>@smallweb.live/./example/main.ts` !
+
 But if you want to do proper work, you'll probably want to install [mutagen](https://mutagen.io) and setup the bi-directional sync:
 
 ```sh
 # install mutagen
-brew intall mutagen-io/mutagen/mutagen
+brew install mutagen-io/mutagen/mutagen
 mutagen daemon register
 
-# start the mutagen-powered between ~/smallweb and <user>.smallweb.live:/home/<user>/smallweb
+# start the mutagen-powered between ~/smallweb and smallweb.live:/home/<user>/smallweb
 smallweb sync <user>@smallweb.live
 
 # list your apps
 smallweb ls
 ```
 
-You'll also be able to access an admin TUI by running `ssh <user>@smallweb.live`.
+## TLS certificates
+
+Smallweb cloud will be able to emit wildcard TLS certificates by using it's own DNS (ex: `https://<app>.<custom-domain>`). See <https://webapp.io/blog/wildcard-tls-certificates-on-demand/> for additional info on the mechanism.
 
 ---
 

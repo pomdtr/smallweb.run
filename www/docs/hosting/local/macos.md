@@ -106,6 +106,13 @@ EOF
 First, let's create a dummy smallweb website:
 
 ```sh
+mkdir -p ~/smallweb/.smallweb
+cat <<EOF > ~/smallweb/.smallweb/config.json
+{
+  "domain": "smallweb.localhost"
+}
+EOF
+
 mkdir -p ~/smallweb/example
 cat <<EOF > ~/smallweb/example/main.ts
 export default {
