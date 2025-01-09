@@ -9,11 +9,11 @@ You can get completions for the app and global config files by adding the follow
   "json.schemas": [
     {
       "fileMatch": ["smallweb.json"],
-      "url": "https://smallweb.dev/schemas/smallweb.json"
+      "url": "https://schemas.smallweb.run/manifest"
     },
     {
-      "fileMatch": [".smallweb.json"],
-      "url": "https://smallweb.dev/schemas/global.json"
+      "fileMatch": [".smallweb/config.json"],
+      "url": "https://schemas.smallweb.run/config"
     }
   ]
 }

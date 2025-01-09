@@ -5,6 +5,7 @@
     },
     "adminApps": [
         "api",
+        "ls",
         "cli",
         "editor",
         "logs",
