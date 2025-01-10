@@ -1,34 +1,17 @@
-import { Codejar } from "jsr:@pomdtr/smallweb-codejar@0.6.1"
-import { Marp } from 'npm:@marp-team/marp-core'
-
-const codejar = new Codejar({
-  fsRoot: "./data",
-  urlRoot: "/edit"
-})
+import { Marp } from 'npm:@marp-team/marp-core@4.0.1'
 
 export default {
-  fetch(req: Request) {
-    const url = new URL(req.url)
-    if (url.pathname == "/edit") {
-      return Response.redirect(new URL("/edit/slides.md", url))
-    }
-
-    if (url.pathname.startsWith('/edit/')) {
-      return codejar.fetch(req)
-    }
-
+  fetch() {
     const marp = new Marp()
-
-    const markdown = Deno.readTextFileSync('data/slides.md')
+    const markdown = Deno.readTextFileSync('./data/slides.md')
     const { html, css } = marp.render(markdown)
-
-    return new Response(/* html */ `<!DOCTYPE html>
+    const body = /* html */ `<!DOCTYPE html>
 <html>
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Marp</title>
+  <title>Marp Example</title>
   <link rel="icon" href="https://marp.app/favicon.png" type="image/png">
   <style>
     body {
@@ -42,10 +25,12 @@ export default {
     ${html}
   </body>
 </html>
-`, {
+`
+
+    return new Response(body, {
       headers: {
-        'Content-Type': 'text/html'
-      }
+        'Content-Type': 'text/html; charset=utf-8',
+      },
     })
   }
 }

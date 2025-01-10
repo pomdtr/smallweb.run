@@ -31,7 +31,7 @@ From now, you be able to run `vim scp://<gh-user>@smallweb.live/authorized_keys`
 
 ## DNS
 
-You'll be able to 
+You'll be able to set new 
 
 ```txt
 $ ssh pomdtr@smallweb.live records set A example 188.114.97.2 --ttl 300
@@ -40,7 +40,7 @@ $ dig A example.smallweb.live
 example.pomdtr.smallweb.live.   300     IN      A       188.114.97.2
 ```
 
-You'll also be able to set these records through sftp.
+You'll also be able to set these records through sftp (each record will be materialized as json file.
 
 ## SSH Proxy
 
