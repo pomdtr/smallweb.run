@@ -1,5 +1,5 @@
 creation_rules:
   - key_groups:
       - age:
-          - age184aa2h77n8hjhwthjv0ddz3leu49jtuhlafspwm29sej84zayd6qcrrwe6 # macbook
-          - age1lzt3p2vwf7vtv9lpyt63t8kdtgwjm8td2yzj88xwygr3c5rvxdsqwr3rge # vps
+          - age143vkm327maclfkdqca4s6tufftej0hsm5hqkqq6lcd9w5vpewcyq2ph8vy # macbook
+          - age149rkxrsqeke4wqnhvvz3me5vprjtcy5elg5szy4aarxrryv8m3kqvs9dme # hetzner vps
