@@ -12,6 +12,6 @@ export default {
             return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run/${parts.join('/')}`)
         }
 
-        return fetch(`https://raw.esm.sh/gh/pomdtr/smallweb.run/${SMALLWEB_APP_NAME}/${version}/${parts.join('/')}`)
+        return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run@${version}/${parts.join('/')}`)
     }
 }
