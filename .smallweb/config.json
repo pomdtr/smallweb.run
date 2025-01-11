@@ -4,6 +4,7 @@
         "smallweb.localhost": "*"
     },
     "adminApps": [
+        "esm",
         "api",
         "ls",
         "cli",

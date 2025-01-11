@@ -12,6 +12,11 @@ head:
 
 This website list what's next for [smallweb](https://smallweb.run).
 
+## SMALLWEB_TOKEN
+
+- generate a random token when smallweb starts, shared between websites
+- useful to validate that a request is coming from another website of the same user
+
 ## App Ideas
 
 - Automatically generate web UI (form), cli and api based on the content of the folder

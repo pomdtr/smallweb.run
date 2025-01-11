@@ -23,9 +23,7 @@ You will interact with smallweb.live using the openssh cli.
 
 ## Authentication
 
-First, you'll need to run `ssh login@smallweb.live`. You'll then go through the [github device auth flow](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#device-flow), and your ssh key will be linked to your github account.
-
-If you're public key is listed in `https://github.com/<gh-user>.keys`, you will be able to skip the login steps.
+First, you'll need to run `ssh login@smallweb.live`. You'll then go through the [github device auth flow](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#device-flow), and your ssh key will be linked to your github account id.
 
 From now, you be able to run `vim scp://<gh-user>@smallweb.live/authorized_keys` to manage your ssh keys.
 
