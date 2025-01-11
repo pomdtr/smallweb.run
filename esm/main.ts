@@ -7,6 +7,11 @@ export default {
             return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run/${SMALLWEB_APP_NAME}/main.ts`)
         }
 
-        return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run${url.pathname}`)
+        const [version, ...parts] = url.pathname.slice(1).split('/')
+        if (version == "latest") {
+            return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run/${parts.join('/')}`)
+        }
+
+        return fetch(`https://raw.esm.sh/gh/pomdtr/smallweb.run/${SMALLWEB_APP_NAME}/${version}/${parts.join('/')}`)
     }
 }
