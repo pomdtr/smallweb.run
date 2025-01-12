@@ -2,12 +2,17 @@
 
 ## smallweb
 
-Host websites from your internet playground
+Host websites from your internet folder
+
+```
+smallweb [flags]
+```
 
 ### Options
 
 ```
-  -h, --help   help for smallweb
+      --dir string   The root directory for smallweb
+  -h, --help         help for smallweb
 ```
 
 ## smallweb _carapace
@@ -24,6 +29,12 @@ smallweb _carapace [flags]
   -h, --help   help for _carapace
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb _carapace spec
 
 
@@ -36,6 +47,12 @@ smallweb _carapace spec [flags]
 
 ```
   -h, --help   help for spec
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb _carapace style
@@ -52,6 +69,12 @@ smallweb _carapace style [flags]
   -h, --help   help for style
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb _carapace style set
 
 
@@ -64,6 +87,12 @@ smallweb _carapace style set [flags]
 
 ```
   -h, --help   help for set
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb changelog
@@ -80,6 +109,12 @@ smallweb changelog [flags]
   -h, --help   help for changelog
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb completion
 
 Generate the autocompletion script for the specified shell
@@ -94,6 +129,12 @@ See each sub-command's help for details on how to use the generated script.
 
 ```
   -h, --help   help for completion
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb completion bash
@@ -135,6 +176,12 @@ smallweb completion bash
       --no-descriptions   disable completion descriptions
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb completion fish
 
 Generate the autocompletion script for fish
@@ -165,6 +212,12 @@ smallweb completion fish [flags]
       --no-descriptions   disable completion descriptions
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb completion powershell
 
 Generate the autocompletion script for powershell
@@ -190,6 +243,12 @@ smallweb completion powershell [flags]
 ```
   -h, --help              help for powershell
       --no-descriptions   disable completion descriptions
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb completion zsh
@@ -233,6 +292,12 @@ smallweb completion zsh [flags]
       --no-descriptions   disable completion descriptions
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb config
 
 Get a configuration value
@@ -245,6 +310,13 @@ smallweb config <key> [flags]
 
 ```
   -h, --help   help for config
+      --json   Output as JSON
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb crons
@@ -252,15 +324,21 @@ smallweb config <key> [flags]
 List cron jobs
 
 ```
-smallweb crons [flags]
+smallweb crons [app] [flags]
 ```
 
 ### Options
 
 ```
-      --app string   filter by app
-  -h, --help         help for crons
-      --json         output as json
+      --all    show all cron jobs
+  -h, --help   help for crons
+      --json   output as json
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb docs
@@ -277,9 +355,15 @@ smallweb docs [flags]
   -h, --help   help for docs
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb doctor
 
-Check the system for potential problems 🩺
+Check the system for potential problems
 
 ```
 smallweb doctor [flags]
@@ -291,18 +375,10 @@ smallweb doctor [flags]
   -h, --help   help for doctor
 ```
 
-## smallweb edit
-
-Run the edit plugin
+### Options inherited from parent commands
 
 ```
-smallweb edit [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for edit
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb fetch
@@ -322,6 +398,32 @@ smallweb fetch <app> [path] [flags]
   -X, --method string        HTTP method to use (default "GET")
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
+## smallweb init
+
+Initialize a new workspace
+
+```
+smallweb init <domain> [flags]
+```
+
+### Options
+
+```
+  -h, --help   help for init
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb link
 
 Create symbolic links
@@ -336,6 +438,12 @@ smallweb link <source> <target> [flags]
   -h, --help   help for link
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb list
 
 List all smallweb apps
@@ -347,10 +455,17 @@ smallweb list [flags]
 ### Options
 
 ```
+      --admin                  filter by admin
   -h, --help                   help for list
       --json                   output as json
       --template string        template to use
       --template-file string   template file to use
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb logs
@@ -358,16 +473,22 @@ smallweb list [flags]
 View app logs
 
 ```
-smallweb logs [flags]
+smallweb logs [app] [flags]
 ```
 
 ### Options
 
 ```
-      --app string        filter by app
+      --all               show logs for all apps
   -h, --help              help for logs
-      --json              output logs in JSON format
       --template string   output logs using a Go template
+      --type string       log type (http, console) (default "http")
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb open
@@ -384,32 +505,10 @@ smallweb open [app] [flags]
   -h, --help   help for open
 ```
 
-## smallweb pull
-
-Run the pull plugin
+### Options inherited from parent commands
 
 ```
-smallweb pull [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for pull
-```
-
-## smallweb push
-
-Run the push plugin
-
-```
-smallweb push [flags]
-```
-
-### Options
-
-```
-  -h, --help   help for push
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb run
@@ -426,6 +525,12 @@ smallweb run <app> [args...] [flags]
   -h, --help   help for run
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb secrets
 
 Manage app secrets
@@ -437,9 +542,17 @@ smallweb secrets [app] [flags]
 ### Options
 
 ```
+      --dotenv        Output as dotenv
   -g, --global        Set global secrets
   -h, --help          help for secrets
+      --json          Output as JSON
       --update-keys   Update all keys
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb service
@@ -452,18 +565,30 @@ Manage smallweb service
   -h, --help   help for service
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb service install
 
 Install smallweb as a service
 
 ```
-smallweb service install [flags]
+smallweb service install [args...] [flags]
 ```
 
 ### Options
 
 ```
   -h, --help   help for install
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb service logs
@@ -481,6 +606,12 @@ smallweb service logs [flags]
   -h, --help     help for logs
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb service restart
 
 Restart smallweb service
@@ -493,6 +624,12 @@ smallweb service restart [flags]
 
 ```
   -h, --help   help for restart
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb service start
@@ -509,6 +646,12 @@ smallweb service start [flags]
   -h, --help   help for start
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb service status
 
 View service status
@@ -521,6 +664,12 @@ smallweb service status [flags]
 
 ```
   -h, --help   help for status
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb service stop
@@ -537,6 +686,12 @@ smallweb service stop [flags]
   -h, --help   help for stop
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb service uninstall
 
 Uninstall smallweb service
@@ -551,18 +706,31 @@ smallweb service uninstall [flags]
   -h, --help   help for uninstall
 ```
 
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
+```
+
 ## smallweb sync
 
 Sync the smallweb config with the filesystem
 
 ```
-smallweb sync <target> [flags]
+smallweb sync <remote> [flags]
 ```
 
 ### Options
 
 ```
-  -h, --help   help for sync
+  -h, --help          help for sync
+      --name string   The name of the sync session
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb up
@@ -576,8 +744,20 @@ smallweb up [flags]
 ### Options
 
 ```
-      --cron   run cron jobs
-  -h, --help   help for up
+      --addr string           address to listen on
+      --cert string           tls certificate file
+      --cron                  enable cron jobs
+  -h, --help                  help for up
+      --key string            key file
+      --on-demand-tls         enable on-demand TLS
+      --ssh-addr string       address to listen on for ssh/sftp
+      --ssh-host-key string   ssh host key (default "~/.ssh/smallweb")
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 ## smallweb upgrade
@@ -592,6 +772,12 @@ smallweb upgrade [version] [flags]
 
 ```
   -h, --help   help for upgrade
+```
+
+### Options inherited from parent commands
+
+```
+      --dir string   The root directory for smallweb
 ```
 
 

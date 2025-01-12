@@ -2,16 +2,43 @@ const { SMALLWEB_APP_NAME } = Deno.env.toObject()
 
 export default {
     fetch(req: Request) {
+        const corsHeaders = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, OPTIONS',
+            'Access-Control-Allow-Headers': '*',
+        }
+
+        if (req.method === 'OPTIONS') {
+            return new Response(null, { headers: corsHeaders })
+        }
+
         const url = new URL(req.url)
         if (url.pathname === '/') {
-            return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run/${SMALLWEB_APP_NAME}/main.ts`)
+            return new Response(null, {
+                status: 302,
+                headers: {
+                    'Location': `https://esm.sh/gh/pomdtr/smallweb.run/${SMALLWEB_APP_NAME}/main.ts`,
+                    ...corsHeaders
+                }
+            })
         }
 
-        const [version, ...parts] = url.pathname.slice(1).split('/')
-        if (version == "latest") {
-            return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run/${parts.join('/')}`)
+        if (url.searchParams.has('v')) {
+            return new Response(null, {
+                status: 302,
+                headers: {
+                    'Location': `https://esm.sh/gh/pomdtr/smallweb.run@${url.searchParams.get('v')}${url.pathname}`,
+                    ...corsHeaders
+                }
+            })
         }
 
-        return Response.redirect(`https://raw.esm.sh/gh/pomdtr/smallweb.run@${version}/${parts.join('/')}`)
+        return new Response(null, {
+            status: 302,
+            headers: {
+                'Location': `https://esm.sh/gh/pomdtr/smallweb.run/${url.pathname}`,
+                ...corsHeaders
+            }
+        })
     }
 }
