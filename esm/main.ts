@@ -15,7 +15,7 @@ export default {
             return new Response(null, {
                 status: 302,
                 headers: {
-                    'Location': `https://github.com/pomdtr/smallweb.run/tree/main/esm`,
+                    'Location': `https://github.com/pomdtr/smallweb.run/tree/main/esm/main.ts`,
                     ...corsHeaders
                 }
             })
