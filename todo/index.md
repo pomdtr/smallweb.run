@@ -5,7 +5,6 @@ head:
   - tag: script
     attrs:
       src: https://esm.smallweb.run/scripts/dot-shortcut.js
-      type: module
       data-url: https://editor.smallweb.run/todo/index.md
 ---
 

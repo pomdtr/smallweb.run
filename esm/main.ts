@@ -1,5 +1,3 @@
-const { SMALLWEB_APP_NAME } = Deno.env.toObject()
-
 export default {
     fetch(req: Request) {
         const corsHeaders = {
@@ -17,7 +15,7 @@ export default {
             return new Response(null, {
                 status: 302,
                 headers: {
-                    'Location': `https://esm.sh/gh/pomdtr/smallweb.run/${SMALLWEB_APP_NAME}/main.ts`,
+                    'Location': `https://github.com/pomdtr/smallweb.run/tree/main/esm`,
                     ...corsHeaders
                 }
             })
@@ -27,7 +25,7 @@ export default {
             return new Response(null, {
                 status: 302,
                 headers: {
-                    'Location': `https://esm.sh/gh/pomdtr/smallweb.run@${url.searchParams.get('v')}${url.pathname}`,
+                    'Location': `https://raw.esm.sh/gh/pomdtr/smallweb.run@${url.searchParams.get('v')}${url.pathname}`,
                     ...corsHeaders
                 }
             })
@@ -36,7 +34,7 @@ export default {
         return new Response(null, {
             status: 302,
             headers: {
-                'Location': `https://esm.sh/gh/pomdtr/smallweb.run/${url.pathname}`,
+                'Location': `https://raw.esm.sh/gh/pomdtr/smallweb.run/${url.pathname}`,
                 ...corsHeaders
             }
         })
