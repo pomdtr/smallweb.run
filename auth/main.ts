@@ -6,20 +6,19 @@ import { CodeUI } from "npm:@openauthjs/openauth/ui/code"
 import { CodeProvider } from "npm:@openauthjs/openauth/provider/code"
 import { Resend } from "npm:resend@4.0.1"
 import { object, string } from "npm:valibot@1.0.0-beta.11"
+import { THEME_SST } from "npm:@openauthjs/openauth/ui/theme"
 import { createSubjects } from "npm:@openauthjs/openauth/subject"
 
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, RESEND_API_KEY } = Deno.env.toObject()
+if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET || !RESEND_API_KEY) {
+    throw new Error("Missing required env vars")
+}
+
 const resend = new Resend(RESEND_API_KEY);
 
-export const subjects = createSubjects({
-    user: object({
-        email: string(),
-    }),
-})
-
-
 const auth = issuer({
+    theme: THEME_SST,
     providers: {
         code: CodeProvider(CodeUI({
             sendCode: async (claims, code) => {
@@ -40,7 +39,11 @@ const auth = issuer({
     storage: MemoryStorage({
         persist: "./data/db.json",
     }),
-    subjects,
+    subjects: createSubjects({
+        user: object({
+            email: string(),
+        }),
+    }),
     success: async (ctx, value) => {
         switch (value.provider) {
             case "github": {

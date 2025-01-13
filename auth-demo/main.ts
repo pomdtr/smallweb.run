@@ -29,7 +29,7 @@ export default {
 
                 if (verifed.err) throw new Error("Invalid token")
 
-                return Response.json({ email: verifed.subject.properties.email })
+                return Response.json(verifed.subject.properties)
             } catch (e) {
                 return new Response((e as Error).message, { status: 500 })
             }
