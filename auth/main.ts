@@ -1,13 +1,13 @@
-import { issuer } from "npm:@openauthjs/openauth@0.3.5"
-import { GithubProvider } from "npm:@openauthjs/openauth@0.3.5/provider/github"
-import { MemoryStorage } from "npm:@openauthjs/openauth/storage/memory"
-import { Octokit } from "npm:octokit@4.1.0"
-import { CodeUI } from "npm:@openauthjs/openauth/ui/code"
-import { CodeProvider } from "npm:@openauthjs/openauth/provider/code"
-import { Resend } from "npm:resend@4.0.1"
-import { object, string } from "npm:valibot@1.0.0-beta.11"
-import { THEME_SST } from "npm:@openauthjs/openauth/ui/theme"
-import { createSubjects } from "npm:@openauthjs/openauth/subject"
+import { issuer } from "@openauthjs/openauth"
+import { GithubProvider } from "@openauthjs/openauth/provider/github"
+import { MemoryStorage } from "@openauthjs/openauth/storage/memory"
+import { Octokit } from "octokit"
+import { CodeUI } from "@openauthjs/openauth/ui/code"
+import { CodeProvider } from "@openauthjs/openauth/provider/code"
+import { Resend } from "resend"
+import { object, string } from "valibot"
+import { THEME_SST } from "@openauthjs/openauth/ui/theme"
+import { createSubjects } from "@openauthjs/openauth/subject"
 
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, RESEND_API_KEY } = Deno.env.toObject()
@@ -67,7 +67,7 @@ export default {
     fetch(req: Request) {
         const url = new URL(req.url)
         if (url.pathname === "/") {
-            return Response.redirect("https://gh.smallweb.run/auth/main.ts")
+            return Response.redirect("https://gh.smallweb.run/auth")
         }
 
         return auth.fetch(req)
