@@ -12,6 +12,10 @@ head:
 
 This website list what's next for [smallweb](https://smallweb.run).
 
+## Improve SFTP support
+
+## SMTP support
+
 # Authentication
 
 ## Setup
