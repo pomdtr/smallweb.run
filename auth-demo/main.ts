@@ -23,13 +23,13 @@ export default {
                 const code = url.searchParams.get("code")!
                 const exchanged = await client.exchange(code, redirectURI)
                 if (exchanged.err) throw new Error("Invalid code")
-                const verifed = await client.verify(subjects, exchanged.tokens.access, {
+                const verified = await client.verify(subjects, exchanged.tokens.access, {
                     refresh: exchanged.tokens.refresh,
                 })
 
-                if (verifed.err) throw new Error("Invalid token")
+                if (verified.err) throw new Error("Invalid token")
 
-                return Response.json(verifed.subject.properties)
+                return Response.json(verified.subject.properties)
             } catch (e) {
                 return new Response((e as Error).message, { status: 500 })
             }
