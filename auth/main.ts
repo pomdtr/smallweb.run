@@ -21,11 +21,6 @@ export const subjects = createSubjects({
 
 const auth = issuer({
     providers: {
-        github: GithubProvider({
-            clientID: GITHUB_CLIENT_ID,
-            clientSecret: GITHUB_CLIENT_SECRET,
-            scopes: ["user:email"],
-        }),
         code: CodeProvider(CodeUI({
             sendCode: async (claims, code) => {
                 await resend.emails.send({
@@ -36,6 +31,11 @@ const auth = issuer({
                 })
             },
         })),
+        github: GithubProvider({
+            clientID: GITHUB_CLIENT_ID,
+            clientSecret: GITHUB_CLIENT_SECRET,
+            scopes: ["user:email"],
+        }),
     },
     storage: MemoryStorage({
         persist: "./data/db.json",

@@ -12,7 +12,7 @@ export default {
     fetch: async (request: Request) => {
         const url = new URL(request.url)
         const client = createClient({
-            clientID: url.hostname,
+            clientID: url.origin,
             issuer: "https://auth.smallweb.run",
         })
 
