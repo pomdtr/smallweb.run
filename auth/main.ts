@@ -10,10 +10,6 @@ import { THEME_SST } from "@openauthjs/openauth/ui/theme"
 import { createSubjects } from "@openauthjs/openauth/subject"
 import * as fs from "@std/fs"
 
-if (await fs.exists("./data")) {
-    await Deno.mkdir("./data")
-}
-
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, RESEND_API_KEY } = Deno.env.toObject()
 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET || !RESEND_API_KEY) {
@@ -68,13 +64,7 @@ const auth = issuer({
     }
 })
 
-export default {
-    fetch(req: Request) {
-        const url = new URL(req.url)
-        if (url.pathname === "/") {
-            return Response.redirect("https://gh.smallweb.run/auth")
-        }
-
-        return auth.fetch(req)
-    }
+if (await fs.exists("./data")) {
+    await Deno.mkdir("./data")
 }
+export default auth
