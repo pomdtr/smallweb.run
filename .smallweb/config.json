@@ -1,8 +1,5 @@
 {
     "domain": "smallweb.run",
-    "customDomains": {
-        "smallweb.localhost": "*"
-    },
     "adminApps": [
         "esm",
         "api",

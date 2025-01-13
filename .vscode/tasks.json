@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "smallweb up",
+            "command": "smallweb up --ssh-addr 2222",
+            "type": "shell",
+            "presentation": {
+                "reveal": "always"
+            }
+        }
+    ]
+}
