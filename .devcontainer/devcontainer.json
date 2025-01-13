@@ -6,9 +6,13 @@
 	"features": {
 		"ghcr.io/devcontainers-community/features/deno:1": {}
 	},
-	"postCreateCommand": "curl -sSfL https://install.smallweb.run | sh",
+	"remoteEnv": {
+		"SMALLWEB_DIR": "${containerWorkspaceFolder}",
+		"SMALLWEB_DOMAIN": "smallweb.localhost"
+	},
 	"forwardPorts": [
 		7777,
 		2222
-	]
+	],
+	"postCreateCommand": "curl -sSfL https://install.smallweb.run | sh"
 }

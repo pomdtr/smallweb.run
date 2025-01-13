@@ -3,11 +3,16 @@
     "tasks": [
         {
             "label": "smallweb up",
-            "command": "smallweb up --ssh-addr 2222",
+            "command": "smallweb up --ssh-addr :2222",
             "type": "shell",
+            "options": {
+                "env": {
+                    "SMALLWEB_DIR": "${workspaceFolder}"
+                }
+            },
             "presentation": {
                 "reveal": "always"
-            }
+            },
         }
     ]
 }
