@@ -1,6 +1,7 @@
 {
     "imports": {
         "@openauthjs/openauth": "npm:@openauthjs/openauth@^0.3.5",
+        "@std/fs": "jsr:@std/fs@^1.0.9",
         "octokit": "npm:octokit@4.1.0",
         "resend": "npm:resend@4.0.1",
         "valibot": "npm:valibot@1.0.0-beta.11"
