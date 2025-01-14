@@ -20,6 +20,10 @@ export default {
 
         if (url.pathname == "/callback") {
             try {
+                if (url.searchParams.has("error")) {
+                    throw new Error(url.searchParams.get("error_description")!)
+                }
+
                 const code = url.searchParams.get("code")!
                 const exchanged = await client.exchange(code, redirectURI)
                 if (exchanged.err) throw new Error("Invalid code")

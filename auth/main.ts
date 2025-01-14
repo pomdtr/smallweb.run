@@ -5,7 +5,10 @@ import { Octokit } from "octokit"
 import { object, string } from "valibot"
 import { THEME_SST } from "@openauthjs/openauth/ui/theme"
 import { createSubjects } from "@openauthjs/openauth/subject"
+import ssh from "npm:ssh2"
+
 import * as fs from "@std/fs"
+
 
 // make sure that the data dir exists
 fs.ensureDirSync("./data")
@@ -13,6 +16,18 @@ fs.ensureDirSync("./data")
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = Deno.env.toObject()
 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
     throw new Error("Missing required env vars")
+}
+
+function parseKeys(authorizedKeys: string) {
+    const keys = []
+    for (const line of authorizedKeys.split("\n")) {
+        if (!line) continue
+        if (line.startsWith("#")) continue
+
+        keys.push(ssh.utils.parseKey(line))
+    }
+
+    return keys
 }
 
 const auth = issuer({
@@ -43,11 +58,20 @@ const auth = issuer({
                 const email = emails.data.find((email) => email.primary)?.email
                 if (!email) throw new Error("No primary email")
 
-                const authorized_keys = Deno.readTextFileSync("authorized_keys")
-                const publicKeys = await octokit.rest.users.listPublicSshKeysForAuthenticatedUser()
-                for (const key of publicKeys.data) {
-                    if (authorized_keys.includes(key.key)) {
-                        return ctx.subject("user", { email })
+                const authorizedKeys = await Deno.readTextFile("authorized_keys")
+                const { data: publicKeys } = await octokit.rest.users.listPublicSshKeysForAuthenticatedUser()
+
+                for (const line of authorizedKeys.split("\n")) {
+                    if (!line) continue
+                    if (line.startsWith("#")) continue
+                    const authorizedKey = ssh.utils.parseKey(line)
+
+                    for (const item of publicKeys) {
+                        const publicKey = ssh.utils.parseKey(item.key)
+
+                        if (authorizedKey.getPublicPEM() === publicKey.getPublicPEM()) {
+                            return ctx.subject("user", { email })
+                        }
                     }
                 }
 

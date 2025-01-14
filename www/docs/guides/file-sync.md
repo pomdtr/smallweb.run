@@ -39,10 +39,10 @@ For example, if you connect to your server using `ssh debian@example.com`, your 
 
 ```sh
 mutagen sync create \
-    --ignore=node_modules,.DS_Store
-    --ignore-vcs
-    --mode=two-way-resolved
-    debian@example.com:/home/debian/smallweb
+    --ignore=node_modules,.DS_Store \
+    --ignore-vcs \
+    --mode=two-way-resolved \
+    debian@example.com:/home/debian/smallweb \
     ~/smallweb
 ```
 
