@@ -1,6 +1,3 @@
-[submodule "smallblog"]
-	path = smallblog
-	url = https://github.com/tayzendev/smallblog
 [submodule "file-server"]
 	path = file-server
 	url = https://github.com/pomdtr/smallweb-file-server
