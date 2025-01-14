@@ -12,9 +12,7 @@ head:
 
 This website list what's next for [smallweb](https://smallweb.run).
 
-## Improve SFTP support
-
-## SMTP support
+## Generate the .sops.yaml from the authorized_keys file
 
 # Authentication
 
