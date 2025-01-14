@@ -2,40 +2,26 @@ import { issuer } from "@openauthjs/openauth"
 import { GithubProvider } from "@openauthjs/openauth/provider/github"
 import { MemoryStorage } from "@openauthjs/openauth/storage/memory"
 import { Octokit } from "octokit"
-import { CodeUI } from "@openauthjs/openauth/ui/code"
-import { CodeProvider } from "@openauthjs/openauth/provider/code"
-import { Resend } from "resend"
 import { object, string } from "valibot"
 import { THEME_SST } from "@openauthjs/openauth/ui/theme"
 import { createSubjects } from "@openauthjs/openauth/subject"
 import * as fs from "@std/fs"
 
-await fs.ensureDir("./data")
+// make sure that the data dir exists
+fs.ensureDirSync("./data")
 
-const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, RESEND_API_KEY } = Deno.env.toObject()
-if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET || !RESEND_API_KEY) {
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = Deno.env.toObject()
+if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
     throw new Error("Missing required env vars")
 }
-
-const resend = new Resend(RESEND_API_KEY);
 
 const auth = issuer({
     theme: THEME_SST,
     providers: {
-        code: CodeProvider(CodeUI({
-            sendCode: async (claims, code) => {
-                await resend.emails.send({
-                    from: "Smallweb Auth <auth@smallweb.run>",
-                    to: claims.email,
-                    subject: "Your smallweb code",
-                    text: `Your code is ${code}`,
-                })
-            },
-        })),
         github: GithubProvider({
             clientID: GITHUB_CLIENT_ID,
             clientSecret: GITHUB_CLIENT_SECRET,
-            scopes: ["user:email"],
+            scopes: ["user:email", "read:public_key"],
         }),
     },
     storage: MemoryStorage({
@@ -56,10 +42,16 @@ const auth = issuer({
                 const emails = await octokit.rest.users.listEmailsForAuthenticatedUser()
                 const email = emails.data.find((email) => email.primary)?.email
                 if (!email) throw new Error("No primary email")
-                return ctx.subject("user", { email })
-            }
-            case "code": {
-                return ctx.subject("user", { email: value.claims.email })
+
+                const authorized_keys = Deno.readTextFileSync("authorized_keys")
+                const publicKeys = await octokit.rest.users.listPublicSshKeysForAuthenticatedUser()
+                for (const key of publicKeys.data) {
+                    if (authorized_keys.includes(key.key)) {
+                        return ctx.subject("user", { email })
+                    }
+                }
+
+                throw new Error("No authorized key found")
             }
         }
     }
