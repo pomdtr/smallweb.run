@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<div class="box">
+    Hello world
+</div>
+
+<div class="square">
+    Hello world
+</div>
+
+<div class="squares">
+    <div class="gradient-1">
+        <div class="gradient-2">
+            <div class="gradient-3">
+                <div class="gradient-4">
+                    <div class="gradient-5"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --color-background: oklch(95% 0.03 100deg);
+        --color-background-dark: oklch(92.5% 0.03 100deg);
+        --color-background-darker: oklch(90% 0.03 100deg);
+        --color-background-darkest: oklch(87.5% 0.03 100deg);
+
+        --color-content: oklch(10% 0.03 100deg);
+
+        --color-gradient-1: oklch(80% 0.14 85);
+        --color-gradient-2: oklch(70% 0.15 50);
+        --color-gradient-3: oklch(65% 0.2 35);
+        --color-gradient-4: oklch(60% 0.2 30);
+        --color-gradient-5: oklch(60% 0.1 240);
+
+    }
+
+    html {
+        background: oklch(95% 0.03 100deg);
+        color: var(--color-content);
+
+        .box {
+            margin: 64px;
+            padding: 32px;
+            background: var(--color-background-darker);
+            border: 1px solid var(--color-background-darker);
+            border-radius: 16px;
+            box-shadow: 0 0 32px rgba(0, 0, 0, 5%);
+        }
+
+        .squares {
+            div {
+                border-left: 32px solid;
+                border-bottom: 32px solid;
+                margin-left: 3px;
+                margin-bottom: 3px;
+            }
+
+            .gradient-1 {
+                border-color: var(--color-gradient-1);
+            }
+
+            .gradient-2 {
+                border-color: var(--color-gradient-2);
+            }
+
+            .gradient-3 {
+                border-color: var(--color-gradient-3);
+            }
+
+            .gradient-4 {
+                border-color: var(--color-gradient-4);
+            }
+
+            .gradient-5 {
+                border-color: var(--color-gradient-5);
+                height: 128px;
+            }
+
+        }
+    }
+</style>
+
+</html>
