@@ -18,18 +18,6 @@ if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
     throw new Error("Missing required env vars")
 }
 
-function parseKeys(authorizedKeys: string) {
-    const keys = []
-    for (const line of authorizedKeys.split("\n")) {
-        if (!line) continue
-        if (line.startsWith("#")) continue
-
-        keys.push(ssh.utils.parseKey(line))
-    }
-
-    return keys
-}
-
 const auth = issuer({
     theme: THEME_SST,
     providers: {
