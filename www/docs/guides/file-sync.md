@@ -28,11 +28,10 @@ To start syncing your files, run the following command:
 
 ```sh
 mutagen sync create \
-    --ignore=node_modules,.DS_Store
-    --ignore-vcs
-    --mode=two-way-resolved
-    <remote>:<remote-dir>
-    <local-dir>
+    --ignore=node_modules,.DS_Store \
+    --ignore-vcs \
+    --mode=two-way-resolved \
+    <remote>:<remote-dir> <local-dir>
 ```
 
 For example, if you connect to your server using `ssh debian@example.com`, your sync command would be:
@@ -42,8 +41,7 @@ mutagen sync create \
     --ignore=node_modules,.DS_Store \
     --ignore-vcs \
     --mode=two-way-resolved \
-    debian@example.com:/home/debian/smallweb \
-    ~/smallweb
+    debian@example.com:/home/debian/smallweb ~/smallweb
 ```
 
 From now on, each time you make a change to your files, they will be automatically synced to the server, and vice-versa.
