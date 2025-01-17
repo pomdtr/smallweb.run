@@ -55,7 +55,11 @@ mutagen daemon register
 Finally, run the following command to sync your smallweb directory to your local machine.
 
 ```bash
-smallweb --dir ~/smallweb sync <remote> /home/smallweb/smallweb
+mutagen sync create \
+    --ignore=node_modules,.DS_Store \
+    --ignore-vcs \
+    --mode=two-way-resolved \
+    smallweb@<domain>:/home/smallweb/smallweb ~/smallweb
 ```
 
 You should now be able to edit your smallweb workspace from `~/smallweb` on your local machine.
