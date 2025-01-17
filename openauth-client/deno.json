@@ -1,7 +1,0 @@
-{
-  "imports": {
-    "@openauthjs/openauth": "npm:@openauthjs/openauth@^0.0.23",
-    "hono": "npm:hono@^4.6.13",
-    "valibot": "npm:valibot@^1.0.0-beta.9"
-  }
-}
