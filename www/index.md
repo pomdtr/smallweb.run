@@ -44,6 +44,6 @@ features:
     details: Each smallweb app is sandboxed using Deno. By default, it only has access to its own folder.
   - icon: 🚀
     title: Deploy anywhere
-    details: The whole smallweb codebase is compiled to a single binary. You can run it on your local machine, a VPS, or a cloud provider.
+    details: The whole smallweb codebase is compiled to a single binary. You can run it on your local machine, a remote server, or both.
 ---
 
