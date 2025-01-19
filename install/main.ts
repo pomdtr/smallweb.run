@@ -21,6 +21,12 @@ export default {
             return res;
         }
 
+        if (url.pathname === "/vps-beta.sh") {
+            const res = await serveFile(req, "./vps-beta.sh");
+            res.headers.set("Content-Type", "text/plain; charset=utf-8");
+            return res;
+        }
+
         let version: string
         if (url.searchParams.get("version")) {
             version = url.searchParams.get("version")!;
