@@ -34,7 +34,7 @@ export default {
         return new Response(null, {
             status: 302,
             headers: {
-                'Location': `https://raw.esm.sh/gh/pomdtr/smallweb.run/${url.pathname}`,
+                'Location': `https://raw.esm.sh/gh/pomdtr/smallweb.run${url.pathname}`,
                 ...corsHeaders
             }
         })

@@ -2,11 +2,11 @@ import PostalMime from 'npm:postal-mime';
 import { ensureDir } from "jsr:@std/fs"
 
 export default {
-    async email(input: ReadableStream<Uint8Array>) {
+    async email(data: ReadableStream<Uint8Array>) {
         await ensureDir("data");
 
-        const email = await PostalMime.parse(input);
-        console.log(`Saving email from ${email.from} to data/email.json`);
-        await Deno.writeTextFile("data/email.json", JSON.stringify(email, null, 4));
+        const msg = await PostalMime.parse(data);
+        console.log(`Saving email from ${msg.from} to data/email.json`);
+        await Deno.writeTextFile("data/email.json", JSON.stringify(msg, null, 4));
     }
 }
