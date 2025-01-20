@@ -46,3 +46,4 @@ What about non-interactive auth ? Maybe we can sign a token with the host key ?
 - Loom alternative using the [MUX](https://www.mux.com/) api
 - Store based on the [`smallweb-app` github topic](https://github.com/topics/smallweb-app)
 - pastebin as a service (inspired by pastes.sh)
+- rss reader which dumps article to smallweb folder

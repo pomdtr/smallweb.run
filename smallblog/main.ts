@@ -5,7 +5,12 @@ export default new Smallblog({
     nav: [
         { text: "Home", href: "/" },
         { text: "About", href: "/about" },
-        { text: "Github", href: "https://github.com/tayzendev/smallblog" },
-        { text: "RSS", href: "/feed.xml" }
+        { text: "Contact", href: "/contact" },
+        {
+            text: "Links", children: [
+                { text: "Github", href: "https://github.com/tayzendev/smallblog" },
+                { text: "RSS", href: "/feed.xml" }
+            ]
+        },
     ]
 });
