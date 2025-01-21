@@ -5,7 +5,6 @@ const reader = new Reader({
         "https://jvns.ca/atom.xml",
         "https://bower.sh/rss",
         "https://macwright.com/rss.xml",
-        "https://blog.smallweb.run/feed.xml"
     ]
 });
 

@@ -2,8 +2,10 @@ import { ensureDir } from "jsr:@std/fs"
 import Parser from "npm:rss-parser@3.13.0"
 import { NodeHtmlMarkdown } from "npm:node-html-markdown"
 
+export type Feed = string | { url: string, id: string }
+
 export type ReaderOptions = {
-    feeds: string[];
+    feeds: Feed[]
 }
 
 function clean(str: string) {
@@ -30,16 +32,18 @@ export class Reader {
         const parser = new Parser()
 
         const links: string[] = []
-        for (const feedUrl of this.opts.feeds) {
-            const feed = await parser.parseURL(feedUrl)
-            const { hostname, origin } = new URL(feedUrl)
-            await ensureDir(`./data/${hostname}`)
+        for (const item of this.opts.feeds) {
+            const rawUrl = typeof item === "string" ? item : item.url
+            const feed = await parser.parseURL(rawUrl)
+            const url = new URL(rawUrl)
+            const id = typeof item === "string" ? url.hostname : clean(item.id)
+            await ensureDir(`./data/${id}`)
 
             for (const item of feed.items) {
                 const pubDate = new Date(item.pubDate!).toISOString().split("T")[0]
                 const filename = pubDate + "_" + clean(item.title!)
-                await Deno.writeTextFile(`./data/${hostname}/${filename}.md`, [`# ${item.title}`, NodeHtmlMarkdown.translate(item.content!)].join("\n\n"))
-                links.push(`- _${pubDate}_ - [${item.title}](${hostname}/${filename}.md) _[(${hostname})](${origin})_`)
+                await Deno.writeTextFile(`./data/${id}/${filename}.md`, [`# ${item.title}`, NodeHtmlMarkdown.translate(item.content!)].join("\n\n"))
+                links.push(`- _${pubDate}_ - [${item.title}](${id}/${filename}.md) _[(${id})](${url.origin})_`)
             }
         }
 
