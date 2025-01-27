@@ -1,0 +1,12 @@
+{
+    "name": "@pomdtr/reader",
+    "version": "0.0.1",
+    "exports": "./pkg/mod.ts",
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "pkg/**/*",
+            "README.md"
+        ]
+    }
+}

@@ -5,6 +5,9 @@ export default defineConfig({
   title: "Smallweb",
   description: "A self-hostable personal cloud inspired by serverless platforms and cgi-bin.",
   cleanUrls: true,
+  sitemap: {
+    hostname: 'https://smallweb.run'
+  },
   head: [
     [
       'meta',

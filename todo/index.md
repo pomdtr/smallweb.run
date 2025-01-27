@@ -12,6 +12,18 @@ head:
 
 This website list what's next for [smallweb](https://smallweb.run).
 
+## Automate DNS-01 challenge validation
+
+Libraries:
+
+- [acme-dns](https://github.com/joohoi/acme-dns)
+- [certmagic](https://github.com/caddyserver/certmagic)
+- [libdns/acmedns](https://github.com/libdns/acmedns)
+
+Usage:
+
+- `smallweb up --acmedns-username <username> --acmedns-password <password> --acmedns-subdomain <subdomain>`
+
 ## Generate the .sops.yaml from the authorized_keys file
 
 # Authentication
