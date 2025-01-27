@@ -13,3 +13,6 @@
 [submodule "telegram"]
 	path = telegram
 	url = https://github.com/pomdtr/smallweb-telegram-bot
+[submodule "excalidraw-dev"]
+	path = excalidraw-dev
+	url = https://github.com/pomdtr/smallweb-excalidraw
