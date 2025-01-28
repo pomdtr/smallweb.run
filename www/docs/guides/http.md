@@ -1,3 +1,7 @@
+---
+outline: [2, 3]
+---
+
 # Handling HTTP Requests
 
 > ℹ️ All the websites hosted under the `smallweb.run` domain are open-source.
@@ -70,6 +74,30 @@ If your static website contains a `main.js` file, but you want to serve it as a 
 ### Rendering markdown
 
 The smallweb static server automatically renders markdown files as html. If you create a file named index.md in a folder (and no `index.html`), it will be served at the root of the website.
+
+### Single Page Applications
+
+The default file-server does not support single page applications (yet!). Instead, you can use the following `main.ts` file:
+
+```ts
+import { serveDir, serveFile } from "jsr:@std/http/file-server"
+
+export default {
+    async fetch(req: Request) {
+        // check if an asset match the request
+        const resp = await serveDir(req, {
+            fsRoot: "./dist"
+        })
+
+        // else, serve dist/index.html
+        if (resp.status == 404) {
+            return serveFile(req, "./dist/index.html")
+        }
+
+        return resp
+    }
+}
+```
 
 ## Dynamic Websites
 

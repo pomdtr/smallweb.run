@@ -12,6 +12,14 @@ head:
 
 This website list what's next for [smallweb](https://smallweb.run).
 
+## Codejar
+
+- add dark mode
+
+## VS Code
+
+Integrate password prompt into the vscode UI
+
 ## Automate DNS-01 challenge validation
 
 Libraries:

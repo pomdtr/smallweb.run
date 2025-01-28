@@ -19,7 +19,38 @@ brew install deno
 
 ```sh
 brew install pomdtr/tap/smallweb
-smallweb service install
+
+cat <<EOF > ~/Libray/LaunchAgents/com.github.pomdtr.smallweb.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.github.pomdtr.smallweb</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>$(brew --prefix)/bin/smallweb</string>
+            <string>up</string>
+        </array>
+        <key>EnvironmentVariables</key>
+        <dict>
+            <key>SMALLWEB_DIR</key>
+            <string>$HOME/smallweb</string>
+        </dict>
+        <key>RunAtLoad</key>
+        <true />
+        <key>StandardOutPath</key>
+        <string>$HOME/Library/Logs/smallweb.log</string>
+        <key>StandardErrorPath</key>
+        <string>$HOME/Library/Logs/smallweb.log</string>
+        <key>WorkingDirectory</key>
+        <string>$HOME/</string>
+    </dict>
+</plist>
+EOF
+
+launchctl load ~/Library/LaunchAgents/com.github.pomdtr.smallweb.plist
+launchctl start com.github.pomdtr.smallweb
 ```
 
 ## Setup Caddy {#setup-caddy-macos}

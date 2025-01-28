@@ -717,6 +717,7 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/fs@^1.0.9",
+      "jsr:@std/path@^1.0.8",
       "npm:@openauthjs/openauth@~0.3.5",
       "npm:octokit@4.1.0",
       "npm:resend@4.0.1",

@@ -31,8 +31,8 @@ export default {
                     refresh: exchanged.tokens.refresh,
                 })
 
-                if (verified.err) throw new Error("Invalid token")
 
+                if (verified.err) throw new Error("Invalid token")
                 return Response.json(verified.subject.properties)
             } catch (e) {
                 return new Response((e as Error).message, { status: 500 })
