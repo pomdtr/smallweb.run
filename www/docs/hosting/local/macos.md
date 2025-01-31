@@ -31,6 +31,7 @@ cat <<EOF > ~/Libray/LaunchAgents/com.github.pomdtr.smallweb.plist
         <array>
             <string>$(brew --prefix)/bin/smallweb</string>
             <string>up</string>
+            <string>--cron</string>
         </array>
         <key>EnvironmentVariables</key>
         <dict>
