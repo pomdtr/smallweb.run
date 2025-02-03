@@ -15,6 +15,7 @@
     "jsr:@std/path@1.0.8": "1.0.8",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/streams@^1.0.8": "1.0.8",
+    "jsr:@vento/vento@*": "1.12.13",
     "jsr:@vento/vento@^1.12.13": "1.12.13",
     "npm:estree-walker@3.0.3": "3.0.3",
     "npm:meriyah@6.0.3": "6.0.3"

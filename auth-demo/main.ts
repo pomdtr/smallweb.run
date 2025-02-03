@@ -1,48 +1,78 @@
-import { createClient } from "npm:@openauthjs/openauth@0.3.5/client"
-import { object, string } from "npm:valibot@1.0.0-beta.11"
+import { Context, Hono } from "npm:hono"
+import { getCookie, setCookie } from "npm:hono/cookie"
+import { createClient } from "npm:@openauthjs/openauth/client"
 import { createSubjects } from "npm:@openauthjs/openauth/subject"
+
+import {object, string, array} from "npm:valibot"
 
 const subjects = createSubjects({
     user: object({
         email: string(),
+        keys: array(string()),
     }),
 })
 
-export default {
-    fetch: async (request: Request) => {
-        const url = new URL(request.url)
-        const client = createClient({
-            clientID: url.origin,
-            issuer: "https://auth.smallweb.run",
+const { SMALLWEB_APP_URL } = Deno.env.toObject()
+
+const client = createClient({ clientID: SMALLWEB_APP_URL, issuer: "https://auth.smallweb.run" })
+
+const app = new Hono()
+  .get("/authorize", async (c) => {
+    const origin = new URL(c.req.url).origin
+    const { url } = await client.authorize(origin + "/callback", "code")
+    return c.redirect(url, 302)
+  })
+
+  .get("/callback", async (c) => {
+    const origin = new URL(c.req.url).origin
+    try {
+      const code = c.req.query("code")
+      if (!code) throw new Error("Missing code")
+      const exchanged = await client.exchange(code, origin + "/callback")
+      if (exchanged.err)
+        return new Response(exchanged.err.toString(), {
+          status: 400,
         })
-
-        const redirectURI = url.origin + "/callback"
-
-        if (url.pathname == "/callback") {
-            try {
-                if (url.searchParams.has("error")) {
-                    throw new Error(url.searchParams.get("error_description")!)
-                }
-
-                const code = url.searchParams.get("code")!
-                const exchanged = await client.exchange(code, redirectURI)
-                if (exchanged.err) throw new Error("Invalid code")
-                const verified = await client.verify(subjects, exchanged.tokens.access, {
-                    refresh: exchanged.tokens.refresh,
-                })
-
-
-                if (verified.err) throw new Error("Invalid token")
-                return Response.json(verified.subject.properties)
-            } catch (e) {
-                return new Response((e as Error).message, { status: 500 })
-            }
-        }
-
-        const res = await client.authorize(redirectURI, "code")
-        return Response.redirect(
-            res.url,
-            302,
-        )
+      setSession(c, exchanged.tokens.access, exchanged.tokens.refresh)
+      return c.redirect("/", 302)
+    } catch (e: any) {
+      return new Response(e.toString())
     }
+  })
+  .get("/", async (c) => {
+    const access = getCookie(c, "access_token")
+    const refresh = getCookie(c, "refresh_token")
+    try {
+      const verified = await client.verify(subjects, access!, {
+        refresh,
+      })
+      if (verified.err) throw new Error("Invalid access token")
+      if (verified.tokens)
+        setSession(c, verified.tokens.access, verified.tokens.refresh)
+      return c.json(verified.subject)
+    } catch (e) {
+      console.error(e)
+      return c.redirect("/authorize", 302)
+    }
+  })
+
+function setSession(c: Context, accessToken?: string, refreshToken?: string) {
+  if (accessToken) {
+    setCookie(c, "access_token", accessToken, {
+      httpOnly: true,
+      sameSite: "Strict",
+      path: "/",
+      maxAge: 34560000,
+    })
+  }
+  if (refreshToken) {
+    setCookie(c, "refresh_token", refreshToken, {
+      httpOnly: true,
+      sameSite: "Strict",
+      path: "/",
+      maxAge: 34560000,
+    })
+  }
 }
+
+export default app

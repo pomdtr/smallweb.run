@@ -12,7 +12,6 @@
         "webdav",
         "telegram",
         "vscode",
-        "vscode-dev",
-        "auth"
+        "vscode-dev"
     ]
 }

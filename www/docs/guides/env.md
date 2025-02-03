@@ -38,12 +38,9 @@ Smallweb automatically injects the following environment variables into your app
 - `SMALLWEB_DOMAIN`: The domain where the smallweb apps are served from.
 - `SMALLWEB_APP_NAME`: The name of the app.
 - `SMALLWEB_APP_DOMAIN`: The domain of the app.
-- `SMALLWEB_APP_URL`: The URL of the app.
+- `SMALLWEB_APP_URL`: The base URL of the app.
 
-And some additional variables are available to admin apps:
-
-- `SMALLWEB_ADMIN`: Allows you to check if the app is an admin app.
-- `SMALLWEB_CLI_PATH`: The path to the smallweb CLI.
+In addition to these, the `SMALLWEB_ADMIN` environment variable is also set for admin apps.
 
 ## Encryption
 
@@ -89,7 +86,7 @@ Then we'll create a `.sops.yaml` file at the root of our smallweb dir:
 creation_rules:
   - key_groups:
       - age:
-          - age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc # public key
+          - age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc # my public key
 ```
 
 > [!TIP] You can repeat the process to add more public keys
@@ -98,11 +95,17 @@ creation_rules:
 From now on, we can generate/edit a `secrets.enc.env` for your app using the following command:
 
 ```sh
-# app is optional in case you are in the app dir
-smallweb secrets [app]
+# edit <app> secrets
+sops ./<app>/secrets.enc.env
 
 # edit global secrets
-smallweb secrets -g
+sops ./.smallweb/secrets.enc.env
 ```
 
 > [!WARNING] Make sure to never edit the encrypted file directly!
+
+If you add a new public key to your `.sops.yaml` file, you'll need to update the keys in your encrypted files:
+
+```sh
+sops updatekeys .smallweb/.secrets.enc.env **/secrets.env.env
+```

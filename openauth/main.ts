@@ -18,7 +18,7 @@ export default authorizer({
             }),
         ),
     },
-    success: async (ctx, value) => {
+    success: (ctx, value) => {
         if (value.provider === "password") {
             return ctx.subject("user", {
                 email: value.email,

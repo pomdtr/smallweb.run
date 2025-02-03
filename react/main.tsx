@@ -1,6 +1,6 @@
-/** @jsxImportSource https://esm.sh/react */
+/** @jsxImportSource https://esm.sh/react@19.0.0 */
 
-import { renderToString } from "npm:react-dom/server";
+import { renderToString } from "https://esm.sh/react-dom@19.0.0/server";
 
 function MyApp() {
     return (
