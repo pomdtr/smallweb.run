@@ -1,7 +1,11 @@
 async function handleRequest() {
-    const { SMALLWEB_DOMAIN, SMALLWEB_DIR } = Deno.env.toObject()
-    const entries = await Array.fromAsync(Deno.readDir(SMALLWEB_DIR))
-    const html = /* html */`
+    const { SMALLWEB_DOMAIN, SMALLWEB_DIR } = Deno.env.toObject();
+    const entries = await Array.fromAsync(Deno.readDir(SMALLWEB_DIR));
+    const html = /* html */`<!DOCTYPE html>
+<html>
+<head>
+    <title>Smallweb</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,6 +27,8 @@ async function handleRequest() {
             background-color: #f2f2f2;
         }
     </style>
+</head>
+<body>
     <table>
         <thead>
             <tr>
@@ -39,12 +45,13 @@ async function handleRequest() {
             `).join('')}
         </tbody>
     </table>
-    `
+</body>
+</html>`;
     return new Response(html, {
         headers: {
             "content-type": "text/html"
         }
-    })
+    });
 }
 
 export default {

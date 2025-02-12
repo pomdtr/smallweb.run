@@ -1,12 +1,13 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
+title: Smallweb – Your internet folder
 head:
   - [
       'meta',
       {
         name: 'og:title',
-        content: 'Smallweb - Your internet folder'
+        content: 'Smallweb – Your internet folder'
       }
     ]
   - [

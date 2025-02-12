@@ -2,6 +2,7 @@
     "domain": "smallweb.run",
     "email": "achille.lacoin@gmail.com",
     "adminApps": [
+        "auth",
         "esm",
         "api",
         "ls",
