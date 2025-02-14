@@ -10,7 +10,7 @@ If you sync the smallweb dir between multiple servers, but want to set different
 
 ```sh
 # run smallweb with a different domain that the one set in the config
-SMALlWEB_DOMAIN=localhost smallweb up
+SMALLWEB_DOMAIN=localhost smallweb up
 ```
 
 ## Available Fields
