@@ -5,6 +5,9 @@ const { SMALLWEB_DIR } = Deno.env.toObject();
 const codejar = new Codejar(SMALLWEB_DIR);
 
 // add authentication
-codejar.fetch = githubAuth({ issuer: "https://auth.smallweb.run" }, codejar.fetch);
+codejar.fetch = githubAuth(
+    { issuer: "https://auth.smallweb.run" },
+    codejar.fetch,
+);
 
 export default codejar;

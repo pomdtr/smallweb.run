@@ -69,7 +69,13 @@ Only use imports that are usable from the browser. `jsr:` and `npm:` specifiers 
 If your static website contains a `main.js` file, but you want to serve it as a static website, you can do the following:
 
 - rename it to something else
-- create a smallweb.json with the following content:
+- create a smallweb.json, and explicitly specify the entrypoint
+
+  ```json
+  {
+    "entrypoint": "jsr:@smallweb/file-server"
+  }
+  ```
 
 ### Rendering markdown
 

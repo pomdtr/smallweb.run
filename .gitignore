@@ -1,5 +1,6 @@
-data
-node_modules
+data/
+node_modules/
+dist/
 .env
 
 .DS_Store

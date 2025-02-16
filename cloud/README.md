@@ -11,24 +11,60 @@ head:
 # smallweb.live
 
 > [!WARNING]
-> smallweb.live does not exist yet. This is a proposal.
+> smallweb.live does not exist yet, this is just proposal. Add your email to the [waitlist](https://cloud.smallweb.run) to be among the first to get access to it!
 
 ## Introduction
 
-Smallweb cloud will allow you to test out smallweb without buying your own domain. It's strongly inspired by both [takingnames.io](https://takingnames.io), [localhost.run](https://localhost.run) and [pico.sh](https://pico.sh).
+Smallweb cloud will allow you to test out smallweb without buying your own domain. It's strongly inspired by both [blot.im](https://blot.im), [val.town](https://val.town) and [pico.sh](https://pico.sh).
 
 You will interact with smallweb.live using the openssh cli.
 
 ## Authentication
 
-First, you'll need to run `ssh signup@smallweb.live`. After validating your email, you'll be able to create a new account.
+Just run `ssh accounts@smallweb.live signup <username>`. If no user has own this username yet, you'll be able to claim it by confirming your email.
 
 If you then run `ssh <username>@smallweb.live`, you'll be greated with the smallweb cli.
 
-To add a new ssh keu, either run `vim scp://<username>@smallweb.live/.smallweb/authorized_keys`, or use `ssh login@smallweb.live` and validate your email.
+```console
+$ ssh <username>@smallweb.live
+Host websites from your internet folder
+
+Usage:
+  smallweb [flags]
+  smallweb [command]
+
+Available Commands:
+  completion  Generate the autocompletion script for the specified shell
+  ...
+```
 
 ## Usage
 
-The `fetch` endpoint will be available at `<app>.<user>.smallweb.live`.
+You can use any sftp-compatible tool to edit your files (the official recommendation will be [rclone](https://rclone.org/)).
 
-The `run` endpoint will be available at `ssh <app>.<user>@smallweb.live`.
+Then, just create `~/smallweb/example/main.ts`:
+
+```ts
+export default {
+    fetch: (_req: Request) => {
+        return new Response("Welcome to Smallweb!");
+    },
+    run: (_args: string[]) => {
+        console.log("Welcome to Smallweb!");
+    },
+};
+```
+
+The `fetch` endpoint will be available at `example.<user>.smallweb.live`.
+
+```console
+$ curl https://example.<user>.smallweb.live
+Welcome to Smallweb!
+```
+
+The `run` endpoint will be available at `example.<user>@smallweb.live`.
+
+```console
+$ ssh example.<user>@smallweb.live
+"Welcome to Smallweb!"
+```

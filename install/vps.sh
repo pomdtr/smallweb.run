@@ -24,7 +24,7 @@ fi
 printf "\n✅ Required packages installed successfully!\n"
 sleep 2
 
-# useradd --system --user-group --create-home --shell "$(which bash)" smallweb
+useradd --system --user-group --create-home --shell "$(which bash)" smallweb
 
 # move the authorized_keys file to the smallweb user
 if [ -f /root/.ssh/authorized_keys ]; then
@@ -51,6 +51,7 @@ SMALLWEB_DIR="/home/smallweb/smallweb"
 
 # shellcheck disable=SC2016
 su smallweb -c "smallweb --dir $SMALLWEB_DIR --domain=$SMALLWEB_DOMAIN init"
+cp /home/smallweb/.ssh/authorized_keys "$SMALLWEB_DIR/.smallweb/authorized_keys"
 
 cat <<EOF > /etc/systemd/system/smallweb.service
 [Unit]
@@ -65,7 +66,7 @@ AmbientCapabilities=CAP_NET_BIND_SERVICE
 User=smallweb
 Restart=always
 RestartSec=10
-WorkingDirectory=/home/smallweb
+WorkingDirectory=$SMALLWEB_DIR
 StandardOutput=syslog
 StandardError=syslog
 SyslogIdentifier=smallweb

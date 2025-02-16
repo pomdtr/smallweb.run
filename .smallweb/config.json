@@ -3,6 +3,7 @@
     "email": "achille.lacoin@gmail.com",
     "adminApps": [
         "auth",
+        "domains",
         "esm",
         "api",
         "ls",

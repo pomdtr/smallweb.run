@@ -1,5 +1,8 @@
-import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.13";
+import { githubAuth } from "jsr:@pomdtr/github-auth@0.3.5";
 
 export default {
-    fetch: lastlogin(() => Response.json(Deno.env.toObject()))
-}
+    fetch: githubAuth({
+        issuer: "https://auth.smallweb.run",
+        authorizedKeys: ["pomdtr"],
+    }, () => Response.json(Deno.env.toObject())),
+};

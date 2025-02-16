@@ -1,6 +1,6 @@
 # Env Variables
 
-## App-specific environment variables
+## Environment variables
 
 You can set environment variables for your app by creating a file called `.env` in the application folder.
 
@@ -25,10 +25,6 @@ export default {
 }
 ```
 
-## Global environment variables
-
-You can set global environment variables by creating a file called `.env` at the root of the smallweb directory.
-
 ## Injected environment variables
 
 Smallweb automatically injects the following environment variables into your app:
@@ -42,13 +38,13 @@ Smallweb automatically injects the following environment variables into your app
 
 In addition to these, the `SMALLWEB_ADMIN` environment variable is also set for admin apps.
 
-## Encryption
+## Encrypted Secrets
 
 > [!WARNING] This feature is recommended only for advanced users.
 
 Smallweb delegates encryption to [SOPS](https://github.com/getsops/sops).
 
-Encrypted secrets are stored in a `secrets.enc.env` file at the root of your app dir, or in the `.smallweb` (for global secrets).
+Encrypted secrets are stored in a `secrets.enc.env` file at the root of your app dir.
 
 Smallweb will automatically decrypt the file and inject the secrets as environment variables into your app at runtime.
 
@@ -97,9 +93,6 @@ From now on, we can generate/edit a `secrets.enc.env` for your app using the fol
 ```sh
 # edit <app> secrets
 sops ./<app>/secrets.enc.env
-
-# edit global secrets
-sops ./.smallweb/secrets.enc.env
 ```
 
 > [!WARNING] Make sure to never edit the encrypted file directly!

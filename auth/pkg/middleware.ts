@@ -3,7 +3,7 @@ type Handler = (req: Request) => Response | Promise<Response>;
 import { createClient } from "@openauthjs/openauth/client";
 import { getCookies, setCookie } from "@std/http/cookie";
 import { subjects } from "./subjects.ts";
-import { checkAuthorizedKeys } from "./ssh.ts";
+import { checkPublicKeys } from "./ssh.ts";
 
 /**
  * Options for GitHub authentication middleware.
@@ -39,7 +39,7 @@ export function githubAuth(opts: GithubAuthOptions, handler: Handler): Handler {
 
     if (
       opts.authorizedKeys &&
-      await checkAuthorizedKeys(
+      await checkPublicKeys(
         opts.authorizedKeys,
         props.publicKeys,
       )

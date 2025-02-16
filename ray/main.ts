@@ -1,9 +1,12 @@
 import { Ray } from "./mod.ts";
-import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.13";
+import { githubAuth } from "jsr:@pomdtr/github-auth@0.3.5";
 
 const { SMALLWEB_DIR } = Deno.env.toObject();
 
 const ray = new Ray(SMALLWEB_DIR);
-ray.fetch = lastlogin(ray.fetch);
+ray.fetch = githubAuth({
+  issuer: "https://auth.smallweb.run",
+  authorizedUsers: ["pomdtr"],
+}, ray.fetch);
 
 export default ray;

@@ -1,5 +1,0 @@
-{
-  "imports": {
-    "@std/streams": "jsr:@std/streams@^1.0.8"
-  }
-}

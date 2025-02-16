@@ -12,53 +12,15 @@ head:
 
 This website list what's next for [smallweb](https://smallweb.run).
 
+## smallweb.live
+
+- rework auth mechanism (ssh `<user>@smallweb.live` instead of `ssh signup@smallweb.live`)
+- Use unix sockets for the smallweb <-> deno communication
+- investigate on demand wildcard tls certificates (or buy a subscription from https://zerossl.com/)
+
 ## Codejar
 
 - add dark mode
-
-## VS Code
-
-Integrate password prompt into the vscode UI
-
-## Automate DNS-01 challenge validation
-
-Libraries:
-
-- [acme-dns](https://github.com/joohoi/acme-dns)
-- [certmagic](https://github.com/caddyserver/certmagic)
-- [libdns/acmedns](https://github.com/libdns/acmedns)
-
-Usage:
-
-- `smallweb up --acmedns-username <username> --acmedns-password <password> --acmedns-subdomain <subdomain>`
-
-## Generate the .sops.yaml from the authorized_keys file
-
-# Authentication
-
-## Setup
-
-1. You put a public key in `~/smallweb/<app>/authorized_keys`
-2. You set the `private` field to true in the `smallweb.json` file
-
-## Auth Flow
-
-Someone goes to the website, he is greeted with the github oauth login page. Once he logs in, smallweb fetch the _verified_ public keys of the user from the api, then compare them with the `authorized_keys` file. If a match is found, the user is granted access to the website.
-
-## Admin users
-
-Admin users have read/write to your whole smallweb directory. You can add them by putting their public key in `~/smallweb/.smallweb/authorized_keys`. All public keys from `~/.ssh` are automatically trusted as admin keys.
-
-## Open question
-
-What about non-interactive auth ? Maybe we can sign a token with the host key ?
-
-## Injected SMALLWEB_TOKEN variable
-
-> [!WARNING] still need some thoughts
-
-- generate a random token when smallweb starts, shared between websites
-- useful to validate that a request is coming from another website of the same user
 
 ## App Ideas
 

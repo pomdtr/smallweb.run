@@ -1,7 +1,6 @@
 import { JSONFilePreset } from "npm:lowdb@7.0.1/node";
 import { serveFile } from "jsr:@std/http";
-import { lastlogin } from "jsr:@pomdtr/lastlogin@0.5.2";
-import { Resend } from "npm:resend@4.0.1"
+import { Resend } from "npm:resend@4.0.1";
 import * as cli from "jsr:@std/cli";
 
 const { EMAIL, RESEND_API_KEY } = Deno.env.toObject();
@@ -28,17 +27,14 @@ const handleRequest = async (req: Request) => {
                 from: "Smallweb Cloud <cloud@smallweb.run>",
                 to: EMAIL,
                 subject: "A new user has joined the waitlist!",
-                text: `A new user with the email ${email} has joined the waitlist!`,
-            })
+                text:
+                    `A new user with the email ${email} has joined the waitlist!`,
+            });
         } catch (e) {
             console.error(e);
         }
 
         return new Response("You have been added to the waitlist!");
-    }
-
-    if (url.pathname === "/db.json") {
-        return serveFile(req, "data/db.json");
     }
 
     if (url.pathname === "/readme") {
@@ -49,10 +45,7 @@ const handleRequest = async (req: Request) => {
 };
 
 export default {
-    fetch: lastlogin(handleRequest, {
-        public: true,
-        privateRoutes: ["/db.json"],
-    }),
+    fetch: handleRequest,
     run(args: string[]) {
         const flags = cli.parseArgs(args, {
             boolean: ["json"],
