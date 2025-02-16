@@ -10,9 +10,6 @@
 [submodule "app-template"]
 	path = app-template
 	url = https://github.com/pomdtr/smallweb-app-template
-[submodule "telegram"]
-	path = telegram
-	url = https://github.com/pomdtr/smallweb-telegram-bot
 [submodule "excalidraw-dev"]
 	path = excalidraw-dev
 	url = https://github.com/pomdtr/smallweb-excalidraw
