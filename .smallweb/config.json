@@ -1,19 +1,37 @@
 {
     "domain": "smallweb.run",
-    "email": "achille.lacoin@gmail.com",
-    "adminApps": [
-        "auth",
-        "domains",
-        "esm",
-        "api",
-        "ls",
-        "cli",
-        "editor",
-        "logs",
-        "ray",
-        "webdav",
-        "telegram",
-        "vscode",
-        "vscode-dev"
-    ]
+    "authorizedKeys": [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPR1N/c+B7OPXEraFx2r3UHViHFbZ2Afg8VQLQ59ZKd macbook",
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJW+GQk0KCvSreL+y3AZdtCu82+13E2eEled+sGRkIEv macbook-pro",
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqKd2Mo+PzywOq+Xf0p/J90ZKVnaRo9Chb63f/jGJgW android"
+    ],
+    "apps": {
+        "auth": {
+            "admin": true
+        },
+        "domains": {
+            "admin": true
+        },
+        "esm": {
+            "admin": true
+        },
+        "ls": {
+            "admin": true
+        },
+        "editor": {
+            "admin": true
+        },
+        "ray": {
+            "admin": true
+        },
+        "webdav": {
+            "admin": true
+        },
+        "vscode": {
+            "admin": true
+        },
+        "vscode-dev": {
+            "admin": true
+        }
+    }
 }

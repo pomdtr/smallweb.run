@@ -5,7 +5,9 @@ export default {
         issuer: "https://auth.smallweb.run",
         authorizedUsers: ["TayzenDev", "pomdtr"],
     }, (req) => {
-        return new Response(`You email is blablabla: ${req.headers.get("remote-email")}`);
+        return new Response(
+            `You email is blablabla: ${req.headers.get("remote-email")}`,
+        );
     }),
     run: () => {
         console.log("Hello from the run function, blablabla!");
