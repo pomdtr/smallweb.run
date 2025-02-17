@@ -8,24 +8,35 @@ head:
       data-url: https://editor.smallweb.run/todo/index.md
 ---
 
-# Smallweb TODO
+# Todo
 
-This website list what's next for [smallweb](https://smallweb.run).
+## smallweb
+
+- [ ] figure out why files are getting wiped out
+- [ ] figure out why config is not reloading
+- [ ] unix socket for deno workers
+- [ ] smallweb api on unix socket or private port
+- [ ] fix permissions in sftp server (ex: plugins are brokens on smallweb.live)
+- [ ] add smallweb as a git remote (dokku inspired)
+- [ ] use .local domain instead of .localhost
+  - require to add a mdns server
+  - add locally signed certificates
+  - find a way to have my own ip (probably using wireguard-go)
 
 ## smallweb.live
 
-- rework auth mechanism (ssh `<user>@smallweb.live` instead of `ssh signup@smallweb.live`)
-- Use unix sockets for the smallweb <-> deno communication
-- investigate on demand wildcard tls certificates (or buy a subscription from https://zerossl.com/)
+- [ ] fix logging issue
+- [ ] SMALLWEB_DIR bug vscode ?
+- [ ] remove hard-coded paths in [smallweb.live](https://smallweb.live/)
+- [ ] Add support for `_smallweb` record
+- [ ] use caddy rest api for wildcard certificates
 
 ## Codejar
 
-- add dark mode
+- [ ] add dark mode
 
 ## App Ideas
 
-- Automatically generate web UI (form), cli and api based on the content of the folder
-- Loom alternative using the [MUX](https://www.mux.com/) api
-- Store based on the [`smallweb-app` github topic](https://github.com/topics/smallweb-app)
 - pastebin as a service (inspired by pastes.sh)
-- rss reader which dumps article to smallweb folder
+- rss reader in the style of [tinyfeed](https://github.com/TheBigRoomXXL/tinyfeed)
+- store based on the [`smallweb-app` github topic](https://github.com/topics/smallweb-app)

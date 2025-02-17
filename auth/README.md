@@ -35,30 +35,24 @@ export default {
     fetch: githubAuth({
         issuer: "https://auth.<your-domain>",
     }, (req) => {
-        return new Response(`You are logged in as ${req.headers.get("x-user-email")}`);
+        return new Response(`You are logged in as ${req.headers.get("Remote-Email")}`);
     }),
 };
 ```
 
-You can limit access to user whose public ssh key (available at `https://github.com/<user>.keys`) is in the `authorized_keys` file:
+You can limit access to specific users, emaill, or public keys by using the `authorizedUsernames`, `authorizedEmails` and `authorizedKeys` options:
 
 ```ts
 // ~/smallweb/auth-demo/main.ts
 import * as path from "jsr:@std/path";
 
-const { SMALLWEB_DIR, SMALLWEB_APP_NAME } = Deno.env.toObject();
-
 export default {
     fetch: githubAuth({
         issuer: "https://auth.<your-domain>",
-        authorizedKeys: [
-            path.join(SMALLWEB_DIR, ".smallweb", "authorized_keys"), // global authorized keys
-            path.join(SMALLWEB_DIR, SMALLWEB_APP_NAME, "authorized_keys"), // app-specific authorized keys
-        ]
+        // only pomdtr can accessd this app
+        authorizedUsers: ["pomdtr"],
     }, (req) => {
-        return new Response(`You are logged in as ${req.headers.get("x-user-email")}`);
+        return new Response(`You are logged in as ${req.headers.get("Remote-User")}, your email is ${req.headers.get("Remote-Email")}`);
     }),
 }
 ```
-
-You can also use either the username or email address to identify the user thanks to the `authorizedUsernames` and `authorizedEmails` options.

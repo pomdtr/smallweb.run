@@ -15,7 +15,7 @@ Smallweb detects the type of website you are trying to host based on the files i
   - if the directory contains `dist/index.html` or an `index.html` file, it is served at the root of the website.
   - if the directory contains an `index.md` file, it is rendered as html.
 
-You can opt-out of the default behavior by creating a `smallweb.json` file at the root of the directory, and specifying the `root` and `entrypoint` fields. See [App Config](/docs/reference/app-config.md) for more information.
+You can opt-out of the default behavior by creating a `smallweb.json` file at the root of the directory, and specifying the `root` and `entrypoint` fields. See [Manifest](/docs/reference/manifest.md) for more information.
 
 ## Static Websites
 

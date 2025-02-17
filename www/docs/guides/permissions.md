@@ -22,7 +22,7 @@ If you want to create an app that can access the whole smallweb directory, you'l
 }
 ```
 
-Admin apps have access to the whole smallweb directory:
+Admin apps have read/write access to the whole smallweb dir (except the special `.smallweb` dir).
 
 ```ts
 const { SMALLWEB_ADMIN, SMALLWEB_DIR } = Deno.env.toObject();
@@ -32,17 +32,4 @@ if (!SMALLWEB_ADMIN) {
 }
 
 const apps = await Deno.readDir(SMALLWEB_DIR).filter((dir) => dir.isDirectory && !strings.startsWith(dir.name, "."));
-```
-
-And are also allowed to run the `smallweb` CLI:
-
-```ts
-const { SMALLWEB_CLI_PATH } = Deno.env.toObject();
-
-const command = new Deno.Command(SMALLWEB_CLI_PATH, {
-    args: ["ls", "--json"],
-});
-
-const output = await command.output();
-const apps = JSON.parse(new TextDecoder().decode(output));
 ```

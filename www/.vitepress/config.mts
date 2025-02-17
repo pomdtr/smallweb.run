@@ -151,8 +151,8 @@ export default defineConfig({
         {
           text: "References",
           items: [
-            { text: "Global Config", link: "/docs/reference/global-config" },
-            { text: "App Config", link: "/docs/reference/app-config" },
+            { text: "Config", link: "/docs/reference/config" },
+            { text: "App Manifest", link: "/docs/reference/manifest" },
             { text: "Editor Support", link: "/docs/reference/editor" },
             { text: "CLI", link: "/docs/reference/cli" },
           ],
