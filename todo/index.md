@@ -9,14 +9,16 @@ This file is a public list of the next stuffs I want to work on for [smallweb](h
 
 ## tomorrow
 
-1. git integration
-2. fix vscode error
+1. upgrade pomdtr.me and demo.smallweb.live
+1. fix vscode error
+2. add git support in smallweb.live
 3. jsonc support for `smallweb auth signin` 
 
 ## smallweb
 
+- [ ] investigate error on smallweb link
 - [x] add back `smallweb open`
-- [ ] add `git-receive-pack` and `git-upload-pack` commands
+- [s] add `git-receive-pack` and `git-upload-pack` commands
 - [ ] unix socket for deno workers
 - [ ] smallweb REST api on unix socket or private port
 - [ ] fix permissions in sftp server (ex: plugins are brokens on smallweb.live)
@@ -30,9 +32,8 @@ This file is a public list of the next stuffs I want to work on for [smallweb](h
 
 - [ ] fix tayzen vscode bug
 - [x] add support for sops
-- [ ] use caddy rest API for wildcard certificates
+- [x] use caddy rest API for wildcard certificates
 - [ ] fix logging issue
-- [ ] SMALLWEB_DIR bug vscode ?
 - [ ] remove hardcoded paths in [smallweb.live](https://smallweb.live/)
 - [ ] Add support for `_smallweb` record
 

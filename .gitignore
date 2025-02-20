@@ -1,6 +1,7 @@
 data/
 node_modules/
 dist/
+.smallweb/repos
 .env
 
 .DS_Store
