@@ -1,41 +1,50 @@
 ---
 title: Smallweb TODO
 favicon: https://icons.smallweb.run/smallweb.svg
-head:
-  - tag: script
-    attrs:
-      src: https://esm.smallweb.run/scripts/dot-shortcut.js
-      data-url: https://editor.smallweb.run/todo/index.md
 ---
 
 # Todo
 
+This file is a public list of the next stuffs I want to work on for [smallweb](https://smallweb.run).
+
+## tomorrow
+
+1. git integration
+2. fix vscode error
+3. jsonc support for `smallweb auth signin` 
+
 ## smallweb
 
-- [ ] figure out why files are getting wiped out
-- [ ] figure out why config is not reloading
+- [x] add back `smallweb open`
+- [ ] add `git-receive-pack` and `git-upload-pack` commands
 - [ ] unix socket for deno workers
-- [ ] smallweb api on unix socket or private port
+- [ ] smallweb REST api on unix socket or private port
 - [ ] fix permissions in sftp server (ex: plugins are brokens on smallweb.live)
-- [ ] add smallweb as a git remote (dokku inspired)
+- [ ] figure out why config is not reloading
 - [ ] use .local domain instead of .localhost
-  - require to add a mdns server
-  - add locally signed certificates
-  - find a way to have my own ip (probably using wireguard-go)
+      - require to add a mdns server
+      - add locally signed certificates
+      - find a way to have my own ip (probably using wireguard-go)
 
-## smallweb.live
+## [smallweb.live](https://smallweb.live)
 
+- [ ] fix tayzen vscode bug
+- [x] add support for sops
+- [ ] use caddy rest API for wildcard certificates
 - [ ] fix logging issue
 - [ ] SMALLWEB_DIR bug vscode ?
-- [ ] remove hard-coded paths in [smallweb.live](https://smallweb.live/)
+- [ ] remove hardcoded paths in [smallweb.live](https://smallweb.live/)
 - [ ] Add support for `_smallweb` record
-- [ ] use caddy rest api for wildcard certificates
 
-## Codejar
+## vscode extension
+
+- [ ] split the extension in 2 (fs-provider and smallweb)
+
+## codejar app
 
 - [ ] add dark mode
 
-## App Ideas
+## app ideas
 
 - pastebin as a service (inspired by pastes.sh)
 - rss reader in the style of [tinyfeed](https://github.com/TheBigRoomXXL/tinyfeed)
