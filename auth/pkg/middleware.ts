@@ -15,8 +15,6 @@ export type GithubAuthOptions = {
   authorizedUsers?: string[];
   /** A list of authorized emails. */
   authorizedEmails?: string[];
-  /** A list of authorized_keys paths. */
-  authorizedKeys?: string[];
 };
 
 export function githubAuth(opts: GithubAuthOptions, handler: Handler): Handler {
@@ -24,7 +22,7 @@ export function githubAuth(opts: GithubAuthOptions, handler: Handler): Handler {
     props: { username: string; email: string; publicKeys: string[] },
   ) => {
     if (
-      !opts.authorizedEmails && !opts.authorizedKeys && !opts.authorizedUsers
+      !opts.authorizedEmails && !opts.authorizedUsers
     ) {
       return true;
     }
@@ -33,16 +31,6 @@ export function githubAuth(opts: GithubAuthOptions, handler: Handler): Handler {
     if (
       opts.authorizedUsers &&
       opts.authorizedUsers.map((u) => u.toLowerCase()).includes(username)
-    ) {
-      return true;
-    }
-
-    if (
-      opts.authorizedKeys &&
-      await checkPublicKeys(
-        opts.authorizedKeys,
-        props.publicKeys,
-      )
     ) {
       return true;
     }

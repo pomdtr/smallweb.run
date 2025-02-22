@@ -20,7 +20,7 @@ export default authServer;
 
 See [Registering a Github App](https://docs.github.com/en/apps/creating-github-apps/registering-a-github-app/registering-a-github-app) for how to get the `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`.
 
-Your app needs to have read access to the user's login, email address and public ssh keys. You can request this permission by adding the `user`, `user:email` and `read:public_key` scopes to your Github App.
+Your app needs to have read access to the user's login, email address and public ssh keys. You can request this permission by adding the `user` and `user:email` scopes to your Github App.
 
 Use `https://auth.smallweb.run/github/callback` as the callback URL.
 
@@ -40,7 +40,7 @@ export default {
 };
 ```
 
-You can limit access to specific users, emaill, or public keys by using the `authorizedUsernames`, `authorizedEmails` and `authorizedKeys` options:
+You can limit access to specific users or emails by using the `authorizedUsernames` and `authorizedEmails`:
 
 ```ts
 // ~/smallweb/auth-demo/main.ts

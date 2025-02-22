@@ -1,4 +1,4 @@
-import { Excalidraw } from "jsr:@smallweb/excalidraw@0.9.0";
+import { Excalidraw } from "jsr:@smallweb/excalidraw@0.9.1";
 
 const excalidraw = new Excalidraw({
     rootDir: "./data",

@@ -1,19 +1,18 @@
 {
   "name": "@pomdtr/smallweb-codejar",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "license": "MIT",
   "exports": {
-    ".": "./mod.ts"
+    ".": "./pkg/mod.ts"
   },
   "lock": false,
   "publish": {
     "include": [
-      "mod.ts",
+      "pkg",
       "README.md"
     ]
   },
   "imports": {
-    "@smallweb/types": "jsr:@smallweb/types@^0.2.0",
     "@std/http": "jsr:@std/http@^1.0.9",
     "@std/path": "jsr:@std/path@^1.0.6"
   }

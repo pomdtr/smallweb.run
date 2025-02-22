@@ -1,28 +1,30 @@
 import * as path from "@std/path";
 import * as http from "@std/http";
-import type { FetchFn } from "@smallweb/types"
 
 export type CodejarOptions = {
-  fsRoot?: string;
+  fsRoot: string;
   urlRoot?: string;
 };
 
 export class Codejar {
-  private rootDir
-  private urlRoot
+  private rootDir;
+  private urlRoot;
 
-  constructor(options: CodejarOptions = {}) {
-    this.rootDir = path.resolve(options.fsRoot || ".");
+  constructor(options: CodejarOptions) {
+    this.rootDir = path.resolve(options.fsRoot);
     this.urlRoot = options.urlRoot || "/";
   }
 
-  fetch: FetchFn = async (req) => {
+  fetch: (req: Request) => Response | Promise<Response> = async (req) => {
     const url = new URL(req.url);
     if (!url.pathname.startsWith(this.urlRoot)) {
       return new Response("Not found", { status: 404 });
     }
 
-    const filepath = path.join(this.rootDir, url.pathname.slice(this.urlRoot.length))
+    const filepath = path.join(
+      this.rootDir,
+      url.pathname.slice(this.urlRoot.length),
+    );
     const stat = await Deno.stat(filepath).catch(() => null);
     if (!stat) {
       return new Response("File not found", { status: 404 });
@@ -46,7 +48,7 @@ export class Codejar {
       return new Response("Method not allowed", { status: 405 });
     }
 
-    if (req.headers.get("accept") == "text/plain") {
+    if (url.searchParams.has("raw")) {
       const content = await Deno.readTextFile(filepath);
       return new Response(content, {
         headers: {
@@ -138,7 +140,9 @@ const homepage = /* html */ `<html lang="en">
     addClosing: false
   })
 
-  const resp = await fetch(window.location.href, {
+  const url = new URL(window.location.href)
+  url.searchParams.set('raw', '')
+  const resp = await fetch(url, {
     headers: {
         accept: 'text/plain'
     }
