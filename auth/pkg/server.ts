@@ -15,7 +15,7 @@ export class GithubAuthServer {
         github: GithubProvider({
           clientID: opts.clientID,
           clientSecret: opts.clientSecret,
-          scopes: ["user:email", "read:public_key"],
+          scopes: ["user:email"],
         }),
       },
       storage: MemoryStorage({

@@ -3,7 +3,6 @@ type Handler = (req: Request) => Response | Promise<Response>;
 import { createClient } from "@openauthjs/openauth/client";
 import { getCookies, setCookie } from "@std/http/cookie";
 import { subjects } from "./subjects.ts";
-import { checkPublicKeys } from "./ssh.ts";
 
 /**
  * Options for GitHub authentication middleware.
@@ -60,6 +59,10 @@ export function githubAuth(opts: GithubAuthOptions, handler: Handler): Handler {
     }
 
     if (url.pathname == "/callback") {
+      if (url.searchParams.has("error")) {
+        const description = url.searchParams.get("error_description");
+        return new Response(description, { status: 500 });
+      }
       const code = url.searchParams.get("code");
       if (!code) return new Response("Missing code", { status: 400 });
       const exchanged = await client.exchange(

@@ -15,6 +15,7 @@ import toc from "https://deno.land/x/lume_markdown_plugins@v0.7.1/toc.ts";
 import image from "https://deno.land/x/lume_markdown_plugins@v0.7.1/image.ts";
 import footnotes from "https://deno.land/x/lume_markdown_plugins@v0.7.1/footnotes.ts";
 import { alert } from "npm:@mdit/plugin-alert@0.13.1";
+import favicon from "lume/plugins/favicon.ts";
 
 import "lume/types.ts";
 
@@ -59,9 +60,9 @@ export default function (userOptions?: Options) {
       .use(pagefind(options.pagefind))
       .use(sitemap())
       .use(feed(options.feed))
+      .use(favicon({ input: "favicon.svg" }))
       .copy("fonts")
       .copy("js")
-      .copy("favicon.png")
       .copy("uploads")
       .mergeKey("extra_head", "stringArray")
       .preprocess([".md"], (pages) => {

@@ -92,6 +92,10 @@ export default defineConfig({
               link: "/docs/guides/ssh",
             },
             {
+              text: "Git Integration",
+              link: "/docs/guides/git",
+            },
+            {
               text: "Cron Jobs",
               link: "/docs/guides/cron",
             },

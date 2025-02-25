@@ -1,8 +1,10 @@
-import { Codejar } from "jsr:@pomdtr/smallweb-codejar@0.4.1";
+import { Codejar } from "jsr:@pomdtr/smallweb-codejar@0.7.0";
 import { githubAuth } from "jsr:@pomdtr/github-auth@0.4.0";
 
 const { SMALLWEB_DIR } = Deno.env.toObject();
-const codejar = new Codejar(SMALLWEB_DIR);
+const codejar = new Codejar({
+    fsRoot: SMALLWEB_DIR,
+});
 
 // add authentication
 codejar.fetch = githubAuth(

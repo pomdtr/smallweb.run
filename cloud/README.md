@@ -15,7 +15,7 @@ head:
 
 ## Introduction
 
-Smallweb cloud will allow you to test out smallweb without buying your own domain. It's strongly inspired by both [blot.im](https://blot.im), [val.town](https://val.town), [pico.sh](https://pico.sh), and [piku](https://piku.github.io).
+Smallweb cloud will allow you to test out smallweb without buying your own domain. It's strongly inspired by both [blot.im](https://blot.im), [val.town](https://val.town), [pico.sh](https://pico.sh), and [dokku](https://dokku.com/).
 
 You will interact with smallweb.live using the openssh cli.
 

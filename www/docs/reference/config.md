@@ -34,6 +34,7 @@ Additional domains that should be routed to the same smallweb instance.
 
 ```json
 {
+  "domain": "example.com",
   "additionalDomains": [
     // in addition to example.com, apps will be served at `<app>.example.org`
     "example.org",
@@ -51,6 +52,7 @@ List of public ssh keys that are allowed to:
 
 ```json
 {
+  "domain": "example.com",
   "authorizedKeys": [
     "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7Z... user@host"
   ]
@@ -67,6 +69,7 @@ Give admin permissions to an app. Admin apps have read/write access to the whole
 
 ```json
 {
+  "domain": "example.com",
   "apps": {
     "vscode": {
       "admin": true
@@ -85,7 +88,7 @@ Additional domains that should be routed to the app.
   "apps": {
     "vscode": {
       "additionalDomains": [
-        // in addition to code.example.com, the app will be served at vscode.me
+        // in addition to vscode.example.com, the app will be served at vscode.me
         "vscode.me"
       ]
     }
@@ -102,6 +105,7 @@ List of public ssh keys that are allowed to:
 
 ```json
 {
+  "domain": "example.com",
   "apps": {
     "vscode": {
       "authorizedKeys": [

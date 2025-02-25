@@ -6,6 +6,14 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqKd2Mo+PzywOq+Xf0p/J90ZKVnaRo9Chb63f/jGJgW android"
     ],
     "apps": {
+        "excalidraw": {
+            "authorizedKeys": [
+                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP2o7fo9vx/uYsG1RiemDqd5X/V9b6H5wtXvLAH/8WcG"
+            ],
+            "additionalDomains": [
+                "excalidraw.zeghib.com"
+            ]
+        },
         "auth": {
             "admin": true
         },

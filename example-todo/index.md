@@ -16,10 +16,10 @@ This file is a public list of the next stuffs I want to work on for [smallweb](h
 
 - [x] fix reloading of config
 - using the `ssh` cli should be optional
-  - ability to create an account and open vscode from the browser
+  - ability to create an account and edit folder from the browser
+  - webdav server ?
 - move logs to `.smallweb/logs/<app>/[cron|http|console].jsonl`
-- replace rclone by mutagen: `mutagen sync create <user>@smallweb.live:~/smallweb`
-- [ ] update git remote url: `git remote add smallweb.live ssh://<app>.<user>@smallweb.live/`
+- replace rclone by mutagen: `mutagen sync create mutagen@smallweb.live:<username>`
 - cursor demo
 
 ## tomorrow

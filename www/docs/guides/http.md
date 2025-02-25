@@ -36,36 +36,6 @@ You can create a website by just adding an `index.html` file in the folder.
 
 To access the website, open `https://example-static.<smallweb-domain>` in your browser.
 
-The static server also supports transpiling `.ts`, `.tsx`, `.jsx`, meaning that you can just import them from your static website.
-
-```html
-<!-- ~/smallweb/example-static/index.html -->
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Example Static Website</title>
-</head>
-
-<body>
-    <div id="root"></div>
-    <script type="module" src="./script.tsx"></script>
-</body>
-```
-
-You'll need to add a pragma to the script file to tell smallweb how to transpile it.
-
-```tsx
-// ~/smallweb/example-static/script.tsx
-/** @jsxImportSource https://esm.sh/react@19.0.0 **/
-import { createRoot } from "https://esm.sh/react-dom@19.0.0/client";
-
-const root = createRoot(document.getElementById("root")!);
-root.render(<h1>Hello, world!</h1>);
-```
-
-Only use imports that are usable from the browser. `jsr:` and `npm:` specifiers are not supported in the browser.
-
 If your static website contains a `main.js` file, but you want to serve it as a static website, you can do the following:
 
 - rename it to something else
@@ -83,27 +53,13 @@ The smallweb static server automatically renders markdown files as html. If you 
 
 ### Single Page Applications
 
-The default file-server does not support single page applications (yet!). Instead, you can use the following `main.ts` file:
+To serve a single page application, you need to redirect all requests to the `index.html` file. You can do this by a `_redirects` file at the root of the static directory.
 
-```ts
-import { serveDir, serveFile } from "jsr:@std/http/file-server"
-
-export default {
-    async fetch(req: Request) {
-        // check if an asset match the request
-        const resp = await serveDir(req, {
-            fsRoot: "./dist"
-        })
-
-        // else, serve dist/index.html
-        if (resp.status == 404) {
-            return serveFile(req, "./dist/index.html")
-        }
-
-        return resp
-    }
-}
+```txt
+/* /index.html 200
 ```
+
+If you're using a tool like [Vite](https://vitejs.dev), this `_redirects` file should be added to the `public` directory.
 
 ## Dynamic Websites
 
