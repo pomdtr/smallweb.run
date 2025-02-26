@@ -1,0 +1,621 @@
+# SMALLWEB DOCUMENTATION (LLM-FRIENDLY FORMAT)
+
+## OVERVIEW
+Smallweb is a file-based hosting platform that makes self-hosting simple. Each subfolder in your smallweb directory becomes a unique domain. No dev server or build process is required - write a file, save it, and it's live.
+
+## CORE CONCEPTS
+
+### Hosting Model
+- **File-based hosting**: Each folder becomes a unique subdomain 
+- **Example**: With domain=example.com, folder "blog" becomes blog.example.com
+- **Root domain**: Redirects to www.example.com if the www directory exists
+
+### Website Types
+- **Static websites**: Any folder with index.html or index.md
+- **Dynamic websites**: Any folder with main.[js,ts,jsx,tsx] that exports a fetch handler
+- **Configuration**: Override defaults with smallweb.json or smallweb.jsonc
+
+### Directory Structure
+- **~/smallweb/[app-name]/** - Each subdirectory is an app
+- **~/smallweb/.smallweb/** - Configuration directory
+- **~/smallweb/[app-name]/data/** - App-specific writable storage
+- **~/smallweb/[app-name]/.env** - App-specific environment variables
+
+## CREATING NEW APPS (STEP-BY-STEP)
+
+### 1. Creating a New App Directory
+To create a new app named "hello-world":
+```sh
+# First, make the directory for your app
+mkdir -p ~/smallweb/hello-world
+```
+
+### 2. Creating a Basic Static Website
+```sh
+# Create an index.html file in your app directory
+echo '<!DOCTYPE html>
+<html>
+  <head><title>Hello World</title></head>
+  <body><h1>Hello, World!</h1></body>
+</html>' > ~/smallweb/hello-world/index.html
+```
+
+### 3. Creating a Basic Dynamic Website
+```sh
+# Create a main.ts file in your app directory
+echo 'export default {
+  fetch(request: Request) {
+    return new Response("Hello, World!", {
+      headers: { "Content-Type": "text/plain" }
+    });
+  }
+}' > ~/smallweb/hello-world/main.ts
+```
+
+### 4. Accessing Your New App
+Once Smallweb is running, your app will be available at:
+```
+https://hello-world.your-domain.com
+```
+Or if using localhost:
+```
+https://hello-world.smallweb.localhost
+```
+
+## IMPORTING LIBRARIES (DETAILED GUIDE)
+
+### Deno Import Syntax Explained
+Smallweb uses Deno's runtime, which supports these import methods:
+
+1. **JSR Registry (Recommended)**
+   ```ts
+   // Format: import { Module } from "jsr:@author/package"
+   import { Hono } from "jsr:@hono/hono";
+   import { DB } from "jsr:@pomdtr/sqlite";
+   ```
+
+2. **NPM Packages**
+   ```ts
+   // Format: import { Module } from "npm:package-name"
+   import { JsonFilePreset } from "npm:lowdb/node";
+   import express from "npm:express";
+   ```
+
+3. **URL Imports (less recommended)**
+   ```ts
+   // Format: import { Module } from "https://url-to-module.js"
+   import { html } from "https://deno.land/x/hono@v3.10.0/middleware.ts";
+   ```
+
+### Common Library Import Examples
+
+```ts
+// HTTP frameworks
+import { Hono } from "jsr:@hono/hono";
+import express from "npm:express";
+
+// Database
+import { DB } from "jsr:@pomdtr/sqlite";
+import { JsonFilePreset } from "npm:lowdb/node";
+import { Pool } from "npm:pg";
+
+// Authentication
+import { lastlogin } from "jsr:@pomdtr/lastlogin";
+import { bearerAuth } from "jsr:@hono/bearer-auth";
+
+// UI frameworks
+import React from "npm:react";
+import { renderToString } from "npm:react-dom/server";
+
+// Utilities
+import { z } from "npm:zod";
+import _ from "npm:lodash";
+```
+
+## INSTALLATION
+
+### One-Line Install
+```sh
+curl -fsSL https://install.smallweb.run | sh
+```
+
+### Homebrew
+```sh
+brew install pomdtr/tap/smallweb
+```
+
+### VPS Installation
+```sh
+curl -sSL https://install.smallweb.run/vps.sh | sh
+```
+
+## BASIC USAGE
+
+### Starting Smallweb
+```sh
+smallweb up
+```
+
+### Starting with Cron Support
+```sh
+smallweb up --cron
+```
+
+### With SSH Support
+```sh
+smallweb up --ssh-addr :2222
+```
+
+## CONFIGURATION
+
+### Global Config
+File: `~/smallweb/.smallweb/config.json`
+```json
+{
+  "domain": "example.com",
+  "additionalDomains": ["example.org"],
+  "authorizedKeys": ["ssh-rsa ..."],
+  "apps": {
+    "app-name": {
+      "admin": true,
+      "additionalDomains": ["custom.domain"],
+      "authorizedKeys": ["ssh-rsa ..."]
+    }
+  }
+}
+```
+
+### App Manifest
+File: `~/smallweb/[app-name]/smallweb.json`
+```json
+{
+  "entrypoint": "main.ts", 
+  "root": "./dist",
+  "crons": [
+    {
+      "schedule": "0 0 * * *",
+      "args": ["param1"]
+    }
+  ]
+}
+```
+
+## CREATING WEBSITES
+
+### Complete Website Examples
+
+#### Static Website
+```html
+<!-- ~/smallweb/example-static/index.html -->
+<!DOCTYPE html>
+<html>
+  <head><title>Example Static Website</title></head>
+  <body><h1>Hello, world!</h1></body>
+</html>
+```
+
+#### Dynamic Website with Fetch Handler
+```ts
+// ~/smallweb/example-server/main.ts
+export default {
+  fetch(request: Request) {
+    const url = new URL(request.url);
+    const name = url.searchParams.get("name") || "world";
+    return new Response(`Hello, ${name}!`, {
+      headers: { "Content-Type": "text/plain" }
+    });
+  }
+}
+```
+
+#### Using Hono Framework (with JSR import)
+```ts
+// ~/smallweb/hono-example/main.ts
+import { Hono } from "jsr:@hono/hono";  // Notice the jsr: prefix for JSR registry
+
+const app = new Hono();
+app.get("/", c => c.text("Hello, world!"));
+app.get("/:name", c => c.text(`Hello, ${c.params.name}!`));
+
+// Always export your app as the default export
+export default app;
+```
+
+### Common Website Patterns
+
+#### HTML Template Rendering
+```ts
+// ~/smallweb/template-example/main.ts
+import { Hono } from "jsr:@hono/hono";
+import { html } from "jsr:@hono/html";
+
+const app = new Hono();
+
+app.get("/", (c) => {
+  // Use the html template literal for type-safe HTML
+  return c.html(html`
+    <!DOCTYPE html>
+    <html>
+      <head><title>Template Example</title></head>
+      <body>
+        <h1>Welcome to Smallweb!</h1>
+        <p>Current time: ${new Date().toLocaleTimeString()}</p>
+      </body>
+    </html>
+  `);
+});
+
+export default app;
+```
+
+#### API Endpoint
+```ts
+// ~/smallweb/api-example/main.ts
+import { Hono } from "jsr:@hono/hono";
+
+const app = new Hono();
+
+// Define some sample data
+const users = [
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" },
+];
+
+// JSON API endpoint
+app.get("/api/users", (c) => {
+  return c.json(users);
+});
+
+// Get user by ID
+app.get("/api/users/:id", (c) => {
+  const id = parseInt(c.req.param("id"));
+  const user = users.find(u => u.id === id);
+  
+  if (!user) {
+    return c.json({ error: "User not found" }, 404);
+  }
+  
+  return c.json(user);
+});
+
+export default app;
+```
+
+## DATA PERSISTENCE
+
+### File Storage
+Each app has write access to its `data` directory. This is important - you MUST use the `data` subfolder for any files you want to write.
+
+```ts
+// Example of reading/writing files in the data directory
+// ~/smallweb/file-storage-example/main.ts
+export default {
+  async fetch(request: Request) {
+    const url = new URL(request.url);
+    
+    // Make sure the data directory exists
+    try {
+      await Deno.mkdir("data", { recursive: true });
+    } catch (err) {
+      if (!(err instanceof Deno.errors.AlreadyExists)) {
+        throw err;
+      }
+    }
+    
+    // Handle writes
+    if (request.method === "POST") {
+      const text = await request.text();
+      await Deno.writeTextFile("data/message.txt", text);
+      return new Response("Data saved successfully");
+    }
+    
+    // Handle reads
+    try {
+      const data = await Deno.readTextFile("data/message.txt");
+      return new Response(data);
+    } catch {
+      return new Response("No data found", { status: 404 });
+    }
+  }
+}
+```
+
+### JSON File Database (using NPM import)
+```ts
+// ~/smallweb/json-db-example/main.ts
+import { JsonFilePreset } from "npm:lowdb/node"  // Notice the npm: prefix for NPM packages
+
+const app = {
+  async fetch(request: Request) {
+    // Always use the data directory for persistent storage
+    const db = await JsonFilePreset('data/db.json', { posts: [] })
+    
+    if (request.method === "POST") {
+      // Add a new post
+      const post = await request.json();
+      post.id = Date.now();  // Simple ID generation
+      post.createdAt = new Date().toISOString();
+      
+      // In two steps
+      db.data.posts.push(post);
+      await db.write();
+      
+      return new Response(JSON.stringify(post), { 
+        headers: { "Content-Type": "application/json" } 
+      });
+    }
+    
+    // Return all posts
+    return new Response(JSON.stringify(db.data.posts), { 
+      headers: { "Content-Type": "application/json" } 
+    });
+  }
+};
+
+export default app;
+```
+
+### SQLite (using JSR import)
+```ts
+// ~/smallweb/sqlite-example/main.ts
+import { Hono } from "jsr:@hono/hono";
+import { DB } from "jsr:@pomdtr/sqlite";  // JSR registry import
+
+const app = new Hono();
+
+// Initialize database
+const initDb = () => {
+  // Always store in the data directory
+  const db = new DB("data/users.db");
+  
+  // Create tables if they don't exist
+  db.execute(`
+    CREATE TABLE IF NOT EXISTS users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      email TEXT UNIQUE,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    )
+  `);
+  
+  return db;
+};
+
+// List all users
+app.get("/users", (c) => {
+  const db = initDb();
+  const users = [];
+  
+  // Query all users
+  for (const row of db.query("SELECT id, name, email, created_at FROM users")) {
+    users.push({
+      id: row[0],
+      name: row[1],
+      email: row[2],
+      createdAt: row[3]
+    });
+  }
+  
+  db.close();
+  return c.json(users);
+});
+
+// Add a new user
+app.post("/users", async (c) => {
+  const db = initDb();
+  const { name, email } = await c.req.json();
+  
+  try {
+    const id = db.query(
+      "INSERT INTO users (name, email) VALUES (?, ?) RETURNING id",
+      [name, email]
+    ).next().value[0];
+    
+    db.close();
+    return c.json({ id, name, email }, 201);
+  } catch (err) {
+    db.close();
+    return c.json({ error: err.message }, 400);
+  }
+});
+
+export default app;
+```
+
+## ENVIRONMENT VARIABLES
+
+### App-Specific Env Variables
+File: `~/smallweb/[app-name]/.env`
+```
+BEARER_TOKEN=SECURE_TOKEN
+```
+
+### Accessing Env Variables
+```ts
+export default {
+  fetch(req: Request) {
+    return new Response(`Token: ${Deno.env.get("BEARER_TOKEN")}`);
+  }
+}
+```
+
+### Injected Variables
+- `SMALLWEB_VERSION` - CLI version
+- `SMALLWEB_DIR` - Apps directory
+- `SMALLWEB_DOMAIN` - Domain for apps
+- `SMALLWEB_APP_NAME` - App name
+- `SMALLWEB_APP_DOMAIN` - App domain
+- `SMALLWEB_APP_URL` - App base URL
+- `SMALLWEB_ADMIN` - Set for admin apps
+
+## AUTHENTICATION
+
+### Protecting Apps
+```ts
+// ~/smallweb/protected-app/main.ts
+import { Excalidraw } from "jsr:@pomdtr/excalidraw";
+import { lastlogin } from "jsr:@pomdtr/lastlogin";
+
+const app = new Excalidraw();
+app.fetch = lastlogin(app.fetch);
+export default app;
+```
+
+### Authentication Providers
+- `lastlogin` - Email-based authentication
+- `bearer-auth` - Token-based authentication
+- Hono integrations: basic-auth, bearer-auth, OAuth
+
+## CLI COMMANDS
+
+### Adding CLI Commands to Apps
+```ts
+// ~/smallweb/custom-command/main.ts
+export default {
+  run(args: string[]) {
+    console.log("Hello world");
+  }
+}
+```
+
+### Running Commands
+```sh
+smallweb run custom-command
+```
+
+## CRON JOBS
+
+### Defining Cron Jobs
+File: `~/smallweb/hello/smallweb.json`
+```json
+{
+  "crons": [
+    {
+      "schedule": "0 0 * * *",
+      "args": ["param1"]
+    }
+  ]
+}
+```
+
+### Listing Cron Jobs
+```sh
+smallweb crons [app-name]
+```
+
+## FILE MANAGEMENT
+
+### Creating Symbolic Links
+```sh
+smallweb link app1/users.json app2/users.json
+```
+
+### SSH/SFTP Access
+With SSH enabled:
+```sh
+# Access smallweb CLI
+ssh -p 2222 _@example.com
+
+# Access app CLI
+ssh -p 2222 app-name@example.com
+
+# SFTP access
+sftp -P 2222 app-name@example.com
+```
+
+## DEPLOYMENT
+
+### Git Deployment
+```sh
+git remote add example.com ssh://my-app@example.com/
+git push example.com main
+```
+
+### File Syncing with Mutagen
+```sh
+mutagen sync create \
+    --ignore=node_modules,.DS_Store \
+    --ignore-vcs \
+    --mode=two-way-resolved \
+    debian@example.com:/home/debian/smallweb ~/smallweb
+```
+
+### Using Local Setup
+- **macOS**: Use dnsmasq and Caddy
+- **Linux**: Use Caddy for reverse proxy
+- **Windows**: Use WSL with Linux setup
+
+### Cloud Hosting Options
+- **VPS**: Any VPS provider with SSH access
+- **Cloudflare Tunnel**: Free secure tunneling
+- **Deno Deploy**: For high-traffic apps
+
+## ADMIN FEATURES
+
+### Admin Apps
+```json
+{
+  "apps": {
+    "my-admin-app": {
+      "admin": true
+    }
+  }
+}
+```
+
+### Plugin System
+Create scripts in `$SMALLWEB_DIR/.smallweb/plugins/` to extend CLI
+
+## LOGGING
+
+### Viewing Logs
+```sh
+# View all logs
+smallweb logs
+
+# View app logs
+smallweb logs app-name
+
+# View console logs
+smallweb logs app-name --type=console
+```
+
+## SECURITY
+
+### Sandbox Permissions
+- Read access: App folder, Deno cache
+- Write access: App's data subfolder
+- Network access: HTTP requests
+- Env access: .env files
+
+### SSH Key Authentication
+```json
+{
+  "authorizedKeys": [
+    "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7..."
+  ]
+}
+```
+
+### Encrypted Secrets
+Store encrypted secrets in `secrets.enc.env` using SOPS with age encryption.
+
+## TROUBLESHOOTING
+
+### System Checks
+```sh
+smallweb doctor
+```
+
+### Viewing Service Status
+```sh
+smallweb service status
+```
+
+### Service Logs
+```sh
+smallweb service logs --follow
+```
+
+## COMMAND REFERENCE
+Run `smallweb --help` for full command reference.
