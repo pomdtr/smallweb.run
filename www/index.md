@@ -36,7 +36,7 @@ hero:
 features:
   - icon: 📂
     title: File-Based Hosting
-    details: Smallweb maps subdomains to subfolders in your smallweb directory. Creating a new app is as simple as creating a new folder.
+    details: Smallweb maps subdomains to subfolders in your smallweb directory. Creating a new app is as simple as running `mkdir ~/smallweb/<app-name>`.
   - icon: ⚡
     title: Instant Feedback
     details: No build or deploy step is required. Just save your changes and refresh your browser.
