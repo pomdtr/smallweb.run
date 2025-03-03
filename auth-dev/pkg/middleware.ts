@@ -17,8 +17,8 @@ export type GithubAuthOptions = {
 };
 
 export function githubAuth(opts: GithubAuthOptions, handler: Handler): Handler {
-  const isAuthorized = async (
-    props: { username: string; email: string; publicKeys: string[] },
+  const isAuthorized = (
+    props: { username: string; email: string },
   ) => {
     if (
       !opts.authorizedEmails && !opts.authorizedUsers
@@ -106,7 +106,7 @@ export function githubAuth(opts: GithubAuthOptions, handler: Handler): Handler {
       );
     }
 
-    if (!await isAuthorized(verified.subject.properties)) {
+    if (!isAuthorized(verified.subject.properties)) {
       return new Response("Unauthorized", { status: 403 });
     }
 

@@ -12,28 +12,7 @@ echo "export PATH=\$PATH:\$HOME/.deno/bin" >> ~/.bashrc
 
 ```sh
 curl -fsSL https://install.smallweb.run | sh
-# add ~/.local/bin to PATH
 echo "export PATH=\$PATH:\$HOME/.local/bin" >> ~/.bashrc
-
-cat <<EOF > ~/.config/systemd/user/smallweb.service
-[Unit]
-Description=Smallweb
-After=network.target
-
-[Service]
-Type=simple
-ExecStart=$HOME/.local/bin/smallweb up --cron
-Restart=always
-RestartSec=10
-Environment="SMALLWEB_DIR=$HOME/smallweb"
-
-[Install]
-WantedBy=default.target
-EOF
-
-systemctl --user daemon-reload
-systemctl --user enable smallweb
-systemctl --user start smallweb
 ```
 
 ## Setup Caddy
@@ -77,6 +56,32 @@ export default {
   }
 }
 EOF
+
+cd ~/smallweb && smallweb up
 ```
 
 If everything went well, you should be able to access `https://example.localhost` in your browser, and see the message `Smallweb is running`.
+
+## Start smallweb at login
+
+```sh
+cat <<EOF > ~/.config/systemd/user/smallweb.service
+[Unit]
+Description=Smallweb
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=$HOME/.local/bin/smallweb up --cron
+Restart=always
+RestartSec=10
+Environment="SMALLWEB_DIR=$HOME/smallweb"
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable smallweb
+systemctl --user start smallweb
+```

@@ -1,4 +1,4 @@
-import { githubAuth } from "jsr:@pomdtr/github-auth@0.3.4";
+import { githubAuth } from "jsr:@pomdtr/github-auth@0.4.3";
 
 export default {
     fetch: githubAuth({

@@ -1,0 +1,12 @@
+{
+    "dependencies": {
+        "@pomdtr/sqlite": "npm:@jsr/pomdtr__sqlite@^3.9.1",
+        "@soapbox/kysely-deno-sqlite": "npm:@jsr/soapbox__kysely-deno-sqlite@^2.2.0",
+        "@std/fs": "npm:@jsr/std__fs@^1.0.13",
+        "better-auth": "^1.2.1",
+        "hono": "^4.7.2"
+    },
+    "devDependencies": {
+        "@better-auth/cli": "^1.2.1"
+    }
+}

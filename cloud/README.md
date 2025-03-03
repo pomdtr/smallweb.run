@@ -11,7 +11,7 @@ head:
 # smallweb.live
 
 > [!WARNING]
-> smallweb.live does not exist yet, this is just proposal. Add your email to the [waitlist](https://cloud.smallweb.run) to be among the first to get access to it!
+> smallweb.live is currently in private alpha. Add you email to the [waitlist](https://cloud.smallweb.run) to be among the first to get access to it!
 
 ## Introduction
 
@@ -40,7 +40,7 @@ Available Commands:
 
 ## Usage
 
-You can use any sftp-compatible tool to edit your files (the official recommendation will be [rclone](https://rclone.org/)).
+You can use any ssh/sftp compatible tool to edit your files (the official recommendation will be [mutagen](https://mutagen.io/)).
 
 Then, just create `~/smallweb/example/main.ts`:
 

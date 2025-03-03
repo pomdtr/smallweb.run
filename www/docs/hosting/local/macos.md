@@ -9,52 +9,21 @@ In the future, we might provide a script to automate this process, but for now, 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-## Install Deno {#install-deno-macos}
+## Install Deno
 
 ```sh
 brew install deno
 ```
 
-## Setup Smallweb {#setup-smallweb-macos}
+## Setup Smallweb
 
 ```sh
 brew install pomdtr/tap/smallweb
-
-cat <<EOF > ~/Libray/LaunchAgents/com.github.pomdtr.smallweb.plist
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-    <dict>
-        <key>Label</key>
-        <string>com.github.pomdtr.smallweb</string>
-        <key>ProgramArguments</key>
-        <array>
-            <string>$(brew --prefix)/bin/smallweb</string>
-            <string>up</string>
-            <string>--cron</string>
-        </array>
-        <key>EnvironmentVariables</key>
-        <dict>
-            <key>SMALLWEB_DIR</key>
-            <string>$HOME/smallweb</string>
-        </dict>
-        <key>RunAtLoad</key>
-        <true />
-        <key>StandardOutPath</key>
-        <string>$HOME/Library/Logs/smallweb.log</string>
-        <key>StandardErrorPath</key>
-        <string>$HOME/Library/Logs/smallweb.log</string>
-        <key>WorkingDirectory</key>
-        <string>$HOME/</string>
-    </dict>
-</plist>
-EOF
-
 launchctl load ~/Library/LaunchAgents/com.github.pomdtr.smallweb.plist
 launchctl start com.github.pomdtr.smallweb
 ```
 
-## Setup Caddy {#setup-caddy-macos}
+## Setup Caddy
 
 Caddy’s configuration path depends on whether you're using an Intel-based Mac or an Apple Silicon (M1/M2) Mac.
 
@@ -98,7 +67,7 @@ brew services start caddy
 caddy trust
 ```
 
-## Setup dnsmasq {#setup-dnsmasq-macos}
+## Setup dnsmasq
 
 The configuration path for dnsmasq also depends on your Mac's architecture.
 
@@ -153,6 +122,48 @@ export default {
   }
 }
 EOF
+
+# Start smallweb
+cd ~/smallweb && smallweb up
 ```
 
 If everything went well, you should be able to access `https://example.smallweb.localhost` in your browser, and see the message `Smallweb is running`.
+
+## Start smallweb at login
+
+```sh
+cat <<EOF > ~/Libray/LaunchAgents/com.github.pomdtr.smallweb.plist
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+    <dict>
+        <key>Label</key>
+        <string>com.github.pomdtr.smallweb</string>
+        <key>ProgramArguments</key>
+        <array>
+            <string>$(brew --prefix)/bin/smallweb</string>
+            <string>up</string>
+            <string>--cron</string>
+            <string>--dir=$HOME/smallweb</string>
+        </array>
+        <key>RunAtLoad</key>
+        <true />
+        <key>StandardOutPath</key>
+        <string>$HOME/Library/Logs/smallweb.log</string>
+        <key>StandardErrorPath</key>
+        <string>$HOME/Library/Logs/smallweb.log</string>
+        <key>WorkingDirectory</key>
+        <string>$HOME/</string>
+    </dict>
+</plist>
+EOF
+
+launchctl load ~/Library/LaunchAgents/com.github.pomdtr.smallweb.plist
+```
+
+Each time you update smallweb, you'll need to restart the service. The easiest way to do this is to unload and load the service:
+
+```sh
+launchctl unload ~/Library/LaunchAgents/com.github.pomdtr.smallweb.plist
+launchctl load ~/Library/LaunchAgents/com.github.pomdtr.smallweb.plist
+```

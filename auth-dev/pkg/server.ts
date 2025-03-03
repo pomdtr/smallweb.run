@@ -38,13 +38,10 @@ export class GithubAuthServer {
             const email = emails.data.find((email) => email.primary)
               ?.email;
 
-            const { data } = await octokit.rest.users
-              .listPublicSshKeysForAuthenticatedUser();
             if (!email) throw new Error("No primary email");
             return res.subject("user", {
               username: login,
               email,
-              publicKeys: data.map((item) => item.key),
             });
           }
         }

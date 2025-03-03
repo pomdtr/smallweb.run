@@ -14,13 +14,12 @@ This file is a public list of the next stuffs I want to work on for [smallweb](h
 
 ## Next Week
 
-- [x] fix reloading of config
+- isolate each user in a docker container, and manage everything using docker-compose
+  - add support for mutagen: `mutagen sync create pomdtr@smallweb.live:/smallweb [...]`
 - using the `ssh` cli should be optional
-  - ability to create an account and open vscode from the browser
-- move logs to `.smallweb/logs/<app>/[cron|http|console].jsonl`
-- replace rclone by mutagen: `mutagen sync create <user>@smallweb.live:~/smallweb`
-- [ ] update git remote url: `git remote add smallweb.live ssh://<app>.<user>@smallweb.live/`
-- cursor demo
+  - auto-create the `vscode` app, and find a way to automatically setup auth (maybe using a middleware?)
+- move logs to `.smallweb/logs/<app>.jsonl`
+- work on cursor demo
 
 ## tomorrow
 
