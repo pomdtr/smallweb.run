@@ -1,7 +1,7 @@
-import { vt } from "jsr:@pomdtr/vt@1.11.2";
+import { vt } from "jsr:@pomdtr/vt@1.11.3";
 
 export default {
-    run: (args: string[]) => {
-        vt.parse(args);
+    run: async (args: string[]) => {
+        await vt.parse(args)
     }
 };

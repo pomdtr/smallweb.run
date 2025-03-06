@@ -4,6 +4,7 @@
     "jsr:@deno/gfm@0.10": "0.10.0",
     "jsr:@denosaurs/emoji@0.3": "0.3.1",
     "jsr:@smallweb/file-server@0.8.1": "0.8.1",
+    "jsr:@smallweb/file-server@0.8.2": "0.8.2",
     "jsr:@std/cli@^1.0.12": "1.0.13",
     "jsr:@std/cli@^1.0.6": "1.0.7",
     "jsr:@std/collections@^1.0.9": "1.0.10",
@@ -61,6 +62,18 @@
     },
     "@smallweb/file-server@0.8.1": {
       "integrity": "db7116f285114a6b56ae78026964cff0044d4a96843e050ed577a402abfb988b",
+      "dependencies": [
+        "jsr:@deno/gfm",
+        "jsr:@std/front-matter",
+        "jsr:@std/fs",
+        "jsr:@std/html@^1.0.3",
+        "jsr:@std/http@^1.0.13",
+        "jsr:@std/path@^1.0.6",
+        "npm:netlify-redirect-parser"
+      ]
+    },
+    "@smallweb/file-server@0.8.2": {
+      "integrity": "f6c94c369f6700f5700fc05361f3d0a4599b0d6e7be514dd3b9cab4940814c66",
       "dependencies": [
         "jsr:@deno/gfm",
         "jsr:@std/front-matter",

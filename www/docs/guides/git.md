@@ -2,14 +2,17 @@
 
 If your smallweb instance is accessible using [SSH](./ssh.md), you can use git to deploy your apps.
 
+Your public ssh key should be present in the `authorizedKeys` field in the global config file (`$SMALLWEB_DIR/.smallweb/config.json`) to allow git to push to your smallweb instance.
+
 ## Setup
 
 Just add a new remote to your git repository:
 
 ```sh
 $ git init --initial-branch main
-# remote syntax: ssh://<app>@<domain>/
-$ git remote add example.com ssh://my-app@example.com/
+
+# remote syntax: _@<domain>:<app-name>.git
+$ git remote add example.com _@example.com:my-app.git
 ```
 
 ## Deploy
@@ -28,4 +31,12 @@ Your app is available at https://my-app.example.com/
 To ssh://my-app@example.com/
  * [new branch]      main -> main
 branch 'main' set up to track 'example.com/main'.
+```
+
+## Cloning the repository
+
+You can also clone the repository to your local machine using:
+
+```sh
+git clone _@example.com:my-app.git
 ```

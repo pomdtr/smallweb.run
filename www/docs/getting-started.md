@@ -22,9 +22,15 @@ Join the [discord server](https://discord.gg/BsgQK42qZe) to ask questions, share
 # use the install script
 curl -fsSL https://install.smallweb.run | sh
 
-# or use homebrew
+# brew (macOS/Linux)
 brew install pomdtr/tap/smallweb
+
+# scoop (Windows)
+scoop bucket add pomdtr https://github.com/pomdtr/scoop-bucket.git
+scoop install pomdtr/smallweb
 ```
+
+You can also
 
 Smallweb installations steps heavily depends on the experience you want to have with Smallweb. Here are a few options:
 

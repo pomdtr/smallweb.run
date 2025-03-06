@@ -11,7 +11,7 @@ smallweb [flags]
 ### Options
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
   -h, --help            help for smallweb
 ```
@@ -34,7 +34,7 @@ smallweb config <key> [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -57,7 +57,7 @@ smallweb crons [app] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -78,7 +78,7 @@ smallweb doctor [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -99,7 +99,7 @@ smallweb init [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -120,7 +120,7 @@ smallweb link <source> <target> [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -145,31 +145,7 @@ smallweb list [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
-      --domain string   The domain for smallweb
-```
-
-## smallweb logs
-
-View app logs
-
-```
-smallweb logs [app] [flags]
-```
-
-### Options
-
-```
-      --all               show logs for all apps
-  -h, --help              help for logs
-      --template string   output logs using a Go template
-      --type string       log type (http, console) (default "http")
-```
-
-### Options inherited from parent commands
-
-```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -190,7 +166,7 @@ smallweb open [app] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -211,7 +187,7 @@ smallweb run <app> [args...] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -234,7 +210,7 @@ smallweb secrets [app] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 
@@ -251,7 +227,7 @@ smallweb up [flags]
 ```
       --addr string           address to listen on
       --api-addr string       address to listen on for api
-      --cron                  enable cron jobs
+      --enable-crons          enable cron jobs
   -h, --help                  help for up
       --on-demand-tls         enable on-demand tls
       --ssh-addr string       address to listen on for ssh/sftp
@@ -263,7 +239,7 @@ smallweb up [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb
+      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
       --domain string   The domain for smallweb
 ```
 

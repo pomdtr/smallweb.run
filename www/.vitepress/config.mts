@@ -108,8 +108,8 @@ export default defineConfig({
               link: "/docs/guides/data",
             },
             {
-              text: "Logs",
-              link: "/docs/guides/logs",
+              text: "Opentelemetry",
+              link: "/docs/guides/opentelemetry",
             },
             {
               text: "Plugins",
@@ -131,6 +131,10 @@ export default defineConfig({
               text: "File Sync",
               link: "/docs/guides/file-sync",
             },
+            {
+              text: "Integrations",
+              link: "/docs/guides/integrations",
+            }
           ],
         },
         {

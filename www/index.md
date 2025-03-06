@@ -1,7 +1,7 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
-title: Smallweb – Your internet folder
+title: Smallweb – Your Internet Folder
 head:
   - [
       'meta',
