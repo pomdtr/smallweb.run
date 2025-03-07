@@ -30,3 +30,9 @@ app.get("/", c => {
 // this work app has a fetch method
 export default app;
 ```
+
+Smallweb apps only have read-access to their own folder, and can only write to the `data` subfolder (contained in the app's folder). You can use this folder to:
+
+- Store data as files (e.g. JSON, CSV, etc.)
+- Use a json file as a database thanks to the `npm:lowdb` package
+- Store SQLite databases (use the `node:sqlite` package)
