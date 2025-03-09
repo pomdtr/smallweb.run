@@ -15,6 +15,10 @@ const handleRequest = async (req: Request) => {
     const url = new URL(req.url);
     if (req.method === "POST") {
         const { email } = await req.json();
+        if (!email) {
+            return new Response("Email is required!", { status: 400 });
+        }
+
         if (db.data.emails.includes(email)) {
             return new Response("You are already on the waitlist!");
         }
