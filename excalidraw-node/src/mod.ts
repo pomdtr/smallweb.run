@@ -1,5 +1,5 @@
 import * as path from "node:path";
-import { createServer } from "./server";
+import { createServer } from "./server.ts";
 import process from "node:process"
 
 export type ExcalidrawOptions = {

@@ -1,0 +1,9 @@
+{
+    "version": "0.0.5",
+    "imports": {
+        "hono": "npm:hono@^4.7.4"
+    },
+    "tasks": {
+        "build": "deno run -A build_npm.ts"
+    }
+}

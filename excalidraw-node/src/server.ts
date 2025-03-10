@@ -1,13 +1,15 @@
 import * as path from "node:path";
 import * as fs from "node:fs/promises";
 import { Hono } from "hono";
-import { serveStatic } from "hono/deno"
+import { logger } from 'hono/logger'
+import { serveStatic } from 'hono/deno'
+
 
 async function ensureDir(dir: string) {
     try {
         await fs.mkdir(dir, { recursive: true });
     } catch (e) {
-        if (e.code !== "EEXIST") {
+        if ((e as any).code !== "EEXIST") {
             throw e;
         }
     }
@@ -27,6 +29,7 @@ export function createServer(rootDir: string) {
     const jsonPath = path.join(rootDir, "drawing.excalidraw.json");
     const svgPath = path.join(rootDir, "drawing.svg");
     return new Hono()
+        .use(logger())
         .post("/", async (c) => {
             const { json, svg } = await c.req.json();
 
@@ -73,6 +76,6 @@ export function createServer(rootDir: string) {
             );
         })
         .get("*", serveStatic({
-            root: path.join(import.meta.dirname, "static")
+            root: path.join(import.meta.dirname!, "static")
         }))
 }

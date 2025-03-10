@@ -1,4 +1,4 @@
-import { Excalidraw } from "./dist/mod.js"
+import { Excalidraw } from "./npm/esm/mod.js"
 
 const excalidraw = new Excalidraw();
 
