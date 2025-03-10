@@ -1,4 +1,4 @@
-import { Excalidraw } from "./npm/esm/mod.js"
+import { Excalidraw } from "./pkg/mod.ts"
 
 const excalidraw = new Excalidraw();
 

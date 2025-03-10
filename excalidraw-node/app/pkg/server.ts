@@ -26,54 +26,67 @@ async function exists(path: string) {
 
 
 export function createServer(rootDir: string) {
-    const jsonPath = path.join(rootDir, "drawing.excalidraw.json");
-    const svgPath = path.join(rootDir, "drawing.svg");
     return new Hono()
         .use(logger())
-        .post("/", async (c) => {
+        .get("/", (c) => {
+            return c.redirect("/d/drawing")
+        })
+        .get("/d/:drawing", async (c) => {
+            const contentType = c.req.header("Content-Type");
+            const params = c.req.param()
+
+            if (contentType === "application/json" || params.drawing.endsWith(".json")) {
+                const filename = params.drawing.replace(/\.json$/, "");
+                const filepath = path.join(rootDir, `${filename}.excalidraw.json`);
+                if (!await exists(filepath)) {
+                    return new Response(null, {
+                        status: 404,
+                    });
+                }
+
+                const json = await fs.readFile(filepath, { encoding: "utf8" });
+                return new Response(
+                    json,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    },
+                );
+            } else if (contentType === "image/svg+xml" || params.drawing.endsWith(".svg")) {
+                const filename = params.drawing.replace(/\.svg$/, "");
+                const filepath = path.join(rootDir, `${filename}.svg`);
+                if (!await exists(filepath)) {
+                    return new Response(null, {
+                        status: 404,
+                    });
+                }
+
+                const svg = await fs.readFile(filepath, { encoding: "utf8" });
+                return new Response(
+                    svg,
+                    {
+                        headers: {
+                            "Content-Type": "image/svg+xml",
+                        },
+                    },
+                );
+            } else {
+                const body = await fs.readFile(path.join(import.meta.dirname!, "static/index.html"), { encoding: "utf8" });
+                return c.html(body);
+            }
+        })
+        .post("/d/:drawing", async (c) => {
+            const params = c.req.param();
             const { json, svg } = await c.req.json();
 
             await ensureDir(rootDir);
-            await fs.writeFile(jsonPath, json, { encoding: "utf8" });
-            await fs.writeFile(svgPath, svg, { encoding: "utf8" });
+            await fs.writeFile(path.join(rootDir, `${params.drawing}.excalidraw.json`), json, { encoding: "utf8" });
+            await fs.writeFile(path.join(rootDir, `${params.drawing}.svg`), svg, { encoding: "utf8" });
 
             return new Response(null, {
                 status: 204,
             });
-        })
-        .get("/svg", async () => {
-            if (!svgPath) {
-                return new Response(null, {
-                    status: 404,
-                });
-            }
-
-            const svg = await fs.readFile(svgPath);
-            return new Response(
-                svg,
-                {
-                    headers: {
-                        "Content-Type": "image/svg+xml",
-                    },
-                },
-            );
-        })
-        .get("/json", async () => {
-            if (!await exists(jsonPath)) {
-                return new Response(null, {
-                    status: 404,
-                });
-            }
-
-            const drawing = await fs.readFile(jsonPath);
-            return new Response(
-                drawing,
-                {
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                },
-            );
         })
         .get("*", serveStatic({
             root: path.join(import.meta.dirname!, "static")

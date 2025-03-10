@@ -19,9 +19,13 @@ function App() {
   const [excalidrawAPI, setExcalidrawAPI] = React.useState<any>(null);
   const debouncedSavedVersion = useDebounce(sceneVersion, DEBOUNCE_MS);
   const { data: initialData, isLoading, error } = useSWR(
-    "/json",
-    async (path) => {
-      const resp = await fetch(path);
+    window.location.href,
+    async (url) => {
+      const resp = await fetch(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
       if (resp.status === 404) {
         setSceneVersion(0);
         return null;
