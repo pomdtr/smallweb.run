@@ -6,7 +6,7 @@ import manifest from "./deno.json" with { type: "json" };
 await emptyDir("./npm");
 
 await build({
-    entryPoints: ["./src/mod.ts"],
+    entryPoints: ["./pkg/mod.ts"],
     outDir: "./npm",
     shims: {
         // see JS docs for overview and more options
@@ -16,7 +16,7 @@ await build({
     importMap: "./deno.json",
     package: {
         // package.json properties
-        name: "@smallweb/excalidraw",
+        name: manifest.name,
         version: manifest.version,
         description: "Excalidraw integration for smallweb",
         license: "MIT",
@@ -25,6 +25,6 @@ await build({
         // steps to run after building and before running the tests
         Deno.copyFileSync("LICENSE", "npm/LICENSE");
         Deno.copyFileSync("README.md", "npm/README.md");
-        copySync("frontend/dist", "npm/esm/static");
+        copySync("pkg/static", "npm/esm/static");
     },
 });

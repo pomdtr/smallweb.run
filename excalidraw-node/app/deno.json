@@ -1,5 +1,9 @@
 {
-    "version": "0.0.5",
+    "name": "@smallweb/excalidraw",
+    "version": "0.0.6",
+    "exports": {
+        ".": "./mod.ts"
+    },
     "imports": {
         "hono": "npm:hono@^4.7.4"
     },
