@@ -1,24 +1,15 @@
 {
     "domain": "smallweb.run",
+    "openauth.issuer": "https://auth.smallweb.run",
     "authorizedKeys": [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPR1N/c+B7OPXEraFx2r3UHViHFbZ2Afg8VQLQ59ZKd macbook",
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJW+GQk0KCvSreL+y3AZdtCu82+13E2eEled+sGRkIEv macbook-pro",
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqKd2Mo+PzywOq+Xf0p/J90ZKVnaRo9Chb63f/jGJgW android"
     ],
     "apps": {
-        "excalidraw": {
-            "authorizedKeys": [
-                "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP2o7fo9vx/uYsG1RiemDqd5X/V9b6H5wtXvLAH/8WcG"
-            ],
-            "additionalDomains": [
-                "excalidraw.zeghib.com"
-            ]
-        },
-        "auth": {
-            "admin": true
-        },
         "tree": {
-            "admin": true
+            "admin": true,
+            "private": true
         },
         "domains": {
             "admin": true
@@ -30,12 +21,10 @@
             "admin": true
         },
         "editor": {
+            "private": true,
             "admin": true
         },
         "ray": {
-            "admin": true
-        },
-        "webdav": {
             "admin": true
         },
         "vscode": {

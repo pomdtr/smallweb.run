@@ -25,7 +25,7 @@ Hello world
 You can easily wire it to smallweb:
 
 ```ts
-import { program } from '@commander-js/extra-typings';
+import { program } from 'npm:@commander-js/extra-typings';
 
 export default {
     run(args: string[]) {

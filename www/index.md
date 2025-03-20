@@ -22,8 +22,7 @@ hero:
   text: "Your internet folder"
   tagline: A personal cloud contained in a single directory.
   image:
-    light: /icon-light.svg
-    dark: /icon-dark.svg
+    src: /smallweb_vtuber.webp
     alt: Smallweb
   actions:
     - theme: brand
@@ -36,7 +35,7 @@ hero:
 features:
   - icon: 📂
     title: File-Based Hosting
-    details: Smallweb maps subdomains to subfolders in your smallweb directory. Creating a new app is as simple as running `mkdir ~/smallweb/<app-name>`.
+    details: Smallweb maps subdomains to subfolders in your smallweb directory. Creating a new app is as simple as running mkdir.
   - icon: ⚡
     title: Instant Feedback
     details: No build or deploy step is required. Just save your changes and refresh your browser.

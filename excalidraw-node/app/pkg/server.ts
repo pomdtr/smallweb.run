@@ -1,7 +1,6 @@
 import * as path from "node:path";
 import * as fs from "node:fs/promises";
 import { Hono } from "hono";
-import { logger } from 'hono/logger'
 import { serveStatic } from 'hono/deno'
 
 
@@ -27,7 +26,6 @@ async function exists(path: string) {
 
 export function createServer(rootDir: string) {
     return new Hono()
-        .use(logger())
         .get("/", (c) => {
             return c.redirect("/d/drawing")
         })

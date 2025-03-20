@@ -1,10 +1,11 @@
 {
     "name": "@smallweb/excalidraw",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "exports": {
         ".": "./mod.ts"
     },
     "imports": {
+        "@commander-js/extra-typings": "npm:@commander-js/extra-typings@^13.1.0",
         "hono": "npm:hono@^4.7.4"
     },
     "tasks": {

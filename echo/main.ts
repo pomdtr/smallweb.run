@@ -1,8 +1,10 @@
 export default {
-    fetch: (req) => {
+    fetch: async (req) => {
         return Response.json(
             {
                 url: req.url,
+                method: req.method,
+                body: req.method == "POST" ? await req.text() : undefined,
                 headers: Object.fromEntries(req.headers.entries())
             }
         )

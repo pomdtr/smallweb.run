@@ -42,7 +42,7 @@ const handleRequest = async (req: Request) => {
     }
 
     if (url.pathname === "/readme") {
-        return Response.redirect("https://readme.smallweb.run/cloud.md");
+        return Response.redirect("https://readme.smallweb.run/cloud");
     }
 
     return serveFile(req, "index.html");

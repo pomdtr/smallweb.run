@@ -23,6 +23,7 @@
     "jsr:@std/path@~0.225.2": "0.225.2",
     "jsr:@ts-morph/bootstrap@0.24": "0.24.0",
     "jsr:@ts-morph/common@0.24": "0.24.0",
+    "npm:@commander-js/extra-typings@^13.1.0": "13.1.0_commander@13.1.0",
     "npm:hono@^4.7.4": "4.7.4"
   },
   "jsr": {
@@ -125,12 +126,22 @@
     }
   },
   "npm": {
+    "@commander-js/extra-typings@13.1.0_commander@13.1.0": {
+      "integrity": "sha512-q5P52BYb1hwVWE6dtID7VvuJWrlfbCv4klj7BjUUOqMz4jbSZD4C9fJ9lRjL2jnBGTg+gDDlaXN51rkWcLk4fg==",
+      "dependencies": [
+        "commander"
+      ]
+    },
+    "commander@13.1.0": {
+      "integrity": "sha512-/rFeCpNJQbhSZjGVwO9RFV3xPqbnERS8MmIQzCtD/zl6gpJuV/bMLuN92oG3F7d8oDEHHRrujSXNUr8fpjntKw=="
+    },
     "hono@4.7.4": {
       "integrity": "sha512-Pst8FuGqz3L7tFF+u9Pu70eI0xa5S3LPUmrNd5Jm8nTHze9FxLTK9Kaj5g/k4UcwuJSXTP65SyHOPLrffpcAJg=="
     }
   },
   "workspace": {
     "dependencies": [
+      "npm:@commander-js/extra-typings@^13.1.0",
       "npm:hono@^4.7.4"
     ]
   }
