@@ -4,7 +4,8 @@
     "authorizedKeys": [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPR1N/c+B7OPXEraFx2r3UHViHFbZ2Afg8VQLQ59ZKd macbook",
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJW+GQk0KCvSreL+y3AZdtCu82+13E2eEled+sGRkIEv macbook-pro",
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqKd2Mo+PzywOq+Xf0p/J90ZKVnaRo9Chb63f/jGJgW android"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqKd2Mo+PzywOq+Xf0p/J90ZKVnaRo9Chb63f/jGJgW android",
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPeqJ99Rne9pxn4apYh23ibSCoIKhkiR0gQpSdYUwlNf codespace"
     ],
     "authorizedEmails": [
         "achille.lacoin@gmail.com"
