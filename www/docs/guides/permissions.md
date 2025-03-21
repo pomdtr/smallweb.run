@@ -11,18 +11,20 @@ This sandbox protects the host system from malicious code, and ensures that apps
 
 ## Admin Apps
 
-If you want to create an app that can access the whole smallweb directory, you'll need to it to the `adminApps` array in your global config (`~/.smallweb/config.json`).
+If you want to create an app that can access the whole smallweb directory, you can set the `apps.<app-name>.admin` property to `true` in the global config file.
 
 ```json
 // ~/smallweb/.smallweb/config.json
 {
-    "adminApps": [
-        "my-admin-app"
-    ]
+    "apps": {
+        "<app-name>": {
+            "admin": true
+        }
+    }
 }
 ```
 
-Admin apps have read/write access to the whole smallweb dir (except the special `.smallweb` dir).
+Admin apps have read/write access to the whole smallweb dir.
 
 ```ts
 const { SMALLWEB_ADMIN, SMALLWEB_DIR } = Deno.env.toObject();

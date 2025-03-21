@@ -4,7 +4,7 @@ import { Octokit } from "npm:octokit@^4.1.0";
 import { THEME_SST } from "npm:/@openauthjs/openauth@^0.3.7/ui/theme";
 import { MemoryStorage } from "npm:/@openauthjs/openauth@^0.3.7/storage/memory";
 import { createSubjects } from "npm:@openauthjs/openauth@^0.3.7/subject";
-import { object, string } from "npm:valibot@1.0.0"
+import { object, string } from "npm:valibot@1.0.0";
 import * as fs from "jsr:@std/fs@^1.0.11";
 
 const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = Deno.env.toObject();

@@ -6,10 +6,19 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJW+GQk0KCvSreL+y3AZdtCu82+13E2eEled+sGRkIEv macbook-pro",
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPqKd2Mo+PzywOq+Xf0p/J90ZKVnaRo9Chb63f/jGJgW android"
     ],
+    "authorizedEmails": [
+        "achille.lacoin@gmail.com"
+    ],
     "apps": {
         "tree": {
             "admin": true,
             "private": true
+        },
+        "demo": {
+            "private": true,
+            "authorizedEmails": [
+                "tbd_fr@yahoo.fr"
+            ]
         },
         "domains": {
             "admin": true
