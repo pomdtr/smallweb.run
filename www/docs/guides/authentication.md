@@ -1,8 +1,6 @@
-# Authentication
+# Authentication with OpenID Connect
 
-## OpenID Connect
-
-### Usage
+## Using a public OIDC provider
 
 You can instruct smallweb to authenticate users using OpenID connect. The easiest to get started is to use [Lastlogin](https://lastlogin.net), a public OIDC provider that do not require a registration process.
 
@@ -91,7 +89,7 @@ If you want to only protect specific routes, set the `privateRoutes` and `public
 }
 ```
 
-### Hosting your own OIDC provider from smallweb
+## Hosting your own OIDC provider from smallweb
 
 Nothing stops you from using an internal url as the issuer !
 
@@ -134,15 +132,6 @@ const iss = issuer({
 export default oidc(iss, storage);
 ```
 
-## Forward Authentication
+Openauth support a bunch of issuers (Google, Github, etc), refer to [their documentation](https://openauth.js.org/docs/) for more information.
 
-If you use smallweb behind reverse proxy, you can delegate authentication to it using forward authentication.
-
-Instead of contacting an OIDC provider, smallweb will check that the `Remote-Email` or `Remote-Group` headers have been set by the reverse proxy, and verify them against the list of users provided in the `authorizedEmails` array.
-
-Refer to the [caddy docs](https://caddyserver.com/docs/caddyfile/directives/forward_auth) for a more detailed explanation of how to set up forward authentication.
-
-Here are some projects that play well with this pattern:
-
-- [https://www.authelia.com/](https://www.authelia.com/)
-- [oauth2-proxy](https://oauth2-proxy.github.io/oauth2-proxy/)
+Smallweb use the app origin as the `client_id`, and no `client_secret`. You can read more about the logic behind these choices at <https://lastlogin.net/developers/>.
