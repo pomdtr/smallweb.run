@@ -42,11 +42,9 @@ In addition to these, the `SMALLWEB_ADMIN` environment variable is also set for 
 
 > [!WARNING] This feature is recommended only for advanced users.
 
-Smallweb delegates encryption to [SOPS](https://github.com/getsops/sops).
+Smallweb delegates encryption to [SOPS](https://github.com/getsops/sops). Encrypted secrets are stored in a `secrets.enc.env` file at the root of your app dir.
 
-Encrypted secrets are stored in a `secrets.enc.env` file at the root of your app dir.
-
-Smallweb will automatically decrypt the file and inject the secrets as environment variables into your app at runtime.
+Smallweb will automatically decrypt the file using your private ssh key (`~/.ssh/id_ed25519` by default) and inject the secrets as environment variables into your app at runtime.
 
 > [!NOTE] This is a opinionated guide, sops support other encryption methods.
 > Check the [SOPS documentation](https://github.com/getsops/sops) for more information.
@@ -54,25 +52,7 @@ Smallweb will automatically decrypt the file and inject the secrets as environme
 On MacOS/Linux, you can install SOPS using Homebrew:
 
 ```sh
-brew install sops
-```
-
-In this guide, we will use [age](https://github.com/FiloSottile/age) to encrypt our secrets.
-
-```sh
-brew install age
-```
-
-To generate a new key pair, run the following command:
-
-```sh
-# linux / WSL
-$ age-keygen -o $HOME/.config/sops/age/keys.txt
-Public key: age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc
-
-# macOS
-$ age-keygen -o $HOME/Library/Application\ Support/sops/age/keys.txt
-Public key: age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc
+brew install sops # make sure your sops version is 3.10.0 or higher
 ```
 
 Then we'll create a `.sops.yaml` file at the root of our smallweb dir:
@@ -82,11 +62,8 @@ Then we'll create a `.sops.yaml` file at the root of our smallweb dir:
 creation_rules:
   - key_groups:
       - age:
-          - age1ud9l6jaer6fp9dnneva23asrauxh5zdhsjzz8zh7lzh02synyd3se9l6mc # my public key
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPR1N/c+B7OPXEraFx2r3UHViHFbZ2Afg8VQLQ59ZKd # your ssh public key
 ```
-
-> [!TIP] You can repeat the process to add more public keys
-> Make sure to run `smallweb secrets --update-keys` after adding new public keys
 
 From now on, we can generate/edit a `secrets.enc.env` for your app using the following command:
 
@@ -100,5 +77,6 @@ sops ./<app>/secrets.enc.env
 If you add a new public key to your `.sops.yaml` file, you'll need to update the keys in your encrypted files:
 
 ```sh
-sops updatekeys .smallweb/.secrets.enc.env **/secrets.env.env
+# run this command at the root of your smallweb dir
+sops updatekeys */secrets.enc.env
 ```

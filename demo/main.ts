@@ -1,3 +1,3 @@
 export default {
-    fetch: () => new Response("edited from codespace!"),
+    fetch: () => new Response("edited from github codespace!"),
 }

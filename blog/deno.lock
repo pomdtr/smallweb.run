@@ -37,6 +37,7 @@
     "jsr:@std/encoding@0.224.3": "0.224.3",
     "jsr:@std/encoding@1.0.0-rc.2": "1.0.0-rc.2",
     "jsr:@std/encoding@1.0.5": "1.0.5",
+    "jsr:@std/encoding@1.0.8": "1.0.8",
     "jsr:@std/encoding@^1.0.1": "1.0.1",
     "jsr:@std/encoding@^1.0.5": "1.0.5",
     "jsr:@std/encoding@^1.0.7": "1.0.7",
@@ -341,6 +342,9 @@
     },
     "@std/encoding@1.0.7": {
       "integrity": "f631247c1698fef289f2de9e2a33d571e46133b38d042905e3eac3715030a82d"
+    },
+    "@std/encoding@1.0.8": {
+      "integrity": "a6c8f3f933ab1bed66244f435d1dc0fd23a888e07195532122ddc3d5f8f0e6b4"
     },
     "@std/fmt@0.218.2": {
       "integrity": "99526449d2505aa758b6cbef81e7dd471d8b28ec0dcb1491d122b284c548788a"

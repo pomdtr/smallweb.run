@@ -225,15 +225,15 @@ smallweb up [flags]
 ### Options
 
 ```
-      --addr string           address to listen on
-      --api-addr string       address to listen on for api
-      --enable-crons          enable cron jobs
-  -h, --help                  help for up
-      --on-demand-tls         enable on-demand tls
-      --ssh-addr string       address to listen on for ssh/sftp
-      --ssh-host-key string   ssh host key
-      --tls-cert string       tls certificate file
-      --tls-key string        tls key file
+      --addr string              address to listen on
+      --enable-crons             enable cron jobs
+  -h, --help                     help for up
+      --on-demand-tls            enable on-demand tls
+      --smtp-addr string         address to listen on for smtp
+      --ssh-addr string          address to listen on for ssh/sftp
+      --ssh-private-key string   ssh private key
+      --tls-cert string          tls certificate file
+      --tls-key string           tls key file
 ```
 
 ### Options inherited from parent commands

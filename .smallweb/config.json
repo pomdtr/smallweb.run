@@ -1,6 +1,6 @@
 {
     "domain": "smallweb.run",
-    "openauth.issuer": "https://auth.smallweb.run",
+    "oidc.issuer": "https://lastlogin.net",
     "authorizedKeys": [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPR1N/c+B7OPXEraFx2r3UHViHFbZ2Afg8VQLQ59ZKd macbook",
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJW+GQk0KCvSreL+y3AZdtCu82+13E2eEled+sGRkIEv macbook-pro",
@@ -11,15 +11,12 @@
         "achille.lacoin@gmail.com"
     ],
     "apps": {
+        "example": {
+            "private": true
+        },
         "tree": {
             "admin": true,
             "private": true
-        },
-        "demo": {
-            "private": true,
-            "authorizedEmails": [
-                "tbd_fr@yahoo.fr"
-            ]
         },
         "domains": {
             "admin": true
@@ -42,6 +39,10 @@
         },
         "vscode-dev": {
             "admin": true
+        },
+        "api": {
+            "admin": true,
+            "private": true
         }
     }
 }

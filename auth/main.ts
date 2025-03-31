@@ -1,7 +1,6 @@
 import { issuer } from "npm:@openauthjs/openauth@^0.3.7";
 import { GithubProvider } from "npm:/@openauthjs/openauth@^0.3.7/provider/github";
 import { Octokit } from "npm:octokit@^4.1.0";
-import { THEME_SST } from "npm:/@openauthjs/openauth@^0.3.7/ui/theme";
 import { MemoryStorage } from "npm:/@openauthjs/openauth@^0.3.7/storage/memory";
 import { createSubjects } from "npm:@openauthjs/openauth@^0.3.7/subject";
 import { object, string } from "npm:valibot@1.0.0";
@@ -15,7 +14,6 @@ if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
 await fs.ensureDir("./data");
 
 export default issuer({
-    theme: THEME_SST,
     providers: {
         github: GithubProvider({
             clientID: GITHUB_CLIENT_ID,

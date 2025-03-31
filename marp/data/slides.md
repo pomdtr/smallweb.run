@@ -9,7 +9,7 @@ backgroundImage: url('https://marp.app/assets/hero-background.svg')
 
 ![bg left:40% 80%](https://marp.app/assets/marp.svg)
 
-# **Marp**
+# petite demo
 
 Markdown Presentation Ecosystem
 

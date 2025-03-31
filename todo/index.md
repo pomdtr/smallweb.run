@@ -14,10 +14,8 @@ This file is a public list of the next stuffs I want to work on for [smallweb](h
 
 ## Next Week
 
-- isolate each user in a docker container, and manage everything using docker-compose
-  - add support for mutagen: `mutagen sync create pomdtr@smallweb.live:/smallweb [...]`
-- using the `ssh` cli should be optional
-  - auto-create the `vscode` app, and find a way to automatically setup auth (maybe using a middleware?)
+- OpenID Connect / Forward Auth
+- Receiving email from smallweb apps
 - move logs to `.smallweb/logs/<app>.jsonl`
 - work on cursor demo
 

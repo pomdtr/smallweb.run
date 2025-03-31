@@ -92,6 +92,10 @@ export default defineConfig({
               link: "/docs/guides/ssh",
             },
             {
+              text: "Email Messages",
+              link: "/docs/guides/email",
+            },
+            {
               text: "Git Integration",
               link: "/docs/guides/git",
             },
@@ -117,7 +121,7 @@ export default defineConfig({
             },
             {
               text: "Authentication",
-              link: "/docs/guides/auth",
+              link: "/docs/guides/authentication",
             },
             {
               text: "Permissions",
