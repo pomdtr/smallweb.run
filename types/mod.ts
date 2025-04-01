@@ -5,7 +5,7 @@ export type DefaultExport = {
 }
 
 export type Config = {
-    domain?: string;
+    domain: string;
     oidc?: {
         issuer: string;
     }

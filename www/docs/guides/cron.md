@@ -1,17 +1,19 @@
 # Cron Jobs
 
 Cron jobs are a way to schedule tasks to run at specific times.
-You can define cron jobs in the `smallweb.json[c]` file at the root of your app.
+You can define cron jobs in your global config.
 
 ```json
-// ~/smallweb/hello/smallweb.json
+// $SMALLWEB_DIR/.smallweb/config.json
 {
-    "crons": [
-        {
-            "schedule": "0 0 * * *",
-            "args": ["pomdtr"]
+    "apps": {
+        "hello": {
+            "crons": [{
+                "schedule": "0 0 * * *",
+                "args": ["pomdtr"]
+            }]
         }
-    ]
+    }
 }
 ```
 

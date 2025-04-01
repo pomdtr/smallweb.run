@@ -1,29 +1,52 @@
-import { issuer } from "npm:@openauthjs/openauth@^0.3.7";
-import { GithubProvider } from "npm:/@openauthjs/openauth@^0.3.7/provider/github";
-import { Octokit } from "npm:octokit@^4.1.0";
-import { MemoryStorage } from "npm:/@openauthjs/openauth@^0.3.7/storage/memory";
-import { createSubjects } from "npm:@openauthjs/openauth@^0.3.7/subject";
-import { object, string } from "npm:valibot@1.0.0";
-import * as fs from "jsr:@std/fs@^1.0.11";
+import { issuer } from "@openauthjs/openauth";
+import { GithubProvider } from "@openauthjs/openauth/provider/github";
+import { CodeUI } from "@openauthjs/openauth/ui/code"
+import { CodeProvider } from "@openauthjs/openauth/provider/code"
+import { Octokit } from "octokit";
+import { Resend } from 'resend';
+import { MemoryStorage } from "@openauthjs/openauth/storage/memory";
+import { createSubjects } from "@openauthjs/openauth/subject";
+import { object, string } from "valibot";
+import * as fs from "@std/fs";
+import { oidc } from "@pomdtr/openauth-oidc"
 
-const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = Deno.env.toObject();
+const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET, RESEND_API_KEY } = Deno.env.toObject();
 if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
     throw new Error("Missing GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET");
 }
 
-await fs.ensureDir("./data");
+if (!RESEND_API_KEY) {
+    throw new Error("Missing RESEND_API_KEY");
+}
 
-export default issuer({
+const resend = new Resend(RESEND_API_KEY);
+
+
+await fs.ensureDir("./data");
+const storage = MemoryStorage({
+    persist: "./data/db.json",
+})
+const iss = issuer({
     providers: {
         github: GithubProvider({
             clientID: GITHUB_CLIENT_ID,
             clientSecret: GITHUB_CLIENT_SECRET,
             scopes: ["user:email"],
         }),
+        code: CodeProvider(
+            CodeUI({
+                sendCode: async (claims, code) => {
+                    await resend.emails.send({
+                        from: "Smallweb Auth <auth@smallweb.run>",
+                        to: claims.email,
+                        subject: "Your authentication code",
+                        html: `Your authentication code is <strong>${code}</strong>`,
+                    })
+                }
+            })
+        )
     },
-    storage: MemoryStorage({
-        persist: "./data/db.json",
-    }),
+    storage,
     subjects: createSubjects({
         user: object({
             email: string(),
@@ -47,6 +70,13 @@ export default issuer({
                     email,
                 });
             }
+            case "code": {
+                return res.subject("user", {
+                    email: input.claims.email,
+                });
+            }
         }
     },
 })
+
+export default oidc(iss, storage)

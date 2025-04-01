@@ -1,3 +1,7 @@
+---
+outline: [2, 3]
+---
+
 # Global Config
 
 The smallweb config is located at `$SMALLWEB_DIR/.smallweb/config.json`.
@@ -6,16 +10,7 @@ If `SMALLWEB_DIR` is not set, it defaults to `~/smallweb`.
 
 Only the `domain` field is required. The rest are optional.
 
-If you sync the smallweb dir between multiple servers, but want to set different config value depending on the server, you can use env variables to set config value.
-
-```sh
-# run smallweb with a different domain that the one set in the config
-SMALLWEB_DOMAIN=localhost smallweb up
-```
-
-## Available Fields
-
-### `domain`
+## `domain`
 
 The `domain` field defines the apex domain used for routing. By default, it is `localhost`.
 
@@ -28,7 +23,13 @@ The `domain` field defines the apex domain used for routing. By default, it is `
 
 See the [Routing](../guides/routing.md) guide for more information.
 
-### `additionalDomains`
+The smallweb domain can be overriden by using the `--domain` flag when running the smallweb CLI.
+
+```sh
+smallweb up --domain smallweb.localhost
+```
+
+## `additionalDomains`
 
 Additional domains that should be routed to the same smallweb instance.
 
@@ -42,7 +43,7 @@ Additional domains that should be routed to the same smallweb instance.
 }
 ```
 
-### `authorizedKeys`
+## `authorizedKeys`
 
 List of public ssh keys that are allowed to:
 
@@ -59,11 +60,37 @@ List of public ssh keys that are allowed to:
 }
 ```
 
-### apps section
+## `authorizedEmails`
+
+List of emails that are allowed to access all private apps.
+
+```json
+{
+  "domain": "example.com",
+  "authorizedEmails": [
+    "achille.lacoin@gmail.com"
+  ]
+}
+```
+
+## `authorizedGroups`
+
+List of groups that are allowed to access all private apps.
+
+```json
+{
+  "domain": "example.com",
+  "authorizedGroups": [
+    "admin"
+  ]
+}
+```
+
+## apps section
 
 This section is used to set app specific config values.
 
-#### `apps.<app>.admin`
+### `apps.<app>.admin`
 
 Give admin permissions to an app. Admin apps have read/write access to the whole smallweb dir (except the special `.smallweb` dir).
 
@@ -78,7 +105,96 @@ Give admin permissions to an app. Admin apps have read/write access to the whole
 }
 ```
 
-#### `apps.<app>.additionalDomains`
+### `apps.<app>.private`
+
+Make an app private. Private apps are only accessible to users with the `authorizedEmails` or `authorizedGroups` set in the config.
+
+```json
+{
+  "domain": "example.com",
+  "apps": {
+    "vscode": {
+      "private": true
+    }
+  }
+}
+```
+
+### `apps.<app>.authorizedEmails`
+
+List of emails that are allowed to access a specific app.
+
+```json
+{
+  "domain": "example.com",
+  "apps": {
+    "vscode": {
+      "private": true,
+      "authorizedEmails": [
+        "achille.lacoin@gmail.com"
+      ]
+    }
+  }
+}
+```
+
+### `apps.<app>.authorizedGroups`
+
+List of groups that are allowed to access all private apps.
+
+```json
+{
+  "domain": "example.com",
+  "authorizedGroups": [
+    "admin"
+  ],
+  "apps": {
+    "vscode": {
+      "private": true,
+      "authorizedGroups": [
+        "dev"
+      ]
+    }
+  }
+}
+```
+
+### `apps.<app>.privateRoutes`
+
+List of routes that are private. Private routes are only accessible to users with the `authorizedEmails` or `authorizedGroups` set in the config.
+
+```json
+{
+  "domain": "example.com",
+  "apps": {
+    "vscode": {
+      "privateRoutes": [
+        "/private/**"
+      ]
+    }
+  }
+}
+```
+
+### `apps.<app>.publicRoutes`
+
+List of routes that are public. Public routes are accessible to everyone, even when the app itself is private.
+
+```json
+{
+  "domain": "example.com",
+  "apps": {
+    "vscode": {
+      "private": true,
+      "publicRoutes": [
+        "/public/**"
+      ]
+    }
+  }
+}
+```
+
+### `apps.<app>.additionalDomains`
 
 Additional domains that should be routed to the app.
 
@@ -112,6 +228,21 @@ List of public ssh keys that are allowed to:
         "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC7Z... user@host"
       ]
     }
+  }
+}
+```
+
+## `oidc` section
+
+### `oidc.issuer`
+
+The issuer of the OIDC provider. This is used to verify if a user is allowed to access a private app.
+
+```json
+{
+  "domain": "example.com",
+  "oidc": {
+    "issuer": "https://lastlogin.net"
   }
 }
 ```
