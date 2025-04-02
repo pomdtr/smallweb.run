@@ -19,6 +19,10 @@ const ext2lang: Record<string, string> = {
     ".sh": "shell",
 };
 
+export type RayOptions = {
+    rootDir: string;
+}
+
 function getRayUrl(pathname: string, code: string): string {
     const language = ext2lang[path.extname(pathname)] || "";
     const hash = `#title=${pathname.slice(1)}&code=${encodeBase64Url(code)
@@ -27,7 +31,10 @@ function getRayUrl(pathname: string, code: string): string {
 }
 
 export class Ray {
-    constructor(private rootDir: string) { }
+    private rootDir: string;
+    constructor(opts: RayOptions) {
+        this.rootDir = opts.rootDir;
+    }
 
     fetch: (req: Request) => Response | Promise<Response> = async (req) => {
         const url = new URL(req.url);

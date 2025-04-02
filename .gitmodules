@@ -13,3 +13,7 @@
 [submodule "excalidraw-dev"]
 	path = excalidraw-dev
 	url = https://github.com/pomdtr/smallweb-excalidraw
+[submodule "excalidraw"]
+	path = excalidraw
+	url = https://github.com/pomdtr/smallweb-excalidraw
+	branch = smallweb

@@ -1,7 +1,7 @@
 {
   "imports": {
     "@openauthjs/openauth": "npm:@openauthjs/openauth@^0.4.3",
-    "@pomdtr/openauth-oidc": "jsr:@pomdtr/openauth-oidc@^0.1.3",
+    "@pomdtr/openauth-oidc": "jsr:@pomdtr/openauth-oidc@^0.1.4",
     "@std/fs": "jsr:@std/fs@^1.0.15",
     "octokit": "npm:octokit@^4.1.2",
     "resend": "npm:resend@^4.2.0",

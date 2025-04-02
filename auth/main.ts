@@ -46,6 +46,9 @@ const iss = issuer({
             })
         )
     },
+    allow: async (_input, _req) => {
+        return true
+    },
     storage,
     subjects: createSubjects({
         user: object({

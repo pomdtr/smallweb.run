@@ -1,7 +1,7 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@pomdtr/openauth-oidc@~0.1.3": "0.1.3",
+    "jsr:@pomdtr/openauth-oidc@~0.1.4": "0.1.4",
     "jsr:@std/encoding@1.0.8": "1.0.8",
     "jsr:@std/fs@^1.0.15": "1.0.15",
     "jsr:@std/html@1.0.3": "1.0.3",
@@ -14,8 +14,8 @@
     "npm:valibot@1": "1.0.0"
   },
   "jsr": {
-    "@pomdtr/openauth-oidc@0.1.3": {
-      "integrity": "593c51fcdd36099dc556d6555143a4eb5a2ec215f82fe160539938af7246a607",
+    "@pomdtr/openauth-oidc@0.1.4": {
+      "integrity": "6d6f782ea32b9e5b805ff055781b3bb12be5106da92e275ae3658570981a5344",
       "dependencies": [
         "jsr:@std/fs",
         "npm:@openauthjs/openauth",
@@ -454,7 +454,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@pomdtr/openauth-oidc@~0.1.3",
+      "jsr:@pomdtr/openauth-oidc@~0.1.4",
       "jsr:@std/fs@^1.0.15",
       "npm:@openauthjs/openauth@~0.4.3",
       "npm:octokit@^4.1.2",

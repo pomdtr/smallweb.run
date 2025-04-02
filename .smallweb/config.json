@@ -33,7 +33,8 @@
             "admin": true
         },
         "ray": {
-            "admin": true
+            "admin": true,
+            "private": true
         },
         "vscode": {
             "admin": true
