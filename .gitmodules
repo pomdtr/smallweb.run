@@ -17,3 +17,6 @@
 	path = excalidraw
 	url = https://github.com/pomdtr/smallweb-excalidraw
 	branch = smallweb
+[submodule "/Users/pomdtr/smallweb/smallweb.run/smallblog"]
+	path = /Users/pomdtr/smallweb/smallweb.run/smallblog
+	url = https://github.com/tayzendev/smallblog.git
