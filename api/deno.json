@@ -12,7 +12,7 @@
   "imports": {
     "@hono/typebox-validator": "npm:@hono/typebox-validator@^0.3.2",
     "@sinclair/typebox": "npm:@sinclair/typebox@^0.34.31",
-    "@smallweb/types": "jsr:@smallweb/types@^0.3.2",
+    "@smallweb/types": "jsr:@smallweb/types@^0.3.3",
     "@std/fs": "jsr:@std/fs@^1.0.15",
     "@std/jsonc": "jsr:@std/jsonc@^1.0.1",
     "@std/path": "jsr:@std/path@^1.0.8",

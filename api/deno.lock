@@ -1,7 +1,7 @@
 {
   "version": "4",
   "specifiers": {
-    "jsr:@smallweb/types@~0.3.2": "0.3.2",
+    "jsr:@smallweb/types@~0.3.3": "0.3.3",
     "jsr:@std/encoding@1.0.8": "1.0.8",
     "jsr:@std/fs@^1.0.15": "1.0.15",
     "jsr:@std/html@1.0.3": "1.0.3",
@@ -14,8 +14,8 @@
     "npm:hono@^4.7.5": "4.7.5"
   },
   "jsr": {
-    "@smallweb/types@0.3.2": {
-      "integrity": "fa491f3a1c5c58a3df4c418a6ec6adff0ce3b6731baefc2be6e1db7d7eebcba5"
+    "@smallweb/types@0.3.3": {
+      "integrity": "f4495f1a649e7bd5cd59938952c95ab0ebc269cf6df365edaaedb4a0d9552579"
     },
     "@std/encoding@1.0.8": {
       "integrity": "a6c8f3f933ab1bed66244f435d1dc0fd23a888e07195532122ddc3d5f8f0e6b4"
@@ -96,7 +96,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@smallweb/types@~0.3.2",
+      "jsr:@smallweb/types@~0.3.3",
       "jsr:@std/fs@^1.0.15",
       "jsr:@std/jsonc@^1.0.1",
       "jsr:@std/path@^1.0.8",

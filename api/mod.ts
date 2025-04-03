@@ -46,7 +46,7 @@ export async function loadConfig(rootDir: string): Promise<smallweb.Config> {
         return config
     }
 
-    return {}
+    throw new Error("Config file not found")
 }
 
 export async function listApps(rootDir: string): Promise<App[]> {
