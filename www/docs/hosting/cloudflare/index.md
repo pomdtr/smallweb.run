@@ -24,23 +24,3 @@ Additionally, it provides some protection against DDoS attacks, and allows you t
 
   ![DNS Configuration](./dns.png)
 
-## Checking that your tunnel is running
-
-Create a dummy smallweb app in `~/smallweb/example`
-
-```sh
-mkdir -p ~/smallweb/example
-cat <<EOF > ~/smallweb/example/main.ts
-export default {
-  fetch() {
-    return new Response("Smallweb is running");
-  }
-}
-EOF
-```
-
-If everything went well, you should be able to access `https://example.<your-domain>` in your browser, and see the message `Smallweb is running`.
-
-## Optional Steps
-
-- You can protect your tunnel (or specific apps) with Cloudflare Access.

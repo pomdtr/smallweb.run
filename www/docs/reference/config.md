@@ -105,21 +105,6 @@ Give admin permissions to an app. Admin apps have read/write access to the whole
 }
 ```
 
-### `apps.<app>.private`
-
-Make an app private. Private apps are only accessible to users with the `authorizedEmails` or `authorizedGroups` set in the config.
-
-```json
-{
-  "domain": "example.com",
-  "apps": {
-    "vscode": {
-      "private": true
-    }
-  }
-}
-```
-
 ### `apps.<app>.authorizedEmails`
 
 List of emails that are allowed to access a specific app.
@@ -153,41 +138,6 @@ List of groups that are allowed to access all private apps.
       "private": true,
       "authorizedGroups": [
         "dev"
-      ]
-    }
-  }
-}
-```
-
-### `apps.<app>.privateRoutes`
-
-List of routes that are private. Private routes are only accessible to users with the `authorizedEmails` or `authorizedGroups` set in the config.
-
-```json
-{
-  "domain": "example.com",
-  "apps": {
-    "vscode": {
-      "privateRoutes": [
-        "/private/**"
-      ]
-    }
-  }
-}
-```
-
-### `apps.<app>.publicRoutes`
-
-List of routes that are public. Public routes are accessible to everyone, even when the app itself is private.
-
-```json
-{
-  "domain": "example.com",
-  "apps": {
-    "vscode": {
-      "private": true,
-      "publicRoutes": [
-        "/public/**"
       ]
     }
   }

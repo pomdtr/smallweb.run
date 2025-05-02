@@ -19,7 +19,7 @@ head:
     ]
 hero:
   name: "Smallweb"
-  text: "Your internet folder"
+  text: "Your Internet Folder"
   tagline: A personal cloud contained in a single directory.
   image:
     src: /smallweb_vtuber.webp
@@ -43,7 +43,7 @@ features:
     title: Secure by Default
     details: Each smallweb app is sandboxed using Deno. By default, it only has access to its own folder.
   - icon: 🚀
-    title: Deploy anywhere
+    title: Deploy Anywhere
     details: The whole smallweb codebase is compiled to a single binary. You can run it on your local machine, a remote server, or both.
 ---
 

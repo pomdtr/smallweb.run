@@ -11,7 +11,7 @@ smallweb [flags]
 ### Options
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
   -h, --help            help for smallweb
 ```
@@ -34,7 +34,7 @@ smallweb config <key> [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -57,7 +57,7 @@ smallweb crons [app] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -78,7 +78,7 @@ smallweb doctor [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -99,7 +99,7 @@ smallweb init [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -114,13 +114,14 @@ smallweb link <source> <target> [flags]
 ### Options
 
 ```
-  -h, --help   help for link
+  -f, --force   Force overwrite existing symlinks
+  -h, --help    help for link
 ```
 
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -145,7 +146,7 @@ smallweb list [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -166,7 +167,7 @@ smallweb open [app] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -187,7 +188,7 @@ smallweb run <app> [args...] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -210,7 +211,7 @@ smallweb secrets [app] [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
@@ -228,7 +229,7 @@ smallweb up [flags]
       --addr string              address to listen on
       --enable-crons             enable cron jobs
   -h, --help                     help for up
-      --on-demand-tls            enable on-demand tls
+      --log-format string        log format (json or text) (default "pretty")
       --smtp-addr string         address to listen on for smtp
       --ssh-addr string          address to listen on for ssh/sftp
       --ssh-private-key string   ssh private key
@@ -239,7 +240,7 @@ smallweb up [flags]
 ### Options inherited from parent commands
 
 ```
-      --dir string      The root directory for smallweb (default "/Users/pomdtr/smallweb/smallweb.run")
+      --dir string      The root directory for smallweb
       --domain string   The domain for smallweb
 ```
 
