@@ -77,7 +77,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=$HOME/.local/bin/smallweb up --cron
+ExecStart=$HOME/.local/bin/smallweb up --enable-crons
 Restart=always
 RestartSec=10
 Environment="SMALLWEB_DIR=$HOME/smallweb"

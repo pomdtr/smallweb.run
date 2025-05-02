@@ -8,5 +8,8 @@
     "watch": "fd -H | entr deno task build",
     "build": "vitepress build",
     "preview": "vitepress preview"
+  },
+  "dependencies": {
+    "vitepress-plugin-llms": "^1.1.1"
   }
 }

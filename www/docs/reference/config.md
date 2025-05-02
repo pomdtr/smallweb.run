@@ -21,8 +21,6 @@ The `domain` field defines the apex domain used for routing. By default, it is `
 }
 ```
 
-See the [Routing](../guides/routing.md) guide for more information.
-
 The smallweb domain can be overriden by using the `--domain` flag when running the smallweb CLI.
 
 ```sh

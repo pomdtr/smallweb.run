@@ -1,8 +1,13 @@
 import { defineConfig } from "vitepress";
+import llmstxt from 'vitepress-plugin-llms'
+
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "Smallweb",
+  vite: {
+    plugins: [llmstxt()],
+  },
   description:
     "A self-hostable personal cloud inspired by serverless platforms and cgi-bin.",
   outDir: "dist",
@@ -76,15 +81,11 @@ export default defineConfig({
           text: "Concepts",
           items: [
             {
-              text: "Routing",
-              link: "/docs/guides/routing",
-            },
-            {
               text: "HTTP Requests",
               link: "/docs/guides/http",
             },
             {
-              text: "Cli Commands",
+              text: "CLI Commands",
               link: "/docs/guides/commands",
             },
             {

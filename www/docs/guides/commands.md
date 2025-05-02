@@ -1,4 +1,4 @@
-# Adding cli commands to your app
+# CLI Commands
 
 To add a cli command to your app, you'll need to add a `run` method to your app's default export.
 
@@ -18,26 +18,40 @@ $ smallweb run custom-command
 Hello world
 ```
 
-## Using a cli framework
+## Accessing stdin
 
-[Commander.js](https://github.com/tj/commander.js) is a popular cli framework for Node.js.
-
-You can easily wire it to smallweb:
+You can access stdin by using the optional input argument of the `run` method.
 
 ```ts
-import { program } from 'npm:@commander-js/extra-typings';
-
+// File: ~/smallweb/custom-command/main.ts
 export default {
-    run(args: string[]) {
-        program.action(() => {
-            console.log("Hello world");
-        });
-
-        await program.parseAsync(args, { from: "user" });
+    run(_args: string[], input: ReadableStream) {
+        console.log("You just piped:");
+        console.log(input);
     }
 }
 ```
 
-See the [Commander.js documentation](https://www.npmjs.com/package/commander) for more information.
+## Using a cli framework
 
-If you want to open urls in the user's browser, you can checkout the [@smallweb/open](https://jsr.io/@smallweb/open) package.
+I personally recommend using [gunshi](https://www.npmjs.com/package/gunshi) to build complex cli commands.
+
+```ts
+import { cli } from 'npm:gunshi@0.17.0'
+
+export default {
+    async run(args: string[]) {
+        await cli(args, {
+            options: {
+                name: {
+                    type: "string",
+                    default: "world",
+                }
+            },
+            run: (ctx) => {
+                console.log(`Hello ${ctx.values.name}!`)
+            }
+        })
+    }
+}
+```

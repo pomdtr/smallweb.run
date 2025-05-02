@@ -1,3 +1,5 @@
+# Hosting smallweb locally
+
 This section will guide you through the process of setting up a local instance of smallweb.
 
 This setup is useful for developing and testing smallweb apps locally, without having to deploy them to the internet.

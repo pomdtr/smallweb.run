@@ -1,2 +1,4 @@
 /docs /docs/getting-started
 /blog https://blog.smallweb.run
+/llms.md /llms.txt 200
+/llms-full.md /llms_full.txt 200

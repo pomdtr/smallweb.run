@@ -114,7 +114,6 @@ Add the following to your `~/.ssh/config` file:
 
 ```txt
 Host example.com
-  Hostname example.com
   User _
   Port 2222
 ```

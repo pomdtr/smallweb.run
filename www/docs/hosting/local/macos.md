@@ -19,8 +19,6 @@ brew install deno
 
 ```sh
 brew install pomdtr/tap/smallweb
-launchctl load ~/Library/LaunchAgents/com.github.pomdtr.smallweb.plist
-launchctl start com.github.pomdtr.smallweb
 ```
 
 ## Setup Caddy
@@ -143,7 +141,7 @@ cat <<EOF > ~/Libray/LaunchAgents/com.github.pomdtr.smallweb.plist
         <array>
             <string>$(brew --prefix)/bin/smallweb</string>
             <string>up</string>
-            <string>--cron</string>
+            <string>--enable-crons</string>
             <string>--dir=$HOME/smallweb</string>
         </array>
         <key>RunAtLoad</key>

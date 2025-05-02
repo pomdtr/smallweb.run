@@ -2,11 +2,34 @@
 outline: [2, 3]
 ---
 
-# Handling HTTP Requests
+# HTTP Requests
 
-> ℹ️ All the websites hosted under the `smallweb.run` domain are open-source.
->
-> You can find their source code in the [smallweb.run monorepo](https://github.com/pomdtr/smallweb.run).
+Smallweb maps every subdomains of your root domain to a directory in your root directory.
+
+For example with, the following configuration:
+
+```json
+// ~/smallweb/.smallweb/config.json
+{
+    "domain": "example.com"
+}
+```
+
+The routing system maps domains to directories as follows:
+
+- Direct subdomain mapping:
+  - `api.example.com` → `~/smallweb/api`
+  - `blog.example.com` → `~/smallweb/blog`
+
+- Root domain behavior:
+  - Requests to `example.com` automatically redirect to `www.example.com` if the `www` directory exists
+  - If the `www` directory does not exist, a 404 error is returned
+
+> [!WARNING]
+> Subdomains must be alphanumeric, and can contain hyphens. You should also avoid using uppercase letters in your subdomains, as they are usually converted to lowercase. Underscores are allowed, but not recommended.
+
+> [!NOTE]
+> Any folder starting with `.` is ignored by the routing system. You can use it to your advantage to create hidden directories that are not accessible from the web (ex: `.github`, or `.data`).
 
 Smallweb detects the type of website you are trying to host based on the files in the directory.
 
@@ -36,10 +59,7 @@ You can create a website by just adding an `index.html` file in the folder.
 
 To access the website, open `https://example-static.<smallweb-domain>` in your browser.
 
-If your static website contains a `main.js` file, but you want to serve it as a static website, you can do the following:
-
-- rename it to something else
-- create a smallweb.json, and explicitly specify the entrypoint
+If your static website contains a `main.js` file, but you want to serve it as a static website, yoy can create a `smallweb.json` file at the root of the directory, and specify the `entrypoint` field to `jsr:@smallweb/file-server`.
 
   ```json
   {
