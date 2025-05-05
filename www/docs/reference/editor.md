@@ -8,12 +8,18 @@ You can get completions for the app and global config files by adding the follow
 {
   "json.schemas": [
     {
-      "fileMatch": ["smallweb.json"],
-      "url": "https://schemas.smallweb.run/manifest"
+      "url": "https://github.com/pomdtr/smallweb/releases/latest/download/manifest.schema.json",
+      "fileMatch": [
+        "smallweb.json",
+        "smallweb.jsonc"
+      ]
     },
     {
-      "fileMatch": [".smallweb/config.json"],
-      "url": "https://schemas.smallweb.run/config"
+      "url": "https://github.com/pomdtr/smallweb/releases/latest/download/config.schema.json",
+      "fileMatch": [
+        ".smallweb/config.json",
+        ".smallweb/config.jsonc"
+      ]
     }
   ]
 }

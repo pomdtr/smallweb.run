@@ -13,11 +13,18 @@ Firt, set the `oidc.issuer` field in your smallweb config:
     "oidc": {
         "issuer": "https://lastlogin.net"
     },
-    "apps": {
-        "demo": {
-            "private": true
-        }
-    }
+    "authorizedEmails": [
+        "your-email@example.com"
+    ]
+}
+```
+
+Then, set the `private` field to `true` in your app manifest:
+
+```json
+// $SMALLWEB_DIR/demo/smallweb.json
+{
+    "private": true
 }
 ```
 
@@ -39,55 +46,7 @@ export default {
 }
 ```
 
-If you want to only authorize a fixed set of users, you can set the `authorizedEmails` property (either in globally or per app):
-
-```json
-{
-    "domain": "example.com",
-    "oidc": {
-        "issuer": "https://lastlogin.net"
-    },
-    // globally
-    "authorizedEmails": [
-        "achille.lacoin@gmail.com"
-    ],
-    "apps": {
-        "demo": {
-            // per app
-            "authorizedEmails": [
-                "smallweb@tayzen.dev"
-            ],
-            "private": true
-        }
-    }
-}
-```
-
-The instructions above also apply to openid connect groups (using the `Remote-Groups` header and the `authorizedGroups` property).
-
-If you want to only protect specific routes, set the `privateRoutes` and `publicRoutes` array. Smallweb uses [doublestar](https://github.com/bmatcuk/doublestar) to check request paths against the global patterns
-
-```json
-{
-    "domain": "example.com",
-    "oidc": {
-        "issuer": "https://lastlogin.net"
-    },
-    "apps": {
-        "demo": {
-            "private": true,
-            "publicRoutes": [
-                "/public/**"
-            ]
-        },
-        "example": {
-            "privateRoutes": [
-                "/private/**"
-            ]
-        }
-    }
-}
-```
+If you want to only protect specific routes, set the `privateRoutes` and `publicRoutes` array in your app manifest. Smallweb uses [doublestar](https://github.com/bmatcuk/doublestar) to check request paths against the global patterns
 
 ## Hosting your own OIDC provider from smallweb
 
@@ -99,11 +58,9 @@ Nothing stops you from using an internal url as the issuer !
     "oidc": {
         "issuer": "https://auth.example.com"
     },
-    "apps": {
-        "demo": {
-            "private": true
-        }
-    }
+    "authorizedEmails": [
+        "your-email@example.com"
+    ]
 }
 ```
 

@@ -1,0 +1,19 @@
+{
+    "name": "@pomdtr/tinyfeed",
+    "version": "0.1.0",
+    "exports": "./pkg/mod.ts",
+    "license": "MIT",
+    "publish": {
+        "include": [
+            "pkg",
+            "README.md"
+        ]
+    },
+    "imports": {
+        "@std/fs": "jsr:@std/fs@^1.0.17",
+        "@std/http": "jsr:@std/http@^1.0.15",
+        "@std/path": "jsr:@std/path@^1.0.9",
+        "@vento/vento": "jsr:@vento/vento@^1.12.16",
+        "rss-parser": "npm:rss-parser@^3.13.0"
+    }
+}

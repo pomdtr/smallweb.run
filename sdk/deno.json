@@ -1,0 +1,17 @@
+{
+  "name": "@smallweb/sdk",
+  "version": "0.2.2",
+  "license": "MIT",
+  "exports": "./pkg/mod.ts",
+  "publish": {
+    "include": [
+      "pkg",
+      "README.md"
+    ]
+  },
+  "imports": {
+    "@std/fs": "jsr:@std/fs@^1.0.17",
+    "@std/jsonc": "jsr:@std/jsonc@^1.0.2",
+    "@std/path": "jsr:@std/path@^1.0.9"
+  }
+}
