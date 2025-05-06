@@ -130,7 +130,7 @@ If everything went well, you should be able to access `https://example.smallweb.
 ## Start smallweb at login
 
 ```sh
-cat <<EOF > ~/Libray/LaunchAgents/com.github.pomdtr.smallweb.plist
+cat <<EOF > ~/Library/LaunchAgents/com.github.pomdtr.smallweb.plist
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
