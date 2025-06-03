@@ -1,6 +1,6 @@
 {
     "name": "@pomdtr/tinyfeed",
-    "version": "0.1.0",
+    "version": "0.3.9",
     "exports": "./pkg/mod.ts",
     "license": "MIT",
     "publish": {
@@ -10,10 +10,9 @@
         ]
     },
     "imports": {
-        "@std/fs": "jsr:@std/fs@^1.0.17",
-        "@std/http": "jsr:@std/http@^1.0.15",
-        "@std/path": "jsr:@std/path@^1.0.9",
+        "@commander-js/extra-typings": "npm:@commander-js/extra-typings@^13.1.0",
         "@vento/vento": "jsr:@vento/vento@^1.12.16",
+        "feed": "npm:feed@^5.0.1",
         "rss-parser": "npm:rss-parser@^3.13.0"
     }
 }

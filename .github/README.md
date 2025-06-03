@@ -1,5 +1,8 @@
 # smallweb.run
 
+> [!WARNING]
+> This monorepo was archived, as I no longer want to use a monorepo to manage my smallweb websites, but individual repositories instead.
+
 This repository is a monorepo of all my apps running under the smallweb.run domain.
 
 I use the [push plugin](../.smallweb/plugins/push.sh) to commit and push changes to this repository.

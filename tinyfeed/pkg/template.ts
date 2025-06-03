@@ -9,8 +9,9 @@ export default /* html */`<!DOCTYPE html>
 	<meta name="application-name" content="tinyfeed">
 	<meta name="application-source" content="https://github.com/TheBigRoomXXL/tinyfeed">
 	<meta name="author" content="Sebastien LOVERGNE">
-	<meta name="description" content="RSS, Atom and JSON feeds aggregator">
+	<meta name="description" content="RSS and Atom feeds aggregator">
 	<meta name="referrer" content="same-origin">
+	<link rel="alternate" type="application/atom+xml" title="RSS Feed" href="/feed.xml" />
     <link rel="icon" href="https://fav.farm/📰" />
 
 	<style>

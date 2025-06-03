@@ -1,41 +1,66 @@
-import { fetch } from "https://esm.town/v/std/fetch";
+import fs from "node:fs/promises";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { Buffer } from "node:buffer";
+const MANUAL_BUNDLES = {
+  mvp: {
+    mainModule: "duckdb-mvp.wasm",
+    mainWorker: "duckdb-node-blocking.cjs",
+  },
+};
 
-
-
-export let duckdbExample = await (async () => {
-    async function createWorker(url) {
-        // For Val Town / Deno environments
-        if (typeof Deno !== "undefined") {
-            return new Worker(url, { type: "module", deno: true });
-        }
-        // For browser environments (keeping the original logic)
-        const workerScript = await fetch(url);
-        const workerURL = URL.createObjectURL(await workerScript.blob());
-        return new Worker(workerURL, { type: "module" });
-    }
-    const duckdb = await import(
-        "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm@1.17.0/+esm"
+async function ensureFileDownloaded(fileName: string) {
+  const targetDir = path.dirname(fileURLToPath(import.meta.url));
+  const DOWNLOAD_PREFIX =
+    "https://cdn.jsdelivr.net/npm/@duckdb/duckdb-wasm/dist/";
+  const filePath = path.join(targetDir, fileName);
+  try {
+    await fs.access(filePath);
+  } catch (error) {
+    console.log(
+      `${fileName} not found. Downloading from ${DOWNLOAD_PREFIX}${fileName}...`,
     );
-    const bundles = duckdb.getJsDelivrBundles();
-    const bundle = await duckdb.selectBundle(bundles);
-    const logger = new duckdb.ConsoleLogger();
-    const worker = await createWorker(bundle.mainWorker);
-    const db = new duckdb.AsyncDuckDB(logger, worker);
-    await db.instantiate(bundle.mainModule);
-    const c = await db.connect();
-    const res = await c.query(`SELECT * FROM generate_series(1, 100) t(v)`);
-    c.close();
-    db.terminate();
-    // DuckDB's toJSON unfortunately includes BigInts, and we can't serialize
-    // BigInts because they have no basic JSON representation. So,
-    // Translate them to ints.
-    return res.toArray().map((r) => {
-        const row = r.toJSON();
-        return JSON.parse(JSON.stringify(row, (k, v) => {
-            return typeof v === "bigint" ? +v.toString() : v;
-        }));
-    });
-})();
+    const response = await fetch(`${DOWNLOAD_PREFIX}${fileName}`);
+    if (!response.ok || !response.body) {
+      throw new Error(`Failed to download ${fileName}: ${response.statusText}`);
+    }
+    const fileBuffer = await response.arrayBuffer();
+    await fs.writeFile(filePath, Buffer.from(fileBuffer));
+    console.log(`${fileName} downloaded successfully to ${filePath}.`);
+  }
+}
 
+const wasmFileName = MANUAL_BUNDLES.mvp.mainModule;
+const workerFileName = MANUAL_BUNDLES.mvp.mainWorker;
 
-console.log(duckdbExample);
+await ensureFileDownloaded(wasmFileName);
+await ensureFileDownloaded(workerFileName);
+
+const workerModule = await import("./" + workerFileName);
+const worker_blocking = workerModule.default;
+
+const logger = new worker_blocking.ConsoleLogger();
+const ddb = await worker_blocking.createDuckDB(
+  MANUAL_BUNDLES,
+  logger,
+  worker_blocking.NODE_RUNTIME,
+);
+
+await ddb.instantiate(
+  MANUAL_BUNDLES.mvp.mainModule,
+  MANUAL_BUNDLES.mvp.mainWorker,
+);
+
+const db = await ddb.connect();
+const mainTsAbsolutePath = fileURLToPath(import.meta.url);
+ddb.registerFileURL(
+  `main.ts`,
+  mainTsAbsolutePath,
+  worker_blocking.DuckDBDataProtocol.NODE_FS,
+  false,
+);
+console.log(
+  "Demo query with fs access:",
+  await db.query("select md5(content) as md5 from read_text('main.ts')")
+    .toArray()[0].md5,
+);

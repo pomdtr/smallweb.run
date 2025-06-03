@@ -1,11 +1,19 @@
-import { TinyFeed } from "jsr:@pomdtr/tinyfeed";
+import { Tinyfeed } from "jsr:@pomdtr/tinyfeed";
+import { createStorage } from "https://esm.sh/unstorage";
+import fsDriver from "https://esm.sh/unstorage/drivers/fs-lite"
 
-const tinyfeed = new TinyFeed({
-    title: "TinyFeed",
+const storage = createStorage({
+    driver: fsDriver({ base: "./data" }),
+});
+
+const tinyfeed = new Tinyfeed({
+    title: "Smallfeed",
     feeds: [
         "https://blog.smallweb.run/feed.xml",
-        "https://deno.com/feed"
-    ]
+        "https://jvns.ca/atom.xml",
+    ],
+    storage,
 })
 
 export default tinyfeed;
+

@@ -18,40 +18,24 @@ $ smallweb run custom-command
 Hello world
 ```
 
-## Accessing stdin
-
-You can access stdin by using the optional input argument of the `run` method.
-
-```ts
-// File: ~/smallweb/custom-command/main.ts
-export default {
-    run(_args: string[], input: ReadableStream) {
-        console.log("You just piped:");
-        console.log(input);
-    }
-}
-```
-
 ## Using a cli framework
 
-I personally recommend using [gunshi](https://www.npmjs.com/package/gunshi) to build complex cli commands.
+I personally recommend using [commander.js](https://www.npmjs.com/package/commander) to build complex cli commands.
 
 ```ts
-import { cli } from 'npm:gunshi@0.17.0'
+import { Command } from 'npm:@commander-js/extra-typings';
 
 export default {
     async run(args: string[]) {
-        await cli(args, {
-            options: {
-                name: {
-                    type: "string",
-                    default: "world",
-                }
-            },
-            run: (ctx) => {
-                console.log(`Hello ${ctx.values.name}!`)
-            }
-        })
+        const program = new Command();
+
+        program
+            .option('-n, --name <name>', 'name to greet', 'world')
+            .action((options) => {
+                console.log(`Hello ${options.name}!`);
+            });
+
+        await program.parseAsync(args, { from: 'user' });
     }
 }
 ```

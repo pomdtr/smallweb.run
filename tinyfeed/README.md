@@ -1,19 +1,25 @@
-# TinyFeed
+# Tinyfeed
 
-Deno port of [TinyFeed](https://github.com/TheBigRoomXXL/tinyfeed).
+Deno port of [tinyfeed](https://github.com/TheBigRoomXXL/tinyfeed).
 
 ## Usage in [smallweb](https://smallweb.run)
 
 ```ts
-// $SMALLWEB_DIR/tinyfeed/main.ts
-import { TinyFeed } from "jsr:@pomdtr/tinyfeed";
+import { Tinyfeed } from "jsr:@pomdtr/tinyfeed";
+import { createStorage } from "https://esm.sh/unstorage";
+import fsDriver from "https://esm.sh/unstorage/drivers/fs";
 
-const tinyfeed = new TinyFeed({
-    title: "TinyFeed Example",
+const storage = createStorage({
+    driver: fsDriver({ base: "./data" }),
+});
+
+const tinyfeed = new Tinyfeed({
+    title: "Smallfeed",
     feeds: [
         "https://blog.smallweb.run/feed.xml",
-        "https://deno.com/feed"
-    ]
+        "https://blog.val.town/rss.xml",
+    ],
+    storage,
 })
 
 export default tinyfeed;
@@ -22,13 +28,17 @@ export default tinyfeed;
 Then use `smallweb run tinyfeed` to generate the feed. You can automate the feed generation using a cron job:
 
 ```json
-// $SMALLWEB_DIR/tinyfeed/smallweb.json
+// $SMALLWEB_DIR/smallfeed/smallweb.json
 {
     "crons": [
         {
             "cron": "0 0 * * *",
-            "args": []
+            "args": ["build"]
         }
     ]
 }
 ```
+
+## Usage in Val Town
+
+See [https://val.town/v/pomdtr/tinyfeed](https://val.town/x/pomdtr/tinyfeed).

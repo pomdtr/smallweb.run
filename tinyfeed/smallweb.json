@@ -1,7 +1,9 @@
 {
     "crons": [
         {
-            "args": [],
+            "args": [
+                "build"
+            ],
             "schedule": "@hourly"
         }
     ]

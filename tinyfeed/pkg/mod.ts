@@ -1,40 +1,57 @@
-import { serveDir } from "@std/http"
-import Parser from "rss-parser"
 import vento from "@vento/vento"
+import { Command } from '@commander-js/extra-typings';
+import Parser from "rss-parser"
 import template from "./template.ts"
-import * as fs from "@std/fs"
-import * as path from "@std/path"
+import { Feed } from "feed"
 
-const parser = new Parser()
-
-export type TinyFeedOptions = {
-    title?: string;
-    description?: string;
-    outPath?: string;
-    feeds: string[];
+export type Storage = {
+    getItem: (name: string) => Promise<string | null>;
+    setItem(name: string, value: string): Promise<void>;
 }
 
-export type Item = {
+export type TinyfeedOptions = {
+    title?: string;
+    description?: string;
+    feeds: string[];
+    storage: Storage;
+}
+
+
+type Item = {
     title: string;
     link: string;
     publication: string | null;
     domain: string;
 }
 
-export class TinyFeed {
-    constructor(public opts: TinyFeedOptions) { }
 
-    fetch: (req: Request) => Response | Promise<Response> = (req: Request) => {
-        return serveDir(req, {
-            fsRoot: "./data",
+export class Tinyfeed {
+    private cli
+    private parser
+    private env
+
+    constructor(public opts: TinyfeedOptions) {
+        this.parser = new Parser()
+        this.env = vento()
+
+        this.cli = new Command("tinyfeed")
+
+        this.cli.command("build").action(async () => {
+            await this.build()
         })
     }
 
-    run: (args: string[]) => void | Promise<void> = async () => {
+    build: () => Promise<void> = async () => {
         const items: Item[] = []
         const feeds = await Promise.all(this.opts.feeds.map(async (feedUrl) => {
-            const feed = await parser.parseURL(feedUrl)
+            const resp = await fetch(feedUrl)
 
+            if (!resp.ok) {
+                console.error(`Failed to fetch feed ${feedUrl}: ${resp.status} ${resp.statusText}`)
+                return null
+            }
+
+            const feed = await this.parser.parseString(await resp.text())
             for (const item of feed.items) {
                 if (!item.link) {
                     continue
@@ -51,9 +68,26 @@ export class TinyFeed {
             return feed
         }))
 
-        const env = vento()
-        const res = await env.runString(template, {
-            title: this.opts.title || "TinyFeed",
+
+        const feed = new Feed({
+            title: this.opts.title || "Tinyfeed",
+            id: "{{ id }}",
+            description: this.opts.description,
+            copyright: "NA",
+        })
+        for (const item of items) {
+            feed.addItem({
+                title: item.title,
+                id: item.link,
+                link: item.link,
+                date: new Date(item.publication || ""),
+            })
+        }
+
+        await this.opts.storage.setItem("feed.xml", feed.atom1())
+
+        const res = await this.env.runString(template, {
+            title: this.opts.title || "Tinyfeed",
             description: this.opts.description,
             items: items.sort((a, b) => {
                 const dateComparison = new Date(b.publication || "").getTime() - new Date(a.publication || "").getTime();
@@ -62,10 +96,53 @@ export class TinyFeed {
                 }
                 return a.title.localeCompare(b.title);
             }),
-            feeds,
+            feeds: feeds.filter(Boolean)
         })
 
-        await fs.ensureDir(path.dirname(this.opts.outPath || "./data/index.html"))
-        await Deno.writeTextFile(this.opts.outPath || "./data/index.html", res.content)
+
+        await this.opts.storage.setItem("index.html", res.content)
+        console.error(`Built static page from ${this.opts.feeds.length} feeds`)
+    }
+
+    fetch: (req: Request) => Response | Promise<Response> = async (_req) => {
+        const url = new URL(_req.url)
+
+        if (url.pathname === "/feed.xml") {
+            const feed = await this.opts.storage.getItem("feed.xml")
+            if (!feed) {
+                return new Response("Not found", {
+                    status: 404
+                })
+            }
+
+            const res = await this.env.runString(feed, {
+                id: url.origin,
+            })
+            return new Response(res.content, {
+                headers: {
+                    "Content-Type": "application/atom+xml"
+                }
+            })
+        }
+
+        const body = await this.opts.storage.getItem("index.html")
+        if (!body) {
+            return new Response("Not found", {
+                status: 404
+            })
+        }
+
+        return new Response(await this.opts.storage.getItem("index.html"), {
+            headers: {
+                "Content-Type": "text/html"
+            }
+        })
+    }
+
+
+    run: (args: string[]) => void | Promise<void> = async (args) => {
+        await this.cli.parseAsync(args, {
+            from: "user"
+        })
     }
 }

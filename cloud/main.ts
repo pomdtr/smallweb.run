@@ -9,7 +9,7 @@ type Data = {
     emails: string[];
 };
 
-const db = await JSONFilePreset<Data>("data/db.json", { emails: [] });
+const db = await JSONFilePreset<Data>("data/storage.json", { emails: [] });
 
 const handleRequest = async (req: Request) => {
     const url = new URL(req.url);

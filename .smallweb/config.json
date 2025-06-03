@@ -6,7 +6,6 @@
     "authorizedKeys": [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEPR1N/c+B7OPXEraFx2r3UHViHFbZ2Afg8VQLQ59ZKd macbook",
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJW+GQk0KCvSreL+y3AZdtCu82+13E2eEled+sGRkIEv macbook-pro",
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPeqJ99Rne9pxn4apYh23ibSCoIKhkiR0gQpSdYUwlNf codespace",
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEiHeBrj0hmIp2Cq+UsFlZiRDcjroU8w2uVwfTADGKWC android"
     ],
     "authorizedEmails": [
@@ -40,11 +39,8 @@
         "api": {
             "admin": true
         },
-        "demo-alex-2": {
-            "additionalDomains": [
-                "excalidraw-smallweb.com"
-            ]
-        },
-        "alex-blog": {}
+        "atproto": {
+            "admin": true
+        }
     }
 }

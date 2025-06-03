@@ -1,0 +1,19 @@
+lang: en
+
+home:
+  welcome: Latest from Smallweb.
+
+menu_links:
+  - href: https://smallweb.run/docs
+    text: Docs
+  - href: /feed.xml
+    text: RSS
+extra_head: []
+
+# Metas plugin https://lume.land/plugins/metas/#description
+metas:
+  site: Smallweb Blog
+  description: The latest from Smallweb
+  title: "=title"
+  image: "=image"
+  lang: en

@@ -1,4 +1,3 @@
-src/uploads
 _site
-_bin
 _cache
+.DS_Store

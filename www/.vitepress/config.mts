@@ -50,6 +50,8 @@ export default defineConfig({
       href: "/apple-touch-icon.png",
     }],
     ["meta", { name: "apple-mobile-web-app-title", content: "Smallweb" }],
+    ["link", { rel: "me", href: "mailto:achille.lacoin@gmail.com" }],
+    ["link", { rel: "webmention", href: "https://webmention.io/smallweb.run/webmention" }],
   ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
@@ -57,6 +59,7 @@ export default defineConfig({
       { text: "Docs", link: "/docs/getting-started" },
       { text: "Apps", link: "https://github.com/topics/smallweb-app" },
       { text: "Blog", link: "https://blog.smallweb.run" },
+      { text: "Sponsor", link: "https://github.com/sponsors/pomdtr" },
     ],
     logo: {
       dark: "/icon-dark.svg",

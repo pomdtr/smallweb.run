@@ -66,5 +66,5 @@ The `run` endpoint will be available at `example.<user>@smallweb.live`.
 
 ```console
 $ ssh example.<user>@smallweb.live
-"Welcome to Smallweb!"
+Welcome to Smallweb!
 ```

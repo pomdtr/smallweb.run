@@ -1,0 +1,8 @@
+{
+    "imports": {
+        "apache-arrow": "npm:apache-arrow^19.0.1"
+    },
+    "unstable": [
+        "detect-cjs"
+    ]
+}

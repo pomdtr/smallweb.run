@@ -1,7 +1,9 @@
 {
-  "version": "4",
+  "version": "5",
   "specifiers": {
     "jsr:@pomdtr/openauth-oidc@~0.1.4": "0.1.4",
+    "jsr:@smallweb/sandbox@0.1.0": "0.1.0",
+    "jsr:@smallweb/sandbox@0.1.1": "0.1.1",
     "jsr:@std/encoding@1.0.8": "1.0.8",
     "jsr:@std/fs@^1.0.15": "1.0.15",
     "jsr:@std/html@1.0.3": "1.0.3",
@@ -20,6 +22,22 @@
         "jsr:@std/fs",
         "npm:@openauthjs/openauth",
         "npm:jose"
+      ]
+    },
+    "@smallweb/sandbox@0.1.0": {
+      "integrity": "840a6120563b20be994fdac3fa858d2cc2e815c6f9b5ea8f14bd02ddd7f71be8",
+      "dependencies": [
+        "jsr:@std/encoding",
+        "jsr:@std/html",
+        "jsr:@std/http"
+      ]
+    },
+    "@smallweb/sandbox@0.1.1": {
+      "integrity": "e90d4f3ca3abbc5b765e29ab90f12cc4e6c8754ec4311bc296ccf6240053f3e6",
+      "dependencies": [
+        "jsr:@std/encoding",
+        "jsr:@std/html",
+        "jsr:@std/http"
       ]
     },
     "@std/encoding@1.0.8": {
@@ -406,7 +424,8 @@
       "integrity": "sha512-XIxfHpEuSJbITd1H3EeQwpcZbTLHc+VVr8ANI9t5sit565tsI4/xK3KWTUFE2e6QiangUkh3B0jihzmGnNrRsQ=="
     },
     "prettier@3.4.2": {
-      "integrity": "sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ=="
+      "integrity": "sha512-e9MewbtFo+Fevyuxn/4rrcDAaq0IYxPGLvObpQjiZBMAzB9IGmzlnG9RZy3FFas+eBMu2vA0CszMeduow5dIuQ==",
+      "bin": true
     },
     "react-dom@19.0.0_react@19.0.0": {
       "integrity": "sha512-4GV5sHFG0e/0AD4X+ySy6UJd3jVl1iNsNHdpad0qhABJ11twS3TTBnseqsKurKcsNqCEFeGL3uLpVChpIO3QfQ==",
@@ -449,7 +468,10 @@
       "integrity": "sha512-0JCqzSKnStlRRQfCdowvqy3cy0Dvtlb8xecj/H8JFZuCze4rwjPZQOgvFvn0Ws/usCHQFGpyr+pB9adaGwXn4Q=="
     },
     "valibot@1.0.0": {
-      "integrity": "sha512-1Hc0ihzWxBar6NGeZv7fPLY0QuxFMyxwYR2sF1Blu7Wq7EnremwY2W02tit2ij2VJT8HcSkHAQqmFfl77f73Yw=="
+      "integrity": "sha512-1Hc0ihzWxBar6NGeZv7fPLY0QuxFMyxwYR2sF1Blu7Wq7EnremwY2W02tit2ij2VJT8HcSkHAQqmFfl77f73Yw==",
+      "optionalPeers": [
+        "typescript@>=5"
+      ]
     }
   },
   "workspace": {

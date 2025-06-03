@@ -58,10 +58,6 @@ mkdir -p /home/smallweb/.ssh
 cp /root/.ssh/authorized_keys /home/smallweb/.ssh/authorized_keys
 ssh-keygen -t ed25519 -N "" -f /home/smallweb/.ssh/id_ed25519
 chown -R smallweb:smallweb /home/smallweb/.ssh
-
-# Create an empty directory for smallweb
-mkdir -p /home/smallweb/smallweb
-chown -R smallweb:smallweb /home/smallweb/smallweb
 ```
 
 ### Setup Compose project
@@ -82,11 +78,8 @@ services:
       - "443:443"
       - "2222:2222"
       - "25:25"
-    environment:
-      - PUID=1000
-      - PGID=1000
     volumes:
-      - /home/smallweb/smallweb:/smallweb
+      - ./data:/smallweb
       - deno_cache:/home/smallweb/.cache/deno
       - certmagic_cache:/home/smallweb/.cache/certmagic
 
@@ -103,7 +96,8 @@ Then init the smallweb workspace and start the service:
 
 ```sh
 cd /opt/docker/smallweb
-# init smallweb workspace
+
+mkdir data && chown smallweb:smallweb data
 docker compose run smallweb init --domain "example.com"
 docker compose up -d
 ```

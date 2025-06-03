@@ -11,10 +11,14 @@ Each smallweb app has write access to a `data` directory at the root of the app 
 The [lowdb](https://github.com/typicode/lowdb) library is a good choice for small apps. It allows you to use a json file as a database.
 
 ```ts
-import { JsonFilePreset } from "npm:lowdb/node"
+import { JSONFilePreset } from "npm:lowdb/node"
 
 const db = await JSONFilePreset('data/db.json', { posts: [] })
 
+// read existing posts
+console.log(db.data.posts)
+
+// add new post
 const post = { id: 1, title: 'lowdb is awesome', views: 100 }
 
 // In two steps
@@ -27,32 +31,34 @@ await db.update(({ posts }) => posts.push(post))
 
 ## Sqlite
 
-If you need a more robust database, you can use the [@pomdtr/sqlite](https://jsr.io/@pomdtr/sqlite) library.
+If you need a more robust database, you can use the `node:sqlite` package.
 
 ```ts
-import { DB } from "jsr:@pomdtr/sqlite";
+import { DatabaseSync } from 'node:sqlite';
 
 // Open a database
-const db = new DB("data/test.db");
-db.execute(`
+const db = new DatabaseSync('data/test.db');
+
+// Create table
+db.exec(`
   CREATE TABLE IF NOT EXISTS people (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT
-  )
+  ) STRICT
 `);
 
-// Run a simple query
+// Insert data
+const insert = db.prepare('INSERT INTO people (name) VALUES (?)');
 for (const name of ["Peter Parker", "Clark Kent", "Bruce Wayne"]) {
-  db.query("INSERT INTO people (name) VALUES (?)", [name]);
+  insert.run(name);
 }
 
-// Print out data in table
-for (const [name] of db.query("SELECT name FROM people")) {
-  console.log(name);
+// Query and print data
+const query = db.prepare('SELECT name FROM people');
+const results = query.all();
+for (const row of results) {
+  console.log(row.name);
 }
-
-// Close connection
-db.close();
 ```
 
 ## Using an external database
